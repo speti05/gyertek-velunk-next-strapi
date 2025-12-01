@@ -24,7 +24,7 @@ export function Footer({ data }: FooterProps) {
           alt={logo.image.alternativeText || "No alternative text"}
           width={100}
           height={100}
-          className="footer__logo--white"
+          className="footer__logo"
         />
         <ul className="footer__links">
           {navigation.map((item) => (

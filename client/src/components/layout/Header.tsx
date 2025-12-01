@@ -26,9 +26,7 @@ export function Header({ data }: HeaderProps) {
         <StrapiImage
           src={logo.image.url}
           alt={logo.image.alternativeText || "No alternative text provided"}
-          className={`header__logo header__logo--${
-            headerLight ? "white" : "black"
-          }`}
+          className={`header__logo `}
           width={120}
           height={120}
         />
