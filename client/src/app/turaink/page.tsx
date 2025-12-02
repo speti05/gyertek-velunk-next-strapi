@@ -32,7 +32,7 @@ export default async function AllEventsRoute({
   // const slug = (await params).slug;
   const { query, page } = await searchParams;
   const { event, blocks } = await loader("stay-in-touch");
-  const ALL_EVENTS_LABEL = "Összes túra és esemény";
+  const ALL_EVENTS_LABEL = "Kiemelt túrák";
 
   return (
     <div className="container">

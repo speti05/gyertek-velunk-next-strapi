@@ -16,11 +16,12 @@ interface PageProps {
 export default async function BlogRoute({ searchParams }: PageProps) {
   const { page, query } = await searchParams;
   const { blocks } = await loader("blog");
+   const LATEST_ARTICLES_LABEL = "Kiemelt beszámolók";
   return (
     <div className="blog-page">
       <BlockRenderer blocks={blocks} />
       <ContentList
-        headline="Check out our latest articles"
+        headline={LATEST_ARTICLES_LABEL}
         path="/api/articles"
         component={BlogCard}
         showSearch
