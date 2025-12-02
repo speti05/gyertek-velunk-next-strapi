@@ -16,6 +16,8 @@ interface ContentListProps {
   showPagination?: boolean;
 }
 
+const FEATURED_ARTICLES_LABEL = "Kiemelt beszámolók";
+
 async function loader(path: string, featured?: boolean, query?: string, page?:string ) {
   const { data, meta } = await getContent(path, featured, query, page);
   return {
@@ -41,7 +43,7 @@ export async function ContentList({
   return (
     <section className="content-items container">
       <h3 className={`content-items__headline ${`content-items--${headlineAlignment}`}`}>
-        {headline || "Featured Articles"}
+        {headline || FEATURED_ARTICLES_LABEL}
       </h3>
       {showSearch && <Search />}
       <div className="content-items__container--card">

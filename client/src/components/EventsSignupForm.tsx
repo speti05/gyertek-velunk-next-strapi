@@ -74,6 +74,14 @@ export function EventSignupForm({
   const strapiErrors = formState?.strapiErrors?.message;
   const successMessage = formState?.successMessage;
 
+  const FORM_LABELS = {
+    firstName: "Keresztnév",
+    lastName: "Vezetéknév",
+    email: "Email",
+    telephone: "Telefon",
+    submit: "Regisztráció",
+  };
+
   return (
     <section className="signup-form">
       <div className="signup-form__info">
@@ -101,23 +109,23 @@ export function EventSignupForm({
         )}
         <div className="signup-form__name-container">
           <TextInput
-            id="firstName"
-            label="First Name"
-            name="firstName"
-            error={zodErrors?.firstName}
-            defaultValue={formState?.formData?.firstName ?? ""}
-          />
-          <TextInput
             id="lastName"
-            label="Last Name"
+            label={FORM_LABELS.lastName}
             name="lastName"
             error={zodErrors?.lastName}
             defaultValue={formState?.formData?.lastName ?? ""}
           />
+          <TextInput
+            id="firstName"
+            label={FORM_LABELS.firstName}
+            name="firstName"
+            error={zodErrors?.firstName}
+            defaultValue={formState?.formData?.firstName ?? ""}
+          />
         </div>
         <TextInput
           id="email"
-          label="Email"
+          label={FORM_LABELS.email}
           name="email"
           type="email"
           error={zodErrors?.email}
@@ -125,7 +133,7 @@ export function EventSignupForm({
         />
         <TextInput
           id="phone"
-          label="Phone"
+          label={FORM_LABELS.telephone}
           name="telephone"
           type="text"
           error={zodErrors?.telephone}
@@ -133,7 +141,7 @@ export function EventSignupForm({
         />
         <input hidden type="text" name="eventId" defaultValue={eventId} />
         <SubmitButton
-          text="Sign Up"
+          text={FORM_LABELS.submit}
           className="btn btn--medium btn--turquoise"
         />
         {strapiErrors && <p className="signup-form__error">{strapiErrors}</p>}

@@ -40,6 +40,7 @@ const PaginationArrow: FC<PaginationArrowProps> = ({
 };
 
 export function PaginationComponent({ pageCount }: Readonly<PaginationProps>) {
+  const PAGE_LABEL = "Oldal";
   // Get current URL path and search parameters using Next.js hooks
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -67,7 +68,7 @@ export function PaginationComponent({ pageCount }: Readonly<PaginationProps>) {
         {/* Current page indicator */}
         <li>
           <span className="page-number">
-            Page {currentPage}
+            {PAGE_LABEL} {currentPage}
           </span>
         </li>
         {/* Right arrow - disabled if on last page */}

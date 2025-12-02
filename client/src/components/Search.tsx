@@ -7,6 +7,7 @@ export function Search() {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
+  const SEARCH_PLACEHOLDER = "Keresés";
 
   // Create a debounced search handler that only triggers 300ms after the user stops typing
   const handleSearch = useDebouncedCallback((term: string) => {
@@ -31,7 +32,7 @@ export function Search() {
     <div className="search">
       <input
         type="text"
-        placeholder="Search"
+        placeholder={SEARCH_PLACEHOLDER}
         // Call handleSearch whenever input value changes
         onChange={(e) => handleSearch(e.target.value)}
         // Initialize input with existing search query from URL

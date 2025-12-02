@@ -32,6 +32,7 @@ export default async function AllEventsRoute({
   // const slug = (await params).slug;
   const { query, page } = await searchParams;
   const { event, blocks } = await loader("stay-in-touch");
+  const ALL_EVENTS_LABEL = "Összes túra és esemény";
 
   return (
     <div className="container">
@@ -39,7 +40,7 @@ export default async function AllEventsRoute({
         <EventSignupForm blocks={blocks} eventId={event.documentId} />
       </div>
       <ContentList
-        headline="All Events"
+        headline={ALL_EVENTS_LABEL}
         path="/api/events"
         query={query}
         page={page}

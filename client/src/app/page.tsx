@@ -10,6 +10,7 @@ async function loader() {
   return { ...data.data };
 }
 
+const FEATURED_ARTICLES_LABEL = "Kiemelt beszámolók";
 
 export default async function HomeRoute() {
   const data = await loader();
@@ -19,7 +20,7 @@ export default async function HomeRoute() {
       <BlockRenderer blocks={blocks} />
       <div className="container">
         <ContentList
-          headline="Featured Articles"
+          headline={FEATURED_ARTICLES_LABEL}
           path="/api/articles"
           component={BlogCard}
           featured

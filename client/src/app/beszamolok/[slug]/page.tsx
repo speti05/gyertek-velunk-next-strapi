@@ -13,6 +13,8 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+const FEATURED_ARTICLES_LABEL = "Kiemelt beszámolók";
+
 async function loader(slug: string) {
   const { data } = await getContentBySlug(slug, "/api/articles");
   const article = data[0];
@@ -86,7 +88,7 @@ export default async function SingleBlogRoute({ params }: PageProps) {
         />
         <BlockRenderer blocks={blocks} />
         <ContentList
-          headline="Featured Articles"
+          headline={FEATURED_ARTICLES_LABEL}
           path="/api/articles"
           component={BlogCard}
           featured={true}

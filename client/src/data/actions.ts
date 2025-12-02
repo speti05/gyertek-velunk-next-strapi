@@ -2,14 +2,24 @@
 import { z } from "zod";
 import { subscribeService, eventsSubscribeService, type EventsSubscribeProps } from "./services";
 
+const MESSAGES = {
+  emailInvalid: "Érvényes email címet adj meg",
+  invalidFirstName: "Add meg a keresztneved",
+  invalidLastName: "Add meg a vezetékneved",
+  invalidTelephone: "Érvényes telefonszámot adj meg. ",
+  enterPhoneNumber: "Add meg a telefonszámod. ",
+  someThingWentWrong: "Hiba történt. Kérjük, próbáld újra később.",
+  failedToSubscribe: "Sikertelen feliratkozás.",
+  succesfullySubscribed: "Sikeres feliratkozás!",
+};
+
 const subscribeSchema = z.object({
   email: z.string().email({
-    message: "Please enter a valid email address",
+    message: MESSAGES.emailInvalid,
   }),
 });
 
 export async function subscribeAction(prevState: any, formData: FormData) {
-  console.log("Our first server action");
   const email = formData.get("email");
 
   const validatedFields = subscribeSchema.safeParse({
@@ -31,7 +41,7 @@ export async function subscribeAction(prevState: any, formData: FormData) {
       ...prevState,
       strapiErrors: null,
       zodErrors: null,
-      errorMessage: "Ops! Something went wrong. Please try again.",
+      errorMessage: MESSAGES.someThingWentWrong,
     };
   }
 
@@ -41,7 +51,7 @@ export async function subscribeAction(prevState: any, formData: FormData) {
       ...prevState,
       strapiErrors: responseData.error,
       zodErrors: null,
-      errorMessage: "Failed to Subscribe.",
+      errorMessage: MESSAGES.failedToSubscribe,
     };
   }
 
@@ -50,25 +60,25 @@ export async function subscribeAction(prevState: any, formData: FormData) {
     zodErrors: null,
     strapiErrors: null,
     errorMessage: null,
-    successMessage: "Successfully Subscribed!",
+    successMessage: MESSAGES.succesfullySubscribed,
   };
 
 }
 
 const eventsSubscribeSchema = z.object({
   firstName: z.string().min(1, {
-    message: "Please enter your first name",
+    message: MESSAGES.invalidFirstName,
   }),
   lastName: z.string().min(1, {
-    message: "Please enter your last name",
+    message: MESSAGES.invalidLastName,
   }),
   email: z.string().email({
-    message: "Please enter a valid email address",
+    message: MESSAGES.emailInvalid,
   }),
   telephone: z.string()
-    .min(1, { message: "Please enter your phone number" })
+    .min(1, { message: MESSAGES.enterPhoneNumber })
     .regex(/^(\+\d{1,3}[-.]?)?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/, {
-      message: "Please enter a valid phone number",
+      message: MESSAGES.invalidTelephone,
     }),
 });
 
@@ -111,7 +121,7 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
       ...prevState,
       strapiErrors: null,
       zodErrors: null,
-      errorMessage: "Ops! Something went wrong. Please try again.",
+      errorMessage: MESSAGES.someThingWentWrong,
     };
   }
 
@@ -123,7 +133,7 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
       formData: {
         ...formDataObject,
       },
-      errorMessage: "Failed to Subscribe.",
+      errorMessage: MESSAGES.failedToSubscribe,
 
     };
   }
@@ -134,6 +144,6 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
     strapiErrors: null,
     errorMessage: null,
     formData: null,
-    successMessage: "Successfully Subscribed!",
+    successMessage: MESSAGES.succesfullySubscribed,
   };
 }
