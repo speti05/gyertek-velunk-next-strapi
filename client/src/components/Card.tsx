@@ -40,7 +40,7 @@ export function Card({
         <h5>{title}</h5>
         {price && (
           <p>
-            <span>Price: </span>
+            <span>Ár: </span>
             {price}
           </p>
         )}

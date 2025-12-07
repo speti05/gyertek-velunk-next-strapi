@@ -18,7 +18,7 @@ export function SubmitButton({
       disabled={status.pending}
       className={className}
     >
-      {status.pending ? "Loading..." : text}
+      {status.pending ? "Töltés..." : text}
     </button>
   );
 }

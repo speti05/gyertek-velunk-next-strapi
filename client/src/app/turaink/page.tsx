@@ -22,7 +22,7 @@ interface ParamsProps {
 }
 
 const EventCard = (props: Readonly<CardProps>) => (
-  <Card {...props} basePath="events" />
+  <Card {...props} basePath="turaink" />
 );
 
 export default async function AllEventsRoute({

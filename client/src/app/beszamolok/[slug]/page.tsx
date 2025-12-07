@@ -54,7 +54,7 @@ function ArticleOverview({
   );
 }
 
-const BlogCard = (props: Readonly<CardProps>) => <Card {...props} basePath="blog" />;
+const BlogCard = (props: Readonly<CardProps>) => <Card {...props} basePath="beszamolok" />;
 
 
 export default async function SingleBlogRoute({ params }: PageProps) {

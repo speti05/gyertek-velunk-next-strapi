@@ -17,7 +17,7 @@ interface ParamsProps {
 }
 
 const EventCard = (props: Readonly<CardProps>) => (
-  <Card {...props} basePath="events" />
+  <Card {...props} basePath="turaink" />
 );
 
 export default async function SingleEventRoute({ params }: ParamsProps) {
@@ -36,7 +36,7 @@ export default async function SingleEventRoute({ params }: ParamsProps) {
         />
       </div>
       <ContentList
-        headline="Featured Events"
+        headline="Kiemelt túrák"
         path="/api/events"
         component={EventCard}
         featured={true}
