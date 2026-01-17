@@ -411,6 +411,38 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiDataPrivacyPageDataPrivacyPage
+  extends Struct.SingleTypeSchema {
+  collectionName: 'data_privacy_pages';
+  info: {
+    description: '';
+    displayName: 'Data Privacy Page';
+    pluralName: 'data-privacy-pages';
+    singularName: 'data-privacy-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    blocks: Schema.Attribute.DynamicZone<['blocks.text-content-block']>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::data-privacy-page.data-privacy-page'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiEventSignupEventSignup extends Struct.CollectionTypeSchema {
   collectionName: 'event_signups';
   info: {
@@ -570,6 +602,39 @@ export interface ApiNewsletterSignupNewsletterSignup
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiOnlyTextInfoPageOnlyTextInfoPage
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'only_text_info_pages';
+  info: {
+    description: '';
+    displayName: 'Only text Info page';
+    pluralName: 'only-text-info-pages';
+    singularName: 'only-text-info-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::only-text-info-page.only-text-info-page'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'title'>;
+    textContent: Schema.Attribute.DynamicZone<['blocks.text-content-block']>;
+    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1122,11 +1187,13 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::article.article': ApiArticleArticle;
+      'api::data-privacy-page.data-privacy-page': ApiDataPrivacyPageDataPrivacyPage;
       'api::event-signup.event-signup': ApiEventSignupEventSignup;
       'api::event.event': ApiEventEvent;
       'api::global.global': ApiGlobalGlobal;
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::newsletter-signup.newsletter-signup': ApiNewsletterSignupNewsletterSignup;
+      'api::only-text-info-page.only-text-info-page': ApiOnlyTextInfoPageOnlyTextInfoPage;
       'api::page.page': ApiPagePage;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

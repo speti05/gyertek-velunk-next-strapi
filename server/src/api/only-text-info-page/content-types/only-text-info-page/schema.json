@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "only_text_info_pages",
+  "info": {
+    "singularName": "only-text-info-page",
+    "pluralName": "only-text-info-pages",
+    "displayName": "Only text Info page",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "textContent": {
+      "type": "dynamiczone",
+      "components": [
+        "blocks.text-content-block"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    }
+  }
+}

@@ -101,6 +101,27 @@ export async function getPageBySlug(slug: string) {
   return await fetchAPI(url.href, { method: "GET" });
 }
 
+const dataPrivacyPageQuery = () =>
+  qs.stringify({
+    populate: {
+      blocks: { // Changed from textContent
+        on: {
+          "blocks.text-content-block": {
+            populate: true,
+            //populate: '*',
+          },
+        },
+      },
+    },
+  });
+
+export async function getDataPrivacy() {
+  const path = "/api/data-privacy-page";
+  const url = new URL(path, BASE_URL);
+  url.search = dataPrivacyPageQuery();
+  return await fetchAPI(url.href, { method: "GET" });
+}
+
 const globalSettingQuery = qs.stringify({
   populate: {
     header: {

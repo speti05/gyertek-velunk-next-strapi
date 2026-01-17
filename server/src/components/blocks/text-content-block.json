@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_blocks_text_content_blocks",
+  "info": {
+    "displayName": "Text Content Block",
+    "icon": "bulletList",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "content": {
+      "type": "richtext"
+    }
+  }
+}

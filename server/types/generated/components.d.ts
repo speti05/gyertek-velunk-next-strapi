@@ -100,6 +100,18 @@ export interface BlocksSubscribe extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksTextContentBlock extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_text_content_blocks';
+  info: {
+    description: '';
+    displayName: 'Text Content Block';
+    icon: 'bulletList';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText;
+  };
+}
+
 export interface ElementsLink extends Struct.ComponentSchema {
   collectionName: 'components_elements_links';
   info: {
@@ -160,6 +172,7 @@ declare module '@strapi/strapi' {
       'blocks.paragraph': BlocksParagraph;
       'blocks.paragraph-with-image': BlocksParagraphWithImage;
       'blocks.subscribe': BlocksSubscribe;
+      'blocks.text-content-block': BlocksTextContentBlock;
       'elements.link': ElementsLink;
       'elements.logo': ElementsLogo;
       'layout.footer': LayoutFooter;

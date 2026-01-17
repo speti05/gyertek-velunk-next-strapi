@@ -55,7 +55,8 @@ type ComponentType =
   | "blocks.heading"
   | "blocks.paragraph-with-image"
   | "blocks.paragraph"
-  | "blocks.full-image";
+  | "blocks.full-image"
+  | "blocks.text-content-block";
 
 interface Base<T extends ComponentType, D extends object = Record<string, unknown>> {
   id: number;
@@ -75,7 +76,8 @@ export type Block =
   | HeadingProps
   | ParagraphWithImageProps
   | ParagraphProps
-  | FullImageProps;
+  | FullImageProps
+  | TextBlockProps;
 
 export interface HeroSectionProps extends Base<"blocks.hero-section"> {
   theme: "turquoise" | "orange";
@@ -130,4 +132,8 @@ export interface FullImageProps extends Base<"blocks.full-image"> {
   id: number;
   __component: "blocks.full-image";
   image: ImageProps;
+}
+
+export interface TextBlockProps extends Base<"blocks.text-content-block"> {
+  content: string;
 }

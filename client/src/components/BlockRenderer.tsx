@@ -8,6 +8,7 @@ import { Heading } from "@/components/blocks/Heading";
 import { ParagraphWithImage } from "@/components/blocks/ParagraphWithImage";
 import { Paragraph } from "@/components/blocks/Paragraph";
 import { FullImage } from "@/components/blocks/FullImage";
+import { TextContentBlock } from "./blocks/OnlyTextContent";
 
 function blockRenderer(block: Block, index: number) {
   switch (block.__component) {
@@ -27,6 +28,8 @@ function blockRenderer(block: Block, index: number) {
       return <Paragraph {...block} key={index} />;
     case "blocks.full-image":
       return <FullImage {...block} key={index} />;
+    case "blocks.text-content-block":
+      return <TextContentBlock {...block} key={index} />;
     default:
       return null;
   }
