@@ -4,7 +4,8 @@
   "info": {
     "singularName": "event",
     "pluralName": "events",
-    "displayName": "Event"
+    "displayName": "Event",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -22,11 +23,12 @@
       "targetField": "title"
     },
     "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "featured": {
       "type": "boolean",
@@ -36,7 +38,7 @@
       "type": "string"
     },
     "startDate": {
-      "type": "datetime"
+      "type": "date"
     },
     "blocks": {
       "type": "dynamiczone",
@@ -50,6 +52,9 @@
       "relation": "oneToMany",
       "target": "api::event-signup.event-signup",
       "mappedBy": "event"
+    },
+    "endDate": {
+      "type": "date"
     }
   }
 }

@@ -478,6 +478,7 @@ export interface ApiEventSignupEventSignup extends Struct.CollectionTypeSchema {
 export interface ApiEventEvent extends Struct.CollectionTypeSchema {
   collectionName: 'events';
   info: {
+    description: '';
     displayName: 'Event';
     pluralName: 'events';
     singularName: 'event';
@@ -493,6 +494,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Text;
+    endDate: Schema.Attribute.Date;
     eventSignups: Schema.Attribute.Relation<
       'oneToMany',
       'api::event-signup.event-signup'
@@ -505,7 +507,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     price: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'title'>;
-    startDate: Schema.Attribute.DateTime;
+    startDate: Schema.Attribute.Date;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

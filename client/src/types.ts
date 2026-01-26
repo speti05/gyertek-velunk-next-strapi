@@ -17,7 +17,7 @@ export interface LogoProps {
   image: ImageProps;
 }
 
-export interface ArticleProps {
+interface BaseBlogProps {
   id: number;
   documentId: string;
   title: string;
@@ -31,20 +31,13 @@ export interface ArticleProps {
   updatedAt: string;
 }
 
-export interface EventProps {
-  id: number;
-  documentId: string;
-  title: string;
-  description: string;
-  slug: string;
-  image: ImageProps;
-  author: string;
-  featured: boolean;
+export interface ArticleProps extends BaseBlogProps{
+}
+
+export interface EventProps extends BaseBlogProps {
   price: string;
   startDate: string;
-  publishedAt: string;
-  createdAt: string;
-  updatedAt: string;
+  endDate: string;
 }
 
 type ComponentType =

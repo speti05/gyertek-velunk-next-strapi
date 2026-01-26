@@ -1,3 +1,5 @@
+'use server'
+
 import { BlockRenderer } from "@/components/BlockRenderer";
 import { getDataPrivacy } from "@/data/loaders";
 import { notFound } from "next/navigation";

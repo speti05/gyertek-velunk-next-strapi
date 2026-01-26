@@ -1,3 +1,5 @@
+'use server'
+
 import { ContentList } from "@/components/ContentList";
 import { Card, type CardProps } from "@/components/Card";
 import { EventSignupForm } from "@/components/EventsSignupForm";
@@ -9,8 +11,6 @@ import { notFound } from "next/navigation";
 async function loader(slug: string) {
   const { data } = await getContentBySlug(slug, "/api/events");
   const event = data[0];
-  console.log(event)
-  console.log(slug)
 
   if (!event) throw notFound();
   return { event: event as EventProps, blocks: event?.blocks };
@@ -24,6 +24,15 @@ interface ParamsProps {
 const EventCard = (props: Readonly<CardProps>) => (
   <Card {...props} basePath="turaink" />
 );
+
+const eventcalendarDataMapper = (data: EventProps[]) => (data.map((event: EventProps) => ({
+  id: event.documentId,
+  title: event.title,
+  link: `turaink/${event.slug}`,
+  description: event.description,
+  startDate: new Date(event.startDate),
+  endDate: new Date(event.endDate)
+})));
 
 export default async function AllEventsRoute({
   params,
@@ -47,6 +56,7 @@ export default async function AllEventsRoute({
         showSearch
         showPagination
         component={EventCard}
+        calendarMapper={eventcalendarDataMapper}
       />
     </div>
   );

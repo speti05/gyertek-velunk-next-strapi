@@ -1,44 +1,130 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Open+Sans:wght@300;400;500&display=swap");
+
+// Fonts are imported via next font, from google fonts layout.tsx (root)
+body {
+  font-family: var(--font-source-sans-3), sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
 
 h1,
 h2,
 h3,
-h4 {
-  font-family:  "Open Sans", sans-serif;
+h4,
+h5 {
+  font-family: var(--font-luckiest-guy), cursive;
 }
 
 h1 {
-  font-size: 10rem;
-  line-height: 12rem;
-  font-weight: 500;
+  font-size: 4rem;
+  line-height: 4.5rem;
+  
+  @media (min-width: 768px) {
+    font-size: 7rem;
+    line-height: 8rem;
+  }
+  
+  @media (min-width: 1024px) {
+    font-size: 10rem;
+    line-height: 12rem;
+  }
 }
 
 h2 {
-  font-size: 8rem;
+  font-size: 3.5rem;
+  line-height: 4rem;
+  
+  @media (min-width: 768px) {
+    font-size: 5.5rem;
+    line-height: 6.5rem;
+  }
+  
+  @media (min-width: 1024px) {
+    font-size: 8rem;
+    line-height: 9.5rem;
+  }
 }
 
 h3 {
-  font-size: 6rem;
-  line-height: 7rem;
+  font-size: 3rem;
+  line-height: 3.5rem;
+  
+  @media (min-width: 768px) {
+    font-size: 4.5rem;
+    line-height: 5.2rem;
+  }
+  
+  @media (min-width: 1024px) {
+    font-size: 6rem;
+    line-height: 7rem;
+  }
 }
 
 h4 {
-  font-size: 4rem;
-  line-height: 4.7rem;
+  font-size: 2.5rem;
+  line-height: 3rem;
+  
+  @media (min-width: 768px) {
+    font-size: 3.2rem;
+    line-height: 3.8rem;
+  }
+  
+  @media (min-width: 1024px) {
+    font-size: 4rem;
+    line-height: 4.7rem;
+  }
 }
 
 h5 {
-  font-size: 3rem;
+  font-size: 2rem;
+  line-height: 2.4rem;
+  
+  @media (min-width: 768px) {
+    font-size: 2.5rem;
+    line-height: 3rem;
+  }
+  
+  @media (min-width: 1024px) {
+    font-size: 3rem;
+    line-height: 3.5rem;
+  }
 }
 
 .copy {
-  font-size: 2rem;
-  line-height: 3rem;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  
+  @media (min-width: 768px) {
+    font-size: 1.8rem;
+    line-height: 2.7rem;
+  }
+  
+  @media (min-width: 1024px) {
+    font-size: 2rem;
+    line-height: 3rem;
+  }
+  
   p {
-    margin: 3rem 0;
+    margin: 2rem 0;
+    
+    @media (min-width: 768px) {
+      margin: 2.5rem 0;
+    }
+    
+    @media (min-width: 1024px) {
+      margin: 3rem 0;
+    }
   }
 }
 
 .copy-small {
-  font-size: 15px;
+  font-size: 13px;
+  
+  @media (min-width: 768px) {
+    font-size: 14px;
+  }
+  
+  @media (min-width: 1024px) {
+    font-size: 15px;
+  }
 }

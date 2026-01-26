@@ -8,6 +8,7 @@ import { EventSignupForm } from "@/components/EventsSignupForm";
 async function loader(slug: string) {
   const { data } = await getContentBySlug(slug, "/api/events");
   const event = data[0];
+  console.log("Loaded event data:", event);
   if (!event) throw notFound();
   return { event: event as EventProps, blocks: event?.blocks };
 }
@@ -25,22 +26,25 @@ export default async function SingleEventRoute({ params }: ParamsProps) {
   const { event, blocks } = await loader(slug);
 
   return (
-    <div className="container">
-      <div className="event-page">
-        <EventSignupForm
-          blocks={blocks}
-          eventId={event.documentId}
-          startDate={event.startDate}
-          price={event.price}
-          image={{ url: event?.image?.url, alt: event?.image?.alternativeText || "Event image" }}
+    <>
+      <div className="container">
+        <div className="event-page">
+          <EventSignupForm
+            blocks={blocks}
+            eventId={event.documentId}
+            startDate={event.startDate}
+            price={event.price}
+            image={{ url: event?.image?.url, alt: event?.image?.alternativeText || "Event image" }}
+          />
+        </div>
+
+        <ContentList
+          headline="Kiemelt túrák"
+          path="/api/events"
+          component={EventCard}
+          featured={true}
         />
       </div>
-      <ContentList
-        headline="Kiemelt túrák"
-        path="/api/events"
-        component={EventCard}
-        featured={true}
-      />
-    </div>
+    </>
   );
 }

@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Luckiest_Guy, Source_Sans_3 } from "next/font/google";
 import "../sass/main.scss";
+import "./globals.css";
 
 import { getGlobalSettings } from "@/data/loaders";
 
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const luckiestGuy = Luckiest_Guy({
   subsets: ["latin"],
+  weight: '400',
+  variable: "--font-luckiest-guy",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const sourceSans3 = Source_Sans_3({
+  variable: "--font-source-sans-3",
   subsets: ["latin"],
 });
 
@@ -47,7 +49,7 @@ export default async function RootLayout({
   const { header, footer } = await loader();
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${luckiestGuy.variable} ${sourceSans3.variable}`}>
         <Header data={header} />
         {children}
         <Footer data={footer} />
