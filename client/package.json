@@ -10,6 +10,11 @@
   },
   "dependencies": {
     "@deemlol/next-icons": "^0.1.9",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.7",
+    "@mui/material": "^7.3.7",
+    "@mui/styled-engine-sc": "^7.3.7",
     "@tailwindcss/postcss": "^4.1.18",
     "@tailwindcss/vite": "^4.1.18",
     "@types/qs": "^6.9.17",
@@ -19,6 +24,7 @@
     "react-dom": "^19.0.0",
     "react-markdown": "^9.0.1",
     "sass": "^1.83.0",
+    "styled-components": "^6.3.8",
     "use-debounce": "^10.0.4",
     "zod": "^3.24.1"
   },

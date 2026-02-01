@@ -1,6 +1,7 @@
 "use client";
 import { FC } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 
 // Props interface for the main pagination component
 interface PaginationProps {
@@ -24,18 +25,19 @@ const PaginationArrow: FC<PaginationArrowProps> = ({
   const isLeft = direction === "left";
 
   return (
-    <button
+    <CustomButton
       onClick={(e) => {
         e.preventDefault();
         // Use Next.js client-side navigation without scroll reset
         router.push(href, { scroll: false });
       }}
+      variant="outlined"
       className={`pagination-arrow ${isDisabled ? "disabled" : ""}`}
       aria-disabled={isDisabled}
       disabled={isDisabled}
     >
       {isLeft ? "«" : "»"}
-    </button>
+    </CustomButton>
   );
 };
 

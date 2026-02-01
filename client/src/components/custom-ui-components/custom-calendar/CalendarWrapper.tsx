@@ -1,6 +1,6 @@
 'use client';
 
-import { ContinuousCalendar } from '@/components/custom-calendar/ContinuousCalendar';
+import { ContinuousCalendar } from '@/components/custom-ui-components/custom-calendar/ContinuousCalendar';
 import { CalendarEvent } from './CalendarTypes';
 import { useRouter } from 'next/navigation';
 import { ArticleProps } from '@/types';

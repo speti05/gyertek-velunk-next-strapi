@@ -1,5 +1,6 @@
 "use client";
 import { useFormStatus } from "react-dom";
+import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 
 interface SubmitButtonProps {
   text: string;
@@ -12,13 +13,14 @@ export function SubmitButton({
 }: Readonly<SubmitButtonProps>) {
   const status = useFormStatus();
   return (
-    <button
+    <CustomButton
+      variant="contained"
       type="submit"
       aria-disabled={status.pending}
       disabled={status.pending}
       className={className}
     >
       {status.pending ? "Töltés..." : text}
-    </button>
+    </CustomButton>
   );
 }

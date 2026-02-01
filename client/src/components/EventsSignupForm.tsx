@@ -1,11 +1,13 @@
 "use client";
+
 import { useActionState } from "react";
 import { BlockRenderer } from "@/components/BlockRenderer";
 import { Block } from "@/types";
 import { formatDate } from "@/utils/format-date";
-import { StrapiImage } from "./StrapiImage";
-import { SubmitButton } from "./SubmitButton";
+import { StrapiImage } from "@/components/StrapiImage";
+import { SubmitButton } from "@/components/SubmitButton";
 import { eventsSubscribeAction } from "@/data/actions";
+import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
 
 const INITIAL_STATE = {
   zodErrors: null,
@@ -37,7 +39,7 @@ function TextInput({
       <label htmlFor={id} className="copy">
         {label}
       </label>
-      <input
+      <CustomTextInput
         type={type}
         name={name}
         id={id}

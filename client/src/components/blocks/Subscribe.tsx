@@ -2,6 +2,8 @@
 import type { SubscribeProps } from "@/types";
 import { useActionState } from "react";
 import { subscribeAction } from "@/data/actions";
+import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
+import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
 
 const INITIAL_STATE = {
   zodErrors: null,
@@ -36,18 +38,19 @@ export function Subscribe({
         <p className="copy">{content}</p>
       </div>
       <form className="newsletter__form" action={formAction}>
-        <input
+        <CustomTextInput
           name="email"
           type="text"
           placeholder={errorMessage || successMessage || placeholder}
           className={`newsletter__email ${errorMessage ? "newsletter__email--error" : ""}`}
         />
-        <button
+        <CustomButton
           type="submit"
+          variant="contained"
           className="newsletter__subscribe btn btn--turquoise btn--medium"
         >
           {buttonText}
-        </button>
+        </CustomButton>
       </form>
     </section>
   );

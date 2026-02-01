@@ -1,10 +1,10 @@
 import { ArticleProps, EventProps } from "@/types";
 import { getContent } from "@/data/loaders";
 
-import { PaginationComponent } from "./PaginationComponent";
+import { PaginationComponent } from "@/components/PaginationComponent";
 import { Search } from "@/components/Search"
-import { CalendarWrapper } from "./custom-calendar/CalendarWrapper";
-import { CalendarEvent } from "./custom-calendar/CalendarTypes";
+import { CalendarWrapper } from "@/components/custom-ui-components/custom-calendar/CalendarWrapper";
+import { CalendarEvent } from "@/components/custom-ui-components/custom-calendar/CalendarTypes";
 
 interface ContentListProps {
   headline: string;

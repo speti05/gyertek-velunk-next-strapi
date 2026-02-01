@@ -3,6 +3,7 @@ import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 
 import type { InfoBlockProps } from "@/types";
+import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 
 export function InfoBlock({
   theme,
@@ -28,9 +29,11 @@ export function InfoBlock({
         <ReactMarkdown className="copy">{content}</ReactMarkdown>
         {cta && (
           <Link href={cta.href} target={cta.isExternal ? "_blank" : "_self"}>
-            <button className={`btn btn--medium btn--${theme}`}>
+            <CustomButton
+              variant="contained"
+              className={`btn btn--medium btn--${theme}`}>
               {cta.text}
-            </button>
+            </CustomButton>
           </Link>
         )}
       </div>

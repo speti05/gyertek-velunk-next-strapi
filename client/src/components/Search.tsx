@@ -1,6 +1,7 @@
 "use client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
+import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
 
 export function Search() {
   // Get access to URL search parameters, routing, and current pathname
@@ -30,7 +31,7 @@ export function Search() {
 
   return (
     <div className="search">
-      <input
+      <CustomTextInput
         type="text"
         placeholder={SEARCH_PLACEHOLDER}
         // Call handleSearch whenever input value changes

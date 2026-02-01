@@ -49,6 +49,10 @@ export default async function RootLayout({
   const { header, footer } = await loader();
   return (
     <html lang="en">
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      />
       <body className={`${luckiestGuy.variable} ${sourceSans3.variable}`}>
         <Header data={header} />
         {children}
