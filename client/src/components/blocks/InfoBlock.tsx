@@ -31,7 +31,7 @@ export function InfoBlock({
           <Link href={cta.href} target={cta.isExternal ? "_blank" : "_self"}>
             <CustomButton
               variant="contained"
-              className={`btn btn--medium btn--${theme}`}>
+              size="large">
               {cta.text}
             </CustomButton>
           </Link>

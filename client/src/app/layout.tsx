@@ -7,6 +7,7 @@ import { getGlobalSettings } from "@/data/loaders";
 
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { MuiThemeProvider } from "@/components/providers/theme-provider/theme-provider";
 
 const luckiestGuy = Luckiest_Guy({
   subsets: ["latin"],
@@ -49,14 +50,18 @@ export default async function RootLayout({
   const { header, footer } = await loader();
   return (
     <html lang="en">
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      />
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        />
+      </head>
       <body className={`${luckiestGuy.variable} ${sourceSans3.variable}`}>
-        <Header data={header} />
-        {children}
-        <Footer data={footer} />
+        <MuiThemeProvider>
+          <Header data={header} />
+          {children}
+          <Footer data={footer} />
+        </MuiThemeProvider>
       </body>
     </html>
   );

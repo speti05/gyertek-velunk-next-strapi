@@ -47,7 +47,7 @@ export function Subscribe({
         <CustomButton
           type="submit"
           variant="contained"
-          className="newsletter__subscribe btn btn--turquoise btn--medium"
+          size="large"
         >
           {buttonText}
         </CustomButton>

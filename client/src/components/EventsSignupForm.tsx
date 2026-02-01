@@ -144,7 +144,6 @@ export function EventSignupForm({
         <input hidden type="text" name="eventId" defaultValue={eventId} />
         <SubmitButton
           text={FORM_LABELS.submit}
-          className="btn btn--medium btn--turquoise"
         />
         {strapiErrors && <p className="signup-form__error">{strapiErrors}</p>}
         {successMessage && (

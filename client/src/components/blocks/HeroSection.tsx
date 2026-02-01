@@ -31,7 +31,10 @@ export function HeroSection({
         {publishedAt && <p className="hero__published-at">{publishedAt}</p>}
       </div>
       {cta && (
-        <CustomButton className={`btn btn--medium btn--${theme}`}>
+        <CustomButton
+          variant="contained"
+          size="large"
+        >
           <Link href={cta.href} target={cta.isExternal ? "_blank" : "_self"}>
             {cta.text}
           </Link>

@@ -16,6 +16,8 @@ export function SubmitButton({
     <CustomButton
       variant="contained"
       type="submit"
+      size="large"
+      color="secondary"
       aria-disabled={status.pending}
       disabled={status.pending}
       className={className}
