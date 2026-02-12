@@ -1,9 +1,9 @@
 import type { EventProps } from "@/types";
 import { ContentList } from "@/components/ContentList";
-import { Card, type CardProps } from "@/components/Card";
 import { getContentBySlug } from "@/data/loaders";
 import { notFound } from "next/navigation";
 import { EventSignupForm } from "@/components/EventsSignupForm";
+import { EventCard } from "@/components/EventCard";
 
 async function loader(slug: string) {
   const { data } = await getContentBySlug(slug, "/api/events");
@@ -14,14 +14,11 @@ async function loader(slug: string) {
 }
 
 interface ParamsProps {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string }>,
+  searchParams: Promise<{ page?: string; query?: string }>;
 }
 
-const EventCard = (props: Readonly<CardProps>) => (
-  <Card {...props} basePath="turaink" />
-);
-
-export default async function SingleEventRoute({ params }: ParamsProps) {
+export default async function SingleEventRoute({ params, searchParams }: ParamsProps) {
   const slug = (await params).slug;
   const { event, blocks } = await loader(slug);
 
@@ -39,6 +36,8 @@ export default async function SingleEventRoute({ params }: ParamsProps) {
         </div>
 
         <ContentList
+          pageParam="events"
+          searchParams={await searchParams}
           headline="Kiemelt túrák"
           path="/api/events"
           component={EventCard}

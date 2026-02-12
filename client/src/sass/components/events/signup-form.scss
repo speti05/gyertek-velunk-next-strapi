@@ -1,7 +1,6 @@
 .signup-form {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 6rem;
 
   &__headline {
     margin-bottom: 3rem;
@@ -17,6 +16,9 @@
 
   &__form {
     width: 45%;
+    display: flex;
+    flex-direction: column;
+     gap: $gap;
 
     & .input {
       width: 100%;
@@ -33,7 +35,7 @@
 
   &__name-container {
     display: flex;
-    justify-content: space-between;
+    gap: $gap;
 
     & .input__container {
       width: 48%;
@@ -41,14 +43,14 @@
   }
 
   &__error {
-    color: rgb(120, 2, 2);
+    color: $gy-v-error;
     font-size: 2rem;
     text-align: center;
     margin-top: 1.6rem;
   }
 
   &__success {
-    color: rgb(2, 120, 2);
+    color: $gy-v-success;
     font-size: 2rem;
     text-align: center;
     margin-top: 1.6rem;

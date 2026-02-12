@@ -38,6 +38,21 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
                 labelId={`${id}-label`}
                 id={id}
                 label={label}
+                /*
+                MenuProps={{
+                        disableScrollLock: true,
+                        variant: "menu",
+                        disablePortal: false,
+                        anchorOrigin: {
+                        vertical: "bottom",
+                        horizontal: "left",
+                        },
+                        transformOrigin: {
+                        vertical: "top",
+                        horizontal: "left",
+                        },
+                }}
+                        */
                 {...props}
             >
                 {props.options?.map((option) => (

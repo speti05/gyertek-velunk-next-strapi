@@ -7,6 +7,8 @@ import { EventSignupForm } from "@/components/EventsSignupForm";
 import { getContentBySlug } from "@/data/loaders";
 import { EventProps } from "@/types";
 import { notFound } from "next/navigation";
+import { CalendarWithContent } from "@/components/CalendarWithContent";
+import { EventCard } from "@/components/EventCard";
 
 async function loader(slug: string) {
   const { data } = await getContentBySlug(slug, "/api/events");
@@ -20,10 +22,6 @@ interface ParamsProps {
   params: Promise<{ slug: string }>;
   searchParams: Promise<{ page?: string; query?: string }>;
 }
-
-const EventCard = (props: Readonly<CardProps>) => (
-  <Card {...props} basePath="turaink" />
-);
 
 const eventcalendarDataMapper = (data: EventProps[]) => (data.map((event: EventProps) => ({
   id: event.documentId,
@@ -41,22 +39,32 @@ export default async function AllEventsRoute({
   // const slug = (await params).slug;
   const { query, page } = await searchParams;
   const { event, blocks } = await loader("stay-in-touch");
-  const ALL_EVENTS_LABEL = "Kiemelt túrák";
+  const FEATURED_EVENTS_LABEL = "Kiemelt túrák";
+  const TOUR_CALENDAR_LABEL = "Túranaptár";
 
   return (
     <div className="container">
       <div className="event-page">
         <EventSignupForm blocks={blocks} eventId={event.documentId} />
       </div>
+
+      <CalendarWithContent
+        headline={TOUR_CALENDAR_LABEL}
+        path="/api/events"
+        query={query}
+        page={page}
+        calendarMapper={eventcalendarDataMapper}
+      />
       <ContentList
-        headline={ALL_EVENTS_LABEL}
+        searchParams={await searchParams}
+        headline={FEATURED_EVENTS_LABEL}
+        pageParam="eventsPage"
         path="/api/events"
         query={query}
         page={page}
         showSearch
         showPagination
         component={EventCard}
-        calendarMapper={eventcalendarDataMapper}
       />
     </div>
   );

@@ -36,6 +36,7 @@ li{
   color: $font-color-hovered;
 }
 .hamburger{
+  z-index: 1000;
   display: none;
   cursor: pointer;
 }
@@ -68,6 +69,7 @@ li{
     transform: rotate(-45deg) translateY(-11.5px); 
   }
   .nav-menu{
+    z-index: 999;
     position: fixed;
     right: -100%;
     flex-direction: column;

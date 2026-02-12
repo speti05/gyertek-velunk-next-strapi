@@ -26,6 +26,9 @@ interface TextInputProps {
   defaultValue?: string;
 }
 
+/**
+ * @deprecated Use CustomTextInput directly instead.
+ */
 function TextInput({
   id,
   label,
@@ -110,14 +113,14 @@ export function EventSignupForm({
           />
         )}
         <div className="signup-form__name-container">
-          <TextInput
+          <CustomTextInput
             id="lastName"
             label={FORM_LABELS.lastName}
             name="lastName"
             error={zodErrors?.lastName}
             defaultValue={formState?.formData?.lastName ?? ""}
           />
-          <TextInput
+          <CustomTextInput
             id="firstName"
             label={FORM_LABELS.firstName}
             name="firstName"
@@ -125,7 +128,7 @@ export function EventSignupForm({
             defaultValue={formState?.formData?.firstName ?? ""}
           />
         </div>
-        <TextInput
+        <CustomTextInput
           id="email"
           label={FORM_LABELS.email}
           name="email"
@@ -133,7 +136,7 @@ export function EventSignupForm({
           error={zodErrors?.email}
           defaultValue={formState?.formData?.email ?? ""}
         />
-        <TextInput
+        <CustomTextInput
           id="phone"
           label={FORM_LABELS.telephone}
           name="telephone"

@@ -1,33 +1,28 @@
 'use client';
 
 import React from 'react';
-import { FormControl, InputLabel, TextField, TextFieldProps } from '@mui/material';
+import { FormControl, TextField, TextFieldProps } from '@mui/material';
+import style from './custom-text-input.module.scss';
 
-type CustomCalendarInputProps = TextFieldProps & {
-    label?: string;     
-    error?: string;
+type CustomTextInputInputProps = TextFieldProps & {
 };
 
-const CustomCalendarInput = React.forwardRef<
+const CustomTextInput = React.forwardRef<
     HTMLInputElement,
-    CustomCalendarInputProps
+    CustomTextInputInputProps
 >(({ children, ...props }, ref) => {
 
     return (
-        <FormControl fullWidth error={!!props.error}>
-            {props.label && (
-                <InputLabel id={`${props.id}-label`} required={props.required}>
-                    {props.label}
-                </InputLabel>
-            )}
-        <TextField
-            className='custom-text-input'
-            {...props}
-        />
+        <FormControl
+            fullWidth
+            className={style.customTextInput}>
+            <TextField
+                inputRef={ref}
+                {...props}
+                helperText={props.error}/>
         </FormControl>
     );
 });
 
-CustomCalendarInput.displayName = 'CustomCalendarInput';
-
-export default CustomCalendarInput;
+CustomTextInput.displayName = 'CustomTextInput';
+export default CustomTextInput;

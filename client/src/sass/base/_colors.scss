@@ -1,8 +1,10 @@
 // Colors from logo
 $gy-v-dark-green:   rgb(55 , 127, 118);
-$gy-v-mid-green:   lighten($gy-v-dark-green, 10%);
-$gy-v-light-green:   lighten($gy-v-dark-green, 20%);
-
+$gy-v-mid-green:   rgb(79 , 182, 169);
+$gy-v-light-green:   rgb(176 , 223, 216);
 $gy-v-dark-brown:   rgb(112 , 99, 76);
-$gy-v-mid-brown:   lighten($gy-v-dark-brown, 10%);
-$gy-v-light-brown:   lighten($gy-v-dark-brown, 20%);
+
+// other colors
+$gy-v-light-brown: rgb(241, 232, 217);
+$gy-v-error: rgb(120, 2, 2);
+$gy-v-success: rgb(2, 120, 2);

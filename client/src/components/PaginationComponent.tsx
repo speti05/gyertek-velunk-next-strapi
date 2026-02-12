@@ -6,6 +6,7 @@ import CustomButton from "@/components/custom-ui-components/custom-button/custom
 // Props interface for the main pagination component
 interface PaginationProps {
   pageCount: number;  // Total number of pages
+  pageParam?: string; // Customize the query param name
 }
 
 // Props interface for the arrow buttons
@@ -41,19 +42,17 @@ const PaginationArrow: FC<PaginationArrowProps> = ({
   );
 };
 
-export function PaginationComponent({ pageCount }: Readonly<PaginationProps>) {
+export function PaginationComponent({ pageCount, pageParam = "page" }: Readonly<PaginationProps>) {
   const PAGE_LABEL = "Oldal";
-  // Get current URL path and search parameters using Next.js hooks
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  // Extract current page from URL params, defaulting to 1 if not present
-  const currentPage = Number(searchParams.get("page")) || 1;
+  // Use the custom pageParam instead of hardcoded "page"
+  const currentPage = Number(searchParams.get(pageParam)) || 1;
 
-  // Helper function to create URLs for pagination
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
-    params.set("page", pageNumber.toString());
-    return `${pathname}?${params.toString()}`; // Combines current path with updated page parameter
+    params.set(pageParam, pageNumber.toString());
+    return `${pathname}?${params.toString()}`;
   };
 
   return (
