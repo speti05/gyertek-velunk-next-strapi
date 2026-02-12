@@ -23,6 +23,8 @@ export default async function BlogRoute({ searchParams }: PageProps) {
     <div className="blog-page">
       <BlockRenderer blocks={blocks} />
       <ContentList
+        pageParam="articlesPage"
+        searchParams={await  searchParams}
         headline={LATEST_ARTICLES_LABEL}
         path="/api/articles"
         component={BlogCard}
