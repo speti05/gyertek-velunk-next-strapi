@@ -1,7 +1,6 @@
 'use server'
 
 import { ContentList } from "@/components/ContentList";
-import { Card, type CardProps } from "@/components/Card";
 import { EventSignupForm } from "@/components/EventsSignupForm";
 
 import { getContentBySlug } from "@/data/loaders";
@@ -9,6 +8,7 @@ import { EventProps } from "@/types";
 import { notFound } from "next/navigation";
 import { CalendarWithContent } from "@/components/CalendarWithContent";
 import { EventCard } from "@/components/EventCard";
+import { EVENTS_LABEL, EVENTS_SEARCH_LABEL, TOUR_CALENDAR_LABEL } from "@/utils/texts";
 
 async function loader(slug: string) {
   const { data } = await getContentBySlug(slug, "/api/events");
@@ -39,15 +39,9 @@ export default async function AllEventsRoute({
   // const slug = (await params).slug;
   const { query, page } = await searchParams;
   const { event, blocks } = await loader("stay-in-touch");
-  const FEATURED_EVENTS_LABEL = "Kiemelt túrák";
-  const TOUR_CALENDAR_LABEL = "Túranaptár";
 
   return (
     <div className="container">
-      <div className="event-page">
-        <EventSignupForm blocks={blocks} eventId={event.documentId} />
-      </div>
-
       <CalendarWithContent
         headline={TOUR_CALENDAR_LABEL}
         path="/api/events"
@@ -57,8 +51,11 @@ export default async function AllEventsRoute({
       />
       <ContentList
         searchParams={await searchParams}
-        headline={FEATURED_EVENTS_LABEL}
+        searchPlaceHolder={EVENTS_SEARCH_LABEL}
+        headline={EVENTS_LABEL}
         pageParam="eventsPage"
+        featured={false}
+        pageSize={9}
         path="/api/events"
         query={query}
         page={page}
@@ -66,6 +63,10 @@ export default async function AllEventsRoute({
         showPagination
         component={EventCard}
       />
+
+      <div className="event-page">
+        <EventSignupForm blocks={blocks} eventId={event.documentId} />
+      </div>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { fetchAPI } from "@/utils/fetch-api";
 import { getStrapiURL } from "@/utils/get-strapi-url";
 
 const BASE_URL = getStrapiURL();
-const BLOG_PAGE_SIZE = 3;
+const DEFAULT_BLOG_PAGE_SIZE = 3;
 const homePageQuery = qs.stringify({
   populate: {
     blocks: {
@@ -164,7 +164,8 @@ export async function getContent(
   path: string,
   featured?: boolean,
   query?: string,
-  page?: string
+  page?: string,
+  pageSize: number = DEFAULT_BLOG_PAGE_SIZE,
 ) {
   const url = new URL(path, BASE_URL);
 
@@ -178,7 +179,7 @@ export async function getContent(
       ...(featured && { featured: { $eq: featured } }),
     },
     pagination: {
-      pageSize: BLOG_PAGE_SIZE,
+      pageSize: pageSize,
       page: parseInt(page || "1"),
     },
     populate: {

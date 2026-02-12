@@ -6,6 +6,7 @@ import { BlogCard } from "@/components/BlogCard";
 import { getHomePage } from "@/data/loaders";
 import { notFound } from "next/navigation";
 import { EventCard } from "@/components/EventCard";
+import { FEATURED_ARTICLES_LABEL, FEATURED_ARTICLES_SEARCH_LABEL } from "@/utils/texts";
 
 async function loader() {
   const data = await getHomePage();
@@ -17,9 +18,6 @@ interface ParamsProps {
   params: Promise<{ slug: string }>;
   searchParams: Promise<{ page?: string; query?: string }>;
 }
-
-const FEATURED_ARTICLES_LABEL = "Kiemelt beszámolók";
-const FEATURED_EVENTS_LABEL = "Kiemelt túráink";
 
 export default async function HomeRoute({
   params,
@@ -33,6 +31,7 @@ export default async function HomeRoute({
       <div className="container">
         <ContentList
           searchParams={await searchParams}
+          searchPlaceHolder={FEATURED_ARTICLES_SEARCH_LABEL}
           pageParam="articlesPage"
           headline={FEATURED_ARTICLES_LABEL}
           path="/api/articles"
@@ -42,8 +41,9 @@ export default async function HomeRoute({
         />
         <ContentList
           searchParams={await searchParams}
+          searchPlaceHolder={FEATURED_ARTICLES_SEARCH_LABEL}
           pageParam="eventsPage"
-          headline={FEATURED_EVENTS_LABEL}
+          headline={FEATURED_ARTICLES_LABEL}
           path="/api/events"
           component={EventCard}
           showPagination

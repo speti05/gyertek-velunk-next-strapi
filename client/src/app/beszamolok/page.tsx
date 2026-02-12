@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { BlockRenderer } from "@/components/BlockRenderer";
 import { ContentList } from "@/components/ContentList";
 import { BlogCard } from "@/components/BlogCard";
+import { ARTICLES_LABEL, ARTICLES_SEARCH_LABEL } from "@/utils/texts";
 
 async function loader(slug: string) {
   const { data } = await getPageBySlug(slug);
@@ -18,14 +19,16 @@ interface PageProps {
 export default async function BlogRoute({ searchParams }: PageProps) {
   const { page, query } = await searchParams;
   const { blocks } = await loader("blog");
-   const LATEST_ARTICLES_LABEL = "Kiemelt beszámolók";
   return (
     <div className="blog-page">
       <BlockRenderer blocks={blocks} />
       <ContentList
         pageParam="articlesPage"
         searchParams={await  searchParams}
-        headline={LATEST_ARTICLES_LABEL}
+        searchPlaceHolder={ARTICLES_SEARCH_LABEL}
+        headline={ARTICLES_LABEL}
+        featured={false}
+        pageSize={9}
         path="/api/articles"
         component={BlogCard}
         showSearch

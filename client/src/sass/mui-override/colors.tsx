@@ -29,7 +29,7 @@ export const colors = {
     main: lighten(0.5, baseColors.lightBrown),
     hover: lighten(0.4, baseColors.lightBrown),
     focused: darken(0.3, baseColors.lightBrown),
-    placeHolder: lighten(0.2, baseColors.lightBrown),
+    placeHolder: baseColors.gray,
     textColor: baseColors.darkBrown,
     disabled: baseColors.gray,
   },

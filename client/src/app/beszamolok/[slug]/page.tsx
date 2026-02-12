@@ -8,12 +8,12 @@ import { BlockRenderer } from "@/components/BlockRenderer";
 import { HeroSection } from "@/components/blocks/HeroSection";
 import { Card, type CardProps } from "@/components/Card";
 import { ContentList } from "@/components/ContentList";
+import { FEATURED_ARTICLES_LABEL } from "@/utils/texts";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ page?: string; query?: string }>
 }
-
-const FEATURED_ARTICLES_LABEL = "Kiemelt beszámolók";
 
 async function loader(slug: string) {
   const { data } = await getContentBySlug(slug, "/api/articles");
@@ -57,7 +57,7 @@ function ArticleOverview({
 const BlogCard = (props: Readonly<CardProps>) => <Card {...props} basePath="beszamolok" />;
 
 
-export default async function SingleBlogRoute({ params }: PageProps) {
+export default async function SingleBlogRoute({ params, searchParams }: PageProps) {
   const slug = (await params).slug;
   const { article, blocks } = await loader(slug);
   const { title, author, publishedAt, description, image } = article;
@@ -89,6 +89,8 @@ export default async function SingleBlogRoute({ params }: PageProps) {
         <BlockRenderer blocks={blocks} />
         <ContentList
           headline={FEATURED_ARTICLES_LABEL}
+          pageParam="articlesPage"
+          searchParams={await  searchParams}
           path="/api/articles"
           component={BlogCard}
           featured={true}
