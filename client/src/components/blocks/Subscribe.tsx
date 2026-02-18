@@ -22,8 +22,7 @@ export function Subscribe({
     subscribeAction,
     INITIAL_STATE
   );
-
-  console.log(formState, "this is our form state coming from useActionState");
+;
   const zodErrors = formState?.zodErrors?.email;
   const strapiErrors = formState?.strapiErrors?.message;
 

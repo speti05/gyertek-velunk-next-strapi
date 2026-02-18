@@ -31,6 +31,9 @@ const homePageQuery = qs.stringify({
             cta: true,
           },
         },
+        "blocks.subscribe": {
+          populate: true,
+        },
       },
     },
   },

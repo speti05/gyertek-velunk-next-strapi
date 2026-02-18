@@ -49,6 +49,7 @@ type ComponentType =
   | "blocks.paragraph-with-image"
   | "blocks.paragraph"
   | "blocks.full-image"
+  | "blocks.searchable-card-list"
   | "blocks.text-content-block";
 
 interface Base<T extends ComponentType, D extends object = Record<string, unknown>> {
@@ -115,6 +116,10 @@ export interface ParagraphWithImageProps extends Base<"blocks.paragraph-with-ima
   image: ImageProps;
   reversed?: boolean;
   imageLandscape?: boolean;
+}
+
+export interface SearchableCardListProps extends Base<"blocks.searchable-card-list"> {
+  // TODO
 }
 
 export interface ParagraphProps extends Base<"blocks.paragraph"> {

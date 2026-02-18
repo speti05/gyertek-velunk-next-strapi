@@ -1,3 +1,5 @@
+'use server'
+
 import type { ArticleProps, Block } from "@/types";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -60,6 +62,7 @@ const BlogCard = (props: Readonly<CardProps>) => <Card {...props} basePath="besz
 export default async function SingleBlogRoute({ params, searchParams }: PageProps) {
   const slug = (await params).slug;
   const { article, blocks } = await loader(slug);
+  const {page, query} = await searchParams;
   const { title, author, publishedAt, description, image } = article;
 
   console.dir(blocks, { depth: null });
@@ -90,7 +93,7 @@ export default async function SingleBlogRoute({ params, searchParams }: PageProp
         <ContentList
           headline={FEATURED_ARTICLES_LABEL}
           pageParam="articlesPage"
-          searchParams={await  searchParams}
+          searchParams={{ page, query }}
           path="/api/articles"
           component={BlogCard}
           featured={true}

@@ -6,13 +6,13 @@ import { useRouter } from 'next/navigation';
 import { ArticleProps } from '@/types';
 import { getContent } from '@/data/loaders';
 
-async function loader(path: string, featured?: boolean, query?: string, page?:string ) {
-  const { data, meta } = await getContent(path, featured, query, page);
-  return {
-    articles: (data as ArticleProps[]) || [],
-    pageCount: meta?.pagination?.pageCount || 1,
-  };
-}
+// async function loader(path: string, featured?: boolean, query?: string, page?:string ) {
+//   const { data, meta } = await getContent(path, featured, query, page);
+//   return {
+//     articles: (data as ArticleProps[]) || [],
+//     pageCount: meta?.pagination?.pageCount || 1,
+//   };
+// }
 
 interface CalendarWrapperProps {
   calendarEvents: CalendarEvent[];

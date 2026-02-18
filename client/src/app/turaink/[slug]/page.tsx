@@ -1,3 +1,5 @@
+'use server'
+
 import type { EventProps } from "@/types";
 import { ContentList } from "@/components/ContentList";
 import { getContentBySlug } from "@/data/loaders";
@@ -21,6 +23,7 @@ interface ParamsProps {
 export default async function SingleEventRoute({ params, searchParams }: ParamsProps) {
   const slug = (await params).slug;
   const { event, blocks } = await loader(slug);
+  const { page, query } = await searchParams;
 
   return (
     <>
@@ -37,7 +40,7 @@ export default async function SingleEventRoute({ params, searchParams }: ParamsP
 
         <ContentList
           pageParam="eventsPage"
-          searchParams={await searchParams}
+          searchParams={{ page, query }}
           headline="Kiemelt túrák"
           path="/api/events"
           component={EventCard}

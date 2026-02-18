@@ -6,7 +6,7 @@ import { BlogCard } from "@/components/BlogCard";
 import { getHomePage } from "@/data/loaders";
 import { notFound } from "next/navigation";
 import { EventCard } from "@/components/EventCard";
-import { FEATURED_ARTICLES_LABEL, FEATURED_ARTICLES_SEARCH_LABEL } from "@/utils/texts";
+import { FEATURED_ARTICLES_LABEL, FEATURED_ARTICLES_SEARCH_LABEL, FEATURED_EVENTS_LABEL, FEATURED_EVENTS_SEARCH_LABEL } from "@/utils/texts";
 
 async function loader() {
   const data = await getHomePage();
@@ -24,13 +24,14 @@ export default async function HomeRoute({
   searchParams,
 }: ParamsProps) {
   const data = await loader();
+  const {page, query} = await searchParams;
   const blocks = data?.blocks || [];
   return (
     <div>
       <BlockRenderer blocks={blocks} />
       <div className="container">
         <ContentList
-          searchParams={await searchParams}
+          searchParams={{ page, query }}
           searchPlaceHolder={FEATURED_ARTICLES_SEARCH_LABEL}
           pageParam="articlesPage"
           headline={FEATURED_ARTICLES_LABEL}
@@ -40,10 +41,10 @@ export default async function HomeRoute({
           featured
         />
         <ContentList
-          searchParams={await searchParams}
-          searchPlaceHolder={FEATURED_ARTICLES_SEARCH_LABEL}
+          searchParams={{ page, query }}
+          searchPlaceHolder={FEATURED_EVENTS_SEARCH_LABEL}
           pageParam="eventsPage"
-          headline={FEATURED_ARTICLES_LABEL}
+          headline={FEATURED_EVENTS_LABEL}
           path="/api/events"
           component={EventCard}
           showPagination

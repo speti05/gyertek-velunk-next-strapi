@@ -21,10 +21,9 @@ export default async function BlogRoute({ searchParams }: PageProps) {
   const { blocks } = await loader("blog");
   return (
     <div className="blog-page">
-      <BlockRenderer blocks={blocks} />
       <ContentList
         pageParam="articlesPage"
-        searchParams={await  searchParams}
+        searchParams={{ page, query }}
         searchPlaceHolder={ARTICLES_SEARCH_LABEL}
         headline={ARTICLES_LABEL}
         featured={false}
@@ -36,6 +35,7 @@ export default async function BlogRoute({ searchParams }: PageProps) {
         showPagination
         page={page}
       />
+      <BlockRenderer blocks={blocks} />
     </div>
   );
 }
