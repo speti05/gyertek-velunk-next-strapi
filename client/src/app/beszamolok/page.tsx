@@ -22,13 +22,12 @@ export default async function BlogRoute({ searchParams }: PageProps) {
   return (
     <div className="blog-page">
       <ContentList
-        pageParam="articlesPage"
-        searchParams={{ page, query }}
+        contentCollectionType="articles"
+        searchParams={await searchParams}
         searchPlaceHolder={ARTICLES_SEARCH_LABEL}
         headline={ARTICLES_LABEL}
         featured={false}
         pageSize={9}
-        path="/api/articles"
         component={BlogCard}
         showSearch
         query={query}

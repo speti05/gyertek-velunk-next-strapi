@@ -50,15 +50,12 @@ export default async function AllEventsRoute({
         calendarMapper={eventcalendarDataMapper}
       />
       <ContentList
-        searchParams={{ page, query }}
+        searchParams={await searchParams}
         searchPlaceHolder={EVENTS_SEARCH_LABEL}
         headline={EVENTS_LABEL}
-        pageParam="eventsPage"
+        contentCollectionType="events"
         featured={false}
         pageSize={9}
-        path="/api/events"
-        query={query}
-        page={page}
         showSearch
         showPagination
         component={EventCard}

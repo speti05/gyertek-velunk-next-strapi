@@ -87,6 +87,30 @@ export interface BlocksParagraphWithImage extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksSearchableCardList extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_searchable_card_lists';
+  info: {
+    description: '';
+    displayName: 'SearchableCardList';
+    icon: 'apps';
+  };
+  attributes: {
+    contentCollectionType: Schema.Attribute.Enumeration<
+      ['events', 'articles']
+    > &
+      Schema.Attribute.Required;
+    featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    headline: Schema.Attribute.String & Schema.Attribute.Required;
+    pageSize: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<3>;
+    searchPlaceHolder: Schema.Attribute.String;
+    showPagination: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    showSearch: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+  };
+}
+
 export interface BlocksSubscribe extends Struct.ComponentSchema {
   collectionName: 'components_blocks_subscribes';
   info: {
@@ -171,6 +195,7 @@ declare module '@strapi/strapi' {
       'blocks.info-block': BlocksInfoBlock;
       'blocks.paragraph': BlocksParagraph;
       'blocks.paragraph-with-image': BlocksParagraphWithImage;
+      'blocks.searchable-card-list': BlocksSearchableCardList;
       'blocks.subscribe': BlocksSubscribe;
       'blocks.text-content-block': BlocksTextContentBlock;
       'elements.link': ElementsLink;

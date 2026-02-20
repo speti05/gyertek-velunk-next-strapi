@@ -39,10 +39,9 @@ export default async function SingleEventRoute({ params, searchParams }: ParamsP
         </div>
 
         <ContentList
-          pageParam="eventsPage"
-          searchParams={{ page, query }}
+          contentCollectionType="events"
+          searchParams={await searchParams}
           headline="Kiemelt túrák"
-          path="/api/events"
           component={EventCard}
           featured={true}
         />

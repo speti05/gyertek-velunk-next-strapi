@@ -1,0 +1,43 @@
+{
+  "collectionName": "components_blocks_searchable_card_lists",
+  "info": {
+    "displayName": "SearchableCardList",
+    "icon": "apps",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "searchPlaceHolder": {
+      "type": "string"
+    },
+    "pageSize": {
+      "type": "integer",
+      "default": 3,
+      "required": true
+    },
+    "headline": {
+      "type": "string",
+      "required": true
+    },
+    "showPagination": {
+      "type": "boolean",
+      "default": false
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "showSearch": {
+      "type": "boolean",
+      "default": false
+    },
+    "contentCollectionType": {
+      "type": "enumeration",
+      "enum": [
+        "events",
+        "articles"
+      ],
+      "required": true
+    }
+  }
+}

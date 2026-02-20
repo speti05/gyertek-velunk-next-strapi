@@ -92,9 +92,8 @@ export default async function SingleBlogRoute({ params, searchParams }: PageProp
         <BlockRenderer blocks={blocks} />
         <ContentList
           headline={FEATURED_ARTICLES_LABEL}
-          pageParam="articlesPage"
-          searchParams={{ page, query }}
-          path="/api/articles"
+          contentCollectionType="articles"
+          searchParams={await searchParams}
           component={BlogCard}
           featured={true}
         />

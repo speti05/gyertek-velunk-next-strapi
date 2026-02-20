@@ -23,7 +23,8 @@
       "components": [
         "blocks.info-block",
         "blocks.hero-section",
-        "blocks.subscribe"
+        "blocks.subscribe",
+        "blocks.searchable-card-list"
       ]
     }
   }

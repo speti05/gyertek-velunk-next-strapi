@@ -34,6 +34,9 @@ const homePageQuery = qs.stringify({
         "blocks.subscribe": {
           populate: true,
         },
+        "blocks.searchable-card-list": {
+          populate: true,
+        },
       },
     },
   },
@@ -90,6 +93,9 @@ const pageBySlugQuery = (slug: string) =>
             },
           },
           "blocks.subscribe": {
+            populate: true,
+          },
+          "blocks.searchable-card-list": {
             populate: true,
           },
         },

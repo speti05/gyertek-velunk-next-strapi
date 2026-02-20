@@ -1,4 +1,4 @@
-import type { Block } from "@/types";
+import type { Block, CustomSearchParams } from "@/types";
 
 import { HeroSection } from "@/components/blocks/HeroSection";
 import { InfoBlock } from "@/components/blocks/InfoBlock";
@@ -9,8 +9,9 @@ import { ParagraphWithImage } from "@/components/blocks/ParagraphWithImage";
 import { Paragraph } from "@/components/blocks/Paragraph";
 import { FullImage } from "@/components/blocks/FullImage";
 import { TextContentBlock } from "./blocks/OnlyTextContent";
+import { SearchableCardList } from "./blocks/SearchableCardList";
 
-function blockRenderer(block: Block, index: number) {
+function blockRenderer(block: Block, index: number, searchParams: CustomSearchParams ) {
   switch (block.__component) {
     case "blocks.hero-section":
       return <HeroSection {...block} key={index} />;
@@ -30,11 +31,13 @@ function blockRenderer(block: Block, index: number) {
       return <FullImage {...block} key={index} />;
     case "blocks.text-content-block":
       return <TextContentBlock {...block} key={index} />;
+    case "blocks.searchable-card-list":
+      return <SearchableCardList {...block} key={index} searchParams={searchParams}/>;
     default:
       return null;
   }
 }
 
-export function BlockRenderer({ blocks }: { blocks: Block[] }) {
-  return blocks.map((block, index) => blockRenderer(block, index));
+export function BlockRenderer({ blocks, searchParams }: { blocks: Block[];  searchParams?: CustomSearchParams }) {
+  return blocks.map((block, index) => blockRenderer(block, index, searchParams));
 }

@@ -5,6 +5,16 @@ export interface LinkProps {
   isExternal: boolean;
 }
 
+export interface CustomSearchParams {
+  page?: string; 
+  query?: string;
+}
+
+export interface PageParams {
+  params?: Promise<{ slug: string }>
+  searchParams?: Promise<CustomSearchParams>
+}
+
 export interface ImageProps {
   id: number;
   documentId: string;
@@ -71,6 +81,7 @@ export type Block =
   | ParagraphWithImageProps
   | ParagraphProps
   | FullImageProps
+  | SearchableCardListProps
   | TextBlockProps;
 
 export interface HeroSectionProps extends Base<"blocks.hero-section"> {
@@ -119,7 +130,14 @@ export interface ParagraphWithImageProps extends Base<"blocks.paragraph-with-ima
 }
 
 export interface SearchableCardListProps extends Base<"blocks.searchable-card-list"> {
-  // TODO
+  searchParams: CustomSearchParams;
+  showSearch: boolean
+  searchPlaceHolder: string;
+  pageSize: number;
+  headline: string;
+  showPagination: boolean;
+  featured: boolean;
+  contentCollectionType: string
 }
 
 export interface ParagraphProps extends Base<"blocks.paragraph"> {

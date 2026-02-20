@@ -5,10 +5,12 @@ import CustomTextInput from "@/components/custom-ui-components/custom-text-input
 
 interface SearchProps {
   placeHolder?: string;
+  contentCollectionType: string;
 } 
 
 export async function Search({
-  placeHolder  
+  placeHolder,
+  contentCollectionType 
 }: Readonly<SearchProps>) {  
   // Get access to URL search parameters, routing, and current pathname
   const searchParams = useSearchParams();
@@ -21,13 +23,13 @@ export async function Search({
     // Create a new URLSearchParams instance with current params
     const params = new URLSearchParams(searchParams);
     // Reset to first page whenever search term changes
-    params.set("page", "1");
+    params.set(`${contentCollectionType}Page`, "1");
 
     // Update URL search parameters based on search term
     if (term) {
-      params.set("query", term);
+      params.set(`${contentCollectionType}Query`, term);
     } else {
-      params.delete("query");
+      params.delete(`${contentCollectionType}Query`);
     }
 
     // Update the URL without triggering a page refresh
@@ -43,7 +45,7 @@ export async function Search({
         // Call handleSearch whenever input value changes
         onChange={(e) => handleSearch(e.target.value)}
         // Initialize input with existing search query from URL
-        defaultValue={searchParams.get("query")?.toString()}
+        defaultValue={searchParams.get(`${contentCollectionType}Query`)?.toString()}
       />
     </div>
   );

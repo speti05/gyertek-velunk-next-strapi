@@ -7,6 +7,7 @@ import { getHomePage } from "@/data/loaders";
 import { notFound } from "next/navigation";
 import { EventCard } from "@/components/EventCard";
 import { FEATURED_ARTICLES_LABEL, FEATURED_ARTICLES_SEARCH_LABEL, FEATURED_EVENTS_LABEL, FEATURED_EVENTS_SEARCH_LABEL } from "@/utils/texts";
+import { PageParams } from "@/types";
 
 async function loader() {
   const data = await getHomePage();
@@ -14,22 +15,16 @@ async function loader() {
   return { ...data.data };
 }
 
-interface ParamsProps {
-  params: Promise<{ slug: string }>;
-  searchParams: Promise<{ page?: string; query?: string }>;
-}
-
 export default async function HomeRoute({
-  params,
   searchParams,
-}: ParamsProps) {
+}: PageParams) {
   const data = await loader();
-  const {page, query} = await searchParams;
   const blocks = data?.blocks || [];
   return (
     <div>
-      <BlockRenderer blocks={blocks} />
-      <div className="container">
+      <BlockRenderer blocks={blocks} searchParams={await searchParams}/>
+      
+      {/* <div className="container">
         <ContentList
           searchParams={{ page, query }}
           searchPlaceHolder={FEATURED_ARTICLES_SEARCH_LABEL}
@@ -50,7 +45,7 @@ export default async function HomeRoute({
           showPagination
           featured
         />
-      </div>
+      </div> */}
     </div>
   );
 }

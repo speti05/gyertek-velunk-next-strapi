@@ -560,7 +560,12 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
   };
   attributes: {
     blocks: Schema.Attribute.DynamicZone<
-      ['blocks.info-block', 'blocks.hero-section', 'blocks.subscribe']
+      [
+        'blocks.info-block',
+        'blocks.hero-section',
+        'blocks.subscribe',
+        'blocks.searchable-card-list',
+      ]
     >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -661,6 +666,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.hero-section',
         'blocks.featured-article',
         'blocks.subscribe',
+        'blocks.searchable-card-list',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
