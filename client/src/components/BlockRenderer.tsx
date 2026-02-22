@@ -10,6 +10,7 @@ import { Paragraph } from "@/components/blocks/Paragraph";
 import { FullImage } from "@/components/blocks/FullImage";
 import { TextContentBlock } from "./blocks/OnlyTextContent";
 import { SearchableCardList } from "./blocks/SearchableCardList";
+import { HeroWithCalendar } from "./blocks/HeroWithCalendar";
 
 function blockRenderer(block: Block, index: number, searchParams: CustomSearchParams ) {
   switch (block.__component) {
@@ -33,6 +34,8 @@ function blockRenderer(block: Block, index: number, searchParams: CustomSearchPa
       return <TextContentBlock {...block} key={index} />;
     case "blocks.searchable-card-list":
       return <SearchableCardList {...block} key={index} searchParams={searchParams}/>;
+    case "blocks.hero-with-calendar":
+      return <HeroWithCalendar {...block} key={index} searchParams={searchParams}/>;
     default:
       return null;
   }

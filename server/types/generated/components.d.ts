@@ -48,6 +48,23 @@ export interface BlocksHeroSection extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksHeroWithCalendar extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_hero_with_calendars';
+  info: {
+    description: '';
+    displayName: 'Hero with calendar';
+    icon: 'apps';
+  };
+  attributes: {
+    headline: Schema.Attribute.String & Schema.Attribute.Required;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
+    theme: Schema.Attribute.Enumeration<['turquoise', 'brown']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'turquoise'>;
+  };
+}
+
 export interface BlocksInfoBlock extends Struct.ComponentSchema {
   collectionName: 'components_blocks_info_blocks';
   info: {
@@ -192,6 +209,7 @@ declare module '@strapi/strapi' {
       'blocks.full-image': BlocksFullImage;
       'blocks.heading': BlocksHeading;
       'blocks.hero-section': BlocksHeroSection;
+      'blocks.hero-with-calendar': BlocksHeroWithCalendar;
       'blocks.info-block': BlocksInfoBlock;
       'blocks.paragraph': BlocksParagraph;
       'blocks.paragraph-with-image': BlocksParagraphWithImage;

@@ -23,6 +23,7 @@ interface ParamsProps {
   searchParams: Promise<{ page?: string; query?: string }>;
 }
 
+// todo: delete
 const eventcalendarDataMapper = (data: EventProps[]) => (data.map((event: EventProps) => ({
   id: event.documentId,
   title: event.title,
@@ -43,11 +44,8 @@ export default async function AllEventsRoute({
   return (
     <div className="container">
       <CalendarWithContent
-        headline={TOUR_CALENDAR_LABEL}
-        path="/api/events"
-        query={query}
-        page={page}
-        calendarMapper={eventcalendarDataMapper}
+        calendarEvents={eventcalendarDataMapper([])}
+        theme="turquoise"
       />
       <ContentList
         searchParams={await searchParams}

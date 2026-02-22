@@ -1,6 +1,7 @@
 'use client';
 
 import React, { use, useEffect, useMemo, useRef, useState } from 'react';
+import style from './CustomCalendar.module.scss';
 
 import { ArrowRightCircle } from "@deemlol/next-icons"
 import { CalendarEvent } from './CalendarTypes';
@@ -13,10 +14,17 @@ const todayText = 'Ma';
 
 interface ContinuousCalendarProps {
   clickHandler: (calendarEvent: CalendarEvent | undefined) => void;
+  //updateYear: (newYearValue: number) => void;
   calendarEvents?: Array<CalendarEvent>;
+  theme: "turquoise" | "brown";
 }
 
-export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({ clickHandler, calendarEvents }) => {
+export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
+    clickHandler,
+    //updateYear,
+    calendarEvents,
+    theme
+  }) => {
   const today = new Date();
   const dayRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [year, setYear] = useState<number>(new Date().getFullYear());
@@ -55,8 +63,14 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({ clickHan
     }
   };
 
-  const handlePrevYear = () => setYear((prevYear) => prevYear - 1);
-  const handleNextYear = () => setYear((prevYear) => prevYear + 1);
+  const handlePrevYear = () => {
+    setYear((prevYear) => prevYear - 1)
+    //updateYear(year);
+  };
+  const handleNextYear = () => {
+    setYear((prevYear) => prevYear + 1);
+    //updateYear(year);
+  };
 
   const handleMonthChange = (event) => {
     const monthIndex = parseInt(event.target.value, 10);
@@ -193,7 +207,7 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({ clickHan
 
   return (
     <div className={`calendar-container rounded-2xl no-scrollbar max-h-full overflow-y-scroll rounded-t-2xl bg-white pb-10 text-slate-800 shadow-xl`}>
-      <div className="sticky -top-px z-50 w-full rounded-t-2xl bg-white px-5 pt-7 sm:px-8 sm:pt-8">
+      <div className={`${style['calendar-header-' + theme]} sticky -top-px z-50 w-full rounded-t-2xl px-5 pt-7 sm:px-8 sm:pt-8`}>
         <div className="mb-4 flex w-full flex-wrap items-center justify-between gap-6">
           <div className="flex flex-wrap gap-2 sm:gap-3">
             <CustomSelect name="month" value={selectedMonth} options={monthOptions} onSelect={handleMonthChange} />
@@ -221,7 +235,7 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({ clickHan
             </CustomButton>
           </div>
         </div>
-        <div className="grid w-full grid-cols-7 justify-between text-slate-500">
+        <div className="grid w-full grid-cols-7 justify-between text-slate-100">
           {daysOfWeek.map((day, index) => (
             <div key={index} className="w-full border-b border-slate-200 py-2 text-center font-semibold">
               {day}
@@ -229,7 +243,7 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({ clickHan
           ))}
         </div>
       </div>
-      <div className="w-full px-5 pt-4 sm:px-8 sm:pt-6">
+      <div className={`${style['calendar-content-' + theme]} w-full px-5 pt-4 sm:px-8 sm:pt-6`}>
         {generateCalendar()}
       </div>
     </div>

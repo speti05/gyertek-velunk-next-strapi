@@ -3,22 +3,14 @@
 import { ContinuousCalendar } from '@/components/custom-ui-components/custom-calendar/ContinuousCalendar';
 import { CalendarEvent } from './CalendarTypes';
 import { useRouter } from 'next/navigation';
-import { ArticleProps } from '@/types';
-import { getContent } from '@/data/loaders';
-
-// async function loader(path: string, featured?: boolean, query?: string, page?:string ) {
-//   const { data, meta } = await getContent(path, featured, query, page);
-//   return {
-//     articles: (data as ArticleProps[]) || [],
-//     pageCount: meta?.pagination?.pageCount || 1,
-//   };
-// }
 
 interface CalendarWrapperProps {
+  theme: "turquoise" | "brown";
   calendarEvents: CalendarEvent[];
+  //updateYear: (newYearValue: number) => void;
 }
 
-export const CalendarWrapper: React.FC<CalendarWrapperProps> = ({ calendarEvents }) => {
+export const CalendarWrapper: React.FC<CalendarWrapperProps> = async ({ calendarEvents, theme, updateYear }) => {
   const router = useRouter();
 
   const clickHandler = (calendarEvent: CalendarEvent | undefined) => {
@@ -28,11 +20,16 @@ export const CalendarWrapper: React.FC<CalendarWrapperProps> = ({ calendarEvents
     else {
       console.error("No calendar event data available for clickHandler.");
     }
-  }
+  };
 
   return (
     <div className="calendar-wrapper">
-      <ContinuousCalendar clickHandler={clickHandler} calendarEvents={calendarEvents} />
+      <ContinuousCalendar
+        clickHandler={clickHandler}
+        //updateYear={updateYear}
+        calendarEvents={calendarEvents}
+        theme={theme}
+      />
     </div>
   );
 };

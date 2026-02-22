@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_blocks_hero_with_calendars",
+  "info": {
+    "displayName": "Hero with calendar",
+    "icon": "apps",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "headline": {
+      "type": "string",
+      "required": true
+    },
+    "theme": {
+      "type": "enumeration",
+      "enum": [
+        "turquoise",
+        "brown"
+      ],
+      "required": true,
+      "default": "turquoise"
+    }
+  }
+}

@@ -29,7 +29,8 @@
         "blocks.hero-section",
         "blocks.featured-article",
         "blocks.subscribe",
-        "blocks.searchable-card-list"
+        "blocks.searchable-card-list",
+        "blocks.hero-with-calendar"
       ]
     }
   }

@@ -1,43 +1,28 @@
-import { EventProps } from "@/types";
-import { getContent } from "@/data/loaders";
+'use server'
+
 import { CalendarWrapper } from "@/components/custom-ui-components/custom-calendar/CalendarWrapper";
 import { CalendarEvent } from "@/components/custom-ui-components/custom-calendar/CalendarTypes";
 
 interface ContentListProps {
-  headline: string;
-  query: string;
-  path: string;
-  page?: string;
-  calendarMapper: (items: any[]) => CalendarEvent[];
-}
-
-async function loader<Type>(path: string, query?: string, page?:string ) {
-  const { data, meta } = await getContent(path, false, query, page);
-  return {
-    data: (data as Type[]) || [],
-    pageCount: meta?.pagination?.pageCount || 1,
-  };
+  theme: "turquoise" | "brown";
+  calendarEvents: CalendarEvent[];
+  //updateYear: (newYearValue: number) => void;
 }
 
 export async function CalendarWithContent({
-  headline,
-  path,
-  query,
-  page,
-  calendarMapper
+  theme,
+  calendarEvents,
+  //updateYear
 }: Readonly<ContentListProps>) {
-  const { data } = await loader<EventProps>(path, query, page);
-
-  const calendarData: CalendarEvent[] = calendarMapper ? calendarMapper(data) : [];
 
   return (
     <section className="content-items container">
-        {!!calendarMapper && <div className="calendar">
-          <h3>
-            {headline}
-          </h3>
-
-          <CalendarWrapper calendarEvents={calendarData} />
+        {<div className="calendar">
+          <CalendarWrapper
+            calendarEvents={calendarEvents}
+            theme={theme}
+            //updateYear={updateYear}
+            />
         </div>
         }
     </section>

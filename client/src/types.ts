@@ -60,7 +60,8 @@ type ComponentType =
   | "blocks.paragraph"
   | "blocks.full-image"
   | "blocks.searchable-card-list"
-  | "blocks.text-content-block";
+  | "blocks.text-content-block"
+  | "blocks.hero-with-calendar";
 
 interface Base<T extends ComponentType, D extends object = Record<string, unknown>> {
   id: number;
@@ -82,7 +83,8 @@ export type Block =
   | ParagraphProps
   | FullImageProps
   | SearchableCardListProps
-  | TextBlockProps;
+  | TextBlockProps
+  | HeroWithCalendarProps;
 
 export interface HeroSectionProps extends Base<"blocks.hero-section"> {
   theme: "turquoise" | "orange";
@@ -138,6 +140,15 @@ export interface SearchableCardListProps extends Base<"blocks.searchable-card-li
   showPagination: boolean;
   featured: boolean;
   contentCollectionType: string
+}
+
+export interface HeroWithCalendarProps extends Base<"blocks.hero-with-calendar">{
+  headline: string;
+  contentCollectionType: string;
+  image: ImageProps;
+  logo?: LogoProps;
+  theme: "turquoise" | "brown";
+  searchParams: CustomSearchParams;
 }
 
 export interface ParagraphProps extends Base<"blocks.paragraph"> {

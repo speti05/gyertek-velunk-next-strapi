@@ -7,7 +7,10 @@ import { PageParams } from "@/types";
 
 async function loader(slug: string) {
   const { data } = await getPageBySlug(slug);
-  if (data.length === 0) notFound();
+  console.log("Page data:", data); // Debug log to check the fetched data
+  if (!data?.length){
+      return notFound();
+  }
   return { blocks: data[0]?.blocks };
 }
 

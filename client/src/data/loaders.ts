@@ -98,6 +98,13 @@ const pageBySlugQuery = (slug: string) =>
           "blocks.searchable-card-list": {
             populate: true,
           },
+          "blocks.hero-with-calendar": {
+            populate: {
+              image: {
+                fields: ["url", "alternativeText"],
+              },
+            },
+          },
         },
       },
     },
@@ -201,7 +208,6 @@ export async function getContent(
   return fetchAPI(url.href, { method: "GET" });
 }
 
-
 const blogPopulate = {
   blocks: {
     on: {
@@ -259,6 +265,9 @@ const blogPopulate = {
           },
         },
       },
+      "blocks.hero-with-calendar": {
+        populate: true,
+      },
     },
   },
 };
@@ -276,6 +285,32 @@ export async function getContentBySlug(slug: string, path: string) {
         fields: ["url", "alternativeText"],
       },
       ...blogPopulate,
+    },
+  });
+
+  return fetchAPI(url.href, { method: "GET" });
+}
+
+export async function getContentForCalendar(
+  path: string,
+  year: number,
+) {
+  const url = new URL(path, BASE_URL);
+  year = 2026;
+
+  url.search = qs.stringify({
+    sort: ["createdAt:desc"],
+    filters: {
+       featured: false,
+    },
+    pagination: {
+      pageSize: 100,
+      page: 1
+    },
+    populate: {
+      image: {
+        fields: ["url", "alternativeText"],
+      },
     },
   });
 

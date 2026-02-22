@@ -5,6 +5,22 @@
   padding: 22rem 4.8rem 0;
   margin-bottom: 12.5rem;
 
+  &__with-calendar{
+    padding: 0 4.8rem 0;
+
+    .hero__headline {
+      max-width: 100%;
+
+      &-centered {
+        text-align: center;
+      }
+
+      .container {
+        padding-top: 0;
+      }
+    }
+  }
+
   &__background {
     position: absolute;
     top: 0;

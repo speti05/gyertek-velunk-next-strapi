@@ -105,8 +105,7 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
     };
   }
 
-
-
+  // @ts-expect-error
   const dataToSend: EventsSubscribeProps = {
     ...validatedFields.data,
     event: {
