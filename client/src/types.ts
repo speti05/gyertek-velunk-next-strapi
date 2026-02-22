@@ -50,6 +50,10 @@ export interface EventProps extends BaseBlogProps {
   endDate: string;
 }
 
+export interface EventSignupBlockProps {
+  eventId: string;
+}
+
 type ComponentType =
   | "blocks.hero-section"
   | "blocks.info-block"
@@ -61,7 +65,8 @@ type ComponentType =
   | "blocks.full-image"
   | "blocks.searchable-card-list"
   | "blocks.text-content-block"
-  | "blocks.hero-with-calendar";
+  | "blocks.hero-with-calendar"
+  | "blocks.event-signup-form";
 
 interface Base<T extends ComponentType, D extends object = Record<string, unknown>> {
   id: number;
@@ -84,7 +89,8 @@ export type Block =
   | FullImageProps
   | SearchableCardListProps
   | TextBlockProps
-  | HeroWithCalendarProps;
+  | HeroWithCalendarProps
+  | EventSignupBlockProps;
 
 export interface HeroSectionProps extends Base<"blocks.hero-section"> {
   theme: "turquoise" | "orange";

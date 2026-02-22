@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_blocks_event_signup_forms",
+  "info": {
+    "displayName": "Event signup form",
+    "icon": "attachment"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    }
+  }
+}

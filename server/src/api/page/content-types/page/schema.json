@@ -30,7 +30,8 @@
         "blocks.featured-article",
         "blocks.subscribe",
         "blocks.searchable-card-list",
-        "blocks.hero-with-calendar"
+        "blocks.hero-with-calendar",
+        "blocks.event-signup-form"
       ]
     }
   }

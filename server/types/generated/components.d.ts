@@ -1,5 +1,16 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface BlocksEventSignupForm extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_event_signup_forms';
+  info: {
+    displayName: 'Event signup form';
+    icon: 'attachment';
+  };
+  attributes: {
+    name: Schema.Attribute.String;
+  };
+}
+
 export interface BlocksFeaturedArticle extends Struct.ComponentSchema {
   collectionName: 'components_blocks_featured_articles';
   info: {
@@ -205,6 +216,7 @@ export interface LayoutHeader extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'blocks.event-signup-form': BlocksEventSignupForm;
       'blocks.featured-article': BlocksFeaturedArticle;
       'blocks.full-image': BlocksFullImage;
       'blocks.heading': BlocksHeading;

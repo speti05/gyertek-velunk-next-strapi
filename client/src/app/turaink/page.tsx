@@ -43,11 +43,13 @@ export default async function AllEventsRoute({
 
   return (
     <div className="container">
-      <CalendarWithContent
+      {/* <CalendarWithContent
         calendarEvents={eventcalendarDataMapper([])}
         theme="turquoise"
         onYearChange={() => Promise.resolve([])}
-      />
+      /> */}
+
+      A calendarWith content helye!!!!!!!!!
       <ContentList
         searchParams={await searchParams}
         searchPlaceHolder={EVENTS_SEARCH_LABEL}

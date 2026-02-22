@@ -105,6 +105,9 @@ const pageBySlugQuery = (slug: string) =>
               },
             },
           },
+          "blocks.event-signup-form": {
+             populate: true,
+          }
         },
       },
     },

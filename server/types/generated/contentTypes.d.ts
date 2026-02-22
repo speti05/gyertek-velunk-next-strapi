@@ -668,6 +668,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.subscribe',
         'blocks.searchable-card-list',
         'blocks.hero-with-calendar',
+        'blocks.event-signup-form',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;

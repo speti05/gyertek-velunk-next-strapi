@@ -2,15 +2,16 @@ import type { Block, CustomSearchParams } from "@/types";
 
 import { HeroSection } from "@/components/blocks/HeroSection";
 import { InfoBlock } from "@/components/blocks/InfoBlock";
-import { FeaturedArticle } from "./blocks/FeaturedArticle";
-import { Subscribe } from "./blocks/Subscribe";
+import { FeaturedArticle } from "@/components/blocks/FeaturedArticle";
+import { Subscribe } from "@/components/blocks/Subscribe";
 import { Heading } from "@/components/blocks/Heading";
 import { ParagraphWithImage } from "@/components/blocks/ParagraphWithImage";
 import { Paragraph } from "@/components/blocks/Paragraph";
 import { FullImage } from "@/components/blocks/FullImage";
-import { TextContentBlock } from "./blocks/OnlyTextContent";
-import { SearchableCardList } from "./blocks/SearchableCardList";
-import { HeroWithCalendar } from "./blocks/HeroWithCalendar";
+import { TextContentBlock } from "@/components/blocks/OnlyTextContent";
+import { SearchableCardList } from "@/components/blocks/SearchableCardList";
+import { HeroWithCalendar } from "@/components/blocks/HeroWithCalendar";
+import { EventSignupBlock } from "@/components/blocks/EventSignupBlock";
 
 function blockRenderer(block: Block, index: number, searchParams: CustomSearchParams ) {
   switch (block.__component) {
@@ -36,6 +37,8 @@ function blockRenderer(block: Block, index: number, searchParams: CustomSearchPa
       return <SearchableCardList {...block} key={index} searchParams={searchParams}/>;
     case "blocks.hero-with-calendar":
       return <HeroWithCalendar {...block} key={index} searchParams={searchParams}/>;
+     case "blocks.event-signup-form":
+      return <EventSignupBlock {...block} eventId={null} key={index} />;  
     default:
       return null;
   }
