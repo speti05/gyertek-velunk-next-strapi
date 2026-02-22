@@ -1,4 +1,4 @@
-'use server'
+'use client'
 
 import { CalendarWrapper } from "@/components/custom-ui-components/custom-calendar/CalendarWrapper";
 import { CalendarEvent } from "@/components/custom-ui-components/custom-calendar/CalendarTypes";
@@ -6,13 +6,13 @@ import { CalendarEvent } from "@/components/custom-ui-components/custom-calendar
 interface ContentListProps {
   theme: "turquoise" | "brown";
   calendarEvents: CalendarEvent[];
-  //updateYear: (newYearValue: number) => void;
+  onYearChange: (year: number) => Promise<CalendarEvent[]>;
 }
 
-export async function CalendarWithContent({
+export function CalendarWithContent({
   theme,
   calendarEvents,
-  //updateYear
+  onYearChange
 }: Readonly<ContentListProps>) {
 
   return (
@@ -21,7 +21,7 @@ export async function CalendarWithContent({
           <CalendarWrapper
             calendarEvents={calendarEvents}
             theme={theme}
-            //updateYear={updateYear}
+            onYearChange={onYearChange}
             />
         </div>
         }

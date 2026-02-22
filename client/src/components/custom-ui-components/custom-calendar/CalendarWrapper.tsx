@@ -7,10 +7,10 @@ import { useRouter } from 'next/navigation';
 interface CalendarWrapperProps {
   theme: "turquoise" | "brown";
   calendarEvents: CalendarEvent[];
-  //updateYear: (newYearValue: number) => void;
+  onYearChange: (year: number) => Promise<CalendarEvent[]>;
 }
 
-export const CalendarWrapper: React.FC<CalendarWrapperProps> = async ({ calendarEvents, theme, updateYear }) => {
+export const CalendarWrapper: React.FC<CalendarWrapperProps> = ({ calendarEvents, theme, onYearChange }) => {
   const router = useRouter();
 
   const clickHandler = (calendarEvent: CalendarEvent | undefined) => {
@@ -26,7 +26,7 @@ export const CalendarWrapper: React.FC<CalendarWrapperProps> = async ({ calendar
     <div className="calendar-wrapper">
       <ContinuousCalendar
         clickHandler={clickHandler}
-        //updateYear={updateYear}
+        onYearChange={onYearChange}
         calendarEvents={calendarEvents}
         theme={theme}
       />

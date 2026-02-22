@@ -4,15 +4,8 @@ import { StrapiImage } from "../StrapiImage";
 import { CalendarWithContent } from "../CalendarWithContent";
 import { HeroWithCalendarProps, EventProps } from "@/types";
 import { getContentForCalendar } from "@/data/loaders";
+import { loadCalendarData } from "@/data/calendar-actions";
 import { CalendarEvent } from "../custom-ui-components/custom-calendar/CalendarTypes";
-
-async function loader<Type>(path: string, year: number) {
-    const { data } = await getContentForCalendar(path, year);
-    console.log(`Fetched data for path ${path} and year ${year}:`, data); // Debug log to check the fetched data
-    return {
-        data: (data as Type[]) || [],
-    };
-}
 
 const eventcalendarDataMapper = (data: EventProps[]) => (data.map((event: EventProps) => ({
     id: event.documentId,
@@ -30,17 +23,10 @@ export async function HeroWithCalendar({
     theme,
 }: Readonly<HeroWithCalendarProps>) {
 
-    const path = `/api/events`;
-
-    let year = new Date().getFullYear();
-
-    const setYear = (newYearValue: number) => {
-        year = newYearValue;
-    };
-
-    const { data } = await loader<EventProps>(path, year);
-
-    const calendarData: CalendarEvent[] = eventcalendarDataMapper(data);
+    const year = new Date().getFullYear();
+    const { data } = await getContentForCalendar(`/api/events`, year);
+    const calendarData: CalendarEvent[] = eventcalendarDataMapper((data as EventProps[]) || []);
+    
     console.log("Mapped calendar data:", calendarData); // Debug log to check the mapped calendar data
 
     return (
@@ -60,6 +46,7 @@ export async function HeroWithCalendar({
                 <CalendarWithContent
                     theme={theme}
                     calendarEvents={calendarData}
+                    onYearChange={loadCalendarData}
                 />
             </div>
             {logo && (

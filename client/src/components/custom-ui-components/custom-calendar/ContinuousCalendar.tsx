@@ -14,21 +14,23 @@ const todayText = 'Ma';
 
 interface ContinuousCalendarProps {
   clickHandler: (calendarEvent: CalendarEvent | undefined) => void;
-  //updateYear: (newYearValue: number) => void;
+  onYearChange: (year: number) => Promise<CalendarEvent[]>;
   calendarEvents?: Array<CalendarEvent>;
   theme: "turquoise" | "brown";
 }
 
 export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
     clickHandler,
-    //updateYear,
-    calendarEvents,
+    onYearChange,
+    calendarEvents: initialCalendarEvents,
     theme
   }) => {
   const today = new Date();
   const dayRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState<number>(0);
+  const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>(initialCalendarEvents || []);
+  const [isLoading, setIsLoading] = useState(false);
   const monthOptions = monthNames.map((month, index) => ({ name: month, value: `${index}` }));
 
   const scrollToDay = (monthIndex: number, dayIndex: number) => {
@@ -63,13 +65,21 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
     }
   };
 
-  const handlePrevYear = () => {
-    setYear((prevYear) => prevYear - 1)
-    //updateYear(year);
+  const handlePrevYear = async () => {
+    const newYear = year - 1;
+    setYear(newYear);
+    setIsLoading(true);
+    const newEvents = await onYearChange(newYear);
+    setCalendarEvents(newEvents);
+    setIsLoading(false);
   };
-  const handleNextYear = () => {
-    setYear((prevYear) => prevYear + 1);
-    //updateYear(year);
+  const handleNextYear = async () => {
+    const newYear = year + 1;
+    setYear(newYear);
+    setIsLoading(true);
+    const newEvents = await onYearChange(newYear);
+    setCalendarEvents(newEvents);
+    setIsLoading(false);
   };
 
   const handleMonthChange = (event) => {
@@ -78,8 +88,15 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
     scrollToDay(monthIndex, 1);
   };
 
-  const handleTodayClick = () => {
-    setYear(today.getFullYear());
+  const handleTodayClick = async () => {
+    const todayYear = today.getFullYear();
+    if (todayYear !== year) {
+      setYear(todayYear);
+      setIsLoading(true);
+      const newEvents = await onYearChange(todayYear);
+      setCalendarEvents(newEvents);
+      setIsLoading(false);
+    }
     scrollToDay(today.getMonth(), today.getDate());
   };
 

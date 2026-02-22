@@ -46,6 +46,7 @@ export default async function AllEventsRoute({
       <CalendarWithContent
         calendarEvents={eventcalendarDataMapper([])}
         theme="turquoise"
+        onYearChange={() => Promise.resolve([])}
       />
       <ContentList
         searchParams={await searchParams}
