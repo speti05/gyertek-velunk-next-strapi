@@ -50,7 +50,7 @@ export interface EventProps extends BaseBlogProps {
   endDate: string;
 }
 
-export interface EventSignupBlockProps {
+export interface EventSignupBlockProps extends Base<"blocks.event-signup-form"> {
   eventId: string;
 }
 
