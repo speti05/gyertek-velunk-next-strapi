@@ -38,6 +38,13 @@
         "articles"
       ],
       "required": true
+    },
+    "basePathForSubPages": {
+      "type": "enumeration",
+      "enum": [
+        "turaink",
+        "beszamolok"
+      ]
     }
   }
 }

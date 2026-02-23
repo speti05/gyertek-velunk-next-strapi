@@ -19,11 +19,20 @@ li{
   a {
     margin-bottom: -65px;
   }
+
+  img.header__logo {
+    height: 16rem;
+    width: auto;
+  }
 }
 .nav-menu{
   display: flex;
   align-items: center;
   gap: 4rem;
+
+  li > a > span {
+   font-family: var(--font-luckiest-guy), cursive;
+  }
 }
 .nav-branding{
   font-size: 2rem;

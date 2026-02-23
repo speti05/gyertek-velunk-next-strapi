@@ -31,7 +31,8 @@
         "blocks.subscribe",
         "blocks.searchable-card-list",
         "blocks.hero-with-calendar",
-        "blocks.event-signup-form"
+        "blocks.event-signup-form",
+        "blocks.text-content-block"
       ]
     }
   }

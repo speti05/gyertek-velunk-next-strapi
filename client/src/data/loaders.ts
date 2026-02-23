@@ -5,41 +5,63 @@ import { getStrapiURL } from "@/utils/get-strapi-url";
 const BASE_URL = getStrapiURL();
 const DEFAULT_BLOG_PAGE_SIZE = 3;
 const homePageQuery = qs.stringify({
-  populate: {
-    blocks: {
-      on: {
-        "blocks.hero-section": {
-          populate: {
-            image: {
-              fields: ["url", "alternativeText"],
-            },
-            logo: {
-              populate: {
-                image: {
-                  fields: ["url", "alternativeText"],
+    populate: {
+      blocks: {
+        on: {
+          "blocks.hero-section": {
+            populate: {
+              image: {
+                fields: ["url", "alternativeText"],
+              },
+              logo: {
+                populate: {
+                  image: {
+                    fields: ["url", "alternativeText"],
+                  },
                 },
               },
+              cta: true,
             },
-            cta: true,
           },
-        },
-        "blocks.info-block": {
-          populate: {
-            image: {
-              fields: ["url", "alternativeText"],
+          "blocks.info-block": {
+            populate: {
+              image: {
+                fields: ["url", "alternativeText"],
+              },
+              cta: true,
             },
-            cta: true,
           },
-        },
-        "blocks.subscribe": {
-          populate: true,
-        },
-        "blocks.searchable-card-list": {
-          populate: true,
+
+          "blocks.featured-article": {
+            populate: {
+              image: {
+                fields: ["url", "alternativeText"],
+              },
+              link: true,
+            },
+          },
+          "blocks.subscribe": {
+            populate: true,
+          },
+          "blocks.searchable-card-list": {
+            populate: true,
+          },
+          "blocks.hero-with-calendar": {
+            populate: {
+              image: {
+                fields: ["url", "alternativeText"],
+              },
+            },
+          },
+          "blocks.event-signup-form": {
+             populate: true,
+          },
+          "blocks.text-content-block": {
+             populate: true,
+          }
         },
       },
     },
-  },
 });
 
 export async function getHomePage() {
@@ -107,6 +129,9 @@ const pageBySlugQuery = (slug: string) =>
           },
           "blocks.event-signup-form": {
              populate: true,
+          },
+          "blocks.text-content-block": {
+             populate: true,
           }
         },
       },
@@ -117,27 +142,6 @@ export async function getPageBySlug(slug: string) {
   const path = "/api/pages";
   const url = new URL(path, BASE_URL);
   url.search = pageBySlugQuery(slug);
-  return await fetchAPI(url.href, { method: "GET" });
-}
-
-const dataPrivacyPageQuery = () =>
-  qs.stringify({
-    populate: {
-      blocks: { // Changed from textContent
-        on: {
-          "blocks.text-content-block": {
-            populate: true,
-            //populate: '*',
-          },
-        },
-      },
-    },
-  });
-
-export async function getDataPrivacy() {
-  const path = "/api/data-privacy-page";
-  const url = new URL(path, BASE_URL);
-  url.search = dataPrivacyPageQuery();
   return await fetchAPI(url.href, { method: "GET" });
 }
 
