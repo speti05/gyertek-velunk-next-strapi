@@ -32,6 +32,7 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
   const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>(initialCalendarEvents || []);
   const [isLoading, setIsLoading] = useState(false);
   const monthOptions = monthNames.map((month, index) => ({ name: month, value: `${index}` }));
+  const buttonColor = theme === "turquoise" ? "primary" : "secondary";
 
   const scrollToDay = (monthIndex: number, dayIndex: number) => {
     const targetDayIndex = dayRefs.current.findIndex(
@@ -97,7 +98,7 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
       setCalendarEvents(newEvents);
       setIsLoading(false);
     }
-    scrollToDay(today.getMonth(), today.getDate());
+      scrollToDay(today.getMonth(), today.getDate());
   };
 
   const handleDayClick = (calendarEvent: CalendarEvent | undefined) => {
@@ -225,36 +226,32 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
   return (
     <div className={`calendar-container rounded-2xl no-scrollbar max-h-full overflow-y-scroll rounded-t-2xl bg-white pb-10 text-slate-800 shadow-xl`}>
       <div className={`${style['calendar-header-' + theme]} sticky -top-px z-50 w-full rounded-t-2xl px-5 pt-7 sm:px-8 sm:pt-8`}>
-        <div className="mb-4 flex w-full flex-wrap items-center justify-between gap-6">
-          <div className="flex flex-wrap gap-2 sm:gap-3">
-            <CustomSelect name="month" value={selectedMonth} options={monthOptions} onSelect={handleMonthChange} />
-            <CustomButton variant="text" onClick={handleTodayClick} className="rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-900 hover:bg-gray-100 lg:px-5 lg:py-2.5">
+        <div className="mb-4 grid grid-cols-3 gap-6">
+            <CustomButton variant="contained" color={buttonColor} onClick={handleTodayClick} className="rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-900 hover:bg-gray-100 lg:px-5 lg:py-2.5">
               {todayText}
             </CustomButton>
-          </div>
-          <div className="flex w-fit items-center justify-between">
+            <CustomSelect name="month" value={selectedMonth} options={monthOptions} onSelect={handleMonthChange} />
+          <div className="flex items-center justify-between">
             <CustomButton
               onClick={handlePrevYear}
-              className="rounded-full border border-slate-300 p-1 transition-colors hover:bg-slate-100 sm:p-2"
-            >
-              <svg className="size-5 text-slate-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              color={buttonColor}>
+              <svg className="size-5 text-slate-100 font-semibold " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m15 19-7-7 7-7"/>
               </svg>
             </CustomButton>
-            <h1 className="min-w-16 text-center text-lg font-semibold sm:min-w-20 sm:text-xl">{year}</h1>
+            <h3 className="min-w-16 text-center text-lg font-semibold sm:min-w-20 sm:text-xl">{year}</h3>
             <CustomButton
               onClick={handleNextYear}
-              className="rounded-full border border-slate-300 p-1 transition-colors hover:bg-slate-100 sm:p-2"
-            >
-              <svg className="size-5 text-slate-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              color={buttonColor}>
+              <svg className="size-5 text-slate-100 font-semibold " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m9 5 7 7-7 7"/>
               </svg>
             </CustomButton>
           </div>
         </div>
-        <div className="grid w-full grid-cols-7 justify-between text-slate-100">
+        <div className="grid w-full grid-cols-7 justify-between text-slate-100 text-4xl">
           {daysOfWeek.map((day, index) => (
-            <div key={index} className="w-full border-b border-slate-200 py-2 text-center font-semibold">
+            <div key={index} className="calendar-day w-full border-b border-slate-200 py-2 text-center font-semibold">
               {day}
             </div>
           ))}

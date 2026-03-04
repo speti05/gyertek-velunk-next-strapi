@@ -170,5 +170,12 @@ export const theme = createTheme({
         },
       },
     },
+
+    //fixing scrollable background in case of opened
+    MuiMenu: {
+      defaultProps: {
+        disableScrollLock: true,
+      },
+    },
   },
 });

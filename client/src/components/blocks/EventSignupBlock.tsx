@@ -6,7 +6,7 @@ import { EventSignupBlockProps } from "@/types";
 
 async function loader(slug: string) {
   const { data } = await getContentBySlug(slug, "/api/events");
-  const event = data[0];
+  const event = data?.[0];
 
   if (!event) throw notFound();
   return { event: event as EventProps, blocks: event?.blocks };
@@ -17,7 +17,7 @@ export const EventSignupBlock = async ({ eventId }: EventSignupBlockProps) => {
     
     return (
         <div className="container">
-            <div className="event-signup-block">
+            <div className="event-signup-block" id="eventSignup">
                 <EventSignupForm blocks={blocks} eventId={eventId} />
             </div>
         </div>

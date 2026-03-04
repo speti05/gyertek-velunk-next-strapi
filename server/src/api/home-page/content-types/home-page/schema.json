@@ -22,11 +22,10 @@
       "type": "dynamiczone",
       "components": [
         "blocks.info-block",
-        "blocks.hero-section",
         "blocks.subscribe",
         "blocks.searchable-card-list",
-        "blocks.hero-with-calendar",
-        "blocks.event-signup-form"
+        "blocks.event-signup-form",
+        "blocks.hero-with-text"
       ]
     }
   }

@@ -530,11 +530,10 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
     blocks: Schema.Attribute.DynamicZone<
       [
         'blocks.info-block',
-        'blocks.hero-section',
         'blocks.subscribe',
         'blocks.searchable-card-list',
-        'blocks.hero-with-calendar',
         'blocks.event-signup-form',
+        'blocks.hero-with-text',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;

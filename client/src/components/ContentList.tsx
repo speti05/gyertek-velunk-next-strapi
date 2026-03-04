@@ -3,6 +3,7 @@ import { getContent } from "@/data/loaders";
 
 import { PaginationComponent } from "@/components/PaginationComponent";
 import { Search } from "@/components/Search";
+import { removeAccents } from "@/utils/text-utils";
 
 interface ContentListProps {
   headline: string;
@@ -49,9 +50,12 @@ export async function ContentList({
   const { data, pageCount } = await loader<EventProps>(path, featured, query, page, pageSize);
   const Component = component;
 
+  const navigationId = removeAccents(headline);
+
   return (
     <section className="content-items container">
-      <h3 className={`content-items__headline ${`content-items--${headlineAlignment}`}`}>
+      <h3 className={`content-items__headline ${`content-items--${headlineAlignment}`}`}
+        id={navigationId}>
         {headline}
       </h3>
       {!!showSearch && <Search placeHolder={searchPlaceHolder} contentCollectionType={contentCollectionType} />}

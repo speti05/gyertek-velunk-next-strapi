@@ -46,11 +46,12 @@ const homePageQuery = qs.stringify({
           "blocks.searchable-card-list": {
             populate: true,
           },
-          "blocks.hero-with-calendar": {
+          "blocks.hero-with-text": {
             populate: {
               image: {
                 fields: ["url", "alternativeText"],
               },
+              link: true,
             },
           },
           "blocks.event-signup-form": {
@@ -275,6 +276,9 @@ const blogPopulate = {
       "blocks.hero-with-calendar": {
         populate: true,
       },
+      "blocks.hero-with-text": {
+        populate: true,
+      },
     },
   },
 };
@@ -303,12 +307,24 @@ export async function getContentForCalendar(
   year: number,
 ) {
   const url = new URL(path, BASE_URL);
-  year = 2026;
+  const startOfYear = new Date(year, 0, 1).toISOString();
+  const endOfYear = new Date(year, 11, 31).toISOString();
 
   url.search = qs.stringify({
-    sort: ["createdAt:desc"],
+    sort: ["startDate:asc"],
     filters: {
-       featured: false,
+      $and: [
+        {
+          startDate: {
+            $gte: startOfYear,
+          },
+        },
+        {
+          startDate: {
+            $lte: endOfYear,
+          },
+        },
+      ],
     },
     pagination: {
       pageSize: 100,

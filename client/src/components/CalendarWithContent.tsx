@@ -17,14 +17,13 @@ export function CalendarWithContent({
 
   return (
     <section className="content-items container">
-        {<div className="calendar">
+        <div className="calendar">
           <CalendarWrapper
             calendarEvents={calendarEvents}
             theme={theme}
             onYearChange={onYearChange}
             />
         </div>
-        }
     </section>
   );
 }

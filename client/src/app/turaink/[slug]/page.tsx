@@ -9,7 +9,7 @@ import { EventCard } from "@/components/EventCard";
 
 async function loader(slug: string) {
   const { data } = await getContentBySlug(slug, "/api/events");
-  const event = data[0];
+  const event = data?.[0];
   console.log("Loaded event data:", event);
   if (!event) throw notFound();
   return { event: event as EventProps, blocks: event?.blocks };

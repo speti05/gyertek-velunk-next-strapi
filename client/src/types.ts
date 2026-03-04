@@ -65,6 +65,7 @@ type ComponentType =
   | "blocks.full-image"
   | "blocks.searchable-card-list"
   | "blocks.text-content-block"
+  | "blocks.hero-with-text"
   | "blocks.hero-with-calendar"
   | "blocks.event-signup-form";
 
@@ -89,6 +90,8 @@ export type Block =
   | FullImageProps
   | SearchableCardListProps
   | TextBlockProps
+  | HeroWithCalendarProps
+  | HeroWithTextProps
   | HeroWithCalendarProps
   | EventSignupBlockProps;
 
@@ -152,10 +155,21 @@ export interface HeroWithCalendarProps extends Base<"blocks.hero-with-calendar">
   headline: string;
   contentCollectionType: string;
   image: ImageProps;
-  logo?: LogoProps;
   theme: "turquoise" | "brown";
   searchParams: CustomSearchParams;
+  Link?: LinkProps[];
+  welcomeText?: string;
 }
+
+export interface HeroWithTextProps extends Base<"blocks.hero-with-text">{
+  headline: string;
+  image: ImageProps;
+  theme: "turquoise" | "brown";
+  searchParams: CustomSearchParams;
+  link?: LinkProps[];
+  welcomeText?: string;
+}
+
 
 export interface ParagraphProps extends Base<"blocks.paragraph"> {
   content: string;

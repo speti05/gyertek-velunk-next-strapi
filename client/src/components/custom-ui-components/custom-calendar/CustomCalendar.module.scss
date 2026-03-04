@@ -1,4 +1,5 @@
 @import "../../../sass/base/colors";
+//@import "../../../sass/base/typography.scss";
 
 .calendar-header-turquoise {
   background-color: $gy-v-dark-green;
@@ -14,4 +15,9 @@
 
 .calendar-content-brown {
   background-color: $gy-v-light-brown
+}
+
+.calendar-day {
+  font-family: var(--font-luckiest-guy), cursive;
+  color: red;
 }

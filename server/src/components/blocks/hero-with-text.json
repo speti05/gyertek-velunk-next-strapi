@@ -1,0 +1,42 @@
+{
+  "collectionName": "components_blocks_hero_with_texts",
+  "info": {
+    "displayName": "Hero with text",
+    "icon": "layout",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "headline": {
+      "type": "string"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "theme": {
+      "type": "enumeration",
+      "enum": [
+        "turquoise",
+        "brown"
+      ],
+      "required": true,
+      "default": "turquoise"
+    },
+    "link": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.link"
+    },
+    "welcomeText": {
+      "type": "text"
+    }
+  }
+}
