@@ -1,7 +1,6 @@
 "use client";
 import type { LinkProps, LogoProps } from "@/types";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { StrapiImage } from "../StrapiImage";
 import { useState } from "react";
 
@@ -15,13 +14,11 @@ interface HeaderProps {
 }
 
 export function Header({ data }: HeaderProps) {
-  const pathname = usePathname();
-  const headerLight = pathname === "/experience";
   const [isActive, setIsActive] = useState(false);
 
   if (!data) return null;
 
-  const { logo, navigation, cta } = data;
+  const { logo, navigation } = data;
   return (
     <>
       <header>

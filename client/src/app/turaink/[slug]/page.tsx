@@ -9,8 +9,7 @@ import { EventCard } from "@/components/EventCard";
 
 async function loader(slug: string) {
   const { data } = await getContentBySlug(slug, "/api/events");
-  const event = data?.[0];
-  console.log("Loaded event data:", event);
+  const event = data[0];
   if (!event) throw notFound();
   return { event: event as EventProps, blocks: event?.blocks };
 }
@@ -23,7 +22,7 @@ interface ParamsProps {
 export default async function SingleEventRoute({ params, searchParams }: ParamsProps) {
   const slug = (await params).slug;
   const { event, blocks } = await loader(slug);
-  const { page, query } = await searchParams;
+  //const { page, query } = await searchParams;
 
   return (
     <>

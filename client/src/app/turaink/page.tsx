@@ -8,8 +8,6 @@ interface ParamsProps {
 }
 
 export default function AllEventsRoute({
-  params,
-  searchParams,
 }: ParamsProps) {
 
   const router = useRouter();

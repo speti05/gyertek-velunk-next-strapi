@@ -17,43 +17,6 @@ const INITIAL_STATE = {
   formData: null,
 };
 
-interface TextInputProps {
-  id: string;
-  label: string;
-  name: string;
-  type?: string;
-  error?: string;
-  defaultValue?: string;
-}
-
-/**
- * @deprecated Use CustomTextInput directly instead.
- */
-function TextInput({
-  id,
-  label,
-  name,
-  type = "text",
-  error,
-  defaultValue,
-}: TextInputProps) {
-  return (
-    <div className="input__container">
-      <label htmlFor={id} className="copy">
-        {label}
-      </label>
-      <CustomTextInput
-        type={type}
-        name={name}
-        id={id}
-        className="input input__text input--beige"
-        defaultValue={defaultValue}
-      />
-      {error && <p className="input__error">{error}</p>}
-    </div>
-  );
-}
-
 export function EventSignupForm({
   blocks,
   eventId,

@@ -41,7 +41,8 @@ interface BaseBlogProps {
   updatedAt: string;
 }
 
-export interface ArticleProps extends BaseBlogProps{
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface ArticleProps extends BaseBlogProps {
 }
 
 export interface EventProps extends BaseBlogProps {
@@ -96,7 +97,7 @@ export type Block =
   | EventSignupBlockProps;
 
 export interface HeroSectionProps extends Base<"blocks.hero-section"> {
-  theme: "turquoise" | "orange";
+  theme: "turquoise" | "brown";
   heading: string;
   image: ImageProps;
   cta?: LinkProps;
@@ -106,7 +107,7 @@ export interface HeroSectionProps extends Base<"blocks.hero-section"> {
 }
 
 export interface InfoBlockProps extends Base<"blocks.info-block"> {
-  theme: "turquoise" | "orange";
+  theme: "turquoise" | "brown";
   reversed?: boolean;
   headline: string;
   content: string;

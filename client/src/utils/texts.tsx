@@ -11,3 +11,12 @@ export const ARTICLES_LABEL = "Beszámolóink";
 export const ARTICLES_SEARCH_LABEL = "Keresés a beszámolók között";
 
 export const TOUR_CALENDAR_LABEL = "Túranaptár";
+
+// Általános
+export const LOADING_LABEL = "Töltés...";
+export const GO_HOME_LABEL = "Vissza a főoldalra";
+export const SERVER_SIDE_ERROR_LABEL = "Szerver oldali hiba.";
+export const PAGE_NOT_FOUND_LABEL = "Az oldal nem található.";
+export const ERROR_LABEL = "Hiba történt. Próbáld újra később.";
+export const NOT_FOUND_LABEL = "Sajnáljuk, ez az oldal jól elvándorolt.";
+export const TRY_AGAIN_LABEL = "Próbáld újra";

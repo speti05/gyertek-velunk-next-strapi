@@ -139,7 +139,7 @@
     max-width: 60%;
     color: white;
 
-    &--orange {
+    &--brown {
       color: white;
     }
   }
@@ -168,7 +168,7 @@
     left: 50%;
     transform: translate(-50%, 50%);
 
-    &--orange {
+    &--brown {
       filter: invert(62%) sepia(21%) saturate(1646%) hue-rotate(348deg)
         brightness(88%) contrast(81%);
     }

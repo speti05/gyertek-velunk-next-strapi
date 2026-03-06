@@ -143,6 +143,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           color: colors.label.main,
+          fontSize: '1.5rem',
           
           // Focused label
           '&.Mui-focused': {
@@ -150,19 +151,36 @@ export const theme = createTheme({
           },
           
           // Error label
-          // '&.Mui-error': {
-          //   color: colors.label.error,
-          // },
+          '&.Mui-error': {
+            fontSize: '1.5rem',
+            color: colors.label.error,
+            fontWeight: 700,
+          },
+        },
+        shrink: {
+          fontSize: '1.8rem',
+
+          '&.Mui-error': {
+            color: colors.label.error,
+          },
+        },
+      },
+    },
+    // Error text styling, outlined input
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          height: '7.5rem',
         },
       },
     },
     
-    // Helper text styling
+    // Helper text styling (under outlined input)
     MuiFormHelperText: {
       styleOverrides: {
         root: {
           marginLeft: '4px',
-          fontSize: '1rem',
+          fontSize: '1.3rem',
           
           '&.Mui-error': {
             color: colors.label.error,

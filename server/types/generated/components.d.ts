@@ -107,7 +107,7 @@ export interface BlocksInfoBlock extends Struct.ComponentSchema {
     headline: Schema.Attribute.String;
     image: Schema.Attribute.Media<'images'>;
     reversed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    theme: Schema.Attribute.Enumeration<['turquoise', 'orange']>;
+    theme: Schema.Attribute.Enumeration<['turquoise', 'brown']>;
   };
 }
 

@@ -10,7 +10,7 @@ type CustomTextInputInputProps = TextFieldProps & {
 const CustomTextInput = React.forwardRef<
     HTMLInputElement,
     CustomTextInputInputProps
->(({ children, ...props }, ref) => {
+>(({ /*children,*/ ...props }, ref) => {
 
     return (
         <FormControl

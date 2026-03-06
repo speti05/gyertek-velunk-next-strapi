@@ -1,6 +1,6 @@
 'use client';
 
-import React, { use, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import style from './CustomCalendar.module.scss';
 
 import { ArrowRightCircle } from "@deemlol/next-icons"
@@ -30,7 +30,6 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState<number>(0);
   const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>(initialCalendarEvents || []);
-  const [isLoading, setIsLoading] = useState(false);
   const monthOptions = monthNames.map((month, index) => ({ name: month, value: `${index}` }));
   const buttonColor = theme === "turquoise" ? "primary" : "secondary";
 
@@ -69,18 +68,14 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
   const handlePrevYear = async () => {
     const newYear = year - 1;
     setYear(newYear);
-    setIsLoading(true);
     const newEvents = await onYearChange(newYear);
     setCalendarEvents(newEvents);
-    setIsLoading(false);
   };
   const handleNextYear = async () => {
     const newYear = year + 1;
     setYear(newYear);
-    setIsLoading(true);
     const newEvents = await onYearChange(newYear);
     setCalendarEvents(newEvents);
-    setIsLoading(false);
   };
 
   const handleMonthChange = (event) => {
@@ -93,10 +88,8 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
     const todayYear = today.getFullYear();
     if (todayYear !== year) {
       setYear(todayYear);
-      setIsLoading(true);
       const newEvents = await onYearChange(todayYear);
       setCalendarEvents(newEvents);
-      setIsLoading(false);
     }
       scrollToDay(today.getMonth(), today.getDate());
   };

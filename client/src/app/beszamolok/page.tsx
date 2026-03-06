@@ -13,12 +13,9 @@ async function loader(slug: string) {
 interface PageProps {
   searchParams: Promise<{ page?: string; query?: string }>
 }
-export default async function BlogRoute({ searchParams }: PageProps) {
-  const { page, query } = await searchParams;
+export default async function BlogRoute({ }: PageProps) {
   const { blocks } = await loader("beszamolok");
   return (
-    <div className="blog-page">
       <BlockRenderer blocks={blocks} />
-    </div>
   );
 }

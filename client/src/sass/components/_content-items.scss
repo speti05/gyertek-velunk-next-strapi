@@ -7,7 +7,7 @@
 
     &--card {
       display: grid;
-      grid-template-columns: repeat(9, 1fr);
+      
       gap: 2rem;
 
       & .content-items__card {
@@ -16,6 +16,11 @@
     }
   }
 
+  @media (min-width: 769px) {
+    .content-items__container--card {
+      grid-template-columns: repeat(9, 1fr);
+    }
+  }
 
   &__headline {
     margin-bottom: 6rem;

@@ -62,7 +62,6 @@ const BlogCard = (props: Readonly<CardProps>) => <Card {...props} basePath="besz
 export default async function SingleBlogRoute({ params, searchParams }: PageProps) {
   const slug = (await params).slug;
   const { article, blocks } = await loader(slug);
-  const {page, query} = await searchParams;
   const { title, author, publishedAt, description, image } = article;
 
   console.dir(blocks, { depth: null });
@@ -76,7 +75,7 @@ export default async function SingleBlogRoute({ params, searchParams }: PageProp
       <HeroSection
         id={article.id}
         heading={title}
-        theme="orange"
+        theme="brown"
         image={image}
         author={author}
         publishedAt={formatDate(publishedAt)}

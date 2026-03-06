@@ -1,6 +1,7 @@
 .signup-form {
   display: flex;
   justify-content: space-between;
+  flex-direction: row;
 
   &__headline {
     margin-bottom: 3rem;
@@ -79,6 +80,20 @@
 
     & span {
       font-weight: 700;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .signup-form {
+    flex-direction: column;
+
+    &__info {
+      width: 100%;
+    }
+
+    &__form {
+      width: 100%;
     }
   }
 }

@@ -34,7 +34,7 @@ export async function ContentList({
   searchParams,
   featured,
   component,
-  headlineAlignment = "left",
+  headlineAlignment = "center",
   showSearch,
   searchPlaceHolder,
   showPagination,
@@ -53,7 +53,7 @@ export async function ContentList({
   const navigationId = removeAccents(headline);
 
   return (
-    <section className="content-items container">
+    <section className="content-items content-items container">
       <h3 className={`content-items__headline ${`content-items--${headlineAlignment}`}`}
         id={navigationId}>
         {headline}

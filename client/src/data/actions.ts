@@ -46,7 +46,6 @@ export async function subscribeAction(prevState: any, formData: FormData) {
   }
 
   if (responseData.error) {
-    console.log(responseData.error, "from action")
     return {
       ...prevState,
       strapiErrors: responseData.error,
@@ -105,7 +104,7 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
     };
   }
 
-  // @ts-expect-error
+  // @ts-expect-error - type mismatch miatt
   const dataToSend: EventsSubscribeProps = {
     ...validatedFields.data,
     event: {

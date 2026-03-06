@@ -1,4 +1,3 @@
-import { red } from '@mui/material/colors';
 import { darken, lighten} from 'polished';
 
 const baseColors = {

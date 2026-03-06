@@ -8,7 +8,7 @@ interface SearchProps {
   contentCollectionType: string;
 } 
 
-export async function Search({
+export function Search({
   placeHolder,
   contentCollectionType 
 }: Readonly<SearchProps>) {  
