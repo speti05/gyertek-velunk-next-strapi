@@ -1,17 +1,7 @@
 "use server";
 import { z } from "zod";
 import { subscribeService, eventsSubscribeService, type EventsSubscribeProps } from "./services";
-
-const MESSAGES = {
-  emailInvalid: "Érvényes email címet adj meg",
-  invalidFirstName: "Add meg a keresztneved",
-  invalidLastName: "Add meg a vezetékneved",
-  invalidTelephone: "Érvényes telefonszámot adj meg. ",
-  enterPhoneNumber: "Add meg a telefonszámod. ",
-  someThingWentWrong: "Hiba történt. Kérjük, próbáld újra később.",
-  failedToSubscribe: "Sikertelen feliratkozás.",
-  succesfullySubscribed: "Sikeres feliratkozás!",
-};
+import { MESSAGES } from "@/utils/texts";
 
 const subscribeSchema = z.object({
   email: z.string().email({
@@ -63,6 +53,7 @@ export async function subscribeAction(prevState: any, formData: FormData) {
   };
 
 }
+const phoneRegex = /^(\+36|06)\d{9}$/;
 
 const eventsSubscribeSchema = z.object({
   firstName: z.string().min(1, {
@@ -76,7 +67,7 @@ const eventsSubscribeSchema = z.object({
   }),
   telephone: z.string()
     .min(1, { message: MESSAGES.enterPhoneNumber })
-    .regex(/^(\+\d{1,3}[-.]?)?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/, {
+    .regex(phoneRegex, {
       message: MESSAGES.invalidTelephone,
     }),
 });

@@ -12,6 +12,11 @@
 
       & .content-items__card {
         grid-column: span 3;
+        
+        &:hover {
+          transform: scale(1.05);
+          transition: transform 0.3s ease;
+        }
       }
     }
   }

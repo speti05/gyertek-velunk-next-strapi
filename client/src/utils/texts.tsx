@@ -20,3 +20,24 @@ export const PAGE_NOT_FOUND_LABEL = "Az oldal nem található.";
 export const ERROR_LABEL = "Hiba történt. Próbáld újra később.";
 export const NOT_FOUND_LABEL = "Sajnáljuk, ez az oldal jól elvándorolt.";
 export const TRY_AGAIN_LABEL = "Próbáld újra";
+
+export const FORM_LABELS = {
+    firstName: "Keresztnév",
+    lastName: "Vezetéknév",
+    email: "Email",
+    telephone: "Telefon",
+    submit: "Regisztráció",
+    startDate: "Kezdés dátuma",
+    price: "Részvételi díj",
+};
+
+export const MESSAGES = {
+  emailInvalid: "Érvényes email címet adj meg",
+  invalidFirstName: "Add meg a keresztneved",
+  invalidLastName: "Add meg a vezetékneved",
+  invalidTelephone: "Érvényes telefonszámot adj meg. ",
+  enterPhoneNumber: "Add meg a telefonszámod. ",
+  someThingWentWrong: "Hiba történt. Kérjük, próbáld újra később.",
+  failedToSubscribe: "Sikertelen feliratkozás.",
+  succesfullySubscribed: "Sikeres feliratkozás!",
+};

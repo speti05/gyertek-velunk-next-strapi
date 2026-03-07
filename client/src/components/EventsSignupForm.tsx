@@ -8,6 +8,7 @@ import { StrapiImage } from "@/components/StrapiImage";
 import { SubmitButton } from "@/components/SubmitButton";
 import { eventsSubscribeAction } from "@/data/actions";
 import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
+import { FORM_LABELS } from "@/utils/texts";
 
 const INITIAL_STATE = {
   zodErrors: null,
@@ -17,9 +18,12 @@ const INITIAL_STATE = {
   formData: null,
 };
 
+// TODO: fix this hardcoded id (id of the "stay in touch" event)
+const DEFAULT_SIGNUP_ID = "hakunoc6kul1z6lbf4j2ritt";
+
 export function EventSignupForm({
   blocks,
-  eventId,
+  eventId=DEFAULT_SIGNUP_ID,
   startDate,
   price,
   image,
@@ -42,13 +46,7 @@ export function EventSignupForm({
   const strapiErrors = formState?.strapiErrors?.message;
   const successMessage = formState?.successMessage;
 
-  const FORM_LABELS = {
-    firstName: "Keresztnév",
-    lastName: "Vezetéknév",
-    email: "Email",
-    telephone: "Telefon",
-    submit: "Regisztráció",
-  };
+      console.log("debug EventSignupForm loaded with eventId:", eventId);
 
   return (
     <section className="signup-form">
@@ -56,12 +54,12 @@ export function EventSignupForm({
         <BlockRenderer blocks={blocks} />
         {startDate && (
           <p className="signup-form__date">
-            <span>StartDate:</span> {formatDate(startDate)}
+            <span>{FORM_LABELS.startDate}:</span> {formatDate(startDate)}
           </p>
         )}
         {price && (
           <p className="signup-form__price">
-            <span>Price:</span> {price}
+            <span>{FORM_LABELS.price}:</span> {price}
           </p>
         )}
       </div>
