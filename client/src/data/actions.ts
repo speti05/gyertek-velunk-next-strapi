@@ -95,9 +95,8 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
     };
   }
 
-  // @ts-expect-error - type mismatch miatt
   const dataToSend: EventsSubscribeProps = {
-    ...validatedFields.data,
+    ...(validatedFields.data as Required<typeof validatedFields.data>),
     event: {
       connect: [formDataObject.eventId as string],
     },

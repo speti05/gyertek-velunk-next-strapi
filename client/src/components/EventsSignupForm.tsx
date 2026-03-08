@@ -46,8 +46,6 @@ export function EventSignupForm({
   const strapiErrors = formState?.strapiErrors?.message;
   const successMessage = formState?.successMessage;
 
-      console.log("debug EventSignupForm loaded with eventId:", eventId);
-
   return (
     <section className="signup-form">
       <div className="signup-form__info">

@@ -27,6 +27,7 @@ export default async function SingleEventRoute({ params, searchParams }: ParamsP
   return (
     <>
       <div className="container">
+        <h2 className={`content-items__headline content-items--center`}>Túrajelentkezés</h2>
         <div className="event-page">
           <EventSignupForm
             blocks={blocks}

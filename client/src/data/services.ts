@@ -32,16 +32,6 @@ export interface EventsSubscribeProps {
   };
 }
 
-export interface EventsSubscribeProps {
-  firstName: string;
-  lastName: string;
-  email: string;
-  telephone: string;
-  event: {
-    connect: [string];
-  };
-}
-
 export async function eventsSubscribeService(data: EventsSubscribeProps) {
   const url = new URL("/api/event-signups", BASE_URL);
 
