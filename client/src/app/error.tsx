@@ -23,26 +23,23 @@ export default function Error({
 
   return (
     <div className="flex flex-col items-center justify-center flex-1">
-      <h2>500</h2>
-      <h3>{SERVER_SIDE_ERROR_LABEL}</h3>
+      <h2 className="mb-8">500</h2>
+      <h5 className="mb-8">{SERVER_SIDE_ERROR_LABEL}</h5>
       <p className="mb-8 text-center max-w-md">{ERROR_LABEL}</p>
-      <CustomButton
-        variant="contained"
-        color="primary"
-        onClick={() => reset()}
-        className="mt-6"
-      >
-        {TRY_AGAIN_LABEL}
-      </CustomButton>
-
-      <CustomButton
-        variant="contained"
-        color="secondary"
-        onClick={() => reset()}
-        className="mt-6"
-      >
-        <Link href="/">{GO_HOME_LABEL}</Link>
-      </CustomButton>
+      <div className="mb-8">
+        <CustomButton
+          variant="contained"
+          color="primary"
+          onClick={() => reset()}
+        >
+          {TRY_AGAIN_LABEL}
+        </CustomButton>
+      </div>
+      <div className="mb-8">
+        <CustomButton variant="contained" color="secondary">
+          <Link href="/">{GO_HOME_LABEL}</Link>
+        </CustomButton>
+      </div>
     </div>
   );
 }

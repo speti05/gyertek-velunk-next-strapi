@@ -7,8 +7,8 @@ import Link from 'next/link';
 export default function NotFound() {
   return (
     <div className="flex flex-col items-center justify-center flex-1">
-      <h2>404</h2>
-      <h5>{PAGE_NOT_FOUND_LABEL}</h5>
+      <h2 className="mb-8">404</h2>
+      <h5 className="mb-8">{PAGE_NOT_FOUND_LABEL}</h5>
       <p className="mb-8 text-center max-w-md">
         {NOT_FOUND_LABEL}
       </p>
@@ -17,7 +17,7 @@ export default function NotFound() {
             <Link href="/" >
                 {GO_HOME_LABEL}
             </Link>
-      </CustomButton>
+        </CustomButton>
     </div>
 
   );
