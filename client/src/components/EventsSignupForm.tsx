@@ -9,6 +9,7 @@ import { SubmitButton } from "@/components/SubmitButton";
 import { eventsSubscribeAction } from "@/data/actions";
 import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
 import { FORM_LABELS } from "@/utils/texts";
+import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
 
 const INITIAL_STATE = {
   zodErrors: null,
@@ -43,7 +44,7 @@ export function EventSignupForm({
   );
 
   const zodErrors = formState?.zodErrors;
-  const strapiErrors = formState?.strapiErrors?.message;
+  const errorMessage = formState?.strapiErrors?.message ?? formState?.errorMessage;
   const successMessage = formState?.successMessage;
 
   return (
@@ -107,10 +108,7 @@ export function EventSignupForm({
         <SubmitButton
           text={FORM_LABELS.submit}
         />
-        {strapiErrors && <p className="signup-form__error">{strapiErrors}</p>}
-        {successMessage && (
-          <p className="signup-form__success">{successMessage}</p>
-        )}
+        <CustomAlertMessage errorMessage={errorMessage} successMessage={successMessage} />
       </form>
     </section>
   );

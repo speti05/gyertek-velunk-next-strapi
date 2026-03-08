@@ -121,7 +121,7 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
       formData: {
         ...formDataObject,
       },
-      errorMessage: MESSAGES.failedToSubscribe,
+      errorMessage: MESSAGES.failedToSubscribeToEvent,
 
     };
   }
@@ -132,6 +132,6 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
     strapiErrors: null,
     errorMessage: null,
     formData: null,
-    successMessage: MESSAGES.succesfullySubscribed,
+    successMessage: MESSAGES.succesfullySubscribedToEvent,
   };
 }

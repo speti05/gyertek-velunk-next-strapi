@@ -39,5 +39,7 @@ export const MESSAGES = {
   enterPhoneNumber: "Add meg a telefonszámod. ",
   someThingWentWrong: "Hiba történt. Kérjük, próbáld újra később.",
   failedToSubscribe: "Sikertelen feliratkozás.",
-  succesfullySubscribed: "Sikeres feliratkozás!",
+  succesfullySubscribed: "Sikeres feliratkozás.",
+  failedToSubscribeToEvent: "Sikertelen túrajelentkezés.",
+  succesfullySubscribedToEvent: "Sikeres túrajelentkezés.",
 };

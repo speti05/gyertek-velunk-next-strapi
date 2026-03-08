@@ -189,6 +189,18 @@ export const theme = createTheme({
       },
     },
 
+    MuiAlert: {
+      styleOverrides: {
+        root: {
+          fontSize: '1.5rem',
+          fontFamily: 'var(--font-source-sans-3), sans-serif',
+        },
+        icon: {
+          fontSize: '2rem',
+        },
+      },
+    },
+
     //fixing scrollable background in case of opened
     MuiMenu: {
       defaultProps: {
