@@ -2,6 +2,7 @@
 import { z } from "zod";
 import { subscribeService, eventsSubscribeService, type EventsSubscribeProps } from "./services";
 import { MESSAGES } from "@/utils/texts";
+import { isDev } from "@clientRoot/env";
 
 const subscribeSchema = z.object({
   email: z.string().email({
@@ -73,9 +74,9 @@ const eventsSubscribeSchema = z.object({
 });
 
 
-async function verifyRecaptcha(token: string): Promise<boolean> {
-  // Skip verification in development mode
-  if (process.env.NODE_ENV === "development") {
+async function verifyRecaptcha(token: string | null): Promise<boolean> {
+  // Skip verification in development mode or without a token
+  if (isDev || !token) {
     return true;
   }
 
@@ -93,7 +94,7 @@ async function verifyRecaptcha(token: string): Promise<boolean> {
 }
 
 export async function eventsSubscribeAction(prevState: any, formData: FormData) {
-  const recaptchaToken = formData.get("recaptchaToken") as string;
+  const recaptchaToken = formData.get("recaptchaToken") as string | null;
   const isHuman = await verifyRecaptcha(recaptchaToken);
   if (!isHuman) {
     return {

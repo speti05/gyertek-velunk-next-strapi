@@ -1,7 +1,6 @@
 "use client";
 
-import { useActionState, useTransition, useRef, useCallback } from "react";
-import { GoogleReCaptchaProvider, useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { useActionState, useRef } from "react";
 import { BlockRenderer } from "@/components/BlockRenderer";
 import { Block } from "@/types";
 import { formatDate } from "@/utils/format-date";
@@ -11,6 +10,8 @@ import { eventsSubscribeAction } from "@/data/actions";
 import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
 import { FORM_LABELS } from "@/utils/texts";
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
+import { RecaptchaProvider } from "@/components/recaptcha-provider";
+import { useRecaptchaSubmit } from "@/hooks/use-recaptcha-submit";
 
 const INITIAL_STATE = {
   zodErrors: null,
@@ -45,29 +46,12 @@ function EventSignupFormInner({
     eventsSubscribeAction,
     INITIAL_STATE
   );
-  const { executeRecaptcha } = useGoogleReCaptcha();
-  const [, startTransition] = useTransition();
   const formRef = useRef<HTMLFormElement>(null);
+  const handleSubmit = useRecaptchaSubmit(formRef, formAction, "event_signup");
 
   const zodErrors = formState?.zodErrors;
   const errorMessage = formState?.strapiErrors?.message ?? formState?.errorMessage;
   const successMessage = formState?.successMessage;
-
-  const handleSubmit = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      if (!executeRecaptcha || !formRef.current) return;
-
-      const token = await executeRecaptcha("event_signup");
-      const formData = new FormData(formRef.current);
-      formData.append("recaptchaToken", token);
-
-      startTransition(() => {
-        formAction(formData);
-      });
-    },
-    [executeRecaptcha, formAction]
-  );
 
   return (
     <section className="signup-form">
@@ -138,8 +122,8 @@ function EventSignupFormInner({
 
 export function EventSignupForm(props: EventSignupFormProps) {
   return (
-    <GoogleReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}>
+    <RecaptchaProvider>
       <EventSignupFormInner {...props} />
-    </GoogleReCaptchaProvider>
+    </RecaptchaProvider>
   );
 }
