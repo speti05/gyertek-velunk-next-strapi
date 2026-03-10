@@ -42,4 +42,5 @@ export const MESSAGES = {
   succesfullySubscribed: "Sikeres feliratkozás.",
   failedToSubscribeToEvent: "Sikertelen túrajelentkezés.",
   succesfullySubscribedToEvent: "Sikeres túrajelentkezés.",
+  recaptchaFailed: "A biztonsági ellenőrzés sikertelen. Kérjük, próbálja újra.",
 };

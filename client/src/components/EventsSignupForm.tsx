@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useTransition, useRef, useCallback } from "react";
+import { GoogleReCaptchaProvider, useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { BlockRenderer } from "@/components/BlockRenderer";
 import { Block } from "@/types";
 import { formatDate } from "@/utils/format-date";
@@ -22,13 +23,7 @@ const INITIAL_STATE = {
 // TODO: fix this hardcoded id (id of the "stay in touch" event)
 const DEFAULT_SIGNUP_ID = "hakunoc6kul1z6lbf4j2ritt";
 
-export function EventSignupForm({
-  blocks,
-  eventId=DEFAULT_SIGNUP_ID,
-  startDate,
-  price,
-  image,
-}: {
+type EventSignupFormProps = {
   blocks: Block[];
   eventId: string;
   startDate?: string;
@@ -37,15 +32,42 @@ export function EventSignupForm({
     url: string;
     alt: string;
   };
-}) {
+};
+
+function EventSignupFormInner({
+  blocks,
+  eventId = DEFAULT_SIGNUP_ID,
+  startDate,
+  price,
+  image,
+}: EventSignupFormProps) {
   const [formState, formAction] = useActionState(
     eventsSubscribeAction,
     INITIAL_STATE
   );
+  const { executeRecaptcha } = useGoogleReCaptcha();
+  const [, startTransition] = useTransition();
+  const formRef = useRef<HTMLFormElement>(null);
 
   const zodErrors = formState?.zodErrors;
   const errorMessage = formState?.strapiErrors?.message ?? formState?.errorMessage;
   const successMessage = formState?.successMessage;
+
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (!executeRecaptcha || !formRef.current) return;
+
+      const token = await executeRecaptcha("event_signup");
+      const formData = new FormData(formRef.current);
+      formData.append("recaptchaToken", token);
+
+      startTransition(() => {
+        formAction(formData);
+      });
+    },
+    [executeRecaptcha, formAction]
+  );
 
   return (
     <section className="signup-form">
@@ -62,7 +84,7 @@ export function EventSignupForm({
           </p>
         )}
       </div>
-      <form className="signup-form__form" action={formAction}>
+      <form ref={formRef} className="signup-form__form" onSubmit={handleSubmit}>
         {image && (
           <StrapiImage
             src={image.url}
@@ -111,5 +133,13 @@ export function EventSignupForm({
         <CustomAlertMessage errorMessage={errorMessage} successMessage={successMessage} />
       </form>
     </section>
+  );
+}
+
+export function EventSignupForm(props: EventSignupFormProps) {
+  return (
+    <GoogleReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}>
+      <EventSignupFormInner {...props} />
+    </GoogleReCaptchaProvider>
   );
 }

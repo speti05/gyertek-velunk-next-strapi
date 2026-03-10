@@ -73,7 +73,37 @@ const eventsSubscribeSchema = z.object({
 });
 
 
+async function verifyRecaptcha(token: string): Promise<boolean> {
+  // Skip verification in development mode
+  if (process.env.NODE_ENV === "development") {
+    return true;
+  }
+
+  const secret = process.env.RECAPTCHA_SECRET_KEY;
+  try {
+    const res = await fetch(
+      `https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${token}`,
+      { method: "POST" }
+    );
+    const data = await res.json();
+    return data.success && data.score >= 0.5;
+  } catch {
+    return false;
+  }
+}
+
 export async function eventsSubscribeAction(prevState: any, formData: FormData) {
+  const recaptchaToken = formData.get("recaptchaToken") as string;
+  const isHuman = await verifyRecaptcha(recaptchaToken);
+  if (!isHuman) {
+    return {
+      ...prevState,
+      zodErrors: null,
+      strapiErrors: null,
+      errorMessage: MESSAGES.recaptchaFailed,
+    };
+  }
+
   const formDataObject = {
     firstName: formData.get("firstName"),
     lastName: formData.get("lastName"),
