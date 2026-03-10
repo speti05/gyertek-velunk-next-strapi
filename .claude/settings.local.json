@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm show @strapi/strapi version)",
+      "Bash(npm install)"
+    ]
+  }
+}
