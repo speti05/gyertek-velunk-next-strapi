@@ -1,7 +1,7 @@
 import { getContentBySlug } from "@/data/loaders";
 import { EventProps } from "@/types";
 import { notFound } from "next/navigation";
-import { EventSignupForm } from "@/components/EventsSignupForm";
+import { EventSignupFormNoSSR } from "@/components/EventSignupFormNoSSR";
 import { EventSignupBlockProps } from "@/types";
 
 async function loader(slug: string) {
@@ -18,7 +18,7 @@ export const EventSignupBlock = async ({ eventId }: EventSignupBlockProps) => {
     return (
         <div className="container">
             <div className="event-signup-block" id="eventSignup">
-                <EventSignupForm blocks={blocks} eventId={eventId} />
+                <EventSignupFormNoSSR blocks={blocks} eventId={eventId} />
             </div>
         </div>
     );

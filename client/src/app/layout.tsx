@@ -56,7 +56,7 @@ export default async function RootLayout({
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
         />
       </head>
-      <body className={`${luckiestGuy.variable} ${sourceSans3.variable} min-h-screen flex flex-col`}>
+      <body suppressHydrationWarning className={`${luckiestGuy.variable} ${sourceSans3.variable} min-h-screen flex flex-col`}>
         <MuiThemeProvider>
           <Header data={header} />
           {children}

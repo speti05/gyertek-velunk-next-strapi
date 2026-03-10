@@ -1,17 +1,19 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  /* config options here */
+const isDev = process.env.NODE_ENV === "development";
+
+const nextConfig = {
   images: {
+    unoptimized: isDev,
     remotePatterns: [
       {
         protocol: "http",
         hostname: "localhost",
         port: "1337",
-        pathname: "/uploads/**/*",
+        pathname: "/uploads/**",
       },
     ],
   },
 };
 
-export default nextConfig;
+export default nextConfig as NextConfig;

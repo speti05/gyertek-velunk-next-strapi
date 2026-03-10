@@ -2,7 +2,7 @@ import { ArticleProps, CustomSearchParams, EventProps } from "@/types";
 import { getContent } from "@/data/loaders";
 
 import { PaginationComponent } from "@/components/PaginationComponent";
-import { Search } from "@/components/Search";
+import { SearchNoSSR } from "@/components/SearchNoSSR";
 import { removeAccents } from "@/utils/text-utils";
 
 interface ContentListProps {
@@ -58,7 +58,7 @@ export async function ContentList({
         id={navigationId}>
         {headline}
       </h3>
-      {!!showSearch && <Search placeHolder={searchPlaceHolder} contentCollectionType={contentCollectionType} />}
+      {!!showSearch && <SearchNoSSR placeHolder={searchPlaceHolder} contentCollectionType={contentCollectionType} />}
       <div className="content-items__container--card">
         {data.map((article) => (
           <Component key={article.documentId} {...article} basePath={path} />
