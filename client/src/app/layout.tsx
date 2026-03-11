@@ -26,20 +26,14 @@ export const metadata: Metadata = {
 };
 
 async function loader() {
-  const res = await getGlobalSettings();
-  // fetchAPI now may return an object with status/statusText/body for non-OK responses
-  if ((res as any).status) {
-    const body = (res as any).body;
-    throw new Error(
-      `Failed to fetch global settings: ${ (res as any).status } ${ (res as any).statusText } ${
-        typeof body === 'string' ? body : JSON.stringify(body)
-      }`
-    );
+  try {
+    const res = await getGlobalSettings();
+    const { data } = (res as any) ?? {};
+    return { header: data?.header ?? null, footer: data?.footer ?? null };
+  } catch (error) {
+    console.error("Failed to fetch global settings:", error);
+    return { header: null, footer: null };
   }
-
-  const { data } = res as any;
-  if (!data) throw new Error("Failed to fetch global settings: empty response");
-  return { header: data?.header, footer: data?.footer };
 }
 
 export default async function RootLayout({

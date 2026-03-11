@@ -41,6 +41,6 @@ export async function fetchAPI(url: string, options: FetchAPIOptions) {
     }
   } catch (error) {
     console.error(`Error ${method} data:`, error);
-    throw error;
+    return null;
   }
 }
