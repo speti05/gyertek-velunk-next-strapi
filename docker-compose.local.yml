@@ -1,3 +1,4 @@
+# for local
 services:
   strapi:
     build: ./server
