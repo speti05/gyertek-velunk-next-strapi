@@ -12,7 +12,7 @@ import { TextContentBlock } from "@/components/blocks/OnlyTextContent";
 import { SearchableCardList } from "@/components/blocks/SearchableCardList";
 import { EventSignupBlock } from "@/components/blocks/EventSignupBlock";
 import { HeroWithTextBlock } from "@/components//blocks/HeroWithText";
-function blockRenderer(block: Block, index: number, searchParams: CustomSearchParams ) {
+function blockRenderer(block: Block, index: number, searchParams: CustomSearchParams, stayInTouchEventId?: string ) {
   switch (block.__component) {
     case "blocks.hero-section":
       return <HeroSection {...block} key={index} />;
@@ -39,12 +39,12 @@ function blockRenderer(block: Block, index: number, searchParams: CustomSearchPa
     case "blocks.hero-with-text":
       return <HeroWithTextBlock {...block} key={index}/>;
      case "blocks.event-signup-form":
-      return <EventSignupBlock {...block} eventId={null} key={index} />;  
+      return <EventSignupBlock {...block} eventId={null} key={index} stayInTouchEventId={stayInTouchEventId}/>;  
     default:
       return null;
   }
 }
 
-export function BlockRenderer({ blocks, searchParams }: { blocks: Block[];  searchParams?: CustomSearchParams }) {
-  return blocks.map((block, index) => blockRenderer(block, index, searchParams));
+export function BlockRenderer({ blocks, searchParams, stayInTouchEventId }: { blocks: Block[];  searchParams?: CustomSearchParams, stayInTouchEventId?: string }) {
+  return blocks.map((block, index) => blockRenderer(block, index, searchParams, stayInTouchEventId));
 }

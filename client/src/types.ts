@@ -49,10 +49,12 @@ export interface EventProps extends BaseBlogProps {
   price: string;
   startDate: string;
   endDate: string;
+  stayInTouchEventId?: string;
 }
 
 export interface EventSignupBlockProps extends Base<"blocks.event-signup-form"> {
   eventId: string;
+  stayInTouchEventId?: string;
 }
 
 type ComponentType =

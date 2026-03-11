@@ -12,13 +12,13 @@ async function loader(slug: string) {
   return { event: event as EventProps, blocks: event?.blocks };
 }
 
-export const EventSignupBlock = async ({ eventId }: EventSignupBlockProps) => {
+export const EventSignupBlock = async ({ eventId, stayInTouchEventId }: EventSignupBlockProps) => {
     const { blocks } = await loader("stay-in-touch");
    
     return (
         <div className="container">
             <div className="event-signup-block" id="eventSignup">
-                <EventSignupFormNoSSR blocks={blocks} eventId={eventId} />
+                <EventSignupFormNoSSR blocks={blocks} eventId={eventId} stayInTouchEventId={stayInTouchEventId} />
             </div>
         </div>
     );

@@ -25,6 +25,7 @@ const INITIAL_STATE = {
 const DEFAULT_SIGNUP_ID = "hakunoc6kul1z6lbf4j2ritt";
 
 type EventSignupFormProps = {
+  stayInTouchEventId?: string;
   blocks: Block[];
   eventId: string;
   startDate?: string;
@@ -36,8 +37,9 @@ type EventSignupFormProps = {
 };
 
 function EventSignupFormInner({
+  stayInTouchEventId,
   blocks,
-  eventId = DEFAULT_SIGNUP_ID,
+  eventId,
   startDate,
   price,
   image,
@@ -110,7 +112,7 @@ function EventSignupFormInner({
           error={zodErrors?.telephone}
           defaultValue={formState?.formData?.telephone ?? ""}
         />
-        <input hidden type="text" name="eventId" defaultValue={eventId} />
+        <input hidden type="text" name="eventId" defaultValue={eventId ?? stayInTouchEventId} />
         <SubmitButton
           text={FORM_LABELS.submit}
         />

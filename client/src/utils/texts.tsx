@@ -40,7 +40,7 @@ export const MESSAGES = {
   someThingWentWrong: "Hiba történt. Kérjük, próbáld újra később.",
   failedToSubscribe: "Sikertelen feliratkozás.",
   succesfullySubscribed: "Sikeres feliratkozás.",
-  failedToSubscribeToEvent: "Sikertelen túrajelentkezés.",
-  succesfullySubscribedToEvent: "Sikeres túrajelentkezés.",
+  failedToSubscribeToEvent: "Sikertelen jelentkezés.",
+  succesfullySubscribedToEvent: "Sikeres jelentkezés.",
   recaptchaFailed: "A biztonsági ellenőrzés sikertelen. Kérjük, próbálja újra.",
 };
