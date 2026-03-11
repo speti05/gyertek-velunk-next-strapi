@@ -1,4 +1,4 @@
-import { ArticleProps, CustomSearchParams, EventProps } from "@/types";
+import { ArticleProps, ContentCollectionType, CustomSearchParams, EventProps } from "@/types";
 import { getContent } from "@/data/loaders";
 
 import { PaginationComponent } from "@/components/PaginationComponent";
@@ -17,7 +17,7 @@ interface ContentListProps {
   searchPlaceHolder?: string;
   page?: string;
   showPagination?: boolean;
-  contentCollectionType: string;
+  contentCollectionType: ContentCollectionType;
 }
 
 async function loader<Type>(path: string, featured?: boolean, query?: string, page?:string, pageSize?:number ) {

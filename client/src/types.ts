@@ -151,12 +151,12 @@ export interface SearchableCardListProps extends Base<"blocks.searchable-card-li
   headline: string;
   showPagination: boolean;
   featured: boolean;
-  contentCollectionType: string
+  contentCollectionType: ContentCollectionType
 }
 
 export interface HeroWithCalendarProps extends Base<"blocks.hero-with-calendar">{
   headline: string;
-  contentCollectionType: string;
+  contentCollectionType: ContentCollectionType;
   image: ImageProps;
   theme: "turquoise" | "brown";
   searchParams: CustomSearchParams;
@@ -187,3 +187,5 @@ export interface FullImageProps extends Base<"blocks.full-image"> {
 export interface TextBlockProps extends Base<"blocks.text-content-block"> {
   content: string;
 }
+
+export type ContentCollectionType = "events" | "articles";

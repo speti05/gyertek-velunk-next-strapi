@@ -2,10 +2,11 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
+import { ContentCollectionType } from "@/types";
 
 interface SearchProps {
   placeHolder?: string;
-  contentCollectionType: string;
+  contentCollectionType: ContentCollectionType;
 } 
 
 export function Search({
