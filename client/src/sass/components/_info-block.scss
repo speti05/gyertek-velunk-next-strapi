@@ -1,3 +1,6 @@
+@use "../base/colors";
+@use "../base/variables";
+
 .info {
   display: flex;
   justify-content: space-between;
@@ -33,11 +36,11 @@
     margin-bottom: 3rem;
 
     &--turquoise {
-      color: $turquoise;
+      color: variables.$turquoise;
     }
 
     &--brown {
-      color: $gy-v-dark-brown;
+      color: colors.$gy-v-dark-brown;
     }
   }
 

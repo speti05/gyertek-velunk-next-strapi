@@ -1,3 +1,6 @@
+@use "../base/colors";
+@use "../base/variables";
+
 .btn {
   font-size: 2.5rem;
 
@@ -22,17 +25,17 @@
   }
 
   &--turquoise {
-    background-color: $turquoise;
+    background-color: variables.$turquoise;
     color: white;
   }
 
   &--brown {
-    background-color: $gy-v-dark-brown;
+    background-color: colors.$gy-v-dark-brown;
     color: white;
   }
 
   &--beige {
-    background-color: $beige;
+    background-color: variables.$beige;
     color: white;
   }
 }

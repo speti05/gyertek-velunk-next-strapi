@@ -1,7 +1,7 @@
-@import '../base/colors';
+@use '../base/colors';
 
 .footer {
-  background-color: $gy-v-dark-brown;
+  background-color: colors.$gy-v-dark-brown;
   color: white;
   padding: 6rem 4.8rem 4.5rem;
 

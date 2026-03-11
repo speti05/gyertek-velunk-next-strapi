@@ -1,27 +1,27 @@
-@import "base/mixins";
-@import "base/variables";
-@import "base/typography";
-@import "base/base";
-@import "base/colors";
+@use "base/mixins";
+@use "base/variables";
+@use "base/typography";
+@use "base/base";
+@use "base/colors";
 
-@import "components/header";
-@import "components/button";
-@import "components/footer";
-@import "components/hero-section";
-@import "components/info-block";
-@import "components/input";
-@import "components/content-items";
-@import "components/blog-preview";
-@import "components/pagination";
+@use "components/header";
+@use "components/button";
+@use "components/footer";
+@use "components/hero-section";
+@use "components/info-block";
+@use "components/input";
+@use "components/content-items";
+@use "components/blog-preview";
+@use "components/pagination";
 
-@import "components/blog/featured-article";
-@import "components/blog/newsletter";
-@import "components/blog/article-intro";
-@import "components/blog/article-overview";
-@import "components/blog/article-components";
-@import "components/search";
+@use "components/blog/featured-article";
+@use "components/blog/newsletter";
+@use "components/blog/article-intro";
+@use "components/blog/article-overview";
+@use "components/blog/article-components";
+@use "components/search";
 
-@import "components/events/signup-form";
-@import "pages/blog";
-@import "pages/general-page";
+@use "components/events/signup-form";
+@use "pages/blog";
+@use "pages/general-page";
 

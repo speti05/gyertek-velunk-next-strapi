@@ -1,6 +1,8 @@
-$font-color: $white;
-$font-color-hovered: $brown;
-$header-background-color: $green;
+@use "../base/variables";
+
+$font-color: variables.$white;
+$font-color-hovered: variables.$brown;
+$header-background-color: variables.$green;
 
 li{
   list-style: none;

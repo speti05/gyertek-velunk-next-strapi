@@ -1,3 +1,6 @@
+@use "../../base/colors";
+@use "../../base/variables";
+
 .signup-form {
   display: flex;
   justify-content: space-between;
@@ -19,7 +22,7 @@
     width: 45%;
     display: flex;
     flex-direction: column;
-     gap: $gap;
+     gap: variables.$gap;
 
     & .input {
       width: 100%;
@@ -36,7 +39,7 @@
 
   &__name-container {
     display: flex;
-    gap: $gap;
+    gap: variables.$gap;
 
     & .input__container {
       width: 48%;
@@ -44,14 +47,14 @@
   }
 
   &__error {
-    color: $gy-v-error;
+    color: colors.$gy-v-error;
     font-size: 2rem;
     text-align: center;
     margin-top: 1.6rem;
   }
 
   &__success {
-    color: $gy-v-success;
+    color: colors.$gy-v-success;
     font-size: 2rem;
     text-align: center;
     margin-top: 1.6rem;
