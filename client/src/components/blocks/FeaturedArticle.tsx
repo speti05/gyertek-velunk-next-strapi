@@ -14,7 +14,7 @@ export function FeaturedArticle({
     <article className="featured-article container">
       <div className="featured-article__info">
         <h3>{headline}</h3>
-        <ReactMarkdown className="copy">{excerpt}</ReactMarkdown>
+        <ReactMarkdown className="paragraph-reset copy">{excerpt}</ReactMarkdown>
         <Link href={link.href}>
           <CustomButton
             variant="contained"

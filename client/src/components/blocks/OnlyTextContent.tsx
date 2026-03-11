@@ -8,7 +8,7 @@ export function TextContentBlock({
   return (
     <div className="container">
       <section className={`onlyText}`}>
-          <ReactMarkdown className="copy">{content}</ReactMarkdown>
+          <ReactMarkdown className="paragraph-reset copy">{content}</ReactMarkdown>
       </section>
     </div>
   );
