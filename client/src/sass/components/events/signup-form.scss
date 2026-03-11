@@ -87,6 +87,7 @@
 @media (max-width: 768px) {
   .signup-form {
     flex-direction: column;
+    padding: 4rem;
 
     &__info {
       width: 100%;
@@ -95,5 +96,8 @@
     &__form {
       width: 100%;
     }
+  }
+  .search {
+    padding: 4rem;
   }
 }
