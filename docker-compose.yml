@@ -1,0 +1,27 @@
+services:
+  strapi:
+    build: ./server
+    ports:
+      - "1337:1337"
+    env_file: ./server/.env
+    volumes:
+      - strapi-data:/opt/app/.tmp        # SQLite database
+      - strapi-uploads:/opt/app/public/uploads
+    restart: unless-stopped
+
+  client:
+    build: ./client
+    ports:
+      - "3000:3000"
+    environment:
+      # Internal Docker network: use service name to reach Strapi
+      - STRAPI_API_URL=http://strapi:1337
+      - PUBLIC_API_URL=http://strapi:1337
+      - RECAPTCHA_SECRET_KEY=${RECAPTCHA_SECRET_KEY}
+    depends_on:
+      - strapi
+    restart: unless-stopped
+
+volumes:
+  strapi-data:
+  strapi-uploads:
