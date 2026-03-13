@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(npm show @strapi/strapi version)",
-      "Bash(npm install)"
+      "Bash(yarn install)",
+      "Bash(docker-compose -f docker-compose.local.yml up --build)"
     ]
   }
 }
