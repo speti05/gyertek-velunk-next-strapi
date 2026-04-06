@@ -1,4 +1,8 @@
-'use server'
+// have to force dynamic
+// use server is only for Server Action Files only
+// page components are already server-side by default in the App Router without it
+
+//export const dynamic = 'force-dynamic';
 
 import { BlockRenderer } from "@/components/BlockRenderer";
 import { getContentBySlug, getHomePage } from "@/data/loaders";
@@ -12,8 +16,8 @@ async function loader() {
 }
 
 async function stayInTouchloader() {
-  const { data } = await getContentBySlug('stay-in-touch', "/api/events");
-  const event = data[0];
+  const result = await getContentBySlug('stay-in-touch', "/api/events");
+  const event = result?.data?.[0];
   if (!event) throw notFound();
   return { stayInTouchEvent: event as EventProps};
 }
