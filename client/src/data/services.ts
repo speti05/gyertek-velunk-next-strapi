@@ -1,4 +1,4 @@
-const BASE_URL = process.env.PUBLIC_API_URL ?? "http://localhost:1337";
+const BASE_URL = process.env.STRAPI_API_URL ?? "http://localhost:1337";
 
 export async function subscribeService(email: string) {
   const url = new URL("/api/newsletter-signups", BASE_URL);
@@ -27,12 +27,10 @@ export interface EventsSubscribeProps {
   lastName: string;
   email: string;
   telephone: string;
-  event: {
-    connect: [string];
-  };
+  event: { connect: string[] };
 }
 
-export async function eventsSubscribeService(data: EventsSubscribeProps) {
+export async function eventsSubscribeService(jwt: string, data: EventsSubscribeProps) {
   const url = new URL("/api/event-signups", BASE_URL);
 
   try {
@@ -40,6 +38,7 @@ export async function eventsSubscribeService(data: EventsSubscribeProps) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
       },
       body: JSON.stringify({ data: { ...data } }),
     });

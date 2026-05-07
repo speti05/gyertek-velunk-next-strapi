@@ -90,15 +90,6 @@ export const theme = createTheme({
         },
       },
     },
-    MuiFormControl: {
-      styleOverrides: {
-        // TODO: bad idea!!!
-        // root: {
-        //   margin: '1rem',
-        //   minHeight: '7.5rem',
-        // },
-      },
-    },
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
@@ -197,6 +188,64 @@ export const theme = createTheme({
         },
         icon: {
           fontSize: '2rem',
+        },
+      },
+    },
+
+    MuiCheckbox: {
+      styleOverrides: {
+        root: {
+          color: colors.checkbox.unchecked,
+          '&.Mui-checked': {
+            color: colors.checkbox.checked,
+          },
+          '&:hover': {
+            backgroundColor: colors.checkbox.hover,
+          },
+          '&.Mui-error': {
+            color: colors.checkbox.error,
+          },
+        },
+      },
+    },
+
+    MuiFormControlLabel: {
+      styleOverrides: {
+        label: {
+          fontFamily: 'var(--font-source-sans-3), sans-serif',
+          fontSize: '1.6rem',
+          fontWeight: 300,
+          fontStyle: 'normal',
+        },
+      },
+    },
+
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          fontFamily: 'var(--font-source-sans-3), sans-serif',
+        },
+      },
+    },
+
+    MuiDialogTitle: {
+      styleOverrides: {
+        root: {
+          fontFamily: 'var(--font-luckiest-guy), cursive',
+          fontSize: '2rem',
+          fontWeight: 400,
+          fontStyle: 'normal',
+        },
+      },
+    },
+
+    MuiDialogContent: {
+      styleOverrides: {
+        root: {
+          fontFamily: 'var(--font-source-sans-3), sans-serif',
+          fontSize: '1.8rem',
+          fontWeight: 300,
+          fontStyle: 'normal',
         },
       },
     },

@@ -1,17 +1,24 @@
 "use client";
 
+import React from "react";
 import Alert from "@mui/material/Alert";
 
 interface AlertMessageProps {
-  errorMessage?: string | null;
-  successMessage?: string | null;
+  errorMessage?: React.ReactNode | null;
+  successMessage?: React.ReactNode | null;
+  infoMessage?: React.ReactNode | null;
 }
 
-export function CustomAlertMessage({ errorMessage, successMessage }: AlertMessageProps) {
-  if (!errorMessage && !successMessage) return null;
+export function CustomAlertMessage({ errorMessage, successMessage, infoMessage }: AlertMessageProps) {
+  if (!errorMessage && !successMessage && !infoMessage) return null;
 
   return (
     <>
+      {infoMessage && (
+        <Alert severity="info" sx={{ mt: 1 }}>
+          {infoMessage}
+        </Alert>
+      )}
       {errorMessage && (
         <Alert severity="error" sx={{ mt: 1 }}>
           {errorMessage}

@@ -9,7 +9,7 @@ export function formatDate(dateString: string): string {
     }
 
     // Format the date using Intl.DateTimeFormat for more consistent results
-    const formatter = new Intl.DateTimeFormat("en-US", {
+    const formatter = new Intl.DateTimeFormat("hu-HU", {
       weekday: "long",
       year: "numeric",
       month: "long",

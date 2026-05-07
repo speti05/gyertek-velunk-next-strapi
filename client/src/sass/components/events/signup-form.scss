@@ -60,6 +60,31 @@
     margin-top: 1.6rem;
   }
 
+  &__status-message {
+    font-size: 1.6rem;
+    color: variables.$dark-brown;
+    line-height: 1.5;
+
+    &--success {
+      color: colors.$gy-v-success;
+      font-weight: 600;
+    }
+  }
+
+  &__status-link {
+    color: variables.$green;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: variables.$brown;
+    }
+  }
+
+  &__submit-btn {
+    align-self: flex-start;
+  }
+
   &__image {
     margin-top: 10rem;
     margin-bottom: 2rem;

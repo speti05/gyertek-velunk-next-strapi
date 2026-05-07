@@ -37,5 +37,11 @@ export const colors = {
     focused: baseColors.lightBrown,
     error: baseColors.red,
   },
+  checkbox: {
+    unchecked: darken(0.2, baseColors.lightBrown),
+    checked: baseColors.darkGreen,
+    hover: lighten(0.2, baseColors.darkGreen),
+    error: baseColors.red,
+  },
   // todo: error + success
 } as const;

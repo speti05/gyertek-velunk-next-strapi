@@ -1,0 +1,197 @@
+@use "../base/variables";
+@use "../base/colors";
+
+.auth-page {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 2rem;
+
+  &__card {
+    background-color: variables.$light-beige;
+    border-radius: 1.6rem;
+    padding: 5rem 4rem;
+    width: 100%;
+    max-width: 54rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+  }
+
+  &__title {
+    font-family: var(--font-luckiest-guy), cursive;
+    font-size: 3.6rem;
+    color: variables.$green;
+    text-align: center;
+
+    &--register {
+      color: variables.$dark-brown;
+    }
+  }
+
+  &__greeting {
+    font-size: 2rem;
+    text-align: center;
+    color: variables.$dark-brown;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+
+    & > button {
+      width: 100%;
+    }
+  }
+
+  &__divider {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    color: variables.$dark-brown;
+    font-size: 1.4rem;
+
+    &::before,
+    &::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background-color: variables.$brown;
+      opacity: 0.5;
+    }
+  }
+
+  &__hint {
+    font-size: 1.4rem;
+    text-align: center;
+    color: variables.$dark-brown;
+  }
+
+  &__logout {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__footer-text {
+    font-size: 1.6rem;
+    text-align: center;
+    color: variables.$dark-brown;
+  }
+
+  &__link {
+    color: variables.$green;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: variables.$brown;
+    }
+  }
+
+  &__password-rules {
+    list-style: none;
+    padding: 0;
+    margin: -1rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  &__password-rule {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.2rem;
+    color: variables.$dark-brown;
+    opacity: 0.5;
+    transition: color 0.2s ease, opacity 0.2s ease;
+
+    &--met {
+      color: variables.$green;
+      opacity: 1;
+    }
+  }
+
+  &__forgot-link {
+    font-size: 1.3rem;
+    text-align: center;
+
+    a {
+      color: variables.$dark-brown;
+      text-decoration: underline;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: variables.$green;
+      }
+    }
+  }
+
+  &--profile {
+    align-items: flex-start;
+    padding: 4rem 2rem;
+  }
+
+  &__card--wide {
+    max-width: 72rem;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+
+  &__section-title {
+    font-family: var(--font-luckiest-guy), cursive;
+    font-size: 2.4rem;
+    color: variables.$dark-brown;
+  }
+
+  &__tours-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__tour-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    background-color: color-mix(in srgb, variables.$light-beige 60%, white);
+    border: 1px solid color-mix(in srgb, variables.$brown 20%, transparent);
+    border-radius: 0.8rem;
+    padding: 1.2rem 1.6rem;
+  }
+
+  &__tour-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: variables.$green;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: variables.$brown;
+      text-decoration: underline;
+    }
+  }
+
+  &__tour-meta {
+    font-size: 1.4rem;
+    color: variables.$dark-brown;
+    opacity: 0.8;
+  }
+}

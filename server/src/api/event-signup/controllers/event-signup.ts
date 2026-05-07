@@ -8,6 +8,24 @@ import { sendSignupEmails } from '../services/email';
 
 export default factories.createCoreController('api::event-signup.event-signup', ({ strapi }) => ({
 
+  async find(ctx) {
+    const userId = ctx.state.user?.id;
+    if (!userId) {
+      return ctx.unauthorized();
+    }
+
+    const entries = await strapi.db.query('api::event-signup.event-signup').findMany({
+      where: { user: { id: userId } },
+      populate: {
+        event: {
+          select: ['title', 'startDate', 'price', 'slug', 'documentId'],
+        },
+      },
+    });
+
+    return { data: entries };
+  },
+
   async create(ctx) {
     // Populate the event relation to include event details in the response
     ctx.query = { ...ctx.query, populate: ['event'] };

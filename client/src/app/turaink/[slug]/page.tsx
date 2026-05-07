@@ -6,6 +6,9 @@ import { getContentBySlug } from "@/data/loaders";
 import { notFound } from "next/navigation";
 import { EventSignupForm } from "@/components/EventsSignupForm";
 import { EventCard } from "@/components/EventCard";
+import { cookies } from "next/headers";
+import { getUserProfileService } from "@/data/auth-service";
+import { getUserEventSignupsLoader } from "@/data/loaders";
 
 async function loader(slug: string) {
   const { data } = await getContentBySlug(slug, "/api/events");
@@ -22,7 +25,16 @@ interface ParamsProps {
 export default async function SingleEventRoute({ params, searchParams }: ParamsProps) {
   const slug = (await params).slug;
   const { event, blocks } = await loader(slug);
-  //const { page, query } = await searchParams;
+
+  const cookieStore = await cookies();
+  const jwt = cookieStore.get("jwt")?.value ?? null;
+  const userProfile = jwt ? await getUserProfileService(jwt) : null;
+
+  let alreadySignedUp = false;
+  if (userProfile && jwt) {
+    const signups = await getUserEventSignupsLoader(jwt);
+    alreadySignedUp = signups.some((s) => s.event?.documentId === event.documentId);
+  }
 
   return (
     <>
@@ -32,9 +44,12 @@ export default async function SingleEventRoute({ params, searchParams }: ParamsP
           <EventSignupForm
             blocks={blocks}
             eventId={event.documentId}
+            eventTitle={event.title}
             startDate={event.startDate}
             price={event.price}
             image={{ url: event?.image?.url, alt: event?.image?.alternativeText || "Event image" }}
+            userProfile={userProfile}
+            alreadySignedUp={alreadySignedUp}
           />
         </div>
 

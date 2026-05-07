@@ -1,59 +1,154 @@
 "use client";
 
-import { useActionState, useRef } from "react";
+import { useActionState, useRef, useState } from "react";
 import { BlockRenderer } from "@/components/BlockRenderer";
 import { Block } from "@/types";
 import { formatDate } from "@/utils/format-date";
 import { StrapiImage } from "@/components/StrapiImage";
-import { SubmitButton } from "@/components/SubmitButton";
 import { eventsSubscribeAction } from "@/data/actions";
-import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
-import { FORM_LABELS } from "@/utils/texts";
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
 import { RecaptchaProvider } from "@/components/recaptcha-provider";
 import { useRecaptchaSubmit } from "@/hooks/use-recaptcha-submit";
+import { UserProfile } from "@/data/auth-service";
+import {
+  FORM_LABELS,
+  SIGNUP_BUTTON_LABEL,
+  SIGNUP_CONFIRM_TITLE,
+  SIGNUP_CONFIRM_YES,
+  SIGNUP_CONFIRM_NO,
+  SIGNUP_LOGIN_REQUIRED,
+  SIGNUP_LOGIN_LINK,
+  SIGNUP_PROFILE_INCOMPLETE,
+  SIGNUP_PROFILE_LINK,
+  SIGNUP_ALREADY_SIGNED_UP,
+  SIGNUP_CONFIRM_TERMS_LABEL,
+  SIGNUP_CONFIRM_TERMS_LINK_LABEL,
+  SIGNUP_CONFIRM_TERMS_HREF,
+} from "@/utils/texts";
+import Link from "next/link";
+import Button from "@mui/material/Button";
+import { CustomDialog } from "@/components/custom-ui-components/custom-dialog/custom-dialog";
+import { CustomCheckbox } from "@/components/custom-ui-components/custom-checkbox/custom-checkbox";
 
 const INITIAL_STATE = {
   zodErrors: null,
   strapiErrors: null,
   errorMessage: null,
   successMessage: null,
-  formData: null,
 };
-
-// TODO: fix this hardcoded id (id of the "stay in touch" event)
-const DEFAULT_SIGNUP_ID = "hakunoc6kul1z6lbf4j2ritt";
 
 type EventSignupFormProps = {
   stayInTouchEventId?: string;
   blocks: Block[];
   eventId: string;
+  eventTitle: string;
   startDate?: string;
   price?: string;
   image?: {
     url: string;
     alt: string;
   };
+  userProfile: UserProfile | null;
+  alreadySignedUp: boolean;
 };
 
 function EventSignupFormInner({
   stayInTouchEventId,
   blocks,
   eventId,
+  eventTitle,
   startDate,
   price,
   image,
+  userProfile,
+  alreadySignedUp,
 }: EventSignupFormProps) {
   const [formState, formAction] = useActionState(
     eventsSubscribeAction,
-    INITIAL_STATE
+    INITIAL_STATE,
   );
   const formRef = useRef<HTMLFormElement>(null);
   const handleSubmit = useRecaptchaSubmit(formRef, formAction, "event_signup");
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
-  const zodErrors = formState?.zodErrors;
-  const errorMessage = formState?.strapiErrors?.message ?? formState?.errorMessage;
+  function handleDialogClose() {
+    setDialogOpen(false);
+    setTermsAccepted(false);
+  }
+
+  const errorMessage =
+    formState?.strapiErrors?.message ?? formState?.errorMessage;
   const successMessage = formState?.successMessage;
+
+  const hasCompleteProfile = !!(
+    userProfile?.firstName &&
+    userProfile?.lastName &&
+    userProfile?.phone
+  );
+
+  function renderSignupArea() {
+    if (successMessage) return null;
+
+    if (alreadySignedUp) {
+      return <CustomAlertMessage infoMessage={SIGNUP_ALREADY_SIGNED_UP} />;
+    }
+
+    if (!userProfile) {
+      return (
+        <>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            disabled
+            className="signup-form__submit-btn"
+          >
+            {SIGNUP_BUTTON_LABEL}
+          </Button>
+          <CustomAlertMessage
+            infoMessage={
+              <>
+                {SIGNUP_LOGIN_REQUIRED}{" "}
+                <Link href="/login" className="signup-form__status-link">
+                  {SIGNUP_LOGIN_LINK}
+                </Link>
+                .
+              </>
+            }
+          />
+        </>
+      );
+    }
+
+    if (!hasCompleteProfile) {
+      return (
+        <CustomAlertMessage
+          infoMessage={
+            <>
+              {SIGNUP_PROFILE_INCOMPLETE}{" "}
+              <Link href="/profile" className="signup-form__status-link">
+                {SIGNUP_PROFILE_LINK}
+              </Link>
+              .
+            </>
+          }
+        />
+      );
+    }
+
+    return (
+      <Button
+        variant="contained"
+        color="primary"
+        size="large"
+        onClick={() => setDialogOpen(true)}
+        className="signup-form__submit-btn"
+      >
+        {SIGNUP_BUTTON_LABEL}
+      </Button>
+    );
+  }
 
   return (
     <section className="signup-form">
@@ -70,6 +165,7 @@ function EventSignupFormInner({
           </p>
         )}
       </div>
+
       <form ref={formRef} className="signup-form__form" onSubmit={handleSubmit}>
         {image && (
           <StrapiImage
@@ -80,44 +176,75 @@ function EventSignupFormInner({
             className="signup-form__image"
           />
         )}
-        <div className="signup-form__name-container">
-          <CustomTextInput
-            id="lastName"
-            label={FORM_LABELS.lastName}
-            name="lastName"
-            error={zodErrors?.lastName}
-            defaultValue={formState?.formData?.lastName ?? ""}
-          />
-          <CustomTextInput
-            id="firstName"
-            label={FORM_LABELS.firstName}
-            name="firstName"
-            error={zodErrors?.firstName}
-            defaultValue={formState?.formData?.firstName ?? ""}
-          />
-        </div>
-        <CustomTextInput
-          id="email"
-          label={FORM_LABELS.email}
-          name="email"
-          type="email"
-          error={zodErrors?.email}
-          defaultValue={formState?.formData?.email ?? ""}
-        />
-        <CustomTextInput
-          id="phone"
-          label={FORM_LABELS.telephone}
-          name="telephone"
+
+        <input
+          hidden
           type="text"
-          error={zodErrors?.telephone}
-          defaultValue={formState?.formData?.telephone ?? ""}
+          name="eventId"
+          defaultValue={eventId ?? stayInTouchEventId}
         />
-        <input hidden type="text" name="eventId" defaultValue={eventId ?? stayInTouchEventId} />
-        <SubmitButton
-          text={FORM_LABELS.submit}
+
+        {renderSignupArea()}
+
+        <CustomAlertMessage
+          errorMessage={errorMessage}
+          successMessage={successMessage}
         />
-        <CustomAlertMessage errorMessage={errorMessage} successMessage={successMessage} />
       </form>
+
+      <CustomDialog
+        open={dialogOpen}
+        onClose={handleDialogClose}
+        title={SIGNUP_CONFIRM_TITLE}
+        cancelLabel={SIGNUP_CONFIRM_NO}
+        confirmLabel={SIGNUP_CONFIRM_YES}
+        confirmDisabled={!termsAccepted}
+        onConfirm={() => {
+          handleDialogClose();
+          formRef.current?.requestSubmit();
+        }}
+      >
+        <div className="my-6">
+          <h4 className="text-center">{eventTitle}</h4>
+          <div className="grid grid-cols-2 gap-4 mt-10 mb-10">
+            {startDate && (
+              <>
+                <span><strong>{FORM_LABELS.startDate}:</strong></span>
+                <span>{formatDate(startDate)}</span>
+              </>
+            )}
+            {price && (
+              <>
+                <span><strong>{FORM_LABELS.price}:</strong></span>
+                <span>{price}</span>
+              </>
+            )}
+          </div>
+        </div>
+        <CustomCheckbox
+          checked={termsAccepted}
+          size="large"
+          onChange={(e) =>
+            setTermsAccepted((e.target as HTMLInputElement).checked)
+          }
+          label={
+            <>
+              {SIGNUP_CONFIRM_TERMS_LABEL}
+              <Link
+                href={SIGNUP_CONFIRM_TERMS_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: "rgb(79, 182, 169)",
+                  textDecoration: "underline",
+                }}
+              >
+                {SIGNUP_CONFIRM_TERMS_LINK_LABEL}
+              </Link>
+            </>
+          }
+        />
+      </CustomDialog>
     </section>
   );
 }

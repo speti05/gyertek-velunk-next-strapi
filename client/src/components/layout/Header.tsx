@@ -3,6 +3,8 @@ import type { LinkProps, LogoProps } from "@/types";
 import Link from "next/link";
 import { StrapiImage } from "../StrapiImage";
 import { useState } from "react";
+import { AUTH_PROFILE_NAV_LABEL, AUTH_LOGIN_LABEL } from "@/utils/texts";
+import { useAuth } from "@/context/auth-context";
 
 
 interface HeaderProps {
@@ -15,10 +17,13 @@ interface HeaderProps {
 
 export function Header({ data }: HeaderProps) {
   const [isActive, setIsActive] = useState(false);
-
+  const { isLoggedIn } = useAuth();
   if (!data) return null;
 
   const { logo, navigation } = data;
+  const authHref = isLoggedIn ? "/profile" : "/login";
+  const authLabel = isLoggedIn ? AUTH_PROFILE_NAV_LABEL : AUTH_LOGIN_LABEL;
+
   return (
     <>
       <header>
@@ -43,6 +48,11 @@ export function Header({ data }: HeaderProps) {
               </Link>
             </li>
           ))}
+            <li>
+              <Link href={authHref} target="_self">
+                <span className="nav-link" onClick={() => setIsActive(false)}>{authLabel}</span>
+              </Link>
+            </li>
         </ul>
           <div className={`hamburger ${isActive ? "active" : ""}`} onClick={() => setIsActive(!isActive)}>
             <span className="bar"></span>
@@ -51,6 +61,6 @@ export function Header({ data }: HeaderProps) {
           </div>
         </nav>
       </header>
-    </>    
+    </>
   );
 }

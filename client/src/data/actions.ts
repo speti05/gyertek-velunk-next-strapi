@@ -1,6 +1,8 @@
 "use server";
 import { z } from "zod";
-import { subscribeService, eventsSubscribeService, type EventsSubscribeProps } from "./services";
+import { cookies } from "next/headers";
+import { subscribeService, eventsSubscribeService } from "./services";
+import { getUserProfileService } from "./auth-service";
 import { MESSAGES } from "@/utils/texts";
 import { isDev } from "@clientRoot/env";
 
@@ -17,7 +19,7 @@ export async function subscribeAction(prevState: any, formData: FormData) {
     email: email
   });
 
-  if (!validatedFields.success) {    
+  if (!validatedFields.success) {
     return {
       ...prevState,
       zodErrors: validatedFields.error.flatten().fieldErrors,
@@ -52,30 +54,9 @@ export async function subscribeAction(prevState: any, formData: FormData) {
     errorMessage: null,
     successMessage: MESSAGES.succesfullySubscribed,
   };
-
 }
-const phoneRegex = /^(\+36|06)\d{9}$/;
-
-const eventsSubscribeSchema = z.object({
-  firstName: z.string().min(1, {
-    message: MESSAGES.invalidFirstName,
-  }),
-  lastName: z.string().min(1, {
-    message: MESSAGES.invalidLastName,
-  }),
-  email: z.string().email({
-    message: MESSAGES.emailInvalid,
-  }),
-  telephone: z.string()
-    .min(1, { message: MESSAGES.enterPhoneNumber })
-    .regex(phoneRegex, {
-      message: MESSAGES.invalidTelephone,
-    }),
-});
-
 
 async function verifyRecaptcha(token: string | null): Promise<boolean> {
-  // Skip verification in development mode or without a token
   if (isDev || !token) {
     return true;
   }
@@ -105,35 +86,35 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
     };
   }
 
-  const formDataObject = {
-    firstName: formData.get("firstName"),
-    lastName: formData.get("lastName"),
-    email: formData.get("email"),
-    telephone: formData.get("telephone"),
-    eventId: formData.get("eventId"),
+  const eventId = formData.get("eventId") as string;
+  if (!eventId) {
+    return { ...prevState, zodErrors: null, strapiErrors: null, errorMessage: MESSAGES.someThingWentWrong };
   }
 
-  const validatedFields = eventsSubscribeSchema.safeParse(formDataObject);
-
-  if (!validatedFields.success) {
-    return {
-      ...prevState,
-      zodErrors: validatedFields.error.flatten().fieldErrors,
-      strapiErrors: null,
-      formData: {
-        ...formDataObject,
-      },
-    };
+  // Get JWT from cookie
+  const cookieStore = await cookies();
+  const jwt = cookieStore.get("jwt")?.value;
+  if (!jwt) {
+    return { ...prevState, zodErrors: null, strapiErrors: null, errorMessage: MESSAGES.loginRequired };
   }
 
-  const dataToSend: EventsSubscribeProps = {
-    ...(validatedFields.data as Required<typeof validatedFields.data>),
-    event: {
-      connect: [formDataObject.eventId as string],
-    },
-  };
+  // Get user profile
+  const userProfile = await getUserProfileService(jwt);
+  if (!userProfile) {
+    return { ...prevState, zodErrors: null, strapiErrors: null, errorMessage: MESSAGES.loginRequired };
+  }
 
-  const responseData = await eventsSubscribeService(dataToSend);
+  if (!userProfile.firstName || !userProfile.lastName || !userProfile.phone) {
+    return { ...prevState, zodErrors: null, strapiErrors: null, errorMessage: MESSAGES.missingProfileData };
+  }
+
+  const responseData = await eventsSubscribeService(jwt, {
+    firstName: userProfile.firstName,
+    lastName: userProfile.lastName,
+    email: userProfile.email,
+    telephone: userProfile.phone,
+    event: { connect: [eventId] },
+  });
 
   if (!responseData) {
     return {
@@ -149,11 +130,7 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
       ...prevState,
       strapiErrors: responseData.error,
       zodErrors: null,
-      formData: {
-        ...formDataObject,
-      },
       errorMessage: MESSAGES.failedToSubscribeToEvent,
-
     };
   }
 
@@ -162,7 +139,6 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
     zodErrors: null,
     strapiErrors: null,
     errorMessage: null,
-    formData: null,
     successMessage: MESSAGES.succesfullySubscribedToEvent,
   };
 }

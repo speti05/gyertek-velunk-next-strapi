@@ -302,6 +302,32 @@ export async function getContentBySlug(slug: string, path: string) {
   return fetchAPI(url.href, { method: "GET" });
 }
 
+export interface EventSignupEntry {
+  id: number;
+  documentId: string;
+  event: {
+    documentId: string;
+    title: string;
+    startDate: string | null;
+    price: string | null;
+    slug: string;
+  } | null;
+}
+
+export async function getUserEventSignupsLoader(
+  jwt: string
+): Promise<EventSignupEntry[]> {
+  const url = new URL("/api/event-signups", BASE_URL);
+
+  const result = await fetchAPI(url.href, {
+    method: "GET",
+    authToken: jwt,
+    next: { revalidate: 0 },
+  });
+
+  return result?.data ?? [];
+}
+
 export async function getContentForCalendar(
   path: string,
   year: number,

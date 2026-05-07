@@ -3,11 +3,14 @@ import { Luckiest_Guy, Source_Sans_3 } from "next/font/google";
 import "../sass/main.scss";
 import "./globals.css";
 
+import { cookies } from "next/headers";
 import { getGlobalSettings } from "@/data/loaders";
+import { SITE_TITLE, SITE_DESCRIPTION } from "@/utils/texts";
 
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MuiThemeProvider } from "@/components/providers/theme-provider/theme-provider";
+import { AuthProvider } from "@/context/auth-context";
 
 const luckiestGuy = Luckiest_Guy({
   subsets: ["latin"],
@@ -21,8 +24,8 @@ const sourceSans3 = Source_Sans_3({
 });
 
 export const metadata: Metadata = {
-  title: "Gyertek Velünk",
-  description: "Turák magyarországon és külföldön.",
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
 };
 
 async function loader() {
@@ -42,6 +45,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const { header, footer } = await loader();
+  const cookieStore = await cookies();
+  const isLoggedIn = !!cookieStore.get("jwt")?.value;
+
   return (
     <html lang="en">
       <head>
@@ -52,9 +58,11 @@ export default async function RootLayout({
       </head>
       <body suppressHydrationWarning className={`${luckiestGuy.variable} ${sourceSans3.variable} min-h-screen flex flex-col`}>
         <MuiThemeProvider>
-          <Header data={header} />
-          {children}
-          <Footer data={footer} />
+          <AuthProvider isLoggedIn={isLoggedIn}>
+            <Header data={header} />
+            {children}
+            <Footer data={footer} />
+          </AuthProvider>
         </MuiThemeProvider>
       </body>
     </html>
