@@ -7,19 +7,22 @@ interface RateEntry {
 const rateLimitStore = new Map<string, RateEntry>();
 
 // Clean up expired entries every 10 minutes to prevent memory leaks
-setInterval(() => {
-  const now = Date.now();
-  for (const [key, entry] of rateLimitStore) {
-    if (entry.resetAt <= now) rateLimitStore.delete(key);
-  }
-}, 10 * 60 * 1000);
+setInterval(
+  () => {
+    const now = Date.now();
+    for (const [key, entry] of rateLimitStore) {
+      if (entry.resetAt <= now) rateLimitStore.delete(key);
+    }
+  },
+  10 * 60 * 1000
+);
 
 function getClientIp(ctx: any): string {
   return (
-    ctx.request.headers['cf-connecting-ip'] ||
-    ctx.request.headers['x-forwarded-for']?.split(',')[0].trim() ||
+    ctx.request.headers["cf-connecting-ip"] ||
+    ctx.request.headers["x-forwarded-for"]?.split(",")[0].trim() ||
     ctx.request.ip ||
-    'unknown'
+    "unknown"
   );
 }
 
@@ -43,7 +46,7 @@ function isRateLimited(ctx: any, key: string, limit: number, windowMs: number): 
 
   if (entry.count > limit) {
     const retryAfter = Math.ceil((entry.resetAt - now) / 1000);
-    ctx.set('Retry-After', String(retryAfter));
+    ctx.set("Retry-After", String(retryAfter));
     ctx.tooManyRequests(`Too many attempts. Please try again in ${retryAfter} seconds.`);
     return true;
   }
@@ -85,14 +88,17 @@ export default (plugin: any) => {
     try {
       await originalEmailConfirmation(ctx);
     } catch {
-      const pluginStore = strapi.store({ type: 'plugin', name: 'users-permissions' });
-      const settings = (await pluginStore.get({ key: 'advanced' })) as Record<string, string> | null;
+      const pluginStore = strapi.store({ type: "plugin", name: "users-permissions" });
+      const settings = (await pluginStore.get({ key: "advanced" })) as Record<
+        string,
+        string
+      > | null;
       const redirectUrl = settings?.email_confirmation_redirection;
 
       if (redirectUrl) {
         ctx.redirect(`${redirectUrl}?error=invalid`);
       } else {
-        ctx.badRequest('Invalid confirmation token');
+        ctx.badRequest("Invalid confirmation token");
       }
     }
   };
@@ -100,7 +106,9 @@ export default (plugin: any) => {
   plugin.controllers.auth.resetPassword = async (ctx: any) => {
     const code = ctx.request.body?.code;
     const userBeforeReset = code
-      ? await strapi.db.query('plugin::users-permissions.user').findOne({ where: { resetPasswordToken: code } })
+      ? await strapi.db
+          .query("plugin::users-permissions.user")
+          .findOne({ where: { resetPasswordToken: code } })
       : null;
 
     await originalResetPassword(ctx);
@@ -108,7 +116,7 @@ export default (plugin: any) => {
     // Password reset proves email ownership — confirm the user if not already confirmed.
     // We use the pre-fetched user because ctx.body.user may be sanitized (no id exposed).
     if (ctx.status === 200 && userBeforeReset?.id) {
-      await strapi.db.query('plugin::users-permissions.user').update({
+      await strapi.db.query("plugin::users-permissions.user").update({
         where: { id: userBeforeReset.id },
         data: { confirmed: true },
       });

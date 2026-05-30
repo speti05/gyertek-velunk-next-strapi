@@ -4,10 +4,10 @@ $font-color: variables.$white;
 $font-color-hovered: variables.$brown;
 $header-background-color: variables.$green;
 
-li{
+li {
   list-style: none;
 }
-.navbar{
+.navbar {
   width: 100%;
   height: 100px;
   display: flex;
@@ -28,31 +28,31 @@ li{
     filter: drop-shadow(10px 10px 10px #222);
   }
 }
-.nav-menu{
+.nav-menu {
   display: flex;
   align-items: center;
   gap: 4rem;
 
   li > a > span {
-   font-family: var(--font-luckiest-guy), cursive;
+    font-family: var(--font-luckiest-guy), cursive;
   }
 }
-.nav-branding{
+.nav-branding {
   font-size: 2rem;
 }
 /* transition for links */
-.nav-link{
+.nav-link {
   transition: 0.5s ease;
 }
-.nav-link:hover{
+.nav-link:hover {
   color: $font-color-hovered;
 }
-.hamburger{
+.hamburger {
   z-index: 1000;
   display: none;
   cursor: pointer;
 }
-.bar{
+.bar {
   width: 25px;
   height: 3px;
   margin: 5px auto;
@@ -60,27 +60,27 @@ li{
   transition: all 0.3s ease-in-out;
   background: white;
 }
-.nav-item{
+.nav-item {
   padding: 0 1.5rem;
 }
-@media(max-width: 760px){
-  .bar{
+@media (max-width: 760px) {
+  .bar {
     display: block;
     background-color: $font-color;
   }
-  .hamburger{
+  .hamburger {
     display: block;
   }
-  .hamburger.active .bar:nth-child(2){
+  .hamburger.active .bar:nth-child(2) {
     opacity: 0;
   }
-  .hamburger.active .bar:nth-child(1){
-    transform: rotate(45deg) translateY(11.5px); 
-  }  
-  .hamburger.active .bar:nth-child(3){
-    transform: rotate(-45deg) translateY(-11.5px); 
+  .hamburger.active .bar:nth-child(1) {
+    transform: rotate(45deg) translateY(11.5px);
   }
-  .nav-menu{
+  .hamburger.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translateY(-11.5px);
+  }
+  .nav-menu {
     z-index: 999;
     position: fixed;
     right: -100%;
@@ -90,14 +90,13 @@ li{
     background: $header-background-color;
     transition: 0.3s;
   }
-  .nav-item{
+  .nav-item {
     padding: 1.5rem 0;
   }
-  
-  .nav-menu.active{
+
+  .nav-menu.active {
     right: 0;
     top: 0;
     padding: 30px 0;
   }
-  
 }

@@ -16,21 +16,23 @@ async function loader() {
 }
 
 async function stayInTouchloader() {
-  const result = await getContentBySlug('stay-in-touch', "/api/events");
+  const result = await getContentBySlug("stay-in-touch", "/api/events");
   const event = result?.data?.[0];
   if (!event) throw notFound();
-  return { stayInTouchEvent: event as EventProps};
+  return { stayInTouchEvent: event as EventProps };
 }
 
-export default async function HomeRoute({
-  searchParams,
-}: PageParams) {
+export default async function HomeRoute({ searchParams }: PageParams) {
   const data = await loader();
   const { stayInTouchEvent } = await stayInTouchloader();
   const blocks = data?.blocks || [];
   return (
     <div>
-      <BlockRenderer blocks={blocks} searchParams={await searchParams} stayInTouchEventId={stayInTouchEvent.documentId}/>
+      <BlockRenderer
+        blocks={blocks}
+        searchParams={await searchParams}
+        stayInTouchEventId={stayInTouchEvent.documentId}
+      />
     </div>
   );
 }

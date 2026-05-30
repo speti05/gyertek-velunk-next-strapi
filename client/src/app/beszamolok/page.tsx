@@ -17,11 +17,9 @@ async function loader(slug: string) {
 }
 
 interface PageProps {
-  searchParams: Promise<{ page?: string; query?: string }>
+  searchParams: Promise<{ page?: string; query?: string }>;
 }
 export default async function BlogRoute({ searchParams }: PageProps) {
   const { blocks } = await loader("beszamolok");
-  return (
-      <BlockRenderer blocks={blocks} searchParams={await searchParams} />
-  );
+  return <BlockRenderer blocks={blocks} searchParams={await searchParams} />;
 }

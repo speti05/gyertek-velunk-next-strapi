@@ -14,7 +14,7 @@ import { AuthProvider } from "@/context/auth-context";
 
 const luckiestGuy = Luckiest_Guy({
   subsets: ["latin"],
-  weight: '400',
+  weight: "400",
   variable: "--font-luckiest-guy",
 });
 
@@ -51,12 +51,12 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
       </head>
-      <body suppressHydrationWarning className={`${luckiestGuy.variable} ${sourceSans3.variable} min-h-screen flex flex-col`}>
+      <body
+        suppressHydrationWarning
+        className={`${luckiestGuy.variable} ${sourceSans3.variable} min-h-screen flex flex-col`}
+      >
         <MuiThemeProvider>
           <AuthProvider isLoggedIn={isLoggedIn}>
             <Header data={header} />

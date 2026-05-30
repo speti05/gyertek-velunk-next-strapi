@@ -1,4 +1,4 @@
-@use '../base/colors';
+@use "../base/colors";
 
 .footer {
   background-color: colors.$gy-v-dark-brown;
@@ -26,7 +26,8 @@
     }
 
     &--white {
-      filter: invert(100%) sepia(0%) saturate(7499%) hue-rotate(25deg) brightness(102%) contrast(101%);
+      filter: invert(100%) sepia(0%) saturate(7499%) hue-rotate(25deg) brightness(102%)
+        contrast(101%);
     }
   }
 

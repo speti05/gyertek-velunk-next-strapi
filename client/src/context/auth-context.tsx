@@ -15,11 +15,7 @@ export function AuthProvider({
   isLoggedIn: boolean;
   children: React.ReactNode;
 }) {
-  return (
-    <AuthContext.Provider value={{ isLoggedIn }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ isLoggedIn }}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {

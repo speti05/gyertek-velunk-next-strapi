@@ -44,9 +44,7 @@ export function Card({
             {price}
           </p>
         )}
-        {(startDate ?? createdAt) && (
-          <p>{formatDate(startDate ?? createdAt)}</p>
-        )}
+        {(startDate ?? createdAt) && <p>{formatDate(startDate ?? createdAt)}</p>}
         <p>{description.slice(0, 144)}...</p>
       </div>
     </Link>

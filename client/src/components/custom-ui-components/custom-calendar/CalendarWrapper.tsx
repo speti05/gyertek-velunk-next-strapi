@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { ContinuousCalendar } from '@/components/custom-ui-components/custom-calendar/ContinuousCalendar';
-import { CalendarEvent } from './CalendarTypes';
-import { useRouter } from 'next/navigation';
+import { ContinuousCalendar } from "@/components/custom-ui-components/custom-calendar/ContinuousCalendar";
+import { CalendarEvent } from "./CalendarTypes";
+import { useRouter } from "next/navigation";
 
 interface CalendarWrapperProps {
   theme: "turquoise" | "brown";
@@ -10,14 +10,17 @@ interface CalendarWrapperProps {
   onYearChange: (year: number) => Promise<CalendarEvent[]>;
 }
 
-export const CalendarWrapper: React.FC<CalendarWrapperProps> = ({ calendarEvents, theme, onYearChange }) => {
+export const CalendarWrapper: React.FC<CalendarWrapperProps> = ({
+  calendarEvents,
+  theme,
+  onYearChange,
+}) => {
   const router = useRouter();
 
   const clickHandler = (calendarEvent: CalendarEvent | undefined) => {
     if (calendarEvent) {
       router.push(calendarEvent.link);
-    }
-    else {
+    } else {
       console.error("No calendar event data available for clickHandler.");
     }
   };
@@ -33,4 +36,3 @@ export const CalendarWrapper: React.FC<CalendarWrapperProps> = ({ calendarEvents
     </div>
   );
 };
-

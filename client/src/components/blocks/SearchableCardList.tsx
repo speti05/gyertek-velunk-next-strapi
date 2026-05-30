@@ -13,14 +13,18 @@ export function SearchableCardList({
   featured,
   showSearch,
 }: SearchableCardListProps) {
-
   const componentToUse = (() => {
     switch (contentCollectionType) {
       // túrák
-      case "events": return EventCard;
+      case "events":
+        return EventCard;
       // beszámolók
-      case "articles": return BlogCard;
-      default: throw new Error(`Unsupported content collection type in SearchableCardList (Card): ${contentCollectionType}`);
+      case "articles":
+        return BlogCard;
+      default:
+        throw new Error(
+          `Unsupported content collection type in SearchableCardList (Card): ${contentCollectionType}`
+        );
     }
   })();
 
@@ -34,6 +38,7 @@ export function SearchableCardList({
       featured={featured}
       searchParams={searchParams}
       showSearch={showSearch}
-      component={componentToUse}/>
+      component={componentToUse}
+    />
   );
 }

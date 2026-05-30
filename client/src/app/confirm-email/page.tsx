@@ -1,9 +1,5 @@
 import Link from "next/link";
-import {
-  AUTH_CONFIRM_EMAIL_TITLE,
-  AUTH_BACK_TO_LOGIN,
-  MESSAGES,
-} from "@/utils/texts";
+import { AUTH_CONFIRM_EMAIL_TITLE, AUTH_BACK_TO_LOGIN, MESSAGES } from "@/utils/texts";
 
 export default async function ConfirmEmailPage({
   searchParams,

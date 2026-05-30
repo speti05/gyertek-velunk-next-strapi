@@ -1,4 +1,4 @@
-'use server'
+"use server";
 
 import type { ArticleProps, Block } from "@/types";
 import Link from "next/link";
@@ -14,7 +14,7 @@ import { FEATURED_ARTICLES_LABEL } from "@/utils/texts";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ page?: string; query?: string }>
+  searchParams: Promise<{ page?: string; query?: string }>;
 }
 
 async function loader(slug: string) {
@@ -58,7 +58,6 @@ function ArticleOverview({
 
 const BlogCard = (props: Readonly<CardProps>) => <Card {...props} basePath="beszamolok" />;
 
-
 export default async function SingleBlogRoute({ params, searchParams }: PageProps) {
   const slug = (await params).slug;
   const { article, blocks } = await loader(slug);
@@ -66,9 +65,7 @@ export default async function SingleBlogRoute({ params, searchParams }: PageProp
 
   console.dir(blocks, { depth: null });
 
-  const tableOfContent = blocks?.filter(
-    (block: Block) => block.__component === "blocks.heading"
-  );
+  const tableOfContent = blocks?.filter((block: Block) => block.__component === "blocks.heading");
 
   return (
     <div>

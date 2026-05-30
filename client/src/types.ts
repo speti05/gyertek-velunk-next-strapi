@@ -6,13 +6,13 @@ export interface LinkProps {
 }
 
 export interface CustomSearchParams {
-  page?: string; 
+  page?: string;
   query?: string;
 }
 
 export interface PageParams {
-  params?: Promise<{ slug: string }>
-  searchParams?: Promise<CustomSearchParams>
+  params?: Promise<{ slug: string }>;
+  searchParams?: Promise<CustomSearchParams>;
 }
 
 export interface ImageProps {
@@ -42,8 +42,7 @@ interface BaseBlogProps {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface ArticleProps extends BaseBlogProps {
-}
+export interface ArticleProps extends BaseBlogProps {}
 
 export interface EventProps extends BaseBlogProps {
   price: string;
@@ -146,16 +145,16 @@ export interface ParagraphWithImageProps extends Base<"blocks.paragraph-with-ima
 
 export interface SearchableCardListProps extends Base<"blocks.searchable-card-list"> {
   searchParams: CustomSearchParams;
-  showSearch: boolean
+  showSearch: boolean;
   searchPlaceHolder: string;
   pageSize: number;
   headline: string;
   showPagination: boolean;
   featured: boolean;
-  contentCollectionType: ContentCollectionType
+  contentCollectionType: ContentCollectionType;
 }
 
-export interface HeroWithCalendarProps extends Base<"blocks.hero-with-calendar">{
+export interface HeroWithCalendarProps extends Base<"blocks.hero-with-calendar"> {
   headline: string;
   contentCollectionType: ContentCollectionType;
   image: ImageProps;
@@ -165,7 +164,7 @@ export interface HeroWithCalendarProps extends Base<"blocks.hero-with-calendar">
   welcomeText?: string;
 }
 
-export interface HeroWithTextProps extends Base<"blocks.hero-with-text">{
+export interface HeroWithTextProps extends Base<"blocks.hero-with-text"> {
   headline: string;
   image: ImageProps;
   theme: "turquoise" | "brown";
@@ -173,7 +172,6 @@ export interface HeroWithTextProps extends Base<"blocks.hero-with-text">{
   link?: LinkProps[];
   welcomeText?: string;
 }
-
 
 export interface ParagraphProps extends Base<"blocks.paragraph"> {
   content: string;

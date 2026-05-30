@@ -15,24 +15,21 @@ export function InfoBlock({
 }: Readonly<InfoBlockProps>) {
   return (
     <section className={`info info--${theme} ${reversed && "info--reversed"}`}>
-      {image && <StrapiImage
-        src={image?.url}
-        alt={image.alternativeText || "No alternative text provided"}
-        height={500}
-        width={600}
-        className="info__image"
-      />
-  }
+      {image && (
+        <StrapiImage
+          src={image?.url}
+          alt={image.alternativeText || "No alternative text provided"}
+          height={500}
+          width={600}
+          className="info__image"
+        />
+      )}
       <div className="info__text">
-        <h2 className={`info__headline info__headline--${theme}`}>
-          {headline}
-        </h2>
+        <h2 className={`info__headline info__headline--${theme}`}>{headline}</h2>
         <ReactMarkdown className="paragraph-reset copy">{content}</ReactMarkdown>
         {cta && (
           <Link href={cta.href} target={cta.isExternal ? "_blank" : "_self"}>
-            <CustomButton
-              variant="contained"
-              size="large">
+            <CustomButton variant="contained" size="large">
               {cta.text}
             </CustomButton>
           </Link>

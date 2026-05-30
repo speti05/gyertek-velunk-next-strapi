@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
 // this color import should be the first
-import { colors } from './colors';
-import { createTheme } from '@mui/material/styles';
+import { colors } from "./colors";
+import { createTheme } from "@mui/material/styles";
 
 export const theme = createTheme({
   typography: {
@@ -10,16 +10,16 @@ export const theme = createTheme({
     // font-optical-sizing: auto;
     // font-weight: 300;
     // font-style: normal;
-  },  
+  },
   shape: {
-    borderRadius: '1rem',
+    borderRadius: "1rem",
   },
   palette: {
     // primary: {
     //   main: colors.primary.main,
     //   contrastText: '#ffffff',
     // },
-  },  
+  },
   components: {
     MuiButton: {
       styleOverrides: {
@@ -28,63 +28,63 @@ export const theme = createTheme({
         //   opacity: 0.6,
         // },
         root: {
-          textTransform: 'none',
-          fontSize: '2rem',
-              fontFamily: 'var(--font-source-sans-3), sans-serif',
-              fontOpticalSizing: 'auto',
-              fontWeight: 300,
-              fontStyle: 'normal',
+          textTransform: "none",
+          fontSize: "2rem",
+          fontFamily: "var(--font-source-sans-3), sans-serif",
+          fontOpticalSizing: "auto",
+          fontWeight: 300,
+          fontStyle: "normal",
         },
         // Primary
         containedPrimary: {
           backgroundColor: colors.button.primary.main,
-          boxShadow: 'none',
-          '&:hover': {
+          boxShadow: "none",
+          "&:hover": {
             backgroundColor: colors.button.primary.hover,
-            boxShadow: '0 2px 8px rgba(55, 127, 118, 0.3)',
+            boxShadow: "0 2px 8px rgba(55, 127, 118, 0.3)",
           },
-          '&:active': {
+          "&:active": {
             backgroundColor: colors.button.primary.active,
           },
         },
         outlinedPrimary: {
           color: colors.button.primary.main,
           borderColor: colors.button.primary.main,
-          '&:hover': {
+          "&:hover": {
             borderColor: colors.button.primary.hover,
             backgroundColor: colors.button.primary.light,
           },
         },
         textPrimary: {
           color: colors.button.primary.main,
-          '&:hover': {
+          "&:hover": {
             backgroundColor: colors.button.primary.light,
           },
         },
-        
+
         // Secondary
         containedSecondary: {
           backgroundColor: colors.button.secondary.main,
-          boxShadow: 'none',
-          '&:hover': {
+          boxShadow: "none",
+          "&:hover": {
             backgroundColor: colors.button.secondary.hover,
-            boxShadow: '0 2px 8px rgba(112, 99, 76, 0.3)',
+            boxShadow: "0 2px 8px rgba(112, 99, 76, 0.3)",
           },
-          '&:active': {
+          "&:active": {
             backgroundColor: colors.button.secondary.active,
           },
         },
         outlinedSecondary: {
           color: colors.button.secondary.main,
           borderColor: colors.button.secondary.main,
-          '&:hover': {
+          "&:hover": {
             borderColor: colors.button.secondary.hover,
             backgroundColor: colors.button.secondary.light,
           },
         },
         textSecondary: {
           color: colors.button.secondary.main,
-          '&:hover': {
+          "&:hover": {
             backgroundColor: colors.button.secondary.light,
           },
         },
@@ -93,65 +93,65 @@ export const theme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          textTransform: 'none',
-          fontSize: '2rem',
-          fontFamily: 'var(--font-source-sans-3), sans-serif',
-          fontOpticalSizing: 'auto',
+          textTransform: "none",
+          fontSize: "2rem",
+          fontFamily: "var(--font-source-sans-3), sans-serif",
+          fontOpticalSizing: "auto",
           fontWeight: 300,
-          fontStyle: 'normal',
+          fontStyle: "normal",
 
           backgroundColor: colors.textInput.main, // Light background for default state
-        
+
           // overwriting default border color
-          '& .MuiOutlinedInput-notchedOutline': {
+          "& .MuiOutlinedInput-notchedOutline": {
             borderColor: colors.textInput.textColor,
           },
 
           // overwriting focused border color
-          '&.Mui-focused': {
+          "&.Mui-focused": {
             color: colors.textInput.focused,
-            '& .MuiOutlinedInput-notchedOutline': {
+            "& .MuiOutlinedInput-notchedOutline": {
               borderColor: colors.textInput.textColor,
             },
           },
         },
         // Input text styling
         input: {
-          padding: '12px 14px',
-          fontSize: '1.5rem',
+          padding: "12px 14px",
+          fontSize: "1.5rem",
           color: colors.textInput.textColor,
-          
-          '&::placeholder': {
+
+          "&::placeholder": {
             color: colors.textInput.placeHolder,
             opacity: 0.5,
           },
         },
       },
     },
-    
+
     // Input Label styling
     MuiInputLabel: {
       styleOverrides: {
         root: {
           color: colors.label.main,
-          fontSize: '1.5rem',
-          
+          fontSize: "1.5rem",
+
           // Focused label
-          '&.Mui-focused': {
+          "&.Mui-focused": {
             color: colors.label.focused,
           },
-          
+
           // Error label
-          '&.Mui-error': {
-            fontSize: '1.5rem',
+          "&.Mui-error": {
+            fontSize: "1.5rem",
             color: colors.label.error,
             fontWeight: 700,
           },
         },
         shrink: {
-          fontSize: '1.8rem',
+          fontSize: "1.8rem",
 
-          '&.Mui-error': {
+          "&.Mui-error": {
             color: colors.label.error,
           },
         },
@@ -161,19 +161,19 @@ export const theme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: {
-          height: '7.5rem',
+          height: "7.5rem",
         },
       },
     },
-    
+
     // Helper text styling (under outlined input)
     MuiFormHelperText: {
       styleOverrides: {
         root: {
-          marginLeft: '4px',
-          fontSize: '1.3rem',
-          
-          '&.Mui-error': {
+          marginLeft: "4px",
+          fontSize: "1.3rem",
+
+          "&.Mui-error": {
             color: colors.label.error,
           },
         },
@@ -183,11 +183,11 @@ export const theme = createTheme({
     MuiAlert: {
       styleOverrides: {
         root: {
-          fontSize: '1.5rem',
-          fontFamily: 'var(--font-source-sans-3), sans-serif',
+          fontSize: "1.5rem",
+          fontFamily: "var(--font-source-sans-3), sans-serif",
         },
         icon: {
-          fontSize: '2rem',
+          fontSize: "2rem",
         },
       },
     },
@@ -196,13 +196,13 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           color: colors.checkbox.unchecked,
-          '&.Mui-checked': {
+          "&.Mui-checked": {
             color: colors.checkbox.checked,
           },
-          '&:hover': {
+          "&:hover": {
             backgroundColor: colors.checkbox.hover,
           },
-          '&.Mui-error': {
+          "&.Mui-error": {
             color: colors.checkbox.error,
           },
         },
@@ -212,10 +212,10 @@ export const theme = createTheme({
     MuiFormControlLabel: {
       styleOverrides: {
         label: {
-          fontFamily: 'var(--font-source-sans-3), sans-serif',
-          fontSize: '1.6rem',
+          fontFamily: "var(--font-source-sans-3), sans-serif",
+          fontSize: "1.6rem",
           fontWeight: 300,
-          fontStyle: 'normal',
+          fontStyle: "normal",
         },
       },
     },
@@ -223,7 +223,7 @@ export const theme = createTheme({
     MuiDialog: {
       styleOverrides: {
         paper: {
-          fontFamily: 'var(--font-source-sans-3), sans-serif',
+          fontFamily: "var(--font-source-sans-3), sans-serif",
         },
       },
     },
@@ -231,10 +231,10 @@ export const theme = createTheme({
     MuiDialogTitle: {
       styleOverrides: {
         root: {
-          fontFamily: 'var(--font-luckiest-guy), cursive',
-          fontSize: '2rem',
+          fontFamily: "var(--font-luckiest-guy), cursive",
+          fontSize: "2rem",
           fontWeight: 400,
-          fontStyle: 'normal',
+          fontStyle: "normal",
         },
       },
     },
@@ -242,10 +242,10 @@ export const theme = createTheme({
     MuiDialogContent: {
       styleOverrides: {
         root: {
-          fontFamily: 'var(--font-source-sans-3), sans-serif',
-          fontSize: '1.8rem',
+          fontFamily: "var(--font-source-sans-3), sans-serif",
+          fontSize: "1.8rem",
           fontWeight: 300,
-          fontStyle: 'normal',
+          fontStyle: "normal",
         },
       },
     },

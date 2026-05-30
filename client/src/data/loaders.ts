@@ -6,68 +6,68 @@ import { getUserProfileService } from "./auth-service";
 const BASE_URL = getStrapiURL();
 const DEFAULT_BLOG_PAGE_SIZE = 3;
 const homePageQuery = qs.stringify({
-    populate: {
-      blocks: {
-        on: {
-          "blocks.hero-section": {
-            populate: {
-              image: {
-                fields: ["url", "alternativeText"],
-              },
-              logo: {
-                populate: {
-                  image: {
-                    fields: ["url", "alternativeText"],
-                  },
+  populate: {
+    blocks: {
+      on: {
+        "blocks.hero-section": {
+          populate: {
+            image: {
+              fields: ["url", "alternativeText"],
+            },
+            logo: {
+              populate: {
+                image: {
+                  fields: ["url", "alternativeText"],
                 },
               },
-              cta: true,
             },
+            cta: true,
           },
-          "blocks.info-block": {
-            populate: {
-              image: {
-                fields: ["url", "alternativeText"],
-              },
-              cta: true,
+        },
+        "blocks.info-block": {
+          populate: {
+            image: {
+              fields: ["url", "alternativeText"],
             },
+            cta: true,
           },
+        },
 
-          "blocks.featured-article": {
-            populate: {
-              image: {
-                fields: ["url", "alternativeText"],
-              },
-              link: true,
+        "blocks.featured-article": {
+          populate: {
+            image: {
+              fields: ["url", "alternativeText"],
+            },
+            link: true,
+          },
+        },
+        "blocks.subscribe": {
+          populate: {
+            image: {
+              fields: ["url", "alternativeText"],
             },
           },
-          "blocks.subscribe": {
-            populate: {
-              image: {
-                fields: ["url", "alternativeText"],
-              },
+        },
+        "blocks.searchable-card-list": {
+          populate: true,
+        },
+        "blocks.hero-with-text": {
+          populate: {
+            image: {
+              fields: ["url", "alternativeText"],
             },
+            link: true,
           },
-          "blocks.searchable-card-list": {
-            populate: true,
-          },
-          "blocks.hero-with-text": {
-            populate: {
-              image: {
-                fields: ["url", "alternativeText"],
-              },
-              link: true,
-            },
-          },
-          "blocks.event-signup-form": {
-             populate: true,
-          },
-          "blocks.text-content-block": {
-             populate: true,
-          }
+        },
+        "blocks.event-signup-form": {
+          populate: true,
+        },
+        "blocks.text-content-block": {
+          populate: true,
         },
       },
     },
+  },
 });
 
 export async function getHomePage() {
@@ -138,11 +138,11 @@ const pageBySlugQuery = (slug: string) =>
             },
           },
           "blocks.event-signup-form": {
-             populate: true,
+            populate: true,
           },
           "blocks.text-content-block": {
-             populate: true,
-          }
+            populate: true,
+          },
         },
       },
     },
@@ -198,17 +198,14 @@ export async function getContent(
   featured?: boolean,
   query?: string,
   page?: string,
-  pageSize: number = DEFAULT_BLOG_PAGE_SIZE,
+  pageSize: number = DEFAULT_BLOG_PAGE_SIZE
 ) {
   const url = new URL(path, BASE_URL);
 
   url.search = qs.stringify({
     sort: ["createdAt:desc"],
     filters: {
-      $or: [
-        { title: { $containsi: query } },
-        { description: { $containsi: query } },
-      ],
+      $or: [{ title: { $containsi: query } }, { description: { $containsi: query } }],
       ...(featured && { featured: { $eq: featured } }),
     },
     pagination: {
@@ -345,9 +342,7 @@ export async function getUserProfilePageLoader(jwt: string) {
   return { profile, isNewsletterSubscribed };
 }
 
-export async function getUserEventSignupsLoader(
-  jwt: string
-): Promise<EventSignupEntry[]> {
+export async function getUserEventSignupsLoader(jwt: string): Promise<EventSignupEntry[]> {
   const url = new URL("/api/event-signups", BASE_URL);
 
   const result = await fetchAPI(url.href, {
@@ -359,10 +354,7 @@ export async function getUserEventSignupsLoader(
   return result?.data ?? [];
 }
 
-export async function getContentForCalendar(
-  path: string,
-  year: number,
-) {
+export async function getContentForCalendar(path: string, year: number) {
   const url = new URL(path, BASE_URL);
   const startOfYear = new Date(year, 0, 1).toISOString();
   const endOfYear = new Date(year, 11, 31).toISOString();
@@ -385,7 +377,7 @@ export async function getContentForCalendar(
     },
     pagination: {
       pageSize: 100,
-      page: 1
+      page: 1,
     },
     populate: {
       image: {

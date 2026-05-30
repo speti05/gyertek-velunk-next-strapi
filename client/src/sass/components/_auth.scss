@@ -113,7 +113,9 @@
     font-size: 1.2rem;
     color: variables.$dark-brown;
     opacity: 0.5;
-    transition: color 0.2s ease, opacity 0.2s ease;
+    transition:
+      color 0.2s ease,
+      opacity 0.2s ease;
 
     &--met {
       color: variables.$green;
@@ -210,5 +212,4 @@
     cursor: pointer;
     user-select: none;
   }
-
 }

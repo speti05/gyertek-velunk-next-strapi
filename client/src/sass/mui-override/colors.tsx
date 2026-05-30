@@ -1,11 +1,11 @@
-import { darken, lighten} from 'polished';
+import { darken, lighten } from "polished";
 
 const baseColors = {
-  darkGreen: 'rgb(55 , 127, 118)', // gy-v-dark-green
-  darkBrown: 'rgb(112 , 99, 76)', // gy-v-dark-brown
-  lightBrown: 'rgb(241, 232, 217)', // gy-v-light-brown
-  gray: 'rgb(156, 163, 175)', // gy-v-gray
-  red:' rgb(255, 0, 0)', // red for errors
+  darkGreen: "rgb(55 , 127, 118)", // gy-v-dark-green
+  darkBrown: "rgb(112 , 99, 76)", // gy-v-dark-brown
+  lightBrown: "rgb(241, 232, 217)", // gy-v-light-brown
+  gray: "rgb(156, 163, 175)", // gy-v-gray
+  red: " rgb(255, 0, 0)", // red for errors
 };
 
 export const colors = {

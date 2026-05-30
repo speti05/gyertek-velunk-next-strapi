@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { StrapiImage } from"../StrapiImage";
+import { StrapiImage } from "../StrapiImage";
 import type { HeroSectionProps } from "@/types";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 
@@ -31,10 +31,7 @@ export function HeroSection({
         {publishedAt && <p className="hero__published-at">{publishedAt}</p>}
       </div>
       {cta && (
-        <CustomButton
-          variant="contained"
-          size="large"
-        >
+        <CustomButton variant="contained" size="large">
           <Link href={cta.href} target={cta.isExternal ? "_blank" : "_self"}>
             {cta.text}
           </Link>

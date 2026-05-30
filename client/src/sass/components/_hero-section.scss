@@ -5,10 +5,10 @@
   padding: 22rem 4.8rem 0;
   margin-bottom: 12.5rem;
 
-  &__with-calendar{
+  &__with-calendar {
     padding: 0 4.8rem 0;
 
-    .hero__container {      
+    .hero__container {
       display: grid;
       gap: 4rem;
 
@@ -26,7 +26,7 @@
           //background-color: $gy-v-light-brown;
           padding: 4rem;
           border-radius: 8px;
-          color:white;
+          color: white;
           background-color: rgba(0, 0, 0, 0.55);
           border-radius: 4rem;
         }
@@ -37,28 +37,25 @@
           gap: 4rem;
         }
       }
-      
+
       .hero__calendar_container {
         margin-top: 2rem;
       }
     }
-    @media(min-width: 1024px) {
+    @media (min-width: 1024px) {
       .hero__container {
         grid-template-columns: 1fr 1fr;
       }
     }
   }
 
-
-  &__with-text{
+  &__with-text {
     padding: 0 4.8rem 0;
     min-height: unset;
     margin-bottom: unset;
 
     .hero__container {
       gap: 4rem;
-
-
 
       .hero__text_and_button_container {
         padding-top: 8rem;
@@ -75,7 +72,7 @@
           //background-color: $gy-v-light-brown;
           padding: 4rem;
           border-radius: 8px;
-          color:white;
+          color: white;
           background-color: rgba(0, 0, 0, 0.55);
           border-radius: 4rem;
         }
@@ -123,7 +120,7 @@
     }
 
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
@@ -149,7 +146,6 @@
     margin-top: 1rem;
     color: white;
     font-size: 1.8rem;
-
   }
   &__author {
     font-weight: 700;
@@ -160,8 +156,6 @@
     font-weight: 400;
   }
 
-  
-
   &__logo {
     position: absolute;
     bottom: 0;
@@ -169,8 +163,8 @@
     transform: translate(-50%, 50%);
 
     &--brown {
-      filter: invert(62%) sepia(21%) saturate(1646%) hue-rotate(348deg)
-        brightness(88%) contrast(81%);
+      filter: invert(62%) sepia(21%) saturate(1646%) hue-rotate(348deg) brightness(88%)
+        contrast(81%);
     }
   }
 }

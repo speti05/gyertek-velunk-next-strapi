@@ -2,20 +2,20 @@
  * newsletter-signup controller
  */
 
-import { factories } from '@strapi/strapi';
-import { verifyUnsubscribeToken } from '../../newsletter/services/unsubscribe-token';
+import { factories } from "@strapi/strapi";
+import { verifyUnsubscribeToken } from "../../newsletter/services/unsubscribe-token";
 
-const UID = 'api::newsletter-signup.newsletter-signup' as const;
+const UID = "api::newsletter-signup.newsletter-signup" as const;
 
 async function resolveEmailFromJwt(ctx: any, strapi: any): Promise<string | null> {
   try {
-    const authHeader = ctx.request.headers['authorization'] as string;
-    if (!authHeader?.startsWith('Bearer ')) return null;
+    const authHeader = ctx.request.headers["authorization"] as string;
+    if (!authHeader?.startsWith("Bearer ")) return null;
     const token = authHeader.slice(7);
-    const payload = await strapi.plugin('users-permissions').service('jwt').verify(token);
-    const user = await strapi.db.query('plugin::users-permissions.user').findOne({
+    const payload = await strapi.plugin("users-permissions").service("jwt").verify(token);
+    const user = await strapi.db.query("plugin::users-permissions.user").findOne({
       where: { id: payload.id },
-      select: ['email'],
+      select: ["email"],
     });
     return user?.email ?? null;
   } catch {
@@ -24,14 +24,13 @@ async function resolveEmailFromJwt(ctx: any, strapi: any): Promise<string | null
 }
 
 export default factories.createCoreController(UID, ({ strapi }) => ({
-
   async findMySubscription(ctx) {
     const email = await resolveEmailFromJwt(ctx, strapi);
     if (!email) return ctx.unauthorized();
 
     const entry = await strapi.documents(UID).findFirst({
       filters: { email: email.toLowerCase() },
-      status: 'published',
+      status: "published",
     });
     ctx.body = { subscribed: !!entry };
   },
@@ -71,13 +70,13 @@ export default factories.createCoreController(UID, ({ strapi }) => ({
     const { email, token } = ctx.query as { email?: string; token?: string };
 
     const fail = (message: string) => {
-      ctx.type = 'html';
+      ctx.type = "html";
       ctx.status = 400;
-      ctx.body = unsubscribePage('Hiba', message, false);
+      ctx.body = unsubscribePage("Hiba", message, false);
     };
 
-    if (!email || !token) return fail('Hiányos leiratkozási link.');
-    if (!verifyUnsubscribeToken(email, token)) return fail('Érvénytelen vagy lejárt link.');
+    if (!email || !token) return fail("Hiányos leiratkozási link.");
+    if (!verifyUnsubscribeToken(email, token)) return fail("Érvénytelen vagy lejárt link.");
 
     const existing = await strapi.documents(UID).findFirst({
       filters: { email: email.toLowerCase() },
@@ -86,15 +85,18 @@ export default factories.createCoreController(UID, ({ strapi }) => ({
       await strapi.documents(UID).delete({ documentId: existing.documentId });
     }
 
-    ctx.type = 'html';
-    ctx.body = unsubscribePage('Sikeres leiratkozás', 'Sikeresen leiratkoztál a hírlevelünkről.', true);
+    ctx.type = "html";
+    ctx.body = unsubscribePage(
+      "Sikeres leiratkozás",
+      "Sikeresen leiratkoztál a hírlevelünkről.",
+      true
+    );
   },
-
 }));
 
 function unsubscribePage(title: string, message: string, success: boolean): string {
-  const color = success ? '#377F76' : '#c0392b';
-  const siteUrl = process.env.SITE_URL ?? '#';
+  const color = success ? "#377F76" : "#c0392b";
+  const siteUrl = process.env.SITE_URL ?? "#";
   return `<!DOCTYPE html>
 <html lang="hu">
 <head>

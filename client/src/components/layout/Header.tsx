@@ -6,7 +6,6 @@ import { useState } from "react";
 import { AUTH_PROFILE_NAV_LABEL, AUTH_LOGIN_LABEL } from "@/utils/texts";
 import { useAuth } from "@/context/auth-context";
 
-
 interface HeaderProps {
   data: {
     logo: LogoProps;
@@ -38,23 +37,27 @@ export function Header({ data }: HeaderProps) {
             />
           </Link>
           <ul className={`nav-menu ${isActive ? "active" : ""}`}>
-          {navigation.map((item) => (
-            <li key={item.id} >
-              <Link
-                href={item.href}
-                target={item.isExternal ? "_blank" : "_self"}
-              >
-                <span className="nav-link" onClick={() => setIsActive(false)}>{item.text}</span>
-              </Link>
-            </li>
-          ))}
+            {navigation.map((item) => (
+              <li key={item.id}>
+                <Link href={item.href} target={item.isExternal ? "_blank" : "_self"}>
+                  <span className="nav-link" onClick={() => setIsActive(false)}>
+                    {item.text}
+                  </span>
+                </Link>
+              </li>
+            ))}
             <li>
               <Link href={authHref} target="_self">
-                <span className="nav-link" onClick={() => setIsActive(false)}>{authLabel}</span>
+                <span className="nav-link" onClick={() => setIsActive(false)}>
+                  {authLabel}
+                </span>
               </Link>
             </li>
-        </ul>
-          <div className={`hamburger ${isActive ? "active" : ""}`} onClick={() => setIsActive(!isActive)}>
+          </ul>
+          <div
+            className={`hamburger ${isActive ? "active" : ""}`}
+            onClick={() => setIsActive(!isActive)}
+          >
             <span className="bar"></span>
             <span className="bar"></span>
             <span className="bar"></span>

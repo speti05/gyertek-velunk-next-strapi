@@ -7,7 +7,7 @@ import { removeAccents } from "@/utils/text-utils";
 
 interface ContentListProps {
   headline: string;
-  searchParams: CustomSearchParams
+  searchParams: CustomSearchParams;
   query?: string;
   pageSize?: number;
   featured?: boolean;
@@ -20,7 +20,13 @@ interface ContentListProps {
   contentCollectionType: ContentCollectionType;
 }
 
-async function loader<Type>(path: string, featured?: boolean, query?: string, page?:string, pageSize?:number ) {
+async function loader<Type>(
+  path: string,
+  featured?: boolean,
+  query?: string,
+  page?: string,
+  pageSize?: number
+) {
   const { data, meta } = await getContent(path, featured, query, page, pageSize);
   return {
     data: (data as Type[]) || [],
@@ -38,13 +44,12 @@ export async function ContentList({
   showSearch,
   searchPlaceHolder,
   showPagination,
-  contentCollectionType
-  
+  contentCollectionType,
 }: Readonly<ContentListProps>) {
   const pageParam = `${contentCollectionType}Page`;
   const path = `/api/${contentCollectionType}`;
   const queryParam = `${contentCollectionType}Query`;
-    // Get the page number using the specific pageParam
+  // Get the page number using the specific pageParam
   const page = searchParams?.[pageParam] || "1";
   const query = searchParams?.[queryParam] || "";
   const { data, pageCount } = await loader<EventProps>(path, featured, query, page, pageSize);
@@ -54,11 +59,18 @@ export async function ContentList({
 
   return (
     <section className="content-items content-items container">
-      <h3 className={`content-items__headline ${`content-items--${headlineAlignment}`}`}
-        id={navigationId}>
+      <h3
+        className={`content-items__headline ${`content-items--${headlineAlignment}`}`}
+        id={navigationId}
+      >
         {headline}
       </h3>
-      {!!showSearch && <SearchNoSSR placeHolder={searchPlaceHolder} contentCollectionType={contentCollectionType} />}
+      {!!showSearch && (
+        <SearchNoSSR
+          placeHolder={searchPlaceHolder}
+          contentCollectionType={contentCollectionType}
+        />
+      )}
       <div className="content-items__container--card">
         {data.map((article) => (
           <Component key={article.documentId} {...article} basePath={path} />

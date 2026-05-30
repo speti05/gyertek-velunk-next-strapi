@@ -29,10 +29,7 @@ export function Footer({ data }: FooterProps) {
         <ul className="footer__links no-list-style">
           {navigation.map((item) => (
             <li key={item.id}>
-              <Link
-                href={item.href}
-                target={item.isExternal ? "_blank" : "_self"}
-              >
+              <Link href={item.href} target={item.isExternal ? "_blank" : "_self"}>
                 {<h5>{item.text}</h5>}
               </Link>
             </li>
@@ -43,11 +40,7 @@ export function Footer({ data }: FooterProps) {
         <ul className="footer__policies-nav no-list-style">
           {policies.map((item) => (
             <li key={item.id}>
-              <Link
-                href={item.href}
-                target={item.isExternal ? "_blank" : "_self"}
-                className="copy"
-              >
+              <Link href={item.href} target={item.isExternal ? "_blank" : "_self"} className="copy">
                 {item.text}
               </Link>
             </li>

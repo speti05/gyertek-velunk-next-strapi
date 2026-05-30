@@ -28,14 +28,14 @@ export const NOT_FOUND_LABEL = "Sajnáljuk, ez az oldal jól elvándorolt.";
 export const TRY_AGAIN_LABEL = "Próbáld újra";
 
 export const FORM_LABELS = {
-    firstName: "Keresztnév",
-    lastName: "Vezetéknév",
-    email: "Email",
-    telephone: "Telefon",
-    phone: "Telefonszám",
-    submit: "Regisztráció",
-    startDate: "Kezdés dátuma",
-    price: "Részvételi díj",
+  firstName: "Keresztnév",
+  lastName: "Vezetéknév",
+  email: "Email",
+  telephone: "Telefon",
+  phone: "Telefonszám",
+  submit: "Regisztráció",
+  startDate: "Kezdés dátuma",
+  price: "Részvételi díj",
 };
 
 export const MESSAGES = {
@@ -61,7 +61,8 @@ export const MESSAGES = {
   passwordNeedsUppercase: "A jelszónak tartalmaznia kell legalább egy nagybetűt.",
   passwordNeedsLowercase: "A jelszónak tartalmaznia kell legalább egy kisbetűt.",
   passwordNeedsSpecial: "A jelszónak tartalmaznia kell legalább egy speciális karaktert.",
-  registrationEmailSent: "Regisztráció sikeres! Kérjük, erősítsd meg az email címedet a kiküldött levélben lévő linkre kattintva.",
+  registrationEmailSent:
+    "Regisztráció sikeres! Kérjük, erősítsd meg az email címedet a kiküldött levélben lévő linkre kattintva.",
   confirmEmailSuccess: "Az email cím sikeresen megerősítve! Most már bejelentkezhetsz.",
   confirmEmailFailed: "Az email cím megerősítése sikertelen. A link érvénytelen vagy lejárt.",
   confirmEmailInvalidLink: "Érvénytelen megerősítési link.",
@@ -86,7 +87,8 @@ export const AUTH_PROFILE_NAV_LABEL = "Profilod";
 export const AUTH_HELLO = (name: string) => `Helló, ${name}!`;
 export const AUTH_FORGOT_PASSWORD_LABEL = "Elfelejtett jelszó?";
 export const AUTH_FORGOT_PASSWORD_TITLE = "Elfelejtett jelszó";
-export const AUTH_FORGOT_PASSWORD_SUCCESS = "Ha ez az email cím regisztrálva van, hamarosan kapsz egy linket. A link 1 óráig érvényes.";
+export const AUTH_FORGOT_PASSWORD_SUCCESS =
+  "Ha ez az email cím regisztrálva van, hamarosan kapsz egy linket. A link 1 óráig érvényes.";
 export const AUTH_RESET_PASSWORD_TITLE = "Új jelszó beállítása";
 export const AUTH_NEW_PASSWORD_LABEL = "Új jelszó";
 export const AUTH_CONFIRM_PASSWORD_LABEL = "Jelszó megerősítése";

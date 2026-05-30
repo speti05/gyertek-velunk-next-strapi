@@ -13,7 +13,8 @@
     "dev": "yarn concurrently \"cd server && yarn develop\" \"npx wait-on http://localhost:1337 && cd client && yarn dev\"",
     "seed": "cd server && yarn strapi import -f ../seed-data.tar.gz --force",
     "export": "cd server && yarn strapi export --no-encrypt -f ../seed-data",
-    "repo:upstream": "git fetch upstream && git merge upstream/main"
+    "repo:upstream": "git fetch upstream && git merge upstream/main",
+    "format": "prettier --write \"client/src/**/*.{ts,tsx,scss}\" \"server/src/**/*.{ts,js}\""
   },
   "dependencies": {
     "@types/node": "^22.5.2",
@@ -22,6 +23,7 @@
     "wait-on": "^8.0.1"
   },
   "devDependencies": {
+    "prettier": "^3.8.3",
     "ts-node": "^10.9.2"
   }
 }

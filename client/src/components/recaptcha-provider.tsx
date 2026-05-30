@@ -16,9 +16,7 @@ export function useRecaptcha() {
 function RecaptchaBridge({ children }: { children: React.ReactNode }) {
   const { executeRecaptcha } = useGoogleReCaptcha();
   return (
-    <RecaptchaContext.Provider value={{ executeRecaptcha }}>
-      {children}
-    </RecaptchaContext.Provider>
+    <RecaptchaContext.Provider value={{ executeRecaptcha }}>{children}</RecaptchaContext.Provider>
   );
 }
 

@@ -9,7 +9,9 @@ export function ParagraphWithImage({
   imageLandscape,
 }: Readonly<ParagraphWithImageProps>) {
   return (
-    <div className={`article-text-image ${reversed ? "article-text-image--reversed" : ""} ${imageLandscape ? "" : "article-text-image--portrait"}`}>
+    <div
+      className={`article-text-image ${reversed ? "article-text-image--reversed" : ""} ${imageLandscape ? "" : "article-text-image--portrait"}`}
+    >
       <ReactMarkdown className="paragraph-reset copy article-text-image__text article-paragraph">
         {content}
       </ReactMarkdown>

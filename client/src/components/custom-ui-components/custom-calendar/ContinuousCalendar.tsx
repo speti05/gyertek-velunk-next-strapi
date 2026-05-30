@@ -1,16 +1,29 @@
-'use client';
+"use client";
 
-import React, { useEffect, useRef, useState } from 'react';
-import style from './CustomCalendar.module.scss';
+import React, { useEffect, useRef, useState } from "react";
+import style from "./CustomCalendar.module.scss";
 
-import { ArrowRightCircle } from "@deemlol/next-icons"
-import { CalendarEvent } from './CalendarTypes';
-import CustomButton from '@/components/custom-ui-components/custom-button/custom-button';
-import { CustomSelect } from '@/components/custom-ui-components/custom-select/custom-select';
+import { ArrowRightCircle } from "@deemlol/next-icons";
+import { CalendarEvent } from "./CalendarTypes";
+import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
+import { CustomSelect } from "@/components/custom-ui-components/custom-select/custom-select";
 
-const daysOfWeek = ['Vasárnap', 'Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat'];
-const monthNames = ['Január', 'Február', 'Március', 'Április', 'Május', 'Június', 'Július', 'Augusztus', 'Szeptember', 'Október', 'November', 'December'];
-const todayText = 'Ma';
+const daysOfWeek = ["Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"];
+const monthNames = [
+  "Január",
+  "Február",
+  "Március",
+  "Április",
+  "Május",
+  "Június",
+  "Július",
+  "Augusztus",
+  "Szeptember",
+  "Október",
+  "November",
+  "December",
+];
+const todayText = "Ma";
 
 interface ContinuousCalendarProps {
   clickHandler: (calendarEvent: CalendarEvent | undefined) => void;
@@ -20,46 +33,59 @@ interface ContinuousCalendarProps {
 }
 
 export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
-    clickHandler,
-    onYearChange,
-    calendarEvents: initialCalendarEvents,
-    theme
-  }) => {
+  clickHandler,
+  onYearChange,
+  calendarEvents: initialCalendarEvents,
+  theme,
+}) => {
   const today = new Date();
   const dayRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState<number>(0);
-  const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>(initialCalendarEvents || []);
+  const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>(
+    initialCalendarEvents || []
+  );
   const monthOptions = monthNames.map((month, index) => ({ name: month, value: `${index}` }));
   const buttonColor = theme === "turquoise" ? "primary" : "secondary";
 
   const scrollToDay = (monthIndex: number, dayIndex: number) => {
     const targetDayIndex = dayRefs.current.findIndex(
-      (ref) => ref && ref.getAttribute('data-month') === `${monthIndex}` && ref.getAttribute('data-day') === `${dayIndex}`,
+      (ref) =>
+        ref &&
+        ref.getAttribute("data-month") === `${monthIndex}` &&
+        ref.getAttribute("data-day") === `${dayIndex}`
     );
 
     const targetElement = dayRefs.current[targetDayIndex];
 
     if (targetDayIndex !== -1 && targetElement) {
-      const container: HTMLElement = document.querySelector('.calendar-container');
+      const container: HTMLElement = document.querySelector(".calendar-container");
       const elementRect = targetElement.getBoundingClientRect();
-      const is2xl = window.matchMedia('(min-width: 1536px)').matches;
+      const is2xl = window.matchMedia("(min-width: 1536px)").matches;
       const offsetFactor = is2xl ? 3 : 2.5;
 
       if (container) {
         const containerRect = container.getBoundingClientRect();
-        const offset = elementRect.top - containerRect.top - (containerRect.height / offsetFactor) + (elementRect.height / 2);
+        const offset =
+          elementRect.top -
+          containerRect.top -
+          containerRect.height / offsetFactor +
+          elementRect.height / 2;
 
         container.scrollTo({
           top: container.scrollTop + offset,
-          behavior: 'smooth',
+          behavior: "smooth",
         });
       } else {
-        const offset = window.scrollY + elementRect.top - (window.innerHeight / offsetFactor) + (elementRect.height / 2);
-  
+        const offset =
+          window.scrollY +
+          elementRect.top -
+          window.innerHeight / offsetFactor +
+          elementRect.height / 2;
+
         window.scrollTo({
           top: offset,
-          behavior: 'smooth',
+          behavior: "smooth",
         });
       }
     }
@@ -91,12 +117,12 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
       const newEvents = await onYearChange(todayYear);
       setCalendarEvents(newEvents);
     }
-      scrollToDay(today.getMonth(), today.getDate());
+    scrollToDay(today.getMonth(), today.getDate());
   };
 
   const handleDayClick = (calendarEvent: CalendarEvent | undefined) => {
-      clickHandler(calendarEvent);
-  }
+    clickHandler(calendarEvent);
+  };
 
   const generateCalendar = () => {
     const today = new Date();
@@ -126,7 +152,7 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
           daysInYear.push({ month: 0, day });
         }
       }
-    
+
       return daysInYear;
     };
 
@@ -142,24 +168,31 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
         {week.map(({ month, day }, dayIndex) => {
           const index = weekIndex * 7 + dayIndex;
           const isNewMonth = index === 0 || calendarDays[index - 1].month !== month;
-          const isToday = today.getMonth() === month && today.getDate() === day && today.getFullYear() === year;
+          const isToday =
+            today.getMonth() === month && today.getDate() === day && today.getFullYear() === year;
 
           const eventToDisplay = calendarEvents?.find((cEvent: CalendarEvent) => {
-            return cEvent?.startDate?.getFullYear() === year &&
-            cEvent?.startDate.getMonth() === (month) &&
-            cEvent?.startDate.getDate() === day;
+            return (
+              cEvent?.startDate?.getFullYear() === year &&
+              cEvent?.startDate.getMonth() === month &&
+              cEvent?.startDate.getDate() === day
+            );
           });
 
           return (
             <div
               key={`${month}-${day}`}
-              ref={(el) => { dayRefs.current[index] = el; }}
+              ref={(el) => {
+                dayRefs.current[index] = el;
+              }}
               data-month={month}
               data-day={day}
               onClick={() => handleDayClick(eventToDisplay)}
-              className={`${eventToDisplay ? 'bg-[#79C2B6]' : ''} border-[#377F76] relative z-10 m-[-0.5px] group aspect-square w-full grow cursor-pointer rounded-xl border font-medium transition-all hover:z-20 hover:border-cyan-400 sm:-m-px sm:size-20 sm:rounded-2xl sm:border-2 lg:size-36 lg:rounded-3xl 2xl:size-40`}
+              className={`${eventToDisplay ? "bg-[#79C2B6]" : ""} border-[#377F76] relative z-10 m-[-0.5px] group aspect-square w-full grow cursor-pointer rounded-xl border font-medium transition-all hover:z-20 hover:border-cyan-400 sm:-m-px sm:size-20 sm:rounded-2xl sm:border-2 lg:size-36 lg:rounded-3xl 2xl:size-40`}
             >
-              <span className={`absolute left-1 top-1 flex size-5 items-center justify-center rounded-full text-xs sm:size-6 sm:text-sm lg:left-2 lg:top-2 lg:size-8 lg:text-base ${isToday ? 'bg-blue-500 font-semibold text-white' : ''} ${month < 0 ? 'text-slate-400' : 'text-slate-800'}`}>
+              <span
+                className={`absolute left-1 top-1 flex size-5 items-center justify-center rounded-full text-xs sm:size-6 sm:text-sm lg:left-2 lg:top-2 lg:size-8 lg:text-base ${isToday ? "bg-blue-500 font-semibold text-white" : ""} ${month < 0 ? "text-slate-400" : "text-slate-800"}`}
+              >
                 {day}
               </span>
               {isNewMonth && (
@@ -167,16 +200,27 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
                   {monthNames[month]}
                 </span>
               )}
-              <CustomButton variant="text" className="absolute right-2 top-2 rounded-full opacity-0 transition-all focus:opacity-100 group-hover:opacity-100">
-                <svg className="size-8 scale-90 color-[#377F76]  transition-all hover:scale-100 group-focus:scale-100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                  <ArrowRightCircle/>
+              <CustomButton
+                variant="text"
+                className="absolute right-2 top-2 rounded-full opacity-0 transition-all focus:opacity-100 group-hover:opacity-100"
+              >
+                <svg
+                  className="size-8 scale-90 color-[#377F76]  transition-all hover:scale-100 group-focus:scale-100"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <ArrowRightCircle />
                 </svg>
               </CustomButton>
-              {eventToDisplay &&
+              {eventToDisplay && (
                 <div className={`absolute right-1 flex h-full p-9 flex-col-reverse`}>
                   <span>{eventToDisplay.title}</span>
                 </div>
-              }
+              )}
             </div>
           );
         })}
@@ -187,26 +231,26 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
   };
 
   useEffect(() => {
-    const calendarContainer = document.querySelector('.calendar-container');
+    const calendarContainer = document.querySelector(".calendar-container");
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const month = parseInt(entry.target.getAttribute('data-month')!, 10);
+            const month = parseInt(entry.target.getAttribute("data-month")!, 10);
             setSelectedMonth(month);
           }
         });
       },
       {
         root: calendarContainer,
-        rootMargin: '-75% 0px -25% 0px',
+        rootMargin: "-75% 0px -25% 0px",
         threshold: 0,
-      },
+      }
     );
 
     dayRefs.current.forEach((ref) => {
-      if (ref && ref.getAttribute('data-day') === '15') {
+      if (ref && ref.getAttribute("data-day") === "15") {
         observer.observe(ref);
       }
     });
@@ -217,40 +261,83 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
   }, []);
 
   return (
-    <div className={`calendar-container rounded-2xl no-scrollbar max-h-full overflow-y-scroll rounded-t-2xl bg-white pb-10 text-slate-800 shadow-xl`}>
-      <div className={`${style['calendar-header-' + theme]} sticky -top-px z-50 w-full rounded-t-2xl px-5 pt-7 sm:px-8 sm:pt-8`}>
+    <div
+      className={`calendar-container rounded-2xl no-scrollbar max-h-full overflow-y-scroll rounded-t-2xl bg-white pb-10 text-slate-800 shadow-xl`}
+    >
+      <div
+        className={`${style["calendar-header-" + theme]} sticky -top-px z-50 w-full rounded-t-2xl px-5 pt-7 sm:px-8 sm:pt-8`}
+      >
         <div className="mb-4 grid grid-cols-3 gap-6">
-            <CustomButton variant="contained" color={buttonColor} onClick={handleTodayClick} className="rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-900 hover:bg-gray-100 lg:px-5 lg:py-2.5">
-              {todayText}
-            </CustomButton>
-            <CustomSelect name="month" value={selectedMonth} options={monthOptions} onSelect={handleMonthChange} />
+          <CustomButton
+            variant="contained"
+            color={buttonColor}
+            onClick={handleTodayClick}
+            className="rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-900 hover:bg-gray-100 lg:px-5 lg:py-2.5"
+          >
+            {todayText}
+          </CustomButton>
+          <CustomSelect
+            name="month"
+            value={selectedMonth}
+            options={monthOptions}
+            onSelect={handleMonthChange}
+          />
           <div className="flex items-center justify-between">
-            <CustomButton
-              onClick={handlePrevYear}
-              color={buttonColor}>
-              <svg className="size-5 text-slate-100 font-semibold " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m15 19-7-7 7-7"/>
+            <CustomButton onClick={handlePrevYear} color={buttonColor}>
+              <svg
+                className="size-5 text-slate-100 font-semibold "
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m15 19-7-7 7-7"
+                />
               </svg>
             </CustomButton>
-            <h3 className="min-w-16 text-center text-lg font-semibold sm:min-w-20 sm:text-xl">{year}</h3>
-            <CustomButton
-              onClick={handleNextYear}
-              color={buttonColor}>
-              <svg className="size-5 text-slate-100 font-semibold " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m9 5 7 7-7 7"/>
+            <h3 className="min-w-16 text-center text-lg font-semibold sm:min-w-20 sm:text-xl">
+              {year}
+            </h3>
+            <CustomButton onClick={handleNextYear} color={buttonColor}>
+              <svg
+                className="size-5 text-slate-100 font-semibold "
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m9 5 7 7-7 7"
+                />
               </svg>
             </CustomButton>
           </div>
         </div>
         <div className="grid w-full grid-cols-7 justify-between text-slate-100 text-4xl">
           {daysOfWeek.map((day, index) => (
-            <div key={index} className="calendar-day w-full border-b border-slate-200 py-2 text-center font-semibold">
+            <div
+              key={index}
+              className="calendar-day w-full border-b border-slate-200 py-2 text-center font-semibold"
+            >
               {day}
             </div>
           ))}
         </div>
       </div>
-      <div className={`${style['calendar-content-' + theme]} w-full px-5 pt-4 sm:px-8 sm:pt-6`}>
+      <div className={`${style["calendar-content-" + theme]} w-full px-5 pt-4 sm:px-8 sm:pt-6`}>
         {generateCalendar()}
       </div>
     </div>

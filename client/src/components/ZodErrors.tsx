@@ -4,5 +4,5 @@ export function ZodErrors({ error, className }: { error: string[]; className?: s
     <div key={index} className={className ?? ""}>
       {err}
     </div>
-  )); 
+  ));
 }

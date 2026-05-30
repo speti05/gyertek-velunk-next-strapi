@@ -27,11 +27,7 @@ export default function Error({
       <h5 className="mb-8">{SERVER_SIDE_ERROR_LABEL}</h5>
       <p className="mb-8 text-center max-w-md">{ERROR_LABEL}</p>
       <div className="mb-8">
-        <CustomButton
-          variant="contained"
-          color="primary"
-          onClick={() => reset()}
-        >
+        <CustomButton variant="contained" color="primary" onClick={() => reset()}>
           {TRY_AGAIN_LABEL}
         </CustomButton>
       </div>

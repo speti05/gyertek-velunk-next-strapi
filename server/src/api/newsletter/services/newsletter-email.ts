@@ -72,7 +72,11 @@ export const sendNewsletterBroadcast = async (
   let sentCount = 0;
 
   if (process.env.NODE_ENV === "development") {
-    const devHtml = emailWrapper(subject, bodyHtml, buildUnsubscribeUrl(recipients[0] ?? 'test@example.com'));
+    const devHtml = emailWrapper(
+      subject,
+      bodyHtml,
+      buildUnsubscribeUrl(recipients[0] ?? "test@example.com")
+    );
     console.log(`[DEV] Newsletter "${subject}" would be sent to: ${recipients.join(", ")}`);
     console.log(`[DEV] HTML content: ${devHtml}`);
     return recipients.length;

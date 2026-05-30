@@ -1,4 +1,4 @@
-'use server'
+"use server";
 
 import { getPageBySlug } from "@/data/loaders";
 import { notFound } from "next/navigation";
@@ -7,8 +7,8 @@ import { PageParams } from "@/types";
 
 async function loader(slug: string) {
   const { data } = await getPageBySlug(slug);
-  if (!data?.length){
-      return notFound();
+  if (!data?.length) {
+    return notFound();
   }
   return { blocks: data[0]?.blocks };
 }
@@ -16,5 +16,5 @@ async function loader(slug: string) {
 export default async function DynamicPageRoute({ params, searchParams }: PageParams) {
   const slug = (await params).slug;
   const { blocks } = await loader(slug);
-  return <BlockRenderer blocks={blocks} searchParams={await searchParams}/>;
+  return <BlockRenderer blocks={blocks} searchParams={await searchParams} />;
 }

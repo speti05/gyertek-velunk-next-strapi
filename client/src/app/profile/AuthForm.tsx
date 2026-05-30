@@ -29,7 +29,13 @@ function SubmitBtn() {
   const { pending } = useFormStatus();
   return (
     <div className="auth-page__buttons">
-      <CustomButton type="submit" variant="contained" color="primary" size="large" disabled={pending}>
+      <CustomButton
+        type="submit"
+        variant="contained"
+        color="primary"
+        size="large"
+        disabled={pending}
+      >
         {pending ? LOADING_LABEL : AUTH_LOGIN_LABEL}
       </CustomButton>
     </div>

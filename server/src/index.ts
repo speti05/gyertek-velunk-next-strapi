@@ -1,7 +1,6 @@
 import type { Core } from "@strapi/strapi";
 import { sendNewsletterBroadcast } from "./api/newsletter/services/newsletter-email";
 
-
 async function grantPermission(strapi: Core.Strapi, roleId: number, action: string) {
   const existing = await strapi.db.query("plugin::users-permissions.permission").findOne({
     where: { action, role: roleId },
@@ -63,9 +62,9 @@ export default {
       strapi.log.info(`Newsletter lifecycle triggered for "${result.subject}"`);
 
       try {
-        const subscribers = await strapi
+        const subscribers = (await strapi
           .documents("api::newsletter-signup.newsletter-signup")
-          .findMany({ status: "published", fields: ["email"] }) as { email: string }[];
+          .findMany({ status: "published", fields: ["email"] })) as { email: string }[];
 
         const emails = subscribers.map((s) => s.email).filter(Boolean);
 

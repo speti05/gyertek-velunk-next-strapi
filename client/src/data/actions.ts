@@ -16,13 +16,18 @@ export async function subscribeAction(prevState: any, formData: FormData) {
   const recaptchaToken = formData.get("recaptchaToken") as string | null;
   const isHuman = await verifyRecaptcha(recaptchaToken);
   if (!isHuman) {
-    return { ...prevState, zodErrors: null, strapiErrors: null, errorMessage: MESSAGES.recaptchaFailed };
+    return {
+      ...prevState,
+      zodErrors: null,
+      strapiErrors: null,
+      errorMessage: MESSAGES.recaptchaFailed,
+    };
   }
 
   const email = formData.get("email");
 
   const validatedFields = subscribeSchema.safeParse({
-    email: email
+    email: email,
   });
 
   if (!validatedFields.success) {
@@ -53,7 +58,9 @@ export async function subscribeAction(prevState: any, formData: FormData) {
       ...prevState,
       strapiErrors: responseData.error,
       zodErrors: null,
-      errorMessage: isAlreadySubscribed ? MESSAGES.emailAlreadySubscribed : MESSAGES.failedToSubscribe,
+      errorMessage: isAlreadySubscribed
+        ? MESSAGES.emailAlreadySubscribed
+        : MESSAGES.failedToSubscribe,
     };
   }
 
@@ -98,24 +105,44 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
 
   const eventId = formData.get("eventId") as string;
   if (!eventId) {
-    return { ...prevState, zodErrors: null, strapiErrors: null, errorMessage: MESSAGES.someThingWentWrong };
+    return {
+      ...prevState,
+      zodErrors: null,
+      strapiErrors: null,
+      errorMessage: MESSAGES.someThingWentWrong,
+    };
   }
 
   // Get JWT from cookie
   const cookieStore = await cookies();
   const jwt = cookieStore.get("jwt")?.value;
   if (!jwt) {
-    return { ...prevState, zodErrors: null, strapiErrors: null, errorMessage: MESSAGES.loginRequired };
+    return {
+      ...prevState,
+      zodErrors: null,
+      strapiErrors: null,
+      errorMessage: MESSAGES.loginRequired,
+    };
   }
 
   // Get user profile
   const userProfile = await getUserProfileService(jwt);
   if (!userProfile) {
-    return { ...prevState, zodErrors: null, strapiErrors: null, errorMessage: MESSAGES.loginRequired };
+    return {
+      ...prevState,
+      zodErrors: null,
+      strapiErrors: null,
+      errorMessage: MESSAGES.loginRequired,
+    };
   }
 
   if (!userProfile.firstName || !userProfile.lastName || !userProfile.phone) {
-    return { ...prevState, zodErrors: null, strapiErrors: null, errorMessage: MESSAGES.missingProfileData };
+    return {
+      ...prevState,
+      zodErrors: null,
+      strapiErrors: null,
+      errorMessage: MESSAGES.missingProfileData,
+    };
   }
 
   const responseData = await eventsSubscribeService(jwt, {

@@ -5,23 +5,19 @@ import CustomButton from "@/components/custom-ui-components/custom-button/custom
 
 // Props interface for the main pagination component
 interface PaginationProps {
-  pageCount: number;  // Total number of pages
+  pageCount: number; // Total number of pages
   pageParam?: string; // Customize the query param name
 }
 
 // Props interface for the arrow buttons
 interface PaginationArrowProps {
-  direction: "left" | "right";  // Direction of the arrow
-  href: string;                 // URL to navigate to
-  isDisabled: boolean;          // Whether the arrow should be disabled
+  direction: "left" | "right"; // Direction of the arrow
+  href: string; // URL to navigate to
+  isDisabled: boolean; // Whether the arrow should be disabled
 }
 
 // Arrow button component for navigation
-const PaginationArrow: FC<PaginationArrowProps> = ({
-  direction,
-  href,
-  isDisabled,
-}) => {
+const PaginationArrow: FC<PaginationArrowProps> = ({ direction, href, isDisabled }) => {
   const router = useRouter();
   const isLeft = direction === "left";
 

@@ -7,12 +7,9 @@ import { ContentCollectionType } from "@/types";
 interface SearchProps {
   placeHolder?: string;
   contentCollectionType: ContentCollectionType;
-} 
+}
 
-export function Search({
-  placeHolder,
-  contentCollectionType 
-}: Readonly<SearchProps>) {  
+export function Search({ placeHolder, contentCollectionType }: Readonly<SearchProps>) {
   // Get access to URL search parameters, routing, and current pathname
   const searchParams = useSearchParams();
   const { replace } = useRouter();

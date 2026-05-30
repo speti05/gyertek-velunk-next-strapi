@@ -18,13 +18,13 @@
   background-color: #f3f4f6;
   color: #4b5563;
   transition: all 0.2s ease;
-  
+
   &:hover:not(.disabled) {
     background-color: #e5e7eb;
     color: #374151;
     transform: translateY(-1px);
   }
-  
+
   &.disabled {
     opacity: 0.4;
     cursor: not-allowed;
@@ -40,7 +40,7 @@
   color: #4b5563;
   min-width: 2.5rem;
   text-align: center;
-  
+
   &.active {
     background-color: #e5e7eb;
     border-radius: 0.5rem;

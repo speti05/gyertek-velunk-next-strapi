@@ -23,7 +23,10 @@ export interface UserProfile {
   phone: string | null;
 }
 
-export async function registerService(email: string, password: string): Promise<AuthResponse | null> {
+export async function registerService(
+  email: string,
+  password: string
+): Promise<AuthResponse | null> {
   const url = new URL("/api/auth/local/register", BASE_URL);
   const username = email.split("@")[0];
 
@@ -72,7 +75,9 @@ export async function forgotPasswordService(email: string): Promise<{ ok: boolea
   }
 }
 
-export async function confirmEmailService(confirmationToken: string): Promise<{ ok: boolean } | null> {
+export async function confirmEmailService(
+  confirmationToken: string
+): Promise<{ ok: boolean } | null> {
   const url = new URL("/api/auth/email-confirmation", BASE_URL);
   url.searchParams.set("confirmation", confirmationToken);
 

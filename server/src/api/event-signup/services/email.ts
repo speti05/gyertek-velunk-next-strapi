@@ -1,15 +1,15 @@
 // src/api/event-signup/services/email.ts
-import nodemailer from 'nodemailer';
+import nodemailer from "nodemailer";
 
 // For development/testing, use Ethereal (fake SMTP)
 let transporter: nodemailer.Transporter;
 
 const setupTransporter = async () => {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === "development") {
     // Create a test account
     const testAccount = await nodemailer.createTestAccount();
     transporter = nodemailer.createTransport({
-      host: 'smtp.ethereal.email',
+      host: "smtp.ethereal.email",
       port: 587,
       secure: false,
       auth: {
@@ -17,7 +17,7 @@ const setupTransporter = async () => {
         pass: testAccount.pass,
       },
     });
-    console.log('Using Ethereal test account:', testAccount);
+    console.log("Using Ethereal test account:", testAccount);
   } else {
     // Production: use real SMTP
     transporter = nodemailer.createTransport({
@@ -49,7 +49,7 @@ const emailFooter = (siteUrl: string | undefined, year: number) => `
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#F1E8D9;font-size:14px;margin:0 0 6px;line-height:1.6;">
         &copy; ${year} Gyertek velünk &mdash; Minden jog fenntartva.
       </p>
-      ${siteUrl ? `<a href="${siteUrl}" style="font-family:'Source Sans 3',Arial,sans-serif;color:#B0DFD8;font-size:14px;text-decoration:none;">${siteUrl}</a>` : ''}
+      ${siteUrl ? `<a href="${siteUrl}" style="font-family:'Source Sans 3',Arial,sans-serif;color:#B0DFD8;font-size:14px;text-decoration:none;">${siteUrl}</a>` : ""}
     </td>
   </tr>
 `;
@@ -125,7 +125,13 @@ const userEmailContent = (firstName: string, lastName: string, eventName: string
   </tr>
 `;
 
-const adminEmailContent = (firstName: string, lastName: string, userEmail: string, eventName: string, telephone: string) => `
+const adminEmailContent = (
+  firstName: string,
+  lastName: string,
+  userEmail: string,
+  eventName: string,
+  telephone: string
+) => `
   <tr>
     <td bgcolor="#ffffff" style="padding:48px;">
 
@@ -206,10 +212,7 @@ export const sendSignupEmails = async (signupData: {
     from: `"Gyertek velünk" <${process.env.SMTP_USER}>`,
     to: userEmail,
     subject: `Sikeres túrajelentkezés – ${eventName}`,
-    html: emailWrapper(
-      siteUrl,
-      userEmailContent(firstName, lastName, eventName)
-    ),
+    html: emailWrapper(siteUrl, userEmailContent(firstName, lastName, eventName)),
   });
 
   // Email to admin (notification)

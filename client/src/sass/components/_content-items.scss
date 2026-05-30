@@ -3,17 +3,15 @@
 .content-items {
   margin-bottom: 12rem;
 
-
   &__container {
     display: grid;
 
     &--card {
       display: grid;
-      
+
       gap: 2rem;
 
       & .content-items__card {
-        
         &:hover {
           transform: scale(1.05);
           transition: transform 0.3s ease;

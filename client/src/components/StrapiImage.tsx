@@ -8,12 +8,7 @@ interface StrapiImageProps {
   [key: string]: string | number | boolean | undefined;
 }
 
-export function StrapiImage({
-  src,
-  alt,
-  className,
-  ...rest
-}: Readonly<StrapiImageProps>) {
+export function StrapiImage({ src, alt, className, ...rest }: Readonly<StrapiImageProps>) {
   const imageUrl = getStrapiMedia(src);
   if (!imageUrl) return null;
 

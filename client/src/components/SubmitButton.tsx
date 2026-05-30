@@ -9,11 +9,7 @@ interface SubmitButtonProps {
   disabled?: boolean;
 }
 
-export function SubmitButton({
-  text,
-  className,
-  disabled,
-}: Readonly<SubmitButtonProps>) {
+export function SubmitButton({ text, className, disabled }: Readonly<SubmitButtonProps>) {
   const status = useFormStatus();
   return (
     <CustomButton

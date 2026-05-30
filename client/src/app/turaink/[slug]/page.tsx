@@ -1,4 +1,4 @@
-'use server'
+"use server";
 
 import type { EventProps } from "@/types";
 import { ContentList } from "@/components/ContentList";
@@ -18,7 +18,7 @@ async function loader(slug: string) {
 }
 
 interface ParamsProps {
-  params: Promise<{ slug: string }>,
+  params: Promise<{ slug: string }>;
   searchParams: Promise<{ page?: string; query?: string }>;
 }
 
