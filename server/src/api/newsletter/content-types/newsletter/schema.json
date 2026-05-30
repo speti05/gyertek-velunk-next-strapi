@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "newsletters",
+  "info": {
+    "singularName": "newsletter",
+    "pluralName": "newsletters",
+    "displayName": "Newsletter",
+    "description": "Newsletter küldés a feliratkozóknak"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "subject": {
+      "type": "string",
+      "required": true
+    },
+    "sentAt": {
+      "type": "datetime"
+    },
+    "body": {
+      "type": "blocks",
+      "required": true
+    }
+  }
+}

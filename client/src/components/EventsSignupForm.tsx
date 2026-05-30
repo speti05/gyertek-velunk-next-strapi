@@ -63,10 +63,7 @@ function EventSignupFormInner({
   userProfile,
   alreadySignedUp,
 }: EventSignupFormProps) {
-  const [formState, formAction] = useActionState(
-    eventsSubscribeAction,
-    INITIAL_STATE,
-  );
+  const [formState, formAction] = useActionState(eventsSubscribeAction, INITIAL_STATE);
   const formRef = useRef<HTMLFormElement>(null);
   const handleSubmit = useRecaptchaSubmit(formRef, formAction, "event_signup");
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -77,8 +74,7 @@ function EventSignupFormInner({
     setTermsAccepted(false);
   }
 
-  const errorMessage =
-    formState?.strapiErrors?.message ?? formState?.errorMessage;
+  const errorMessage = formState?.strapiErrors?.message ?? formState?.errorMessage;
   const successMessage = formState?.successMessage;
 
   const hasCompleteProfile = !!(
@@ -177,19 +173,11 @@ function EventSignupFormInner({
           />
         )}
 
-        <input
-          hidden
-          type="text"
-          name="eventId"
-          defaultValue={eventId ?? stayInTouchEventId}
-        />
+        <input hidden type="text" name="eventId" defaultValue={eventId ?? stayInTouchEventId} />
 
         {renderSignupArea()}
 
-        <CustomAlertMessage
-          errorMessage={errorMessage}
-          successMessage={successMessage}
-        />
+        <CustomAlertMessage errorMessage={errorMessage} successMessage={successMessage} />
       </form>
 
       <CustomDialog
@@ -209,13 +197,17 @@ function EventSignupFormInner({
           <div className="grid grid-cols-2 gap-4 mt-10 mb-10">
             {startDate && (
               <>
-                <span><strong>{FORM_LABELS.startDate}:</strong></span>
+                <span>
+                  <strong>{FORM_LABELS.startDate}:</strong>
+                </span>
                 <span>{formatDate(startDate)}</span>
               </>
             )}
             {price && (
               <>
-                <span><strong>{FORM_LABELS.price}:</strong></span>
+                <span>
+                  <strong>{FORM_LABELS.price}:</strong>
+                </span>
                 <span>{price}</span>
               </>
             )}
@@ -224,9 +216,7 @@ function EventSignupFormInner({
         <CustomCheckbox
           checked={termsAccepted}
           size="large"
-          onChange={(e) =>
-            setTermsAccepted((e.target as HTMLInputElement).checked)
-          }
+          onChange={(e) => setTermsAccepted((e.target as HTMLInputElement).checked)}
           label={
             <>
               {SIGNUP_CONFIRM_TERMS_LABEL}

@@ -57,7 +57,7 @@ export function PaginationComponent({ pageCount, pageParam = "page" }: Readonly<
 
   return (
     <nav role="navigation" aria-label="Pagination" className="pagination-nav">
-      <ul className="pagination-list">
+      <ul className="pagination-list no-list-style">
         {/* Left arrow - disabled if on first page */}
         <li>
           <PaginationArrow

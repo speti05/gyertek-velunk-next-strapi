@@ -30,7 +30,7 @@ const INITIAL_STATE = {
 
 function PasswordStrengthHint({ password }: { password: string }) {
   return (
-    <ul className="auth-page__password-rules">
+    <ul className="auth-page__password-rules no-list-style">
       {PASSWORD_RULES.map((rule) => (
         <li
           key={rule.label}
@@ -48,7 +48,13 @@ function SubmitBtn() {
   const { pending } = useFormStatus();
   return (
     <div className="auth-page__buttons">
-      <CustomButton type="submit" variant="contained" color="secondary" size="large" disabled={pending}>
+      <CustomButton
+        type="submit"
+        variant="contained"
+        color="secondary"
+        size="large"
+        disabled={pending}
+      >
         {pending ? LOADING_LABEL : AUTH_REGISTER_LABEL}
       </CustomButton>
     </div>

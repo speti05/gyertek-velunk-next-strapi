@@ -8,6 +8,8 @@ import { registerService, loginService, forgotPasswordService, resetPasswordServ
 import { isDev } from "@clientRoot/env";
 import { MESSAGES, AUTH_FORGOT_PASSWORD_SUCCESS } from "@/utils/texts";
 
+const STRAPI_URL = process.env.STRAPI_API_URL ?? "http://localhost:1337";
+
 async function verifyRecaptcha(token: string | null): Promise<boolean> {
   if (isDev || !token) return true;
   const secret = process.env.RECAPTCHA_SECRET_KEY;
@@ -249,4 +251,31 @@ export async function updateProfileAction(prevState: any, formData: FormData) {
 
   revalidatePath("/profile");
   return { ...prevState, zodErrors: null, errorMessage: null, successMessage: MESSAGES.profileSaveSuccess };
+}
+
+export async function toggleNewsletterSubscriptionAction(prevState: any, formData: FormData) {
+  const cookieStore = await cookies();
+  const jwt = cookieStore.get("jwt")?.value;
+  if (!jwt) redirect("/login");
+
+  const subscribe = formData.get("subscribe") === "true";
+  const method = subscribe ? "POST" : "DELETE";
+  const url = new URL("/api/newsletter-signups/me", STRAPI_URL);
+
+  try {
+    const response = await fetch(url.href, {
+      method,
+      headers: { Authorization: `Bearer ${jwt}` },
+    });
+    if (!response.ok) throw new Error("Request failed");
+  } catch {
+    return { ...prevState, subscribed: !subscribe, errorMessage: MESSAGES.newsletterToggleFailed, successMessage: null };
+  }
+
+  revalidatePath("/profile");
+  return {
+    subscribed: subscribe,
+    errorMessage: null,
+    successMessage: subscribe ? MESSAGES.newsletterSubscribeSuccess : MESSAGES.newsletterUnsubscribeSuccess,
+  };
 }

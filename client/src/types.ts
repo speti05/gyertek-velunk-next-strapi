@@ -129,6 +129,7 @@ export interface SubscribeProps extends Base<"blocks.subscribe"> {
   content: string;
   placeholder: string;
   buttonText: string;
+  image: ImageProps;
 }
 
 export interface HeadingProps extends Base<"blocks.heading"> {

@@ -46,7 +46,8 @@ export const MESSAGES = {
   enterPhoneNumber: "Add meg a telefonszámod. ",
   someThingWentWrong: "Hiba történt. Kérjük, próbáld újra később.",
   failedToSubscribe: "Sikertelen feliratkozás.",
-  succesfullySubscribed: "Sikeres feliratkozás.",
+  succesfullySubscribed: "Sikeresen feliratkoztál a hírlevelünkre!",
+  emailAlreadySubscribed: "Ez az email cím már fel van iratkozva a hírlevélre.",
   failedToSubscribeToEvent: "Sikertelen jelentkezés.",
   succesfullySubscribedToEvent: "Sikeres jelentkezés.",
   recaptchaFailed: "A biztonsági ellenőrzés sikertelen. Kérjük, próbálja újra.",
@@ -68,6 +69,9 @@ export const MESSAGES = {
   profileSaveFailed: "Mentés sikertelen. Kérjük, próbáld újra.",
   missingProfileData: "Kérjük, töltsd ki a profilodon az alapadatokat a jelentkezés előtt.",
   loginRequired: "A jelentkezéshez kérjük, jelentkezz be.",
+  newsletterSubscribeSuccess: "Sikeresen feliratkoztál a hírlevélre.",
+  newsletterUnsubscribeSuccess: "Sikeresen leiratkoztál a hírlevélről.",
+  newsletterToggleFailed: "Hiba történt. Kérjük, próbálja újra.",
 };
 
 // Auth
@@ -105,6 +109,8 @@ export const PROFILE_TITLE = "Profilom";
 export const PROFILE_BASIC_DATA_SECTION = "Alapadatok";
 export const PROFILE_MY_TOURS_SECTION = "Túráim";
 export const PROFILE_NO_TOURS_MESSAGE = "Még nem jelentkeztél túrára.";
+export const PROFILE_NEWSLETTER_SECTION = "Hírlevél";
+export const PROFILE_NEWSLETTER_SUBSCRIBE_LABEL = "Feliratkozom a hírlevélre";
 
 // Event signup confirmation
 export const SIGNUP_BUTTON_LABEL = "Jelentkezés";

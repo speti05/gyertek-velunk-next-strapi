@@ -1,10 +1,10 @@
-import type { Schema, Struct } from '@strapi/strapi';
+import type { Schema, Struct } from "@strapi/strapi";
 
 export interface BlocksEventSignupForm extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_event_signup_forms';
+  collectionName: "components_blocks_event_signup_forms";
   info: {
-    displayName: 'Event signup form';
-    icon: 'attachment';
+    displayName: "Event signup form";
+    icon: "attachment";
   };
   attributes: {
     name: Schema.Attribute.String;
@@ -12,32 +12,32 @@ export interface BlocksEventSignupForm extends Struct.ComponentSchema {
 }
 
 export interface BlocksFeaturedArticle extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_featured_articles';
+  collectionName: "components_blocks_featured_articles";
   info: {
-    displayName: 'Featured Article';
+    displayName: "Featured Article";
   };
   attributes: {
     excerpt: Schema.Attribute.RichText;
     headline: Schema.Attribute.String;
-    image: Schema.Attribute.Media<'images'>;
-    link: Schema.Attribute.Component<'elements.link', false>;
+    image: Schema.Attribute.Media<"images">;
+    link: Schema.Attribute.Component<"elements.link", false>;
   };
 }
 
 export interface BlocksFullImage extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_full_images';
+  collectionName: "components_blocks_full_images";
   info: {
-    displayName: 'Full Image';
+    displayName: "Full Image";
   };
   attributes: {
-    image: Schema.Attribute.Media<'images'>;
+    image: Schema.Attribute.Media<"images">;
   };
 }
 
 export interface BlocksHeading extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_headings';
+  collectionName: "components_blocks_headings";
   info: {
-    displayName: 'Heading';
+    displayName: "Heading";
   };
   attributes: {
     heading: Schema.Attribute.String;
@@ -46,75 +46,75 @@ export interface BlocksHeading extends Struct.ComponentSchema {
 }
 
 export interface BlocksHeroSection extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_hero_sections';
+  collectionName: "components_blocks_hero_sections";
   info: {
-    displayName: 'Hero Section';
+    displayName: "Hero Section";
   };
   attributes: {
-    cta: Schema.Attribute.Component<'elements.link', false>;
+    cta: Schema.Attribute.Component<"elements.link", false>;
     heading: Schema.Attribute.String;
-    image: Schema.Attribute.Media<'images'>;
-    logo: Schema.Attribute.Component<'elements.logo', false>;
-    theme: Schema.Attribute.Enumeration<['turquoise', 'orange']>;
+    image: Schema.Attribute.Media<"images">;
+    logo: Schema.Attribute.Component<"elements.logo", false>;
+    theme: Schema.Attribute.Enumeration<["turquoise", "orange"]>;
   };
 }
 
 export interface BlocksHeroWithCalendar extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_hero_with_calendars';
+  collectionName: "components_blocks_hero_with_calendars";
   info: {
-    description: '';
-    displayName: 'Hero with calendar';
-    icon: 'apps';
+    description: "";
+    displayName: "Hero with calendar";
+    icon: "apps";
   };
   attributes: {
     headline: Schema.Attribute.String & Schema.Attribute.Required;
-    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+    image: Schema.Attribute.Media<"images" | "files" | "videos" | "audios"> &
       Schema.Attribute.Required;
-    theme: Schema.Attribute.Enumeration<['turquoise', 'brown']> &
+    theme: Schema.Attribute.Enumeration<["turquoise", "brown"]> &
       Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'turquoise'>;
+      Schema.Attribute.DefaultTo<"turquoise">;
   };
 }
 
 export interface BlocksHeroWithText extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_hero_with_texts';
+  collectionName: "components_blocks_hero_with_texts";
   info: {
-    description: '';
-    displayName: 'Hero with text';
-    icon: 'layout';
+    description: "";
+    displayName: "Hero with text";
+    icon: "layout";
   };
   attributes: {
     headline: Schema.Attribute.String;
-    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+    image: Schema.Attribute.Media<"images" | "files" | "videos" | "audios"> &
       Schema.Attribute.Required;
-    link: Schema.Attribute.Component<'elements.link', true>;
-    theme: Schema.Attribute.Enumeration<['turquoise', 'brown']> &
+    link: Schema.Attribute.Component<"elements.link", true>;
+    theme: Schema.Attribute.Enumeration<["turquoise", "brown"]> &
       Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'turquoise'>;
+      Schema.Attribute.DefaultTo<"turquoise">;
     welcomeText: Schema.Attribute.Text;
   };
 }
 
 export interface BlocksInfoBlock extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_info_blocks';
+  collectionName: "components_blocks_info_blocks";
   info: {
-    description: '';
-    displayName: 'Info Block';
+    description: "";
+    displayName: "Info Block";
   };
   attributes: {
     content: Schema.Attribute.RichText;
-    cta: Schema.Attribute.Component<'elements.link', false>;
+    cta: Schema.Attribute.Component<"elements.link", false>;
     headline: Schema.Attribute.String;
-    image: Schema.Attribute.Media<'images'>;
+    image: Schema.Attribute.Media<"images">;
     reversed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    theme: Schema.Attribute.Enumeration<['turquoise', 'brown']>;
+    theme: Schema.Attribute.Enumeration<["turquoise", "brown"]>;
   };
 }
 
 export interface BlocksParagraph extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_paragraphs';
+  collectionName: "components_blocks_paragraphs";
   info: {
-    displayName: 'Paragraph';
+    displayName: "Paragraph";
   };
   attributes: {
     content: Schema.Attribute.RichText;
@@ -122,64 +122,58 @@ export interface BlocksParagraph extends Struct.ComponentSchema {
 }
 
 export interface BlocksParagraphWithImage extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_paragraph_with_images';
+  collectionName: "components_blocks_paragraph_with_images";
   info: {
-    displayName: 'Paragraph With Image';
+    displayName: "Paragraph With Image";
   };
   attributes: {
     content: Schema.Attribute.RichText;
-    image: Schema.Attribute.Media<'images'>;
+    image: Schema.Attribute.Media<"images">;
     imageLandscape: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     reversed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
   };
 }
 
 export interface BlocksSearchableCardList extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_searchable_card_lists';
+  collectionName: "components_blocks_searchable_card_lists";
   info: {
-    description: '';
-    displayName: 'SearchableCardList';
-    icon: 'apps';
+    description: "";
+    displayName: "SearchableCardList";
+    icon: "apps";
   };
   attributes: {
-    basePathForSubPages: Schema.Attribute.Enumeration<
-      ['turaink', 'beszamolok']
-    >;
-    contentCollectionType: Schema.Attribute.Enumeration<
-      ['events', 'articles']
-    > &
+    basePathForSubPages: Schema.Attribute.Enumeration<["turaink", "beszamolok"]>;
+    contentCollectionType: Schema.Attribute.Enumeration<["events", "articles"]> &
       Schema.Attribute.Required;
     featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     headline: Schema.Attribute.String & Schema.Attribute.Required;
-    pageSize: Schema.Attribute.Integer &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<3>;
+    pageSize: Schema.Attribute.Integer & Schema.Attribute.Required & Schema.Attribute.DefaultTo<3>;
     searchPlaceHolder: Schema.Attribute.String;
-    showPagination: Schema.Attribute.Boolean &
-      Schema.Attribute.DefaultTo<false>;
+    showPagination: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     showSearch: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
   };
 }
 
 export interface BlocksSubscribe extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_subscribes';
+  collectionName: "components_blocks_subscribes";
   info: {
-    displayName: 'Subscribe';
+    displayName: "Subscribe";
   };
   attributes: {
     buttonText: Schema.Attribute.String;
     content: Schema.Attribute.Text;
     headline: Schema.Attribute.String;
+    image: Schema.Attribute.Media<"images"> & Schema.Attribute.Required;
     placeholder: Schema.Attribute.String;
   };
 }
 
 export interface BlocksTextContentBlock extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_text_content_blocks';
+  collectionName: "components_blocks_text_content_blocks";
   info: {
-    description: '';
-    displayName: 'Text Content Block';
-    icon: 'bulletList';
+    description: "";
+    displayName: "Text Content Block";
+    icon: "bulletList";
   };
   attributes: {
     content: Schema.Attribute.RichText;
@@ -187,9 +181,9 @@ export interface BlocksTextContentBlock extends Struct.ComponentSchema {
 }
 
 export interface ElementsLink extends Struct.ComponentSchema {
-  collectionName: 'components_elements_links';
+  collectionName: "components_elements_links";
   info: {
-    displayName: 'Link';
+    displayName: "Link";
   };
   attributes: {
     href: Schema.Attribute.String;
@@ -199,62 +193,62 @@ export interface ElementsLink extends Struct.ComponentSchema {
 }
 
 export interface ElementsLogo extends Struct.ComponentSchema {
-  collectionName: 'components_elements_logos';
+  collectionName: "components_elements_logos";
   info: {
-    displayName: 'Logo';
+    displayName: "Logo";
   };
   attributes: {
-    image: Schema.Attribute.Media<'images'>;
+    image: Schema.Attribute.Media<"images">;
     logoText: Schema.Attribute.String;
   };
 }
 
 export interface LayoutFooter extends Struct.ComponentSchema {
-  collectionName: 'components_layout_footers';
+  collectionName: "components_layout_footers";
   info: {
-    displayName: 'Footer';
+    displayName: "Footer";
   };
   attributes: {
     copy: Schema.Attribute.String;
-    logo: Schema.Attribute.Component<'elements.logo', false>;
-    navigation: Schema.Attribute.Component<'elements.link', true>;
-    policies: Schema.Attribute.Component<'elements.link', true>;
+    logo: Schema.Attribute.Component<"elements.logo", false>;
+    navigation: Schema.Attribute.Component<"elements.link", true>;
+    policies: Schema.Attribute.Component<"elements.link", true>;
   };
 }
 
 export interface LayoutHeader extends Struct.ComponentSchema {
-  collectionName: 'components_layout_headers';
+  collectionName: "components_layout_headers";
   info: {
-    description: '';
-    displayName: 'Header';
+    description: "";
+    displayName: "Header";
   };
   attributes: {
-    cta: Schema.Attribute.Component<'elements.link', false>;
-    logo: Schema.Attribute.Component<'elements.logo', false>;
-    navigation: Schema.Attribute.Component<'elements.link', true>;
+    cta: Schema.Attribute.Component<"elements.link", false>;
+    logo: Schema.Attribute.Component<"elements.logo", false>;
+    navigation: Schema.Attribute.Component<"elements.link", true>;
   };
 }
 
-declare module '@strapi/strapi' {
+declare module "@strapi/strapi" {
   export module Public {
     export interface ComponentSchemas {
-      'blocks.event-signup-form': BlocksEventSignupForm;
-      'blocks.featured-article': BlocksFeaturedArticle;
-      'blocks.full-image': BlocksFullImage;
-      'blocks.heading': BlocksHeading;
-      'blocks.hero-section': BlocksHeroSection;
-      'blocks.hero-with-calendar': BlocksHeroWithCalendar;
-      'blocks.hero-with-text': BlocksHeroWithText;
-      'blocks.info-block': BlocksInfoBlock;
-      'blocks.paragraph': BlocksParagraph;
-      'blocks.paragraph-with-image': BlocksParagraphWithImage;
-      'blocks.searchable-card-list': BlocksSearchableCardList;
-      'blocks.subscribe': BlocksSubscribe;
-      'blocks.text-content-block': BlocksTextContentBlock;
-      'elements.link': ElementsLink;
-      'elements.logo': ElementsLogo;
-      'layout.footer': LayoutFooter;
-      'layout.header': LayoutHeader;
+      "blocks.event-signup-form": BlocksEventSignupForm;
+      "blocks.featured-article": BlocksFeaturedArticle;
+      "blocks.full-image": BlocksFullImage;
+      "blocks.heading": BlocksHeading;
+      "blocks.hero-section": BlocksHeroSection;
+      "blocks.hero-with-calendar": BlocksHeroWithCalendar;
+      "blocks.hero-with-text": BlocksHeroWithText;
+      "blocks.info-block": BlocksInfoBlock;
+      "blocks.paragraph": BlocksParagraph;
+      "blocks.paragraph-with-image": BlocksParagraphWithImage;
+      "blocks.searchable-card-list": BlocksSearchableCardList;
+      "blocks.subscribe": BlocksSubscribe;
+      "blocks.text-content-block": BlocksTextContentBlock;
+      "elements.link": ElementsLink;
+      "elements.logo": ElementsLogo;
+      "layout.footer": LayoutFooter;
+      "layout.header": LayoutHeader;
     }
   }
 }

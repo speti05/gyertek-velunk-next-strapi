@@ -45,6 +45,7 @@ const CustomTextInput = React.forwardRef<
                   input: {
                     ...((slotProps?.input as object) ?? {}),
                     endAdornment: passwordAdornment,
+                    suppressHydrationWarning: true,
                   },
                   htmlInput: {
                     ...((slotProps?.htmlInput as object) ?? {}),

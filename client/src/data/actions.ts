@@ -13,6 +13,12 @@ const subscribeSchema = z.object({
 });
 
 export async function subscribeAction(prevState: any, formData: FormData) {
+  const recaptchaToken = formData.get("recaptchaToken") as string | null;
+  const isHuman = await verifyRecaptcha(recaptchaToken);
+  if (!isHuman) {
+    return { ...prevState, zodErrors: null, strapiErrors: null, errorMessage: MESSAGES.recaptchaFailed };
+  }
+
   const email = formData.get("email");
 
   const validatedFields = subscribeSchema.safeParse({
@@ -39,11 +45,15 @@ export async function subscribeAction(prevState: any, formData: FormData) {
   }
 
   if (responseData.error) {
+    const isAlreadySubscribed =
+      responseData.error.details?.errors?.some((e: any) =>
+        e.message?.toLowerCase().includes("unique")
+      ) || responseData.error.message?.toLowerCase().includes("unique");
     return {
       ...prevState,
       strapiErrors: responseData.error,
       zodErrors: null,
-      errorMessage: MESSAGES.failedToSubscribe,
+      errorMessage: isAlreadySubscribed ? MESSAGES.emailAlreadySubscribed : MESSAGES.failedToSubscribe,
     };
   }
 

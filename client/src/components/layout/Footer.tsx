@@ -26,7 +26,7 @@ export function Footer({ data }: FooterProps) {
           height={100}
           className="footer__logo"
         />
-        <ul className="footer__links">
+        <ul className="footer__links no-list-style">
           {navigation.map((item) => (
             <li key={item.id}>
               <Link
@@ -40,7 +40,7 @@ export function Footer({ data }: FooterProps) {
         </ul>
       </nav>
       <div className="footer__policies">
-        <ul className="footer__policies-nav">
+        <ul className="footer__policies-nav no-list-style">
           {policies.map((item) => (
             <li key={item.id}>
               <Link

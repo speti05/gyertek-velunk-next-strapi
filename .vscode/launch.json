@@ -1,0 +1,43 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+
+    {
+      "name": "Client (dev)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["run", "dev"],
+      "cwd": "${workspaceFolder}/client",
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"],
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "name": "Server (develop)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["run", "develop"],
+      "cwd": "${workspaceFolder}/server",
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"],
+      "autoAttachChildProcesses": false,
+      "env": {
+        "NODE_ENV": "development"
+      }
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Full Stack (dev + develop)",
+      "configurations": ["Client (dev)", "Server (develop)"],
+      "stopAll": true,
+      "env": {
+        "NODE_ENV": "development"
+      }
+    }
+  ]
+}

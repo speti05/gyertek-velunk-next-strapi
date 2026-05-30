@@ -1,15 +1,17 @@
-import type { Core } from '@strapi/strapi';
+import type { Core } from "@strapi/strapi";
+import { sendNewsletterBroadcast } from "./api/newsletter/services/newsletter-email";
+
 
 async function grantPermission(strapi: Core.Strapi, roleId: number, action: string) {
-  const existing = await strapi.db.query('plugin::users-permissions.permission').findOne({
+  const existing = await strapi.db.query("plugin::users-permissions.permission").findOne({
     where: { action, role: roleId },
   });
   if (!existing) {
-    await strapi.db.query('plugin::users-permissions.permission').create({
+    await strapi.db.query("plugin::users-permissions.permission").create({
       data: { action, role: roleId, enabled: true },
     });
   } else if (!existing.enabled) {
-    await strapi.db.query('plugin::users-permissions.permission').update({
+    await strapi.db.query("plugin::users-permissions.permission").update({
       where: { id: existing.id },
       data: { enabled: true },
     });
@@ -20,18 +22,18 @@ export default {
   register() {},
 
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
-    const clientUrl = process.env.CLIENT_URL ?? 'http://localhost:3000';
+    const clientUrl = process.env.CLIENT_URL ?? "http://localhost:3000";
 
     const pluginStore = strapi.store({
-      environment: '',
-      type: 'plugin',
-      name: 'users-permissions',
+      environment: "",
+      type: "plugin",
+      name: "users-permissions",
     });
 
-    const existing = (await pluginStore.get({ key: 'advanced' })) as Record<string, unknown> | null;
+    const existing = (await pluginStore.get({ key: "advanced" })) as Record<string, unknown> | null;
 
     await pluginStore.set({
-      key: 'advanced',
+      key: "advanced",
       value: {
         ...existing,
         email_confirmation: true,
@@ -41,20 +43,84 @@ export default {
     });
 
     // Grant authenticated role necessary permissions
-    const authenticatedRole = await strapi.db.query('plugin::users-permissions.role').findOne({
-      where: { type: 'authenticated' },
+    const authenticatedRole = await strapi.db.query("plugin::users-permissions.role").findOne({
+      where: { type: "authenticated" },
     });
 
     if (authenticatedRole) {
       const id = authenticatedRole.id;
-      // Users-permissions: GET /api/users/me and PUT /api/users/me
-      await grantPermission(strapi, id, 'plugin::users-permissions.user.me');
-      await grantPermission(strapi, id, 'plugin::users-permissions.user.update');
-      // Event signups: create and find
-      await grantPermission(strapi, id, 'api::event-signup.event-signup.create');
-      await grantPermission(strapi, id, 'api::event-signup.event-signup.find');
-      // Events: find (needed for the event relation validation when creating event-signups)
-      await grantPermission(strapi, id, 'api::event.event.find');
+      await grantPermission(strapi, id, "plugin::users-permissions.user.me");
+      await grantPermission(strapi, id, "plugin::users-permissions.user.update");
+      await grantPermission(strapi, id, "api::event-signup.event-signup.create");
+      await grantPermission(strapi, id, "api::event-signup.event-signup.find");
+      await grantPermission(strapi, id, "api::event.event.find");
     }
+
+    // Newsletter: send on first publish
+    const handleNewsletterPublish = async (result: any) => {
+      if (!result.publishedAt || result.sentAt) return;
+
+      strapi.log.info(`Newsletter lifecycle triggered for "${result.subject}"`);
+
+      try {
+        const subscribers = await strapi
+          .documents("api::newsletter-signup.newsletter-signup")
+          .findMany({ status: "published", fields: ["email"] }) as { email: string }[];
+
+        const emails = subscribers.map((s) => s.email).filter(Boolean);
+
+        if (emails.length === 0) {
+          strapi.log.info("Newsletter: no subscribers found");
+          return;
+        }
+
+        const sentCount = await sendNewsletterBroadcast(result.subject, result.body, emails);
+
+        await strapi.db.query("api::newsletter.newsletter").update({
+          where: { id: result.id },
+          data: { sentAt: new Date() },
+        });
+
+        strapi.log.info(
+          `Newsletter "${result.subject}" sent to ${sentCount}/${emails.length} subscribers`
+        );
+      } catch (err) {
+        strapi.log.error("Newsletter send failed:", err);
+      }
+    };
+
+    strapi.db.lifecycles.subscribe({
+      models: ["api::newsletter.newsletter"],
+      async afterCreate(event: any) {
+        await handleNewsletterPublish(event.result);
+      },
+      async afterUpdate(event: any) {
+        await handleNewsletterPublish(event.result);
+      },
+    });
+
+    // Auto-subscribe new users to the newsletter on registration
+    strapi.db.lifecycles.subscribe({
+      models: ["plugin::users-permissions.user"],
+      async afterCreate(event: any) {
+        const email = event.result?.email;
+        if (!email) return;
+        try {
+          const existing = await strapi
+            .documents("api::newsletter-signup.newsletter-signup")
+            .findFirst({ filters: { email: email.toLowerCase() } });
+          if (!existing) {
+            const created = await strapi
+              .documents("api::newsletter-signup.newsletter-signup")
+              .create({ data: { email: email.toLowerCase() } });
+            await strapi
+              .documents("api::newsletter-signup.newsletter-signup")
+              .publish({ documentId: created.documentId });
+          }
+        } catch (err) {
+          strapi.log.error("Failed to auto-subscribe new user to newsletter:", err);
+        }
+      },
+    });
   },
 };

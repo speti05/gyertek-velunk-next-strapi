@@ -3,7 +3,7 @@ import type { Block, CustomSearchParams } from "@/types";
 import { HeroSection } from "@/components/blocks/HeroSection";
 import { InfoBlock } from "@/components/blocks/InfoBlock";
 import { FeaturedArticle } from "@/components/blocks/FeaturedArticle";
-import { Subscribe } from "@/components/blocks/Subscribe";
+import { SubscribeNoSSR } from "@/components/blocks/SubscribeNoSSR";
 import { Heading } from "@/components/blocks/Heading";
 import { ParagraphWithImage } from "@/components/blocks/ParagraphWithImage";
 import { Paragraph } from "@/components/blocks/Paragraph";
@@ -21,7 +21,7 @@ function blockRenderer(block: Block, index: number, searchParams: CustomSearchPa
     case "blocks.featured-article":
       return <FeaturedArticle {...block} key={index} />;
     case "blocks.subscribe":
-      return <Subscribe {...block} key={index} />;
+      return <SubscribeNoSSR {...block} key={index} />;
     case "blocks.heading":
       return <Heading {...block} key={index} />;
     case "blocks.paragraph-with-image":

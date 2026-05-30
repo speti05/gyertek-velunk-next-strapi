@@ -1,6 +1,7 @@
 import qs from "qs";
 import { fetchAPI } from "@/utils/fetch-api";
 import { getStrapiURL } from "@/utils/get-strapi-url";
+import { getUserProfileService } from "./auth-service";
 
 const BASE_URL = getStrapiURL();
 const DEFAULT_BLOG_PAGE_SIZE = 3;
@@ -41,7 +42,11 @@ const homePageQuery = qs.stringify({
             },
           },
           "blocks.subscribe": {
-            populate: true,
+            populate: {
+              image: {
+                fields: ["url", "alternativeText"],
+              },
+            },
           },
           "blocks.searchable-card-list": {
             populate: true,
@@ -116,7 +121,11 @@ const pageBySlugQuery = (slug: string) =>
             },
           },
           "blocks.subscribe": {
-            populate: true,
+            populate: {
+              image: {
+                fields: ["url", "alternativeText"],
+              },
+            },
           },
           "blocks.searchable-card-list": {
             populate: true,
@@ -251,7 +260,11 @@ const blogPopulate = {
         },
       },
       "blocks.subscribe": {
-        populate: true,
+        populate: {
+          image: {
+            fields: ["url", "alternativeText"],
+          },
+        },
       },
       "blocks.heading": {
         populate: true,
@@ -312,6 +325,24 @@ export interface EventSignupEntry {
     price: string | null;
     slug: string;
   } | null;
+}
+
+export async function getMyNewsletterSubscriptionLoader(jwt: string): Promise<boolean> {
+  const url = new URL("/api/newsletter-signups/me", BASE_URL);
+  const result = await fetchAPI(url.href, {
+    method: "GET",
+    authToken: jwt,
+    next: { revalidate: 0 },
+  });
+  return result?.subscribed ?? false;
+}
+
+export async function getUserProfilePageLoader(jwt: string) {
+  const [profile, isNewsletterSubscribed] = await Promise.all([
+    getUserProfileService(jwt),
+    getMyNewsletterSubscriptionLoader(jwt),
+  ]);
+  return { profile, isNewsletterSubscribed };
 }
 
 export async function getUserEventSignupsLoader(

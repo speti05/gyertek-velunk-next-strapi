@@ -9,7 +9,11 @@ interface AlertMessageProps {
   infoMessage?: React.ReactNode | null;
 }
 
-export function CustomAlertMessage({ errorMessage, successMessage, infoMessage }: AlertMessageProps) {
+export function CustomAlertMessage({
+  errorMessage,
+  successMessage,
+  infoMessage,
+}: AlertMessageProps) {
   if (!errorMessage && !successMessage && !infoMessage) return null;
 
   return (

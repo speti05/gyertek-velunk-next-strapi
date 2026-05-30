@@ -1,9 +1,8 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { logoutAction } from "@/data/auth-actions";
-import { SubmitButton } from "@/components/SubmitButton";
-import { getUserProfileService } from "@/data/auth-service";
-import { getUserEventSignupsLoader } from "@/data/loaders";
+import { SubmitButtonNoSSR } from "@/components/SubmitButtonNoSSR";
+import { getUserEventSignupsLoader, getUserProfilePageLoader } from "@/data/loaders";
 import { ProfileForm } from "./ProfileForm";
 import { formatDate } from "@/utils/format-date";
 import Link from "next/link";
@@ -23,7 +22,7 @@ export default async function ProfilePage() {
     redirect("/login");
   }
 
-  const userProfile = await getUserProfileService(jwt);
+  const { profile: userProfile, isNewsletterSubscribed } = await getUserProfilePageLoader(jwt);
   const signups = userProfile ? await getUserEventSignupsLoader(jwt) : [];
 
   const displayEmail = userProfile?.email ?? "";
@@ -39,6 +38,7 @@ export default async function ProfilePage() {
           firstName={userProfile?.firstName ?? null}
           lastName={userProfile?.lastName ?? null}
           phone={userProfile?.phone ?? null}
+          isNewsletterSubscribed={isNewsletterSubscribed}
         />
 
         <section className="auth-page__section">
@@ -46,36 +46,32 @@ export default async function ProfilePage() {
           {signups.length === 0 ? (
             <p className="auth-page__footer-text">{PROFILE_NO_TOURS_MESSAGE}</p>
           ) : (
-            <ul className="auth-page__tours-list">
-              {signups.map((signup) => (
-                <li key={signup.id} className="auth-page__tour-item">
-                  {signup.event ? (
-                    <>
-                      <Link href={`/turaink/${signup.event.slug}`} className="auth-page__tour-title">
-                        {signup.event.title}
-                      </Link>
-                      {signup.event.startDate && (
-                        <span className="auth-page__tour-meta">
-                          {FORM_LABELS.startDate}: {formatDate(signup.event.startDate)}
-                        </span>
-                      )}
-                      {signup.event.price && (
-                        <span className="auth-page__tour-meta">
-                          {FORM_LABELS.price}: {signup.event.price}
-                        </span>
-                      )}
-                    </>
-                  ) : (
-                    <span className="auth-page__tour-title">—</span>
-                  )}
-                </li>
-              ))}
+            <ul className="auth-page__tours-list no-list-style">
+              {signups.map((signup) =>
+                signup.event ? (
+                  <li key={signup.id} className="auth-page__tour-item">
+                    <Link href={`/turaink/${signup.event.slug}`} className="auth-page__tour-title">
+                      {signup.event.title}
+                    </Link>
+                    {signup.event.startDate && (
+                      <span className="auth-page__tour-meta">
+                        {FORM_LABELS.startDate}: {formatDate(signup.event.startDate)}
+                      </span>
+                    )}
+                    {signup.event.price && (
+                      <span className="auth-page__tour-meta">
+                        {FORM_LABELS.price}: {signup.event.price}
+                      </span>
+                    )}
+                  </li>
+                ) : null
+              )}
             </ul>
           )}
         </section>
 
         <form action={logoutAction} className="auth-page__logout">
-          <SubmitButton text={AUTH_LOGOUT_LABEL} />
+          <SubmitButtonNoSSR text={AUTH_LOGOUT_LABEL} />
         </form>
       </div>
     </main>
