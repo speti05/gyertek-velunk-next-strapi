@@ -86,22 +86,24 @@ function EventSignupFormInner({
   function renderSignupArea() {
     if (successMessage) return null;
 
-    if (alreadySignedUp) {
-      return <CustomAlertMessage infoMessage={SIGNUP_ALREADY_SIGNED_UP} />;
-    }
+    const isDisabled = alreadySignedUp || !userProfile || !hasCompleteProfile;
 
-    if (!userProfile) {
-      return (
-        <>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            disabled
-            className="signup-form__submit-btn"
-          >
-            {SIGNUP_BUTTON_LABEL}
-          </Button>
+    return (
+      <>
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          disabled={isDisabled}
+          onClick={isDisabled ? undefined : () => setDialogOpen(true)}
+          className="signup-form__submit-btn"
+        >
+          {SIGNUP_BUTTON_LABEL}
+        </Button>
+
+        {alreadySignedUp && <CustomAlertMessage infoMessage={SIGNUP_ALREADY_SIGNED_UP} />}
+
+        {!alreadySignedUp && !userProfile && (
           <CustomAlertMessage
             infoMessage={
               <>
@@ -113,36 +115,22 @@ function EventSignupFormInner({
               </>
             }
           />
-        </>
-      );
-    }
+        )}
 
-    if (!hasCompleteProfile) {
-      return (
-        <CustomAlertMessage
-          infoMessage={
-            <>
-              {SIGNUP_PROFILE_INCOMPLETE}{" "}
-              <Link href="/profile" className="signup-form__status-link">
-                {SIGNUP_PROFILE_LINK}
-              </Link>
-              .
-            </>
-          }
-        />
-      );
-    }
-
-    return (
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        onClick={() => setDialogOpen(true)}
-        className="signup-form__submit-btn"
-      >
-        {SIGNUP_BUTTON_LABEL}
-      </Button>
+        {!alreadySignedUp && userProfile && !hasCompleteProfile && (
+          <CustomAlertMessage
+            infoMessage={
+              <>
+                {SIGNUP_PROFILE_INCOMPLETE}{" "}
+                <Link href="/profile" className="signup-form__status-link">
+                  {SIGNUP_PROFILE_LINK}
+                </Link>
+                .
+              </>
+            }
+          />
+        )}
+      </>
     );
   }
 
