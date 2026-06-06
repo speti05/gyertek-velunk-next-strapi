@@ -23,6 +23,7 @@ const CustomTextInput = React.forwardRef<HTMLInputElement, CustomTextInputInputP
           onClick={() => setShowPassword((prev) => !prev)}
           onMouseDown={(e) => e.preventDefault()}
           edge="end"
+          suppressHydrationWarning
         >
           {showPassword ? <VisibilityOff /> : <Visibility />}
         </IconButton>

@@ -1,4 +1,4 @@
-@use "../base/variables";
+@use "../base/colors";
 
 .input {
   outline: none;
@@ -14,7 +14,7 @@
     height: 6.4rem;
     border-radius: 1.8rem;
     padding: 2rem;
-    background-color: variables.$light-brown;
+    background-color: colors.$gy-v-light-brown;
   }
 
   &__error {

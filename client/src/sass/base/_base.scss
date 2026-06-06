@@ -1,5 +1,5 @@
 @use "mixins";
-@use "variables";
+@use "colors";
 
 *,
 *::after,
@@ -11,7 +11,7 @@
 }
 
 body {
-  background-color: variables.$light-beige;
+  background-color: colors.$gy-v-light-beige;
 }
 
 main {

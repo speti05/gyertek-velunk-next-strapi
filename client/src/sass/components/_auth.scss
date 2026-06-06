@@ -1,4 +1,3 @@
-@use "../base/variables";
 @use "../base/colors";
 
 .auth-page {
@@ -9,7 +8,7 @@
   padding: 6rem 2rem;
 
   &__card {
-    background-color: variables.$light-beige;
+    background-color: colors.$gy-v-light-beige;
     border-radius: 1.6rem;
     padding: 5rem 4rem;
     width: 100%;
@@ -23,18 +22,18 @@
   &__title {
     font-family: var(--font-luckiest-guy), cursive;
     font-size: 3.6rem;
-    color: variables.$green;
+    color: colors.$gy-v-dark-green;
     text-align: center;
 
     &--register {
-      color: variables.$dark-brown;
+      color: colors.$gy-v-dark-brown;
     }
   }
 
   &__greeting {
     font-size: 2rem;
     text-align: center;
-    color: variables.$dark-brown;
+    color: colors.$gy-v-dark-brown;
   }
 
   &__form {
@@ -57,7 +56,7 @@
     display: flex;
     align-items: center;
     gap: 1.2rem;
-    color: variables.$dark-brown;
+    color: colors.$gy-v-dark-brown;
     font-size: 1.4rem;
 
     &::before,
@@ -65,7 +64,7 @@
       content: "";
       flex: 1;
       height: 1px;
-      background-color: variables.$brown;
+      background-color: colors.$gy-v-light-beige;
       opacity: 0.5;
     }
   }
@@ -73,7 +72,7 @@
   &__hint {
     font-size: 1.4rem;
     text-align: center;
-    color: variables.$dark-brown;
+    color: colors.$gy-v-dark-brown;
   }
 
   &__logout {
@@ -84,16 +83,16 @@
   &__footer-text {
     font-size: 1.6rem;
     text-align: center;
-    color: variables.$dark-brown;
+    color: colors.$gy-v-dark-brown;
   }
 
   &__link {
-    color: variables.$green;
+    color: colors.$gy-v-dark-green;
     text-decoration: underline;
     transition: color 0.2s ease;
 
     &:hover {
-      color: variables.$brown;
+      color: colors.$gy-v-dark-green;
     }
   }
 
@@ -111,14 +110,14 @@
     align-items: center;
     gap: 0.6rem;
     font-size: 1.2rem;
-    color: variables.$dark-brown;
+    color: colors.$gy-v-dark-brown;
     opacity: 0.5;
     transition:
       color 0.2s ease,
       opacity 0.2s ease;
 
     &--met {
-      color: variables.$green;
+      color: colors.$gy-v-dark-green;
       opacity: 1;
     }
   }
@@ -128,12 +127,12 @@
     text-align: center;
 
     a {
-      color: variables.$dark-brown;
+      color: colors.$gy-v-dark-brown;
       text-decoration: underline;
       transition: color 0.2s ease;
 
       &:hover {
-        color: variables.$green;
+        color: colors.$gy-v-dark-green;
       }
     }
   }
@@ -156,7 +155,7 @@
   &__section-title {
     font-family: var(--font-luckiest-guy), cursive;
     font-size: 2.4rem;
-    color: variables.$dark-brown;
+    color: colors.$gy-v-dark-brown;
   }
 
   &__tours-list {
@@ -172,8 +171,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
-    background-color: color-mix(in srgb, variables.$light-beige 60%, white);
-    border: 1px solid color-mix(in srgb, variables.$brown 20%, transparent);
+    background-color: color-mix(in srgb, colors.$gy-v-light-beige 60%, white);
+    border: 1px solid color-mix(in srgb, colors.$gy-v-light-beige 20%, transparent);
     border-radius: 0.8rem;
     padding: 1.2rem 1.6rem;
   }
@@ -181,19 +180,19 @@
   &__tour-title {
     font-size: 1.8rem;
     font-weight: 600;
-    color: variables.$green;
+    color: colors.$gy-v-dark-green;
     text-decoration: none;
     transition: color 0.2s ease;
 
     &:hover {
-      color: variables.$brown;
+      color: colors.$gy-v-light-beige;
       text-decoration: underline;
     }
   }
 
   &__tour-meta {
     font-size: 1.4rem;
-    color: variables.$dark-brown;
+    color: colors.$gy-v-dark-brown;
     opacity: 0.8;
   }
 
@@ -208,7 +207,7 @@
     align-items: center;
     gap: 1rem;
     font-size: 1.6rem;
-    color: variables.$dark-brown;
+    color: colors.$gy-v-dark-brown;
     cursor: pointer;
     user-select: none;
   }

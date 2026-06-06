@@ -22,6 +22,15 @@
     },
     "copy": {
       "type": "string"
+    },
+    "facebookUrl": {
+      "type": "string"
+    },
+    "instagramUrl": {
+      "type": "string"
+    },
+    "tiktokUrl": {
+      "type": "string"
     }
   }
 }

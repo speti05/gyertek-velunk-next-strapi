@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Luckiest_Guy, Source_Sans_3 } from "next/font/google";
 import "../sass/main.scss";
 import "./globals.css";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import { cookies } from "next/headers";
 import { getGlobalSettings } from "@/data/loaders";
@@ -47,6 +48,7 @@ export default async function RootLayout({
   const { header, footer } = await loader();
   const cookieStore = await cookies();
   const isLoggedIn = !!cookieStore.get("jwt")?.value;
+  const userEmail = cookieStore.get("user_email")?.value;
 
   return (
     <html lang="en">
@@ -58,7 +60,7 @@ export default async function RootLayout({
         className={`${luckiestGuy.variable} ${sourceSans3.variable} min-h-screen flex flex-col`}
       >
         <MuiThemeProvider>
-          <AuthProvider isLoggedIn={isLoggedIn}>
+          <AuthProvider isLoggedIn={isLoggedIn} userEmail={userEmail}>
             <Header data={header} />
             {children}
             <Footer data={footer} />

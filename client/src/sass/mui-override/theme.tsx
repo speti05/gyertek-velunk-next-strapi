@@ -256,5 +256,18 @@ export const theme = createTheme({
         disableScrollLock: true,
       },
     },
+
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          fontFamily: "var(--font-source-sans-3), sans-serif",
+          fontWeight: 300,
+          fontStyle: "normal",
+          fontSize: "1.4rem",
+          lineHeight: "1.8rem",
+          padding: "0.5rem 1rem",
+        },
+      },
+    },
   },
 });

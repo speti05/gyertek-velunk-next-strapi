@@ -27,6 +27,12 @@ export interface LogoProps {
   image: ImageProps;
 }
 
+export interface SocialLinksProps {
+  facebookUrl?: string;
+  instagramUrl?: string;
+  tiktokUrl?: string;
+}
+
 interface BaseBlogProps {
   id: number;
   documentId: string;

@@ -1,5 +1,4 @@
 @use "../base/colors";
-@use "../base/variables";
 
 .info {
   display: flex;
@@ -36,7 +35,7 @@
     margin-bottom: 3rem;
 
     &--turquoise {
-      color: variables.$turquoise;
+      color: colors.$gy-v-mid-green;
     }
 
     &--brown {

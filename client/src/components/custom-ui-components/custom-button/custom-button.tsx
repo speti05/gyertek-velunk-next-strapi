@@ -9,7 +9,7 @@ interface CustomButtonProps extends ButtonProps {
 
 const CustomButton: React.FC<CustomButtonProps> = ({ children, ...props }) => {
   return (
-    <Button className="custom-button" {...props}>
+    <Button className="custom-button" {...props} suppressHydrationWarning>
       {children}
     </Button>
   );

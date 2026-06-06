@@ -1,5 +1,4 @@
 @use "../base/colors";
-@use "../base/variables";
 
 .btn {
   font-size: 2.5rem;
@@ -25,7 +24,7 @@
   }
 
   &--turquoise {
-    background-color: variables.$turquoise;
+    background-color: colors.$gy-v-mid-green;
     color: white;
   }
 
@@ -35,7 +34,7 @@
   }
 
   &--beige {
-    background-color: variables.$beige;
+    background-color: colors.$gy-v-light-beige;
     color: white;
   }
 }

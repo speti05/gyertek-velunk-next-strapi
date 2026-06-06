@@ -127,3 +127,8 @@ export const SIGNUP_LOGIN_LINK = "jelentkezz be";
 export const SIGNUP_PROFILE_INCOMPLETE = "A jelentkezéshez kérjük, töltsd ki az";
 export const SIGNUP_PROFILE_LINK = "alapadataidat a profilodon";
 export const SIGNUP_ALREADY_SIGNED_UP = "Már jelentkeztél erre a túrára.";
+
+// Footer social links
+export const FOOTER_FACEBOOK_ARIA = "Látogass el Facebook oldalunkra";
+export const FOOTER_INSTAGRAM_ARIA = "Látogass el Instagram oldalunkra";
+export const FOOTER_TIKTOK_ARIA = "Látogass el TikTok oldalunkra";

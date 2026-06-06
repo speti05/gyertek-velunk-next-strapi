@@ -210,9 +210,12 @@ export interface LayoutFooter extends Struct.ComponentSchema {
   };
   attributes: {
     copy: Schema.Attribute.String;
+    facebookUrl: Schema.Attribute.String;
+    instagramUrl: Schema.Attribute.String;
     logo: Schema.Attribute.Component<"elements.logo", false>;
     navigation: Schema.Attribute.Component<"elements.link", true>;
     policies: Schema.Attribute.Component<"elements.link", true>;
+    tiktokUrl: Schema.Attribute.String;
   };
 }
 

@@ -1,5 +1,4 @@
 @use "../../base/colors";
-@use "../../base/variables";
 
 .signup-form {
   display: flex;
@@ -22,7 +21,7 @@
     width: 45%;
     display: flex;
     flex-direction: column;
-    gap: variables.$gap;
+    gap: 1.5rem;
 
     & .input {
       width: 100%;
@@ -39,7 +38,7 @@
 
   &__name-container {
     display: flex;
-    gap: variables.$gap;
+    gap: 1.5rem;
 
     & .input__container {
       width: 48%;
@@ -62,7 +61,7 @@
 
   &__status-message {
     font-size: 1.6rem;
-    color: variables.$dark-brown;
+    color: colors.$gy-v-dark-brown;
     line-height: 1.5;
 
     &--success {
@@ -72,12 +71,12 @@
   }
 
   &__status-link {
-    color: variables.$green;
+    color: colors.$gy-v-dark-green;
     text-decoration: underline;
     transition: color 0.2s ease;
 
     &:hover {
-      color: variables.$brown;
+      color: colors.$gy-v-light-beige;
     }
   }
 

@@ -1,8 +1,8 @@
-@use "../base/variables";
+@use "../base/colors";
 
-$font-color: variables.$white;
-$font-color-hovered: variables.$brown;
-$header-background-color: variables.$green;
+$font-color: colors.$gy-v-white;
+$font-color-hovered: colors.$gy-v-light-brown;
+$header-background-color: colors.$gy-v-dark-green;
 
 li {
   list-style: none;
@@ -18,13 +18,13 @@ li {
   color: $font-color;
   background-color: $header-background-color;
 
-  a {
+  &__logo-link {
     margin-bottom: -65px;
   }
 
   img.header__logo {
-    height: 16rem;
-    width: auto;
+    height: auto;
+    max-width: 20rem;
     filter: drop-shadow(10px 10px 10px #222);
   }
 }
@@ -62,6 +62,44 @@ li {
 }
 .nav-item {
   padding: 0 1.5rem;
+}
+
+.navbar__auth-group {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.navbar__auth-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: $font-color;
+  transition: color 0.5s ease;
+  flex-direction: column;
+
+  &:hover {
+    color: $font-color-hovered;
+  }
+}
+
+.navbar__auth-name {
+  font-family: var(--font-source-sans-3), sans-serif;
+  font-size: 1.6rem;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.navbar__auth-btn {
+  display: flex;
+  align-items: center;
+  color: $font-color;
+  font-size: inherit;
+  transition: color 0.5s ease;
+
+  &:hover {
+    color: $font-color-hovered;
+  }
 }
 @media (max-width: 760px) {
   .bar {
