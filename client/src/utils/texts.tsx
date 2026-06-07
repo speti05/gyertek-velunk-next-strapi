@@ -132,3 +132,51 @@ export const SIGNUP_ALREADY_SIGNED_UP = "Már jelentkeztél erre a túrára.";
 export const FOOTER_FACEBOOK_ARIA = "Látogass el Facebook oldalunkra";
 export const FOOTER_INSTAGRAM_ARIA = "Látogass el Instagram oldalunkra";
 export const FOOTER_TIKTOK_ARIA = "Látogass el TikTok oldalunkra";
+
+// Cookie consent - banner
+export const COOKIE_BANNER_TITLE = "Sütik használata";
+export const COOKIE_BANNER_DESCRIPTION =
+  "Ez a weboldal sütiket és hasonló technológiákat használ a működéséhez, a biztonságos bejelentkezéshez és a látogatói statisztikákhoz. A funkcionális és analitikai sütik elfogadásával hozzájárulsz adatok gyűjtéséhez a Google számára.";
+export const COOKIE_BANNER_ACCEPT_ALL = "Elfogadom";
+export const COOKIE_BANNER_DECLINE = "Elutasítom";
+export const COOKIE_BANNER_SETTINGS = "Beállítások";
+
+// Cookie consent - preferences dialog
+export const COOKIE_PREFS_TITLE = "Cookie beállítások";
+export const COOKIE_PREFS_ACCEPT_ALL = "Összes elfogadása";
+export const COOKIE_PREFS_REJECT_ALL = "Összes elutasítása";
+export const COOKIE_PREFS_SAVE = "Mentés";
+export const COOKIE_PREFS_CLOSE = "Bezárás";
+
+// Cookie consent - categories
+export const COOKIE_NECESSARY_TITLE = "Szükséges sütik";
+export const COOKIE_NECESSARY_DESCRIPTION =
+  "Ezek a sütik elengedhetetlenek a weboldal alapvető működéséhez. Nélkülük az oldal nem tud megfelelően működni.";
+export const COOKIE_FUNCTIONAL_TITLE = "Funkcionális sütik";
+export const COOKIE_FUNCTIONAL_DESCRIPTION =
+  "A Google reCAPTCHA v3 szolgáltatás segít kiszűrni az automatizált robotokat az űrlapok beküldésekor. Adatokat továbbít a Google számára (IP-cím, böngészőadatok).";
+export const COOKIE_ANALYTICS_TITLE = "Analitika";
+export const COOKIE_ANALYTICS_DESCRIPTION =
+  "Ezek a sütik segítenek megérteni, hogyan használják a látogatók a weboldalt, és lehetővé teszik a felhasználói élmény javítását. A Google Analytics névtelen statisztikákat gyűjt az oldalhasználatról.";
+
+// Cookie consent - table headers
+export const COOKIE_TABLE_NAME = "Név";
+export const COOKIE_TABLE_DOMAIN = "Domain";
+export const COOKIE_TABLE_EXPIRATION = "Lejárat";
+export const COOKIE_TABLE_DESCRIPTION = "Leírás";
+
+// Cookie consent - cookie descriptions
+export const COOKIE_JWT_DESC = "Bejelentkezési munkamenet azonosítója";
+export const COOKIE_EMAIL_DESC = "Bejelentkezett felhasználó email-je";
+export const COOKIE_CC_DESC = "Cookie-hozzájárulási beállítások";
+export const COOKIE_RECAPTCHA_DESC = "Google reCAPTCHA bot-azonosítás";
+export const COOKIE_GA_DESC = "Megkülönbözteti a felhasználókat (Google Analytics)";
+export const COOKIE_GA_SESSION_DESC = "Munkamenet állapotának megőrzése (Google Analytics)";
+
+// Cookie consent - data values
+export const COOKIE_DOMAIN_SITE = "saját weboldal";
+export const COOKIE_DOMAIN_GOOGLE = "google.com";
+export const COOKIE_EXPIRY_7_DAYS = "7 nap";
+export const COOKIE_EXPIRY_6_MONTHS = "6 hónap";
+export const COOKIE_EXPIRY_1_YEAR = "1 év";
+export const COOKIE_EXPIRY_2_YEARS = "2 év";

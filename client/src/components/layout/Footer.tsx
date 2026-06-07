@@ -1,14 +1,9 @@
 import type { LinkProps, LogoProps, SocialLinksProps } from "@/types";
 import { FOOTER_FACEBOOK_ARIA, FOOTER_INSTAGRAM_ARIA, FOOTER_TIKTOK_ARIA } from "@/utils/texts";
-
-import { config } from "@fortawesome/fontawesome-svg-core";
-import { faFacebook, faInstagram, faTiktok } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { StrapiImage } from "../StrapiImage";
-import { Tooltip } from "@mui/material";
-
-config.autoAddCss = false;
+import CustomIcon, { type IconName } from "../custom-ui-components/custom-icon/custom-icon";
+import CustomTooltip from "../custom-ui-components/custom-tooltip/custom-tooltip";
 
 interface FooterProps {
   data: {
@@ -19,11 +14,11 @@ interface FooterProps {
   } & SocialLinksProps;
 }
 
-const SOCIAL_LINKS = [
-  { key: "facebook" as const, ariaLabel: FOOTER_FACEBOOK_ARIA, icon: faFacebook },
-  { key: "instagram" as const, ariaLabel: FOOTER_INSTAGRAM_ARIA, icon: faInstagram },
-  { key: "tiktok" as const, ariaLabel: FOOTER_TIKTOK_ARIA, icon: faTiktok },
-] as const;
+const SOCIAL_LINKS: { key: "facebook" | "instagram" | "tiktok"; ariaLabel: string; iconName: IconName }[] = [
+  { key: "facebook", ariaLabel: FOOTER_FACEBOOK_ARIA, iconName: "facebook" },
+  { key: "instagram", ariaLabel: FOOTER_INSTAGRAM_ARIA, iconName: "instagram" },
+  { key: "tiktok", ariaLabel: FOOTER_TIKTOK_ARIA, iconName: "tiktok" },
+];
 
 const socialUrlMap = (data: SocialLinksProps) => ({
   facebook: data.facebookUrl,
@@ -40,29 +35,37 @@ export function Footer({ data }: FooterProps) {
 
   return (
     <footer className="footer">
-      <StrapiImage
-        src={logo.image.url}
-        alt={logo.image.alternativeText || "Gyertek velünk"}
-        width={100}
-        height={100}
-        className="footer__logo"
-      />
+      <CustomTooltip title={logo.image.alternativeText || "Gyertek velünk"} placement="top">
+        <span className="footer__logo-wrapper">
+          <Link href="/" className="navbar__logo-link">
+            <StrapiImage
+              src={logo.image.url}
+              alt={logo.image.alternativeText || "Gyertek velünk"}
+              width={100}
+              height={100}
+              className="footer__logo"
+            />
+          </Link>
+        </span>
+      </CustomTooltip>
       <nav className="footer__social_nav">
         {activeSocialLinks.length > 0 && (
           <ul className="footer__social no-list-style">
-            {activeSocialLinks.map(({ key, ariaLabel, icon }) => (
+            {activeSocialLinks.map(({ key, ariaLabel, iconName }) => (
               <li key={key}>
-                <Tooltip title={key} placement="top">
-                  <Link
-                    href={urlMap[key]!}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={ariaLabel}
-                    className="footer__social-link"
-                  >
-                    <FontAwesomeIcon icon={icon} size="2x" />
-                  </Link>
-                </Tooltip>
+                <CustomTooltip title={key} placement="top">
+                  <span>
+                    <Link
+                      href={urlMap[key]!}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={ariaLabel}
+                      className="footer__social-link"
+                    >
+                      <CustomIcon name={iconName} size="2x" />
+                    </Link>
+                  </span>
+                </CustomTooltip>
               </li>
             ))}
           </ul>

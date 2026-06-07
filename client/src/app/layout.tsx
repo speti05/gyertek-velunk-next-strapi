@@ -12,6 +12,11 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MuiThemeProvider } from "@/components/providers/theme-provider/theme-provider";
 import { AuthProvider } from "@/context/auth-context";
+import { CookieConsentProvider } from "@/context/cookie-consent-context";
+import { CookieConsentInit } from "@/components/CookieConsentInit";
+import { CookieConsentBanner } from "@/components/CookieConsentBanner";
+import { RecaptchaProvider } from "@/components/recaptcha-provider";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 
 const luckiestGuy = Luckiest_Guy({
   subsets: ["latin"],
@@ -40,6 +45,33 @@ async function loader() {
   }
 }
 
+function parseInitialConsent(ccCookieValue: string | undefined) {
+  if (!ccCookieValue) {
+    return {
+      initialHasResponded: false,
+      initialRecaptchaConsented: false,
+      initialAnalyticsConsented: false,
+    };
+  }
+  try {
+    const parsed = JSON.parse(ccCookieValue);
+    if (Array.isArray(parsed.categories)) {
+      return {
+        initialHasResponded: true,
+        initialRecaptchaConsented: parsed.categories.includes("recaptcha"),
+        initialAnalyticsConsented: parsed.categories.includes("analytics"),
+      };
+    }
+  } catch {
+    console.error("Failed to parse cookie consent cookie:", ccCookieValue);
+  }
+  return {
+    initialHasResponded: false,
+    initialRecaptchaConsented: false,
+    initialAnalyticsConsented: false,
+  };
+}
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -49,22 +81,32 @@ export default async function RootLayout({
   const cookieStore = await cookies();
   const isLoggedIn = !!cookieStore.get("jwt")?.value;
   const userEmail = cookieStore.get("user_email")?.value;
+  const { initialHasResponded, initialRecaptchaConsented, initialAnalyticsConsented } =
+    parseInitialConsent(cookieStore.get("cc_cookie")?.value);
 
   return (
     <html lang="en">
-      <head>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-      </head>
       <body
         suppressHydrationWarning
         className={`${luckiestGuy.variable} ${sourceSans3.variable} min-h-screen flex flex-col`}
       >
         <MuiThemeProvider>
-          <AuthProvider isLoggedIn={isLoggedIn} userEmail={userEmail}>
-            <Header data={header} />
-            {children}
-            <Footer data={footer} />
-          </AuthProvider>
+          <CookieConsentProvider
+            initialHasResponded={initialHasResponded}
+            initialRecaptchaConsented={initialRecaptchaConsented}
+            initialAnalyticsConsented={initialAnalyticsConsented}
+          >
+            <AuthProvider isLoggedIn={isLoggedIn} userEmail={userEmail}>
+              <RecaptchaProvider>
+                <Header data={header} />
+                {children}
+                <Footer data={footer} />
+                <CookieConsentInit />
+                <CookieConsentBanner />
+                <GoogleAnalytics />
+              </RecaptchaProvider>
+            </AuthProvider>
+          </CookieConsentProvider>
         </MuiThemeProvider>
       </body>
     </html>

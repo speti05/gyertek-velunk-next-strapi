@@ -18,8 +18,9 @@ import { MESSAGES, AUTH_FORGOT_PASSWORD_SUCCESS } from "@/utils/texts";
 const STRAPI_URL = process.env.STRAPI_API_URL ?? "http://localhost:1337";
 
 async function verifyRecaptcha(token: string | null): Promise<boolean> {
-  if (isDev || !token) return true;
   const secret = process.env.RECAPTCHA_SECRET_KEY;
+  if (isDev || !secret) return true;
+  if (!token) return false;
   try {
     const res = await fetch(
       `https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${token}`,

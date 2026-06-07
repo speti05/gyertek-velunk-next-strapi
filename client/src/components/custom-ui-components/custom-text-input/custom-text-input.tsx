@@ -3,8 +3,7 @@
 import React, { useState } from "react";
 import { AUTH_HIDE_PASSWORD_LABEL, AUTH_SHOW_PASSWORD_LABEL } from "@/utils/texts";
 import { FormControl, TextField, TextFieldProps, InputAdornment, IconButton } from "@mui/material";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import CustomIcon from "../custom-icon/custom-icon";
 import style from "./custom-text-input.module.scss";
 
 type CustomTextInputInputProps = Omit<TextFieldProps, "error"> & {
@@ -25,7 +24,7 @@ const CustomTextInput = React.forwardRef<HTMLInputElement, CustomTextInputInputP
           edge="end"
           suppressHydrationWarning
         >
-          {showPassword ? <VisibilityOff /> : <Visibility />}
+          {showPassword ? <CustomIcon name="visibilityOff" /> : <CustomIcon name="visibility" />}
         </IconButton>
       </InputAdornment>
     ) : undefined;

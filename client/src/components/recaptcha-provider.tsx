@@ -2,6 +2,7 @@
 
 import { createContext, useContext } from "react";
 import { GoogleReCaptchaProvider, useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { useCookieConsent } from "@/context/cookie-consent-context";
 
 type RecaptchaContextValue = {
   executeRecaptcha: ((action: string) => Promise<string>) | undefined;
@@ -21,10 +22,12 @@ function RecaptchaBridge({ children }: { children: React.ReactNode }) {
 }
 
 const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-const isValidKey = siteKey && !siteKey.includes("your_recaptcha");
+export const isRecaptchaConfigured = !!(siteKey && !siteKey.includes("your_recaptcha"));
 
 export function RecaptchaProvider({ children }: { children: React.ReactNode }) {
-  if (!isValidKey) {
+  const { recaptchaConsented } = useCookieConsent();
+
+  if (!isRecaptchaConfigured || !recaptchaConsented) {
     return (
       <RecaptchaContext.Provider value={{ executeRecaptcha: undefined }}>
         {children}

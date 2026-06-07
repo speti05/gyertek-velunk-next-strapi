@@ -6,10 +6,13 @@ import { createTheme } from "@mui/material/styles";
 
 export const theme = createTheme({
   typography: {
-    // fontFamily: 'var(--font-source-sans-3), sans-serif',
-    // font-optical-sizing: auto;
-    // font-weight: 300;
-    // font-style: normal;
+    fontFamily: "var(--font-source-sans-3), sans-serif",
+    h1: { fontFamily: "var(--font-luckiest-guy), cursive" },
+    h2: { fontFamily: "var(--font-luckiest-guy), cursive" },
+    h3: { fontFamily: "var(--font-luckiest-guy), cursive" },
+    h4: { fontFamily: "var(--font-luckiest-guy), cursive" },
+    h5: { fontFamily: "var(--font-luckiest-guy), cursive" },
+    h6: { fontFamily: "var(--font-luckiest-guy), cursive" },
   },
   shape: {
     borderRadius: "1rem",
@@ -52,7 +55,7 @@ export const theme = createTheme({
           borderColor: colors.button.primary.main,
           "&:hover": {
             borderColor: colors.button.primary.hover,
-            backgroundColor: colors.button.primary.light,
+            fontColor: colors.button.primary.hover,
           },
         },
         textPrimary: {
@@ -266,6 +269,21 @@ export const theme = createTheme({
           fontSize: "1.4rem",
           lineHeight: "1.8rem",
           padding: "0.5rem 1rem",
+        },
+      },
+    },
+
+    MuiSwitch: {
+      styleOverrides: {
+        switchBase: {
+          "&.Mui-checked": {
+            color: colors.button.primary.main,
+            "& + .MuiSwitch-track": { backgroundColor: colors.button.primary.main },
+          },
+          "&.Mui-checked.Mui-disabled": {
+            color: "rgb(176, 223, 216)",
+            "& + .MuiSwitch-track": { backgroundColor: "rgb(176, 223, 216)", opacity: 0.9 },
+          },
         },
       },
     },

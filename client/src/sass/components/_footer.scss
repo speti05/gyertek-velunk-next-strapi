@@ -29,13 +29,19 @@ $font-color-hovered: colors.$gy-v-light-brown;
     }
   }
 
-  &__logo {
-    height: auto;
-    width: 10rem;
+  &__logo-wrapper {
     position: absolute;
     top: calc($logo-size / -2);
     left: 50%;
     transform: translateX(-5rem);
+    display: block;
+    width: $logo-size;
+    height: $logo-size;
+  }
+
+  &__logo {
+    width: 100%;
+    height: auto;
   }
 
   &__links {

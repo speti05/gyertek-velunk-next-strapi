@@ -7,7 +7,6 @@ import { formatDate } from "@/utils/format-date";
 import { StrapiImage } from "@/components/StrapiImage";
 import { eventsSubscribeAction } from "@/data/actions";
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
-import { RecaptchaProvider } from "@/components/recaptcha-provider";
 import { useRecaptchaSubmit } from "@/hooks/use-recaptcha-submit";
 import { UserProfile } from "@/data/auth-service";
 import {
@@ -228,9 +227,5 @@ function EventSignupFormInner({
 }
 
 export function EventSignupForm(props: EventSignupFormProps) {
-  return (
-    <RecaptchaProvider>
-      <EventSignupFormInner {...props} />
-    </RecaptchaProvider>
-  );
+  return <EventSignupFormInner {...props} />;
 }

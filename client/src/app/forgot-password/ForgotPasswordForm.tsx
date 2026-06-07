@@ -6,7 +6,6 @@ import { forgotPasswordAction } from "@/data/auth-actions";
 import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
-import { RecaptchaProvider } from "@/components/recaptcha-provider";
 import { useRecaptchaSubmit } from "@/hooks/use-recaptcha-submit";
 import {
   LOADING_LABEL,
@@ -63,9 +62,5 @@ function ForgotPasswordFormInner() {
 }
 
 export function ForgotPasswordForm() {
-  return (
-    <RecaptchaProvider>
-      <ForgotPasswordFormInner />
-    </RecaptchaProvider>
-  );
+  return <ForgotPasswordFormInner />;
 }

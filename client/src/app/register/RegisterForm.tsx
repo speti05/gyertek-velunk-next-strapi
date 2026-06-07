@@ -6,7 +6,6 @@ import { authAction } from "@/data/auth-actions";
 import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
-import { RecaptchaProvider } from "@/components/recaptcha-provider";
 import Link from "next/link";
 import { useRecaptchaSubmit } from "@/hooks/use-recaptcha-submit";
 import {
@@ -122,9 +121,5 @@ function RegisterFormInner() {
 }
 
 export function RegisterForm() {
-  return (
-    <RecaptchaProvider>
-      <RegisterFormInner />
-    </RecaptchaProvider>
-  );
+  return <RegisterFormInner />;
 }

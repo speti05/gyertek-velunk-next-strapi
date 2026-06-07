@@ -3,10 +3,8 @@ import type { LinkProps, LogoProps } from "@/types";
 import { AUTH_LOGIN_LABEL, AUTH_LOGOUT_LABEL, AUTH_PROFILE_NAV_LABEL } from "@/utils/texts";
 import { logoutAction } from "@/data/auth-actions";
 import { useAuth } from "@/context/auth-context";
-import LoginIcon from "@mui/icons-material/Login";
-import LogoutIcon from "@mui/icons-material/Logout";
-import PersonIcon from "@mui/icons-material/Person";
-import { Tooltip } from "@mui/material";
+import CustomIcon from "../custom-ui-components/custom-icon/custom-icon";
+import CustomTooltip from "../custom-ui-components/custom-tooltip/custom-tooltip";
 import Link from "next/link";
 import { useState } from "react";
 import { StrapiImage } from "../StrapiImage";
@@ -31,15 +29,19 @@ export function Header({ data }: HeaderProps) {
     <>
       <header>
         <nav className="navbar">
-          <Link href="/" className="navbar__logo-link">
-            <StrapiImage
-              src={logo.image.url}
-              alt={logo.image.alternativeText || "Gyertek velünk"}
-              className={`header__logo `}
-              width={256}
-              height={174}
-            />
-          </Link>
+          <CustomTooltip title={logo.image.alternativeText || "Gyertek velünk"} placement="top">
+            <span>
+              <Link href="/" className="navbar__logo-link">
+                <StrapiImage
+                  src={logo.image.url}
+                  alt={logo.image.alternativeText || "Gyertek velünk"}
+                  className={`header__logo `}
+                  width={256}
+                  height={174}
+                />
+              </Link>
+            </span>
+          </CustomTooltip>
           <ul className={`nav-menu ${isActive ? "active" : ""} no-list-style`}>
             {navigation.map((item) => (
               <li key={item.id}>
@@ -52,39 +54,43 @@ export function Header({ data }: HeaderProps) {
             ))}
             {isLoggedIn ? (
               <li className="navbar__auth-group">
-                <Tooltip title={AUTH_PROFILE_NAV_LABEL} placement="bottom">
-                  <Link
-                    href="/profile"
-                    className="navbar__auth-link"
-                    onClick={() => setIsActive(false)}
-                  >
-                    <PersonIcon fontSize="inherit" />
-                    <span className="navbar__auth-name">{displayName}</span>
-                  </Link>
-                </Tooltip>
+                <CustomTooltip title={AUTH_PROFILE_NAV_LABEL} placement="bottom">
+                  <span>
+                    <Link
+                      href="/profile"
+                      className="navbar__auth-link"
+                      onClick={() => setIsActive(false)}
+                    >
+                      <CustomIcon name="person" fontSize="inherit" />
+                      <span className="navbar__auth-name">{displayName}</span>
+                    </Link>
+                  </span>
+                </CustomTooltip>
                 <form action={logoutAction}>
-                  <Tooltip title={AUTH_LOGOUT_LABEL} placement="bottom">
+                  <CustomTooltip title={AUTH_LOGOUT_LABEL} placement="bottom">
                     <button
                       type="submit"
                       className="navbar__auth-btn"
                       aria-label={AUTH_LOGOUT_LABEL}
                     >
-                      <LogoutIcon fontSize="inherit" />
+                      <CustomIcon name="logout" fontSize="inherit" />
                     </button>
-                  </Tooltip>
+                  </CustomTooltip>
                 </form>
               </li>
             ) : (
               <li>
-                <Tooltip title={AUTH_LOGIN_LABEL} placement="bottom">
-                  <Link
-                    href="/login"
-                    className="navbar__auth-link"
-                    onClick={() => setIsActive(false)}
-                  >
-                    <LoginIcon fontSize="inherit" />
-                  </Link>
-                </Tooltip>
+                <CustomTooltip title={AUTH_LOGIN_LABEL} placement="bottom">
+                  <span>
+                    <Link
+                      href="/login"
+                      className="navbar__auth-link"
+                      onClick={() => setIsActive(false)}
+                    >
+                      <CustomIcon name="login" fontSize="inherit" />
+                    </Link>
+                  </span>
+                </CustomTooltip>
               </li>
             )}
           </ul>
