@@ -315,6 +315,7 @@ export async function getContentBySlug(slug: string, path: string) {
 export interface EventSignupEntry {
   id: number;
   documentId: string;
+  isPaid: boolean;
   event: {
     documentId: string;
     title: string;

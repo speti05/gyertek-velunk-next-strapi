@@ -54,17 +54,16 @@ export const CustomDialog: React.FC<CustomDialogProps> = ({
           {headerAction && <Box sx={{ ml: 1, flexShrink: 0 }}>{headerAction}</Box>}
         </DialogTitle>
       )}
-      {children && (
-        <DialogContent dividers={contentDividers}>{children}</DialogContent>
-      )}
+      {children && <DialogContent dividers={contentDividers}>{children}</DialogContent>}
       <DialogActions>
         {actions ?? (
           <>
-            <Button onClick={onClose} color="inherit">
+            <Button onClick={onClose} color="inherit" sx={{ flex: "1" }}>
               {cancelLabel}
             </Button>
             {onConfirm && (
               <Button
+                sx={{ flex: "1" }}
                 onClick={onConfirm}
                 variant="contained"
                 color="primary"

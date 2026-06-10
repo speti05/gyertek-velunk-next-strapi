@@ -51,7 +51,7 @@ export const MESSAGES = {
   failedToSubscribeToEvent: "Sikertelen jelentkezés.",
   succesfullySubscribedToEvent: "Sikeres jelentkezés.",
   recaptchaFailed: "A biztonsági ellenőrzés sikertelen. Kérjük, próbálja újra.",
-  invalidPassword: "A jelszónak legalább 6 karakter hosszúnak kell lennie",
+  invalidPassword: "A jelszónak legalább 6 és legfeljebb 15 karakter hosszúnak kell lennie",
   loginFailed: "Hibás email cím vagy jelszó.",
   emailAlreadyTaken: "Ez az email cím már regisztrálva van.",
   registrationFailed: "Sikertelen regisztráció. Kérjük, próbálja újra.",
@@ -97,7 +97,7 @@ export const AUTH_HAS_ACCOUNT_HINT = "Már van fiókod?";
 export const AUTH_CONFIRM_EMAIL_TITLE = "Email megerősítés";
 
 export const PASSWORD_RULES = [
-  { label: "Legalább 6 karakter", test: (p: string) => p.length >= 6 },
+  { label: "Legalább 6, legfeljebb 15 karakter", test: (p: string) => p.length >= 6 && p.length <= 15 },
   { label: "Kis- és nagybetű", test: (p: string) => /[a-z]/.test(p) && /[A-Z]/.test(p) },
   { label: "Speciális karakter (pl. !@#$%)", test: (p: string) => /[^A-Za-z0-9]/.test(p) },
 ];
@@ -105,23 +105,32 @@ export const AUTH_INVALID_RESET_LINK = "Érvénytelen vagy lejárt link.";
 export const AUTH_SAVE_LABEL = "Mentés";
 export const AUTH_SHOW_PASSWORD_LABEL = "Jelszó megjelenítése";
 export const AUTH_HIDE_PASSWORD_LABEL = "Jelszó elrejtése";
+export const AUTH_TERMS_ACCEPT_PREFIX = "Elolvastam és elfogadom az ";
+export const AUTH_TERMS_LINK_LABEL = "ÁSZF-et";
+export const AUTH_TERMS_ACCEPT_SUFFIX = ".";
+export const AUTH_TERMS_REQUIRED_ERROR = "Az ÁSZF elfogadása kötelező a regisztrációhoz.";
 
 // Profile
 export const PROFILE_TITLE = "Profilom";
 export const PROFILE_BASIC_DATA_SECTION = "Alapadatok";
 export const PROFILE_MY_TOURS_SECTION = "Túráim";
 export const PROFILE_NO_TOURS_MESSAGE = "Még nem jelentkeztél túrára.";
+export const PROFILE_PAYMENT_PAID = "Befizetve";
+export const PROFILE_PAYMENT_UNPAID = "Befizetés folyamatban";
 export const PROFILE_NEWSLETTER_SECTION = "Hírlevél";
 export const PROFILE_NEWSLETTER_SUBSCRIBE_LABEL = "Feliratkozom a hírlevélre";
+export const PROFILE_INCOMPLETE_WARNING =
+  "A neved és telefonszámod nincs kitöltve. Ezek elengedhetetlenek a túrajelentkezéshez.";
 
 // Event signup confirmation
 export const SIGNUP_BUTTON_LABEL = "Jelentkezés";
 export const SIGNUP_CONFIRM_TITLE = "Biztos, hogy jelentkezel erre a túrára?";
 export const SIGNUP_CONFIRM_YES = "Igen";
 export const SIGNUP_CONFIRM_NO = "Nem";
-export const SIGNUP_CONFIRM_TERMS_LABEL = "Elolvastam a ";
-export const SIGNUP_CONFIRM_TERMS_LINK_LABEL = "felhasználási feltételeket";
-export const SIGNUP_CONFIRM_TERMS_HREF = "/felhasznalasi-feltetelek";
+export const SIGNUP_CONFIRM_AWAIT_EMAIL_LABEL =
+  "Elfogadom a feltételeket, várom a tájékoztató emailt a túráról";
+export const SIGNUP_TOUR_INFO_IN_PROFILE =
+  "A túrajelentkezési információk megtalálhatók a profilodban";
 export const SIGNUP_LOGIN_REQUIRED = "A jelentkezéshez kérjük,";
 export const SIGNUP_LOGIN_LINK = "jelentkezz be";
 export const SIGNUP_PROFILE_INCOMPLETE = "A jelentkezéshez kérjük, töltsd ki az";

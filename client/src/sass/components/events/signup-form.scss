@@ -76,7 +76,8 @@
     transition: color 0.2s ease;
 
     &:hover {
-      color: colors.$gy-v-light-beige;
+      color: colors.$gy-v-dark-green;
+      text-decoration: none;
     }
   }
 

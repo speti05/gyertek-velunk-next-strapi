@@ -440,6 +440,7 @@ export interface ApiEventSignupEventSignup extends Struct.CollectionTypeSchema {
     email: Schema.Attribute.Email;
     event: Schema.Attribute.Relation<"manyToOne", "api::event.event">;
     firstName: Schema.Attribute.String;
+    isPaid: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     lastName: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<"oneToMany", "api::event-signup.event-signup"> &

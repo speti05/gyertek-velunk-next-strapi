@@ -13,10 +13,14 @@ import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 
 config.autoAddCss = false;
 
 const ICON_MAP = {
+  checked: { type: "mui" as const, component: CheckCircleIcon },
+  unchecked: { type: "mui" as const, component: RadioButtonUncheckedIcon },
   login: { type: "mui" as const, component: LoginIcon },
   logout: { type: "mui" as const, component: LogoutIcon },
   person: { type: "mui" as const, component: PersonIcon },

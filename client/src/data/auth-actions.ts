@@ -44,6 +44,7 @@ const registerSchema = z
     password: z
       .string()
       .min(6, { message: MESSAGES.invalidPassword })
+      .max(15, { message: MESSAGES.invalidPassword })
       .regex(/[A-Z]/, { message: MESSAGES.passwordNeedsUppercase })
       .regex(/[a-z]/, { message: MESSAGES.passwordNeedsLowercase })
       .regex(/[^A-Za-z0-9]/, { message: MESSAGES.passwordNeedsSpecial }),

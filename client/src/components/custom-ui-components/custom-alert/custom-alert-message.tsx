@@ -7,17 +7,24 @@ interface AlertMessageProps {
   errorMessage?: React.ReactNode | null;
   successMessage?: React.ReactNode | null;
   infoMessage?: React.ReactNode | null;
+  warningMessage?: React.ReactNode | null;
 }
 
 export function CustomAlertMessage({
   errorMessage,
   successMessage,
   infoMessage,
+  warningMessage,
 }: AlertMessageProps) {
-  if (!errorMessage && !successMessage && !infoMessage) return null;
+  if (!errorMessage && !successMessage && !infoMessage && !warningMessage) return null;
 
   return (
     <>
+      {warningMessage && (
+        <Alert severity="warning" sx={{ mt: 1 }}>
+          {warningMessage}
+        </Alert>
+      )}
       {infoMessage && (
         <Alert severity="info" sx={{ mt: 1 }}>
           {infoMessage}

@@ -10,6 +10,7 @@ import {
   FORM_LABELS,
   AUTH_SAVE_LABEL,
   PROFILE_BASIC_DATA_SECTION,
+  PROFILE_INCOMPLETE_WARNING,
   PROFILE_NEWSLETTER_SECTION,
   PROFILE_NEWSLETTER_SUBSCRIBE_LABEL,
 } from "@/utils/texts";
@@ -96,6 +97,9 @@ export function ProfileForm({
     <>
       <section className="auth-page__section">
         <h2 className="auth-page__section-title">{PROFILE_BASIC_DATA_SECTION}</h2>
+        {(!savedValues.firstName || !savedValues.lastName || !savedValues.phone) && (
+          <CustomAlertMessage warningMessage={PROFILE_INCOMPLETE_WARNING} />
+        )}
         <form action={formAction} className="auth-page__form">
           <CustomTextInput
             id="email"

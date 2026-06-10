@@ -6,11 +6,14 @@ import { getUserEventSignupsLoader, getUserProfilePageLoader } from "@/data/load
 import { ProfileForm } from "./ProfileForm";
 import { formatDate } from "@/utils/format-date";
 import Link from "next/link";
+import CustomChip from "@/components/custom-ui-components/custom-chip/custom-chip";
 import {
   AUTH_LOGOUT_LABEL,
   AUTH_HELLO,
   PROFILE_MY_TOURS_SECTION,
   PROFILE_NO_TOURS_MESSAGE,
+  PROFILE_PAYMENT_PAID,
+  PROFILE_PAYMENT_UNPAID,
   FORM_LABELS,
 } from "@/utils/texts";
 
@@ -50,19 +53,31 @@ export default async function ProfilePage() {
               {signups.map((signup) =>
                 signup.event ? (
                   <li key={signup.id} className="auth-page__tour-item">
-                    <Link href={`/turaink/${signup.event.slug}`} className="auth-page__tour-title">
-                      {signup.event.title}
-                    </Link>
-                    {signup.event.startDate && (
-                      <span className="auth-page__tour-meta">
-                        {FORM_LABELS.startDate}: {formatDate(signup.event.startDate)}
-                      </span>
-                    )}
-                    {signup.event.price && (
-                      <span className="auth-page__tour-meta">
-                        {FORM_LABELS.price}: {signup.event.price}
-                      </span>
-                    )}
+                    <div className="auth-page__tour-item__info">
+                      <Link
+                        href={`/turaink/${signup.event.slug}`}
+                        className="auth-page__tour-title"
+                      >
+                        {signup.event.title}
+                      </Link>
+                      {signup.event.startDate && (
+                        <span className="auth-page__tour-meta">
+                          {FORM_LABELS.startDate}: {formatDate(signup.event.startDate)}
+                        </span>
+                      )}
+                      {signup.event.price && (
+                        <span className="auth-page__tour-meta">
+                          {FORM_LABELS.price}: {signup.event.price}
+                        </span>
+                      )}
+                    </div>
+                    <div>
+                      <CustomChip
+                        label={signup.isPaid ? PROFILE_PAYMENT_PAID : PROFILE_PAYMENT_UNPAID}
+                        color={signup.isPaid ? "success" : "warning"}
+                        size="large"
+                      />
+                    </div>
                   </li>
                 ) : null
               )}

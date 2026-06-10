@@ -43,5 +43,10 @@ export const colors = {
     hover: lighten(0.2, baseColors.darkGreen),
     error: baseColors.red,
   },
-  // todo: error + success
+  chip: {
+    success: { backgroundColor: "rgb(176, 223, 216)", color: "rgb(55, 127, 118)" },
+    warning: { backgroundColor: "rgb(228, 203, 161)", color: "rgb(112, 99, 76)" },
+    error: { backgroundColor: "rgba(120, 2, 2, 0.12)", color: "rgb(120, 2, 2)" },
+    default: { backgroundColor: "rgb(241, 232, 217)", color: "rgb(112, 99, 76)" },
+  },
 } as const;

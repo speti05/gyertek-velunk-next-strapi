@@ -19,7 +19,13 @@ import {
   AUTH_HAS_ACCOUNT_HINT,
   PASSWORD_RULES,
   FORM_LABELS,
+  AUTH_TERMS_ACCEPT_PREFIX,
+  AUTH_TERMS_LINK_LABEL,
+  AUTH_TERMS_ACCEPT_SUFFIX,
+  AUTH_TERMS_REQUIRED_ERROR,
 } from "@/utils/texts";
+import CustomIcon from "@/components/custom-ui-components/custom-icon/custom-icon";
+import { CustomCheckbox } from "@/components/custom-ui-components/custom-checkbox/custom-checkbox";
 
 const INITIAL_STATE = {
   zodErrors: null,
@@ -35,7 +41,7 @@ function PasswordStrengthHint({ password }: { password: string }) {
           key={rule.label}
           className={`auth-page__password-rule${rule.test(password) ? " auth-page__password-rule--met" : ""}`}
         >
-          <span>{rule.test(password) ? "✓" : "○"}</span>
+          <CustomIcon name={rule.test(password) ? "checked" : "unchecked"}></CustomIcon>
           {rule.label}
         </li>
       ))}
@@ -63,8 +69,20 @@ function SubmitBtn() {
 function RegisterFormInner() {
   const [formState, formAction] = useActionState(authAction, INITIAL_STATE);
   const [password, setPassword] = useState("");
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [termsError, setTermsError] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
-  const handleSubmit = useRecaptchaSubmit(formRef, formAction, "auth");
+  const baseAction = useRecaptchaSubmit(formRef, formAction, "auth");
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    if (!termsAccepted) {
+      e.preventDefault();
+      setTermsError(true);
+      return;
+    }
+    setTermsError(false);
+    baseAction(e);
+  }
 
   if (formState?.successMessage) {
     return (
@@ -107,6 +125,29 @@ function RegisterFormInner() {
           error={formState?.zodErrors?.passwordConfirmation?.[0]}
         />
         <CustomAlertMessage errorMessage={formState?.errorMessage} />
+        <CustomCheckbox
+          checked={termsAccepted}
+          onChange={(e) => {
+            setTermsAccepted(e.target.checked);
+            if (e.target.checked) setTermsError(false);
+          }}
+          error={termsError}
+          helperText={termsError ? AUTH_TERMS_REQUIRED_ERROR : undefined}
+          label={
+            <span>
+              {AUTH_TERMS_ACCEPT_PREFIX}
+              <Link
+                className="auth-page__link"
+                href="/felhasznalasi-feltetelek"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {AUTH_TERMS_LINK_LABEL}
+              </Link>
+              {AUTH_TERMS_ACCEPT_SUFFIX}
+            </span>
+          }
+        />
         <SubmitBtn />
         <div className="auth-page__divider">{AUTH_DIVIDER_LABEL}</div>
         <p className="auth-page__hint">

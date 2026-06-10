@@ -4,6 +4,12 @@
 import { colors } from "./colors";
 import { createTheme } from "@mui/material/styles";
 
+declare module "@mui/material/Chip" {
+  interface ChipPropsSizeOverrides {
+    large: true;
+  }
+}
+
 export const theme = createTheme({
   typography: {
     fontFamily: "var(--font-source-sans-3), sans-serif",
@@ -93,6 +99,16 @@ export const theme = createTheme({
         },
       },
     },
+    MuiInputBase: {
+      defaultProps: {
+        slotProps: {
+          input: {
+            suppressHydrationWarning: true,
+          } as React.InputHTMLAttributes<HTMLInputElement>,
+        },
+      },
+    },
+
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
@@ -286,6 +302,36 @@ export const theme = createTheme({
           },
         },
       },
+    },
+
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          fontWeight: 600,
+          borderRadius: "999px",
+        },
+        sizeSmall: {
+          height: "2.2rem",
+          fontSize: "1.2rem",
+        },
+        sizeMedium: {
+          height: "2.8rem",
+          fontSize: "1.4rem",
+        },
+        colorDefault: colors.chip.default,
+        colorSuccess: colors.chip.success,
+        colorWarning: colors.chip.warning,
+        colorError: colors.chip.error,
+      },
+      variants: [
+        {
+          props: { size: "large" },
+          style: {
+            height: "3.2rem",
+            fontSize: "1.6rem",
+          },
+        },
+      ],
     },
   },
 });
