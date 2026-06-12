@@ -17,8 +17,10 @@ async function resolveEmailFromJwt(ctx: any, strapi: any): Promise<string | null
       where: { id: payload.id },
       select: ["email"],
     });
+    console.info(`Resolved email from JWT for newsletter signup: ${user?.email ?? null}`);
     return user?.email ?? null;
   } catch {
+    console.warn("Failed to resolve email from JWT in newsletter signup controller");
     return null;
   }
 }
@@ -26,18 +28,25 @@ async function resolveEmailFromJwt(ctx: any, strapi: any): Promise<string | null
 export default factories.createCoreController(UID, ({ strapi }) => ({
   async findMySubscription(ctx) {
     const email = await resolveEmailFromJwt(ctx, strapi);
-    if (!email) return ctx.unauthorized();
+    if (!email) {
+      console.warn("Failed to resolve email from JWT in newsletter signup controller");
+      return ctx.unauthorized();
+    }
 
     const entry = await strapi.documents(UID).findFirst({
       filters: { email: email.toLowerCase() },
       status: "published",
     });
     ctx.body = { subscribed: !!entry };
+    console.info(`Newsletter subscription status for ${email.toLowerCase()}: ${!!entry}`);
   },
 
   async subscribeMe(ctx) {
     const email = await resolveEmailFromJwt(ctx, strapi);
-    if (!email) return ctx.unauthorized();
+    if (!email) {
+      console.warn("Failed to resolve email from JWT in newsletter signup controller");
+      return ctx.unauthorized();
+    }
     const normalized = email.toLowerCase();
 
     const existing = await strapi.documents(UID).findFirst({
@@ -48,6 +57,7 @@ export default factories.createCoreController(UID, ({ strapi }) => ({
       const created = await strapi.documents(UID).create({ data: { email: normalized } });
       await strapi.documents(UID).publish({ documentId: created.documentId });
     } else {
+      console.info(`Newsletter signup already exists for ${normalized}, ensuring it's published`);
       await strapi.documents(UID).publish({ documentId: existing.documentId });
     }
     ctx.body = { subscribed: true };
@@ -61,9 +71,11 @@ export default factories.createCoreController(UID, ({ strapi }) => ({
       filters: { email: email.toLowerCase() },
     });
     if (existing) {
+      console.info(`Unsubscribing ${email.toLowerCase()}`);
       await strapi.documents(UID).delete({ documentId: existing.documentId });
     }
     ctx.body = { subscribed: false };
+    console.info(`Newsletter unsubscription successful for ${email.toLowerCase()}`);
   },
 
   async unsubscribe(ctx) {

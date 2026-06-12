@@ -72,6 +72,7 @@ export function Header({ data }: HeaderProps) {
                       type="submit"
                       className="navbar__auth-btn"
                       aria-label={AUTH_LOGOUT_LABEL}
+                      suppressHydrationWarning
                     >
                       <CustomIcon name="logout" fontSize="inherit" />
                     </button>

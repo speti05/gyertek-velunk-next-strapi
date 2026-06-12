@@ -4,7 +4,7 @@
 
 // src/api/event-signup/controllers/event-signup.ts
 import { factories } from "@strapi/strapi";
-import { sendSignupEmails } from "../services/email";
+import { sendSignupEmails } from "../../../lib/email/event-signup";
 
 export default factories.createCoreController("api::event-signup.event-signup", ({ strapi }) => ({
   async find(ctx) {
@@ -37,7 +37,7 @@ export default factories.createCoreController("api::event-signup.event-signup", 
 
     // Send emails — non-blocking, won't affect the API response
     sendSignupEmails({ userEmail: email, firstName, lastName, eventName, telephone }).catch((err) =>
-      strapi.log.error("Email sending failed:", err)
+      console.error("Email sending failed:", err)
     );
 
     // Return the original Strapi response untouched

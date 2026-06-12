@@ -1,0 +1,55 @@
+export const newsletterEmailWrapper = (
+  subject: string,
+  content: string,
+  unsubscribeUrl: string
+) => {
+  const year = new Date().getFullYear();
+  const siteUrl = process.env.SITE_URL;
+  return `<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Source+Sans+3:wght@300;400;600&display=swap');</style>
+</head>
+<body style="margin:0;padding:0;font-family:'Source Sans 3',Arial,sans-serif;background-color:#F1E8D9;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#F1E8D9">
+    <tr>
+      <td align="center" style="padding:30px 20px;">
+        <table width="1100" cellpadding="0" cellspacing="0" border="0" style="max-width:1100px;width:100%;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.12);">
+          <tr>
+            <td style="padding:0;line-height:0;font-size:0;">
+              <img src="cid:hirlevel-fejlec" width="1100"
+                   style="display:block;width:100%;height:auto;border:0;"
+                   alt="Gyertek velünk hírlevél" />
+            </td>
+          </tr>
+          <tr>
+            <td bgcolor="#578C84" style="padding:16px 40px;">
+              <h1 style="font-family:'Source Sans 3',Arial,sans-serif;color:#ffffff;margin:0;font-size:22px;font-weight:600;letter-spacing:0.5px;">${subject}</h1>
+            </td>
+          </tr>
+          <tr>
+            <td bgcolor="#ffffff" style="padding:48px;">
+              ${content}
+            </td>
+          </tr>
+          <tr>
+            <td bgcolor="#70634C" style="padding:28px 40px;text-align:center;">
+              <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#F1E8D9;font-size:14px;margin:0 0 6px;line-height:1.6;">
+                &copy; ${year} Gyertek velünk &mdash; Minden jog fenntartva.
+              </p>
+              ${siteUrl ? `<a href="${siteUrl}" style="font-family:'Source Sans 3',Arial,sans-serif;color:#B0DFD8;font-size:14px;text-decoration:none;">${siteUrl}</a>` : ""}
+              <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#c9bba8;font-size:12px;margin:16px 0 0;line-height:1.6;">
+                Nem szeretnél több hírlevelet kapni?
+                <a href="${unsubscribeUrl}" style="color:#c9bba8;text-decoration:underline;">Leiratkozás</a>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+};

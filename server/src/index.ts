@@ -1,5 +1,7 @@
+import path from "path";
 import type { Core } from "@strapi/strapi";
-import { sendNewsletterBroadcast } from "./api/newsletter/services/newsletter-email";
+import { sendNewsletterBroadcast } from "./lib/email/newsletter";
+import { getTransporter } from "./lib/email/mailer";
 
 async function grantPermission(strapi: Core.Strapi, roleId: number, action: string) {
   const existing = await strapi.db.query("plugin::users-permissions.permission").findOne({
@@ -21,6 +23,23 @@ export default {
   register() {},
 
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
+    getTransporter().catch((err) => console.error("Mailer init failed:", err));
+
+    // Inject header image as CID inline attachment into every Strapi system email
+    const headerImagePath = path.join(
+      strapi.dirs.app.root,
+      "src/lib/email/templates/email-fejlec-600.jpg"
+    );
+    const emailService = strapi.plugin("email").service("email") as any;
+    const _originalSend = emailService.send.bind(emailService);
+    emailService.send = async (options: any) => {
+      options.attachments = [
+        ...(options.attachments ?? []),
+        { filename: "email-fejlec-600.jpg", path: headerImagePath, cid: "email-fejlec" },
+      ];
+      return _originalSend(options);
+    };
+
     const clientUrl = process.env.CLIENT_URL ?? "http://localhost:3000";
 
     const pluginStore = strapi.store({
@@ -59,7 +78,7 @@ export default {
     const handleNewsletterPublish = async (result: any) => {
       if (!result.publishedAt || result.sentAt) return;
 
-      strapi.log.info(`Newsletter lifecycle triggered for "${result.subject}"`);
+      console.info(`Newsletter lifecycle triggered for "${result.subject}"`);
 
       try {
         const subscribers = (await strapi
@@ -69,7 +88,7 @@ export default {
         const emails = subscribers.map((s) => s.email).filter(Boolean);
 
         if (emails.length === 0) {
-          strapi.log.info("Newsletter: no subscribers found");
+          console.info("Newsletter: no subscribers found");
           return;
         }
 
@@ -80,11 +99,11 @@ export default {
           data: { sentAt: new Date() },
         });
 
-        strapi.log.info(
+        console.info(
           `Newsletter "${result.subject}" sent to ${sentCount}/${emails.length} subscribers`
         );
       } catch (err) {
-        strapi.log.error("Newsletter send failed:", err);
+        console.error("Newsletter send failed:", err);
       }
     };
 
@@ -117,7 +136,7 @@ export default {
               .publish({ documentId: created.documentId });
           }
         } catch (err) {
-          strapi.log.error("Failed to auto-subscribe new user to newsletter:", err);
+          console.error("Failed to auto-subscribe new user to newsletter:", err);
         }
       },
     });
