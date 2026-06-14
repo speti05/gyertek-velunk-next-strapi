@@ -65,6 +65,9 @@ const homePageQuery = qs.stringify({
         "blocks.text-content-block": {
           populate: true,
         },
+        "blocks.contact-request-form": {
+          populate: true,
+        },
       },
     },
   },
@@ -141,6 +144,9 @@ const pageBySlugQuery = (slug: string) =>
             populate: true,
           },
           "blocks.text-content-block": {
+            populate: true,
+          },
+          "blocks.contact-request-form": {
             populate: true,
           },
         },

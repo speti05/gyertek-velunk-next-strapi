@@ -12,6 +12,7 @@ import { TextContentBlock } from "@/components/blocks/OnlyTextContent";
 import { SearchableCardList } from "@/components/blocks/SearchableCardList";
 import { EventSignupBlock } from "@/components/blocks/EventSignupBlock";
 import { HeroWithTextBlock } from "@/components//blocks/HeroWithText";
+import { ContactRequestBlock } from "@/components/blocks/ContactRequestBlock";
 function blockRenderer(
   block: Block,
   index: number,
@@ -43,6 +44,8 @@ function blockRenderer(
     //   return <HeroWithCalendar {...block} key={index} searchParams={searchParams}/>;
     case "blocks.hero-with-text":
       return <HeroWithTextBlock {...block} key={index} />;
+    case "blocks.contact-request-form":
+      return <ContactRequestBlock key={index} />;
     case "blocks.event-signup-form":
       return (
         <EventSignupBlock

@@ -1,0 +1,72 @@
+@use "../base/colors" as c;
+
+.contact-request {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  background-color: c.$gy-v-light-brown;
+  margin-bottom: 0;
+
+  &__inner {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 4rem;
+    max-width: 120rem;
+    margin: 0 auto;
+    padding: 6rem 4rem 10rem 4rem;
+
+    @media (max-width: 900px) {
+      flex-direction: column;
+      padding: 6rem 2rem 10rem 2rem;
+      gap: 2.4rem;
+    }
+  }
+
+  &__info {
+    flex: 1;
+    max-width: 42rem;
+
+    @media (max-width: 900px) {
+      max-width: 100%;
+    }
+  }
+
+  &__title {
+    color: c.$gy-v-dark-green;
+    margin-bottom: 1.2rem;
+  }
+
+  &__subtitle {
+    color: c.$gy-v-dark-brown;
+    font-size: 1.6rem;
+    line-height: 1.6;
+  }
+
+  &__form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 50rem;
+    width: 100%;
+
+    @media (max-width: 900px) {
+      max-width: 100%;
+    }
+  }
+
+  &__success {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 50rem;
+    width: 100%;
+    justify-content: center;
+
+    @media (max-width: 900px) {
+      max-width: 100%;
+    }
+  }
+}

@@ -424,6 +424,32 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiContactRequestContactRequest extends Struct.CollectionTypeSchema {
+  collectionName: "contact_requests";
+  info: {
+    displayName: "Contact Request";
+    pluralName: "contact-requests";
+    singularName: "contact-request";
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+    email: Schema.Attribute.Email;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<"oneToMany", "api::contact-request.contact-request"> &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    phone: Schema.Attribute.String;
+    preferredContact: Schema.Attribute.Enumeration<["phone", "email"]> & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+  };
+}
+
 export interface ApiEventSignupEventSignup extends Struct.CollectionTypeSchema {
   collectionName: "event_signups";
   info: {
@@ -532,6 +558,7 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
         "blocks.searchable-card-list",
         "blocks.event-signup-form",
         "blocks.hero-with-text",
+        "blocks.contact-request-form",
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -622,6 +649,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         "blocks.hero-with-calendar",
         "blocks.event-signup-form",
         "blocks.text-content-block",
+        "blocks.contact-request-form",
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -1068,6 +1096,7 @@ declare module "@strapi/strapi" {
       "admin::transfer-token-permission": AdminTransferTokenPermission;
       "admin::user": AdminUser;
       "api::article.article": ApiArticleArticle;
+      "api::contact-request.contact-request": ApiContactRequestContactRequest;
       "api::event-signup.event-signup": ApiEventSignupEventSignup;
       "api::event.event": ApiEventEvent;
       "api::global.global": ApiGlobalGlobal;

@@ -25,7 +25,8 @@
         "blocks.subscribe",
         "blocks.searchable-card-list",
         "blocks.event-signup-form",
-        "blocks.hero-with-text"
+        "blocks.hero-with-text",
+        "blocks.contact-request-form"
       ]
     }
   }

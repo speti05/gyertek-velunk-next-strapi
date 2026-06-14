@@ -73,6 +73,13 @@ export const MESSAGES = {
   newsletterSubscribeSuccess: "Sikeresen feliratkoztál a hírlevélre.",
   newsletterUnsubscribeSuccess: "Sikeresen leiratkoztál a hírlevélről.",
   newsletterToggleFailed: "Hiba történt. Kérjük, próbálja újra.",
+  contactRequestSuccess: "Köszönjük! Hamarosan felvesszük veled a kapcsolatot.",
+  contactRequestFailed: "Nem sikerült elküldeni. Kérjük, próbáld újra később.",
+  contactRequestAlreadyExists:
+    "Ezzel a kapcsolati adattal már kaptunk tőled megkeresést. Hamarosan felvesszük veled a kapcsolatot!",
+  invalidName: "Add meg a neved.",
+  invalidPhone: "Add meg a telefonszámod.",
+  invalidContactEmail: "Add meg az email címedet.",
 };
 
 // Auth
@@ -97,7 +104,10 @@ export const AUTH_HAS_ACCOUNT_HINT = "Már van fiókod?";
 export const AUTH_CONFIRM_EMAIL_TITLE = "Email megerősítés";
 
 export const PASSWORD_RULES = [
-  { label: "Legalább 6, legfeljebb 15 karakter", test: (p: string) => p.length >= 6 && p.length <= 15 },
+  {
+    label: "Legalább 6, legfeljebb 15 karakter",
+    test: (p: string) => p.length >= 6 && p.length <= 15,
+  },
   { label: "Kis- és nagybetű", test: (p: string) => /[a-z]/.test(p) && /[A-Z]/.test(p) },
   { label: "Speciális karakter (pl. !@#$%)", test: (p: string) => /[^A-Za-z0-9]/.test(p) },
 ];
@@ -181,6 +191,21 @@ export const COOKIE_CC_DESC = "Cookie-hozzájárulási beállítások";
 export const COOKIE_RECAPTCHA_DESC = "Google reCAPTCHA bot-azonosítás";
 export const COOKIE_GA_DESC = "Megkülönbözteti a felhasználókat (Google Analytics)";
 export const COOKIE_GA_SESSION_DESC = "Munkamenet állapotának megőrzése (Google Analytics)";
+
+// Contact request form
+export const CONTACT_REQUEST_TITLE = "Kapcsolatfelvétel";
+export const CONTACT_REQUEST_SUBTITLE_PREFIX = "Még nem állsz készen ";
+export const CONTACT_REQUEST_SUBTITLE_LINK = "fiókot";
+export const CONTACT_REQUEST_SUBTITLE_SUFFIX =
+  " csinálni? Nagyon új még neked a túrázás, inkább előbb hallanál még róla többet? Semmi gond! Adj meg néhány adatot és felvesszük veled a kapcsolatot.";
+export const CONTACT_REQUEST_NAME_LABEL = "Neved";
+export const CONTACT_REQUEST_PHONE_LABEL = "Telefonszámod";
+export const CONTACT_REQUEST_EMAIL_LABEL = "Email címed";
+export const CONTACT_REQUEST_PREFERRED_LABEL = "Hogyan keressünk?";
+export const CONTACT_REQUEST_PHONE_OPTION = "Telefonon keress";
+export const CONTACT_REQUEST_EMAIL_OPTION = "Emailben keress";
+export const CONTACT_REQUEST_SUBMIT_LABEL = "Küldés";
+export const CONTACT_REQUEST_NEW_REQUEST_LABEL = "Küldök másikat";
 
 // Cookie consent - data values
 export const COOKIE_DOMAIN_SITE = "saját weboldal";

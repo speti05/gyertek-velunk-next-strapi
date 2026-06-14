@@ -1,5 +1,13 @@
 import type { Schema, Struct } from "@strapi/strapi";
 
+export interface BlocksContactRequestForm extends Struct.ComponentSchema {
+  collectionName: "components_blocks_contact_request_forms";
+  info: {
+    displayName: "Contact Request Form";
+  };
+  attributes: {};
+}
+
 export interface BlocksEventSignupForm extends Struct.ComponentSchema {
   collectionName: "components_blocks_event_signup_forms";
   info: {
@@ -235,6 +243,7 @@ export interface LayoutHeader extends Struct.ComponentSchema {
 declare module "@strapi/strapi" {
   export module Public {
     export interface ComponentSchemas {
+      "blocks.contact-request-form": BlocksContactRequestForm;
       "blocks.event-signup-form": BlocksEventSignupForm;
       "blocks.featured-article": BlocksFeaturedArticle;
       "blocks.full-image": BlocksFullImage;

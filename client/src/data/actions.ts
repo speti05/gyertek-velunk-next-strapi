@@ -1,7 +1,7 @@
 "use server";
 import { z } from "zod";
 import { cookies } from "next/headers";
-import { subscribeService, eventsSubscribeService } from "./services";
+import { subscribeService, eventsSubscribeService, contactRequestService } from "./services";
 import { getUserProfileService } from "./auth-service";
 import { MESSAGES } from "@/utils/texts";
 import { isDev } from "@clientRoot/env";
@@ -87,6 +87,105 @@ async function verifyRecaptcha(token: string | null): Promise<boolean> {
   } catch {
     return false;
   }
+}
+
+const contactRequestSchema = z
+  .object({
+    name: z.string().min(1, { message: MESSAGES.invalidName }),
+    preferredContact: z.enum(["phone", "email"]),
+    phone: z.string().optional(),
+    email: z.string().optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.preferredContact === "phone" && (!data.phone || data.phone.trim() === "")) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: MESSAGES.invalidPhone, path: ["phone"] });
+    }
+    if (data.preferredContact === "email" && (!data.email || data.email.trim() === "")) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: MESSAGES.invalidContactEmail,
+        path: ["email"],
+      });
+    }
+    if (
+      data.preferredContact === "email" &&
+      data.email &&
+      data.email.trim() !== "" &&
+      !z.string().email().safeParse(data.email).success
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: MESSAGES.emailInvalid,
+        path: ["email"],
+      });
+    }
+  });
+
+export async function contactRequestAction(prevState: any, formData: FormData) {
+  const recaptchaToken = formData.get("recaptchaToken") as string | null;
+  const isHuman = await verifyRecaptcha(recaptchaToken);
+  if (!isHuman) {
+    return {
+      ...prevState,
+      zodErrors: null,
+      strapiErrors: null,
+      errorMessage: MESSAGES.recaptchaFailed,
+    };
+  }
+
+  const validatedFields = contactRequestSchema.safeParse({
+    name: formData.get("name"),
+    preferredContact: formData.get("preferredContact"),
+    phone: formData.get("phone") ?? undefined,
+    email: formData.get("email") ?? undefined,
+  });
+
+  if (!validatedFields.success) {
+    return {
+      ...prevState,
+      zodErrors: validatedFields.error.flatten().fieldErrors,
+      strapiErrors: null,
+      errorMessage: null,
+    };
+  }
+
+  const { name, preferredContact, phone, email } = validatedFields.data;
+
+  const responseData = await contactRequestService({
+    name,
+    preferredContact,
+    phone: preferredContact === "phone" ? phone : undefined,
+    email: preferredContact === "email" ? email : undefined,
+  });
+
+  if (!responseData) {
+    return {
+      ...prevState,
+      strapiErrors: null,
+      zodErrors: null,
+      errorMessage: MESSAGES.contactRequestFailed,
+    };
+  }
+
+  if (responseData.error) {
+    const isDuplicate = responseData.error.status === 409;
+    return {
+      ...prevState,
+      strapiErrors: responseData.error,
+      zodErrors: null,
+      errorMessage: isDuplicate
+        ? MESSAGES.contactRequestAlreadyExists
+        : MESSAGES.contactRequestFailed,
+    };
+  }
+
+  return {
+    ...prevState,
+    zodErrors: null,
+    strapiErrors: null,
+    errorMessage: null,
+    successMessage: MESSAGES.contactRequestSuccess,
+  };
 }
 
 export async function eventsSubscribeAction(prevState: any, formData: FormData) {

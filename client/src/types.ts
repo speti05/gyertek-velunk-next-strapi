@@ -75,7 +75,8 @@ type ComponentType =
   | "blocks.text-content-block"
   | "blocks.hero-with-text"
   | "blocks.hero-with-calendar"
-  | "blocks.event-signup-form";
+  | "blocks.event-signup-form"
+  | "blocks.contact-request-form";
 
 interface Base<T extends ComponentType, D extends object = Record<string, unknown>> {
   id: number;
@@ -86,6 +87,8 @@ interface Base<T extends ComponentType, D extends object = Record<string, unknow
   publishedAt?: string;
   data?: D;
 }
+
+export interface ContactRequestBlockProps extends Base<"blocks.contact-request-form"> {}
 
 export type Block =
   | HeroSectionProps
@@ -101,7 +104,8 @@ export type Block =
   | HeroWithCalendarProps
   | HeroWithTextProps
   | HeroWithCalendarProps
-  | EventSignupBlockProps;
+  | EventSignupBlockProps
+  | ContactRequestBlockProps;
 
 export interface HeroSectionProps extends Base<"blocks.hero-section"> {
   theme: "turquoise" | "brown";
