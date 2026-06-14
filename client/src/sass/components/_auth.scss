@@ -58,7 +58,7 @@
     align-items: center;
     gap: 1.2rem;
     color: colors.$gy-v-dark-brown;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
 
     &::before,
     &::after {
@@ -71,7 +71,7 @@
   }
 
   &__hint {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     text-align: center;
     color: colors.$gy-v-dark-brown;
   }
@@ -87,16 +87,6 @@
     color: colors.$gy-v-dark-brown;
   }
 
-  &__link {
-    color: colors.$gy-v-dark-green;
-    text-decoration: underline;
-    transition: color 0.2s ease;
-
-    &:hover {
-      color: colors.$gy-v-dark-green;
-    }
-  }
-
   &__password-rules {
     list-style: none;
     padding: 0;
@@ -110,7 +100,7 @@
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     color: colors.$gy-v-dark-brown;
     opacity: 0.5;
     transition:
@@ -124,18 +114,8 @@
   }
 
   &__forgot-link {
-    font-size: 1.3rem;
+    font-size: 1.6rem;
     text-align: center;
-
-    a {
-      color: colors.$gy-v-dark-brown;
-      text-decoration: underline;
-      transition: color 0.2s ease;
-
-      &:hover {
-        color: colors.$gy-v-dark-green;
-      }
-    }
   }
 
   &--profile {
@@ -169,32 +149,39 @@
   }
 
   &__tour-item {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
     background-color: color-mix(in srgb, colors.$gy-v-light-beige 60%, white);
     border: 1px solid color-mix(in srgb, colors.$gy-v-light-beige 20%, transparent);
     border-radius: 0.8rem;
     padding: 1.2rem 1.6rem;
 
+    &__image {
+      width: 8rem;
+      height: 8rem;
+      border-radius: 0.6rem;
+      overflow: hidden;
+      flex-shrink: 0;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
     &__info {
       display: flex;
       flex-direction: column;
       gap: 0.4rem;
+      flex: 1;
     }
   }
 
   &__tour-title {
     font-size: 1.8rem;
     font-weight: 600;
-    color: colors.$gy-v-dark-green;
-    text-decoration: none;
-    transition: color 0.2s ease;
-
-    &:hover {
-      color: colors.$gy-v-dark-brown;
-      text-decoration: underline;
-    }
   }
 
   &__tour-meta {

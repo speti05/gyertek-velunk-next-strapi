@@ -2,7 +2,7 @@
 
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 import { GO_HOME_LABEL, NOT_FOUND_LABEL, PAGE_NOT_FOUND_LABEL } from "@/utils/texts";
-import Link from "next/link";
+import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 
 export default function NotFound() {
   return (
@@ -12,7 +12,7 @@ export default function NotFound() {
       <p className="mb-8 text-center max-w-md">{NOT_FOUND_LABEL}</p>
 
       <CustomButton variant="contained" color="primary">
-        <Link href="/">{GO_HOME_LABEL}</Link>
+        <CustomLink href="/" color="inherit" underline="none">{GO_HOME_LABEL}</CustomLink>
       </CustomButton>
     </div>
   );

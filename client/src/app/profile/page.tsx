@@ -5,8 +5,9 @@ import { SubmitButtonNoSSR } from "@/components/SubmitButtonNoSSR";
 import { getUserEventSignupsLoader, getUserProfilePageLoader } from "@/data/loaders";
 import { ProfileForm } from "./ProfileForm";
 import { formatDate } from "@/utils/format-date";
-import Link from "next/link";
+import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import CustomChip from "@/components/custom-ui-components/custom-chip/custom-chip";
+import { StrapiImage } from "@/components/StrapiImage";
 import {
   AUTH_LOGOUT_LABEL,
   AUTH_HELLO,
@@ -53,13 +54,26 @@ export default async function ProfilePage() {
               {signups.map((signup) =>
                 signup.event ? (
                   <li key={signup.id} className="auth-page__tour-item">
+                    {signup.event.image?.url && (
+                      <div className="auth-page__tour-item__image">
+                        <StrapiImage
+                          src={signup.event.image.url}
+                          alt={signup.event.image.alternativeText || signup.event.title}
+                          width={80}
+                          height={80}
+                        />
+                      </div>
+                    )}
                     <div className="auth-page__tour-item__info">
-                      <Link
-                        href={`/turaink/${signup.event.slug}`}
-                        className="auth-page__tour-title"
-                      >
-                        {signup.event.title}
-                      </Link>
+                      <span className="auth-page__tour-title">
+                        <CustomLink
+                          href={`/turaink/${signup.event.slug}`}
+                          className="auth-page__tour-title"
+                          color="primary"
+                        >
+                          {signup.event.title}
+                        </CustomLink>
+                      </span>
                       {signup.event.startDate && (
                         <span className="auth-page__tour-meta">
                           {FORM_LABELS.startDate}: {formatDate(signup.event.startDate)}

@@ -49,4 +49,9 @@ export const colors = {
     error: { backgroundColor: "rgba(120, 2, 2, 0.12)", color: "rgb(120, 2, 2)" },
     default: { backgroundColor: "rgb(241, 232, 217)", color: "rgb(112, 99, 76)" },
   },
+  link: {
+    primary: { main: baseColors.darkGreen, hover: baseColors.darkBrown },
+    secondary: { main: baseColors.darkBrown, hover: baseColors.darkGreen },
+    white: { main: "#ffffff", hover: baseColors.lightBrown },
+  },
 } as const;

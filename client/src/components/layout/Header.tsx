@@ -5,7 +5,7 @@ import { logoutAction } from "@/data/auth-actions";
 import { useAuth } from "@/context/auth-context";
 import CustomIcon from "../custom-ui-components/custom-icon/custom-icon";
 import CustomTooltip from "../custom-ui-components/custom-tooltip/custom-tooltip";
-import Link from "next/link";
+import CustomLink from "../custom-ui-components/custom-link/custom-link";
 import { useState } from "react";
 import { StrapiImage } from "../StrapiImage";
 
@@ -31,7 +31,7 @@ export function Header({ data }: HeaderProps) {
         <nav className="navbar">
           <CustomTooltip title={logo.image.alternativeText || "Gyertek velünk"} placement="top">
             <span>
-              <Link href="/" className="navbar__logo-link">
+              <CustomLink href="/" className="navbar__logo-link" color="white" underline="none">
                 <StrapiImage
                   src={logo.image.url}
                   alt={logo.image.alternativeText || "Gyertek velünk"}
@@ -39,31 +39,39 @@ export function Header({ data }: HeaderProps) {
                   width={256}
                   height={174}
                 />
-              </Link>
+              </CustomLink>
             </span>
           </CustomTooltip>
           <ul className={`nav-menu ${isActive ? "active" : ""} no-list-style`}>
             {navigation.map((item) => (
               <li key={item.id}>
-                <Link href={item.href} target={item.isExternal ? "_blank" : "_self"}>
+                <CustomLink
+                  href={item.href}
+                  target={item.isExternal ? "_blank" : "_self"}
+                  color="white"
+                  underline="none"
+                  isHoverScaled
+                >
                   <span className="nav-link" onClick={() => setIsActive(false)}>
                     {item.text}
                   </span>
-                </Link>
+                </CustomLink>
               </li>
             ))}
             {isLoggedIn ? (
               <li className="navbar__auth-group">
                 <CustomTooltip title={AUTH_PROFILE_NAV_LABEL} placement="bottom">
                   <span>
-                    <Link
+                    <CustomLink
                       href="/profile"
                       className="navbar__auth-link"
                       onClick={() => setIsActive(false)}
+                      color="white"
+                      underline="none"
                     >
                       <CustomIcon name="person" fontSize="inherit" />
                       <span className="navbar__auth-name">{displayName}</span>
-                    </Link>
+                    </CustomLink>
                   </span>
                 </CustomTooltip>
                 <form action={logoutAction}>
@@ -83,13 +91,16 @@ export function Header({ data }: HeaderProps) {
               <li>
                 <CustomTooltip title={AUTH_LOGIN_LABEL} placement="bottom">
                   <span>
-                    <Link
+                    <CustomLink
                       href="/login"
                       className="navbar__auth-link"
                       onClick={() => setIsActive(false)}
+                      color="white"
+                      underline="none"
+                      isHoverScaled
                     >
                       <CustomIcon name="login" fontSize="inherit" />
-                    </Link>
+                    </CustomLink>
                   </span>
                 </CustomTooltip>
               </li>

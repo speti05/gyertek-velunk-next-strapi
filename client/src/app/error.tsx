@@ -7,7 +7,7 @@ import {
   SERVER_SIDE_ERROR_LABEL,
   TRY_AGAIN_LABEL,
 } from "@/utils/texts";
-import Link from "next/link";
+import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import { useEffect } from "react";
 
 export default function Error({
@@ -33,7 +33,7 @@ export default function Error({
       </div>
       <div className="mb-8">
         <CustomButton variant="contained" color="secondary">
-          <Link href="/">{GO_HOME_LABEL}</Link>
+          <CustomLink href="/" color="inherit" underline="none">{GO_HOME_LABEL}</CustomLink>
         </CustomButton>
       </div>
     </div>

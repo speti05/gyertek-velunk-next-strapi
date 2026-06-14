@@ -1,6 +1,6 @@
 import { ImageProps } from "@/types";
 
-import Link from "next/link";
+import CustomLink from "./custom-ui-components/custom-link/custom-link";
 import { StrapiImage } from "./StrapiImage";
 import { formatDate } from "@/utils/format-date";
 
@@ -27,7 +27,7 @@ export function Card({
   basePath,
 }: Readonly<CardProps>) {
   return (
-    <Link href={`/${basePath}/${slug}`} className="content-items__card">
+    <CustomLink href={`/${basePath}/${slug}`} className="content-items__card" color="inherit" underline="none">
       <div className="content-items__card-img">
         <StrapiImage
           src={image.url}
@@ -47,6 +47,6 @@ export function Card({
         {(startDate ?? createdAt) && <p>{formatDate(startDate ?? createdAt)}</p>}
         <p>{description.slice(0, 144)}...</p>
       </div>
-    </Link>
+    </CustomLink>
   );
 }

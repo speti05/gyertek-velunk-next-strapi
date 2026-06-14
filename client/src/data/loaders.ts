@@ -322,6 +322,7 @@ export interface EventSignupEntry {
     startDate: string | null;
     price: string | null;
     slug: string;
+    image: { url: string; alternativeText: string | null } | null;
   } | null;
 }
 
@@ -345,6 +346,16 @@ export async function getUserProfilePageLoader(jwt: string) {
 
 export async function getUserEventSignupsLoader(jwt: string): Promise<EventSignupEntry[]> {
   const url = new URL("/api/event-signups", BASE_URL);
+
+  url.search = qs.stringify({
+    populate: {
+      event: {
+        populate: {
+          image: { fields: ["url", "alternativeText"] },
+        },
+      },
+    },
+  });
 
   const result = await fetchAPI(url.href, {
     method: "GET",

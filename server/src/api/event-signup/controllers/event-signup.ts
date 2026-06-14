@@ -18,6 +18,9 @@ export default factories.createCoreController("api::event-signup.event-signup", 
       populate: {
         event: {
           select: ["title", "startDate", "price", "slug", "documentId"],
+          populate: {
+            image: { select: ["url", "alternativeText"] },
+          },
         },
       },
     });

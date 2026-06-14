@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useRef } from "react";
-import Link from "next/link";
+import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import { forgotPasswordAction } from "@/data/auth-actions";
 import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
@@ -55,7 +55,7 @@ function ForgotPasswordFormInner() {
         </form>
       )}
       <p className="auth-page__forgot-link">
-        <Link href="/login">{AUTH_BACK_TO_LOGIN}</Link>
+        <CustomLink href="/login" color="secondary">{AUTH_BACK_TO_LOGIN}</CustomLink>
       </p>
     </>
   );

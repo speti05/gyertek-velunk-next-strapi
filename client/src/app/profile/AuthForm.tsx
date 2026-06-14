@@ -6,7 +6,7 @@ import { authAction } from "@/data/auth-actions";
 import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
-import Link from "next/link";
+import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import { useRecaptchaSubmit } from "@/hooks/use-recaptcha-submit";
 import {
   LOADING_LABEL,
@@ -68,14 +68,16 @@ function AuthFormInner() {
         <CustomAlertMessage errorMessage={formState?.errorMessage} />
         <SubmitBtn />
         <div className="auth-page__divider">{AUTH_DIVIDER_LABEL}</div>
-        <p className="auth-page__hint">
+        <p className="auth-page__hint hint">
           {AUTH_NO_ACCOUNT_HINT}{" "}
-          <Link href="/register" className="auth-page__link">
+          <CustomLink href="/register" color="primary">
             {AUTH_REGISTER_LABEL}
-          </Link>
+          </CustomLink>
         </p>
-        <p className="auth-page__forgot-link">
-          <Link href="/forgot-password">{AUTH_FORGOT_PASSWORD_LABEL}</Link>
+        <p className="auth-page__forgot-link hint">
+          <CustomLink href="/forgot-password" color="secondary">
+            {AUTH_FORGOT_PASSWORD_LABEL}
+          </CustomLink>
         </p>
       </form>
     </>

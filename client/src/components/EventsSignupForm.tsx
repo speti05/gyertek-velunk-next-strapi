@@ -23,7 +23,7 @@ import {
   SIGNUP_CONFIRM_AWAIT_EMAIL_LABEL,
   SIGNUP_TOUR_INFO_IN_PROFILE,
 } from "@/utils/texts";
-import Link from "next/link";
+import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import Button from "@mui/material/Button";
 import { CustomDialog } from "@/components/custom-ui-components/custom-dialog/custom-dialog";
 import { CustomCheckbox } from "@/components/custom-ui-components/custom-checkbox/custom-checkbox";
@@ -108,9 +108,9 @@ function EventSignupFormInner({
             infoMessage={
               <>
                 {SIGNUP_LOGIN_REQUIRED}{" "}
-                <Link href="/login" className="signup-form__status-link">
+                <CustomLink href="/login" color="primary">
                   {SIGNUP_LOGIN_LINK}
-                </Link>
+                </CustomLink>
                 .
               </>
             }
@@ -122,9 +122,9 @@ function EventSignupFormInner({
             infoMessage={
               <>
                 {SIGNUP_PROFILE_INCOMPLETE}{" "}
-                <Link href="/profile" className="signup-form__status-link">
+                <CustomLink href="/profile" color="primary">
                   {SIGNUP_PROFILE_LINK}
-                </Link>
+                </CustomLink>
                 .
               </>
             }

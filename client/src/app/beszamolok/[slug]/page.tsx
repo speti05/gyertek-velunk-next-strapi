@@ -1,7 +1,7 @@
 "use server";
 
 import type { ArticleProps, Block } from "@/types";
-import Link from "next/link";
+import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import { notFound } from "next/navigation";
 import { formatDate } from "@/utils/format-date";
 import { getContentBySlug } from "@/data/loaders";
@@ -45,9 +45,9 @@ function ArticleOverview({
         <ul className="article-overview__contents">
           {tableOfContent.map((item, index) => (
             <li key={index}>
-              <Link href={`#${item.linkId}`} className="article-overview__link">
+              <CustomLink href={`#${item.linkId}`} className="article-overview__link" color="primary">
                 {index + 1}. {item.heading}
-              </Link>
+              </CustomLink>
             </li>
           ))}
         </ul>

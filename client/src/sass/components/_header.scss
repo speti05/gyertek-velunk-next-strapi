@@ -19,7 +19,7 @@ li {
   background-color: $header-background-color;
 
   &__logo-link {
-    margin-bottom: -65px;
+    margin-bottom: -65px !important;
   }
 
   img.header__logo {
@@ -42,10 +42,7 @@ li {
 }
 /* transition for links */
 .nav-link {
-  transition: 0.5s ease;
-}
-.nav-link:hover {
-  color: $font-color-hovered;
+  transition: color 0.5s ease;
 }
 .hamburger {
   z-index: 1000;
@@ -74,13 +71,7 @@ li {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  color: $font-color;
-  transition: color 0.5s ease;
   flex-direction: column;
-
-  &:hover {
-    color: $font-color-hovered;
-  }
 }
 
 .navbar__auth-name {

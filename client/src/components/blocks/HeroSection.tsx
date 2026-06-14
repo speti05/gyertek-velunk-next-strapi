@@ -1,4 +1,4 @@
-import Link from "next/link";
+import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import { StrapiImage } from "../StrapiImage";
 import type { HeroSectionProps } from "@/types";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
@@ -32,9 +32,9 @@ export function HeroSection({
       </div>
       {cta && (
         <CustomButton variant="contained" size="large">
-          <Link href={cta.href} target={cta.isExternal ? "_blank" : "_self"}>
+          <CustomLink href={cta.href} target={cta.isExternal ? "_blank" : "_self"} color="inherit" underline="none">
             {cta.text}
-          </Link>
+          </CustomLink>
         </CustomButton>
       )}
       {logo && (

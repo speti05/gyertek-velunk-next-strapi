@@ -10,6 +10,21 @@ declare module "@mui/material/Chip" {
   }
 }
 
+declare module "@mui/material/Link" {
+  interface LinkPropsColorOverrides {
+    white: true;
+  }
+}
+
+declare module "@mui/material/styles" {
+  interface Palette {
+    white: Palette["primary"];
+  }
+  interface PaletteOptions {
+    white?: PaletteOptions["primary"];
+  }
+}
+
 export const theme = createTheme({
   typography: {
     fontFamily: "var(--font-source-sans-3), sans-serif",
@@ -24,10 +39,12 @@ export const theme = createTheme({
     borderRadius: "1rem",
   },
   palette: {
-    // primary: {
-    //   main: colors.primary.main,
-    //   contrastText: '#ffffff',
-    // },
+    white: {
+      main: colors.link.white.main,
+      light: colors.link.white.main,
+      dark: colors.link.white.hover,
+      contrastText: "rgb(112, 99, 76)",
+    },
   },
   components: {
     MuiButton: {
@@ -302,6 +319,39 @@ export const theme = createTheme({
           },
         },
       },
+    },
+
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          transition: "color 0.2s ease",
+          fontFamily: "var(--font-source-sans-3), sans-serif",
+          fontWeight: 300,
+        },
+      },
+      variants: [
+        {
+          props: { color: "primary" },
+          style: {
+            color: colors.link.primary.main,
+            "&:hover": { color: colors.link.primary.hover },
+          },
+        },
+        {
+          props: { color: "secondary" },
+          style: {
+            color: colors.link.secondary.main,
+            "&:hover": { color: colors.link.secondary.hover },
+          },
+        },
+        {
+          props: { color: "white" },
+          style: {
+            color: colors.link.white.main,
+            "&:hover": { color: colors.link.white.hover },
+          },
+        },
+      ],
     },
 
     MuiChip: {
