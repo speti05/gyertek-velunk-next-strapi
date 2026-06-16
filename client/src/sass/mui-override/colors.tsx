@@ -34,7 +34,7 @@ export const colors = {
   },
   label: {
     main: darken(0.2, baseColors.lightBrown),
-    focused: baseColors.lightBrown,
+    focused: darken(0.4, baseColors.lightBrown),
     error: baseColors.red,
   },
   checkbox: {
