@@ -45,7 +45,7 @@ function blockRenderer(
     case "blocks.hero-with-text":
       return <HeroWithTextBlock {...block} key={index} />;
     case "blocks.contact-request-form":
-      return <ContactRequestBlock key={index} />;
+      return <ContactRequestBlock {...block} key={index} />;
     case "blocks.event-signup-form":
       return (
         <EventSignupBlock

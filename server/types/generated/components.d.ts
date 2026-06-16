@@ -5,7 +5,12 @@ export interface BlocksContactRequestForm extends Struct.ComponentSchema {
   info: {
     displayName: "Contact Request Form";
   };
-  attributes: {};
+  attributes: {
+    link: Schema.Attribute.Component<"elements.link", false>;
+    subtitlePrefix: Schema.Attribute.String;
+    subtitleSuffix: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
 }
 
 export interface BlocksEventSignupForm extends Struct.ComponentSchema {

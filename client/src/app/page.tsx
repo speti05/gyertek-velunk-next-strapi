@@ -17,9 +17,8 @@ async function loader() {
 
 async function stayInTouchloader() {
   const result = await getContentBySlug("stay-in-touch", "/api/events");
-  const event = result?.data?.[0];
-  if (!event) throw notFound();
-  return { stayInTouchEvent: event as EventProps };
+  const event = result?.data?.[0] as EventProps | undefined;
+  return { stayInTouchEvent: event };
 }
 
 export default async function HomeRoute({ searchParams }: PageParams) {
@@ -31,7 +30,7 @@ export default async function HomeRoute({ searchParams }: PageParams) {
       <BlockRenderer
         blocks={blocks}
         searchParams={await searchParams}
-        stayInTouchEventId={stayInTouchEvent.documentId}
+        stayInTouchEventId={stayInTouchEvent?.documentId}
       />
     </div>
   );

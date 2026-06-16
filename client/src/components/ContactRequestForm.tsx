@@ -22,6 +22,14 @@ import {
   CONTACT_REQUEST_NEW_REQUEST_LABEL,
 } from "@/utils/texts";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
+import { LinkProps } from "@/types";
+
+interface ContactRequestFormProps {
+  title?: string;
+  subtitlePrefix?: string;
+  subtitleSuffix?: string;
+  link?: LinkProps;
+}
 
 const INITIAL_STATE = {
   zodErrors: null,
@@ -35,7 +43,7 @@ const CONTACT_OPTIONS = [
   { value: "email", label: CONTACT_REQUEST_EMAIL_OPTION },
 ];
 
-export function ContactRequestForm() {
+export function ContactRequestForm({ title, subtitlePrefix, subtitleSuffix, link }: ContactRequestFormProps = {}) {
   const [formState, formAction] = useActionState(contactRequestAction, INITIAL_STATE);
   const formRef = useRef<HTMLFormElement>(null);
   const handleSubmit = useRecaptchaSubmit(formRef, formAction, "contact_request");
@@ -61,11 +69,11 @@ export function ContactRequestForm() {
     <section className="contact-request" id="contact-request">
       <div className="contact-request__inner">
         <div className="contact-request__info">
-          <h3 className="contact-request__title">{CONTACT_REQUEST_TITLE}</h3>
+          <h3 className="contact-request__title">{title ?? CONTACT_REQUEST_TITLE}</h3>
           <p className="contact-request__subtitle">
-            {CONTACT_REQUEST_SUBTITLE_PREFIX}
-            <CustomLink href="/login">{CONTACT_REQUEST_SUBTITLE_LINK}</CustomLink>
-            {CONTACT_REQUEST_SUBTITLE_SUFFIX}
+            {subtitlePrefix ?? CONTACT_REQUEST_SUBTITLE_PREFIX}
+            <CustomLink href={link?.href ?? "/login"}>{link?.text ?? CONTACT_REQUEST_SUBTITLE_LINK}</CustomLink>
+            {subtitleSuffix ?? CONTACT_REQUEST_SUBTITLE_SUFFIX}
           </p>
         </div>
 

@@ -88,7 +88,12 @@ interface Base<T extends ComponentType, D extends object = Record<string, unknow
   data?: D;
 }
 
-export interface ContactRequestBlockProps extends Base<"blocks.contact-request-form"> {}
+export interface ContactRequestBlockProps extends Base<"blocks.contact-request-form"> {
+  title?: string;
+  subtitlePrefix?: string;
+  subtitleSuffix?: string;
+  link?: LinkProps;
+}
 
 export type Block =
   | HeroSectionProps

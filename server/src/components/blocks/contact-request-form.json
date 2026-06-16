@@ -4,5 +4,20 @@
     "displayName": "Contact Request Form"
   },
   "options": {},
-  "attributes": {}
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "subtitlePrefix": {
+      "type": "string"
+    },
+    "subtitleSuffix": {
+      "type": "text"
+    },
+    "link": {
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.link"
+    }
+  }
 }
