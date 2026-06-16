@@ -22,9 +22,11 @@ import {
   SIGNUP_ALREADY_SIGNED_UP,
   SIGNUP_CONFIRM_AWAIT_EMAIL_LABEL,
   SIGNUP_TOUR_INFO_IN_PROFILE,
+  SIGNUP_ASZF_BUTTON_LABEL,
+  CURRENCY,
 } from "@/utils/texts";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
-import Button from "@mui/material/Button";
+import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 import { CustomDialog } from "@/components/custom-ui-components/custom-dialog/custom-dialog";
 import { CustomCheckbox } from "@/components/custom-ui-components/custom-checkbox/custom-checkbox";
 import { margin } from "polished";
@@ -89,7 +91,7 @@ function EventSignupFormInner({
 
     return (
       <>
-        <Button
+        <CustomButton
           sx={{ width: "100%" }}
           variant="contained"
           color="primary"
@@ -99,7 +101,7 @@ function EventSignupFormInner({
           className="signup-form__submit-btn"
         >
           {SIGNUP_BUTTON_LABEL}
-        </Button>
+        </CustomButton>
 
         {alreadySignedUp && <CustomAlertMessage infoMessage={SIGNUP_ALREADY_SIGNED_UP} />}
 
@@ -145,7 +147,10 @@ function EventSignupFormInner({
         )}
         {price && (
           <p className="signup-form__price">
-            <span>{FORM_LABELS.price}:</span> {price}
+            <span>
+              {FORM_LABELS.price}:{price}
+            </span>
+            <span>{CURRENCY}</span>
           </p>
         )}
       </div>
@@ -194,14 +199,26 @@ function EventSignupFormInner({
             {price && (
               <>
                 <span>
-                  <strong>{FORM_LABELS.price}:</strong>
+                  <strong>{FORM_LABELS.price}: </strong>
                 </span>
-                <span>{price}</span>
+                <span>
+                  {price} {CURRENCY}
+                </span>
               </>
             )}
           </div>
         </div>
-        <CustomAlertMessage warningMessage={SIGNUP_TOUR_INFO_IN_PROFILE} />
+        <CustomAlertMessage infoMessage={SIGNUP_TOUR_INFO_IN_PROFILE} />
+
+        <CustomButton
+          variant="outlined"
+          size="small"
+          sx={{ marginTop: "16px" }}
+          onClick={() => window.open("/aszf", "_blank")}
+        >
+          {SIGNUP_ASZF_BUTTON_LABEL}
+        </CustomButton>
+
         <CustomCheckbox
           sx={{ marginTop: margin(10) }}
           checked={awaitEmailConfirmed}

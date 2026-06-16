@@ -3,6 +3,7 @@ import { ImageProps } from "@/types";
 import CustomLink from "./custom-ui-components/custom-link/custom-link";
 import { StrapiImage } from "./StrapiImage";
 import { formatDate } from "@/utils/format-date";
+import { CARD_PRICE_LABEL, CURRENCY } from "@/utils/texts";
 
 export interface CardProps {
   documentId: string;
@@ -27,7 +28,12 @@ export function Card({
   basePath,
 }: Readonly<CardProps>) {
   return (
-    <CustomLink href={`/${basePath}/${slug}`} className="content-items__card" color="inherit" underline="none">
+    <CustomLink
+      href={`/${basePath}/${slug}`}
+      className="content-items__card"
+      color="inherit"
+      underline="none"
+    >
       <div className="content-items__card-img">
         <StrapiImage
           src={image.url}
@@ -40,8 +46,9 @@ export function Card({
         <h5>{title}</h5>
         {price && (
           <p>
-            <span>Ár: </span>
+            <span>{CARD_PRICE_LABEL}: </span>
             {price}
+            <span> {CURRENCY}</span>
           </p>
         )}
         {(startDate ?? createdAt) && <p>{formatDate(startDate ?? createdAt)}</p>}

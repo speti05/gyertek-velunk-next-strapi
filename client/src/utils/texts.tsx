@@ -27,6 +27,9 @@ export const ERROR_LABEL = "Hiba történt. Próbáld újra később.";
 export const NOT_FOUND_LABEL = "Sajnáljuk, ez az oldal jól elvándorolt.";
 export const TRY_AGAIN_LABEL = "Próbáld újra";
 
+export const CARD_PRICE_LABEL = "Ár";
+export const CURRENCY = "Ft";
+
 export const FORM_LABELS = {
   firstName: "Keresztnév",
   lastName: "Vezetéknév",
@@ -138,7 +141,7 @@ export const SIGNUP_CONFIRM_TITLE = "Biztos, hogy jelentkezel erre a túrára?";
 export const SIGNUP_CONFIRM_YES = "Igen";
 export const SIGNUP_CONFIRM_NO = "Nem";
 export const SIGNUP_CONFIRM_AWAIT_EMAIL_LABEL =
-  "Elfogadom a feltételeket, várom a tájékoztató emailt a túráról";
+  "Elfogadom az ÁSZF-et, várom a tájékoztató emailt a túráról";
 export const SIGNUP_TOUR_INFO_IN_PROFILE =
   "A túrajelentkezési információk megtalálhatók a profilodban";
 export const SIGNUP_LOGIN_REQUIRED = "A jelentkezéshez kérjük,";
@@ -146,6 +149,7 @@ export const SIGNUP_LOGIN_LINK = "jelentkezz be";
 export const SIGNUP_PROFILE_INCOMPLETE = "A jelentkezéshez kérjük, töltsd ki az";
 export const SIGNUP_PROFILE_LINK = "alapadataidat a profilodon";
 export const SIGNUP_ALREADY_SIGNED_UP = "Már jelentkeztél erre a túrára.";
+export const SIGNUP_ASZF_BUTTON_LABEL = "ÁSZF megtekintése";
 
 // Footer social links
 export const FOOTER_FACEBOOK_ARIA = "Látogass el Facebook oldalunkra";
