@@ -22,6 +22,7 @@ import {
   CONTACT_REQUEST_NEW_REQUEST_LABEL,
 } from "@/utils/texts";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
+import { MAX_NAME, MAX_PHONE, MAX_EMAIL } from "@/components/custom-ui-components/custom-text-input/input-length-limits";
 import { LinkProps } from "@/types";
 
 interface ContactRequestFormProps {
@@ -95,6 +96,7 @@ export function ContactRequestForm({ title, subtitlePrefix, subtitleSuffix, link
               name="name"
               label={CONTACT_REQUEST_NAME_LABEL}
               error={zodErrors?.name?.[0]}
+              slotProps={{ htmlInput: { maxLength: MAX_NAME } }}
             />
 
             <CustomRadioGroup
@@ -111,6 +113,7 @@ export function ContactRequestForm({ title, subtitlePrefix, subtitleSuffix, link
                 label={CONTACT_REQUEST_PHONE_LABEL}
                 type="tel"
                 error={zodErrors?.phone?.[0]}
+                slotProps={{ htmlInput: { maxLength: MAX_PHONE } }}
               />
             )}
 
@@ -120,6 +123,7 @@ export function ContactRequestForm({ title, subtitlePrefix, subtitleSuffix, link
                 label={CONTACT_REQUEST_EMAIL_LABEL}
                 type="email"
                 error={zodErrors?.email?.[0]}
+                slotProps={{ htmlInput: { maxLength: MAX_EMAIL } }}
               />
             )}
 

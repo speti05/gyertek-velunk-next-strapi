@@ -21,22 +21,22 @@ export function CustomAlertMessage({
   return (
     <>
       {warningMessage && (
-        <Alert severity="warning" sx={{ mt: 1 }}>
+        <Alert severity="warning" sx={{ mt: 1, mb: 1 }}>
           {warningMessage}
         </Alert>
       )}
       {infoMessage && (
-        <Alert severity="info" sx={{ mt: 1 }}>
+        <Alert severity="info" sx={{ mt: 1, mb: 1 }}>
           {infoMessage}
         </Alert>
       )}
       {errorMessage && (
-        <Alert severity="error" sx={{ mt: 1 }}>
+        <Alert severity="error" sx={{ mt: 1, mb: 1 }}>
           {errorMessage}
         </Alert>
       )}
       {successMessage && (
-        <Alert severity="success" sx={{ mt: 1 }}>
+        <Alert severity="success" sx={{ mt: 1, mb: 1 }}>
           {successMessage}
         </Alert>
       )}

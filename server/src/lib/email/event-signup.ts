@@ -3,11 +3,28 @@ import { getTransporter } from "./mailer";
 import { emailWrapper, SystemEmailSubject } from "./templates/layout";
 import { userEmailContent, adminEmailContent } from "./templates/event-signup";
 
+const CURRENCY = "Ft";
+
 const headerAttachment = {
   filename: "email-fejlec-600.jpg",
   path: path.join(process.cwd(), "src/lib/email/templates/email-fejlec-600.jpg"),
   cid: "email-fejlec",
 };
+
+interface CompanionData {
+  lastName: string;
+  firstName: string;
+  phone: string;
+  birthCountry: string;
+  birthPlace: string;
+  birthDate: string;
+  documentType: string;
+  documentNumber: string;
+  documentIssueDate: string;
+  documentExpiryDate: string;
+  allergies: string;
+  fbLink: string;
+}
 
 export const sendSignupEmails = async (signupData: {
   userEmail: string;
@@ -15,9 +32,36 @@ export const sendSignupEmails = async (signupData: {
   lastName: string;
   eventName: string;
   telephone: string;
+  billingCountry?: string;
+  billingCity?: string;
+  billingZip?: string;
+  billingStreet?: string;
+  billingHouseNumber?: string;
+  wantInvoice?: boolean;
+  companyName?: string;
+  taxNumber?: string;
+  birthCountry?: string;
+  birthPlace?: string;
+  birthDate?: string;
+  documentType?: string;
+  documentNumber?: string;
+  documentIssueDate?: string;
+  documentExpiryDate?: string;
+  allergies?: string;
+  fbLink?: string;
+  companions?: CompanionData[];
+  notes?: string;
+  eventPrice?: string;
 }) => {
   const t = await getTransporter();
-  const { userEmail, firstName, lastName, eventName, telephone } = signupData;
+  const {
+    userEmail, firstName, lastName, eventName, telephone,
+    billingCountry, billingCity, billingZip, billingStreet, billingHouseNumber,
+    wantInvoice, companyName, taxNumber,
+    birthCountry, birthPlace, birthDate,
+    documentType, documentNumber, documentIssueDate, documentExpiryDate,
+    allergies, fbLink, companions, notes, eventPrice,
+  } = signupData;
   const siteUrl = process.env.SITE_URL;
 
   console.info(
@@ -28,7 +72,7 @@ export const sendSignupEmails = async (signupData: {
     from: `"Gyertek velünk" <${process.env.SMTP_USER}>`,
     to: userEmail,
     subject: `Sikeres túrajelentkezés – ${eventName}`,
-    html: emailWrapper(siteUrl, userEmailContent(firstName, lastName, eventName), SystemEmailSubject.EventSignup),
+    html: emailWrapper(siteUrl, userEmailContent(firstName, lastName, eventName, eventPrice, 1 + (companions?.length ?? 0), CURRENCY), SystemEmailSubject.EventSignup),
     attachments: [headerAttachment],
   });
 
@@ -38,7 +82,14 @@ export const sendSignupEmails = async (signupData: {
     subject: `Túrajelentkezés: ${eventName}`,
     html: emailWrapper(
       siteUrl,
-      adminEmailContent(firstName, lastName, userEmail, eventName, telephone),
+      adminEmailContent({
+        firstName, lastName, userEmail, eventName, telephone,
+        billingCountry, billingCity, billingZip, billingStreet, billingHouseNumber,
+        wantInvoice, companyName, taxNumber,
+        birthCountry, birthPlace, birthDate,
+        documentType, documentNumber, documentIssueDate, documentExpiryDate,
+        allergies, fbLink, companions, notes,
+      }),
       SystemEmailSubject.EventSignupAdmin
     ),
     attachments: [headerAttachment],

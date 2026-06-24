@@ -1,0 +1,17 @@
+export const MAX_EMAIL = 254;
+export const MAX_NAME = 100;
+export const MAX_PHONE = 30;
+export const MAX_PASSWORD = 15;
+export const MAX_ZIP = 20;
+export const MAX_STREET = 150;
+export const MAX_HOUSE_NUMBER = 20;
+export const MAX_COMPANY_NAME = 512;
+export const TAX_NUMBER_DIGITS = 11;
+export const TAX_NUMBER_DISPLAY_MAX = 13;
+export const MIN_PLACE_NAME = 2;
+export const MAX_PLACE_NAME = 100;
+export const MIN_DOCUMENT_NUMBER = 6;
+export const MAX_DOCUMENT_NUMBER = 10;
+export const MAX_ALLERGIES = 1000;
+export const MAX_FB_LINK = 500;
+export const MAX_NOTES = 1000;

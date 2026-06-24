@@ -21,6 +21,11 @@ export interface UserProfile {
   firstName: string | null;
   lastName: string | null;
   phone: string | null;
+  country: string | null;
+  city: string | null;
+  zip: string | null;
+  street: string | null;
+  houseNumber: string | null;
 }
 
 export async function registerService(
@@ -133,7 +138,16 @@ export async function getUserProfileService(jwt: string): Promise<UserProfile | 
 export async function updateUserProfileService(
   jwt: string,
   userId: number,
-  data: { firstName: string; lastName: string; phone: string }
+  data: {
+    firstName: string;
+    lastName: string;
+    phone: string;
+    country: string;
+    city: string;
+    zip: string;
+    street: string;
+    houseNumber: string;
+  }
 ): Promise<UserProfile | null> {
   const url = new URL(`/api/users/${userId}`, BASE_URL);
 

@@ -18,6 +18,7 @@ import {
   AUTH_NO_ACCOUNT_HINT,
   FORM_LABELS,
 } from "@/utils/texts";
+import { MAX_EMAIL, MAX_PASSWORD } from "@/components/custom-ui-components/custom-text-input/input-length-limits";
 
 const INITIAL_STATE = {
   zodErrors: null,
@@ -57,6 +58,7 @@ function AuthFormInner() {
           name="email"
           type="email"
           error={formState?.zodErrors?.email?.[0]}
+          slotProps={{ htmlInput: { maxLength: MAX_EMAIL } }}
         />
         <CustomTextInput
           id="password"
@@ -64,6 +66,7 @@ function AuthFormInner() {
           name="password"
           type="password"
           error={formState?.zodErrors?.password?.[0]}
+          slotProps={{ htmlInput: { maxLength: MAX_PASSWORD } }}
         />
         <CustomAlertMessage errorMessage={formState?.errorMessage} />
         <SubmitBtn />

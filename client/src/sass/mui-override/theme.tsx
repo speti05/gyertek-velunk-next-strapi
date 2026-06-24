@@ -183,6 +183,11 @@ export const theme = createTheme({
             color: colors.label.error,
             fontWeight: 700,
           },
+
+          // Required asterisk
+          "& .MuiFormLabel-asterisk": {
+            color: colors.label.required,
+          },
         },
         shrink: {
           fontSize: "1.8rem",
@@ -198,6 +203,9 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           height: "7.5rem",
+          "&:has(textarea)": {
+            height: "auto",
+          },
         },
       },
     },
@@ -316,6 +324,78 @@ export const theme = createTheme({
           "&.Mui-checked.Mui-disabled": {
             color: "rgb(176, 223, 216)",
             "& + .MuiSwitch-track": { backgroundColor: "rgb(176, 223, 216)", opacity: 0.9 },
+          },
+        },
+      },
+    },
+
+    MuiStepLabel: {
+      styleOverrides: {
+        label: {
+          fontFamily: "var(--font-source-sans-3), sans-serif",
+          fontSize: "1.3rem",
+          "&.Mui-active": {
+            color: colors.button.primary.main,
+            fontWeight: 700,
+          },
+          "&.Mui-completed": {
+            color: colors.button.primary.main,
+          },
+        },
+      },
+    },
+
+    MuiStepIcon: {
+      styleOverrides: {
+        root: {
+          fontSize: "3.2rem",
+          "&.Mui-active": {
+            color: colors.button.primary.main,
+          },
+          "&.Mui-completed": {
+            color: colors.button.primary.main,
+          },
+        },
+        text: {
+          fontSize: "0.75rem",
+        },
+      },
+    },
+
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          fontSize: "1.5rem",
+          fontFamily: "var(--font-source-sans-3), sans-serif",
+          fontWeight: 300,
+          "&::before": {
+            display: "none",
+          },
+        },
+      },
+    },
+
+    MuiAccordion: {
+      styleOverrides: {
+        root: {
+          backgroundColor: colors.accordion.default,
+          borderRadius: "0.6rem !important",
+          boxShadow: "none",
+          transition: "background-color 0.2s ease",
+          "&::before": {
+            display: "none",
+          },
+        },
+      },
+    },
+
+    MuiAccordionSummary: {
+      styleOverrides: {
+        root: {
+          borderRadius: "0.6rem",
+          transition: "background-color 0.2s ease",
+          "&:hover": {
+            backgroundColor: colors.accordion.hover,
           },
         },
       },

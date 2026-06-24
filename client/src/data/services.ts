@@ -22,11 +22,45 @@ export async function subscribeService(email: string) {
   }
 }
 
+export interface CompanionPayload {
+  lastName: string;
+  firstName: string;
+  phone: string;
+  birthCountry: string;
+  birthPlace: string;
+  birthDate: string;
+  documentType: string;
+  documentNumber: string;
+  documentIssueDate: string;
+  documentExpiryDate: string;
+  allergies: string;
+  fbLink: string;
+}
+
 export interface EventsSubscribeProps {
   firstName: string;
   lastName: string;
   email: string;
   telephone: string;
+  billingCountry: string;
+  billingCity: string;
+  billingZip: string;
+  billingStreet: string;
+  billingHouseNumber: string;
+  wantInvoice: boolean;
+  companyName: string;
+  taxNumber: string;
+  birthCountry: string;
+  birthPlace: string;
+  birthDate: string;
+  documentType: string;
+  documentNumber: string;
+  documentIssueDate: string;
+  documentExpiryDate: string;
+  allergies: string;
+  fbLink: string;
+  companions: CompanionPayload[];
+  notes: string;
   event: { connect: string[] };
 }
 

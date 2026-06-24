@@ -53,7 +53,7 @@ const homePageQuery = qs.stringify({
         },
         "blocks.hero-with-text": {
           populate: {
-            image: {
+            images: {
               fields: ["url", "alternativeText"],
             },
             link: true,
@@ -318,14 +318,52 @@ export async function getContentBySlug(slug: string, path: string) {
   return fetchAPI(url.href, { method: "GET" });
 }
 
+export interface CompanionData {
+  lastName: string;
+  firstName: string;
+  phone: string;
+  birthCountry: string;
+  birthPlace: string;
+  birthDate: string;
+  documentType: string;
+  documentNumber: string;
+  documentIssueDate: string;
+  documentExpiryDate: string;
+  allergies: string;
+  fbLink: string;
+}
+
 export interface EventSignupEntry {
   id: number;
   documentId: string;
   isPaid: boolean;
+  firstName: string | null;
+  lastName: string | null;
+  telephone: string | null;
+  billingCountry: string | null;
+  billingCity: string | null;
+  billingZip: string | null;
+  billingStreet: string | null;
+  billingHouseNumber: string | null;
+  wantInvoice: boolean;
+  companyName: string | null;
+  taxNumber: string | null;
+  birthCountry: string | null;
+  birthPlace: string | null;
+  birthDate: string | null;
+  documentType: string | null;
+  documentNumber: string | null;
+  documentIssueDate: string | null;
+  documentExpiryDate: string | null;
+  allergies: string | null;
+  fbLink: string | null;
+  companions: CompanionData[] | null;
+  notes: string | null;
   event: {
     documentId: string;
     title: string;
     startDate: string | null;
+    endDate: string | null;
     price: string | null;
     slug: string;
     image: { url: string; alternativeText: string | null } | null;
@@ -361,6 +399,31 @@ export async function getUserEventSignupsLoader(jwt: string): Promise<EventSignu
         },
       },
     },
+    fields: [
+      "isPaid",
+      "firstName",
+      "lastName",
+      "telephone",
+      "billingCountry",
+      "billingCity",
+      "billingZip",
+      "billingStreet",
+      "billingHouseNumber",
+      "wantInvoice",
+      "companyName",
+      "taxNumber",
+      "birthCountry",
+      "birthPlace",
+      "birthDate",
+      "documentType",
+      "documentNumber",
+      "documentIssueDate",
+      "documentExpiryDate",
+      "allergies",
+      "fbLink",
+      "companions",
+      "notes",
+    ],
   });
 
   const result = await fetchAPI(url.href, {

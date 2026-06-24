@@ -35,11 +35,26 @@ export default factories.createCoreController("api::event-signup.event-signup", 
     const response = await super.create(ctx);
 
     // Grab the data that was just saved, including the populated event
-    const { email, firstName, lastName, event, telephone } = response.data;
+    const {
+      email, firstName, lastName, event, telephone,
+      billingCountry, billingCity, billingZip, billingStreet, billingHouseNumber,
+      wantInvoice, companyName, taxNumber,
+      birthCountry, birthPlace, birthDate,
+      documentType, documentNumber, documentIssueDate, documentExpiryDate,
+      allergies, fbLink, companions, notes,
+    } = response.data;
     const eventName = event?.title || "Unknown Event";
 
     // Send emails — non-blocking, won't affect the API response
-    sendSignupEmails({ userEmail: email, firstName, lastName, eventName, telephone }).catch((err) =>
+    sendSignupEmails({
+      userEmail: email, firstName, lastName, eventName, telephone,
+      eventPrice: event?.price,
+      billingCountry, billingCity, billingZip, billingStreet, billingHouseNumber,
+      wantInvoice, companyName, taxNumber,
+      birthCountry, birthPlace, birthDate,
+      documentType, documentNumber, documentIssueDate, documentExpiryDate,
+      allergies, fbLink, companions, notes,
+    }).catch((err) =>
       console.error("Email sending failed:", err)
     );
 

@@ -5,18 +5,18 @@ import { LinkProps } from "@/types";
 
 interface HeroTextAndButtonsProps {
   headline: string;
-  theme: "turquoise" | "brown";
+  theme?: "turquoise" | "brown";
   linkButtons: LinkProps[];
   welcomeText?: string;
 }
 
 export const HeroTextAndButtons = ({
   headline,
-  theme,
+  theme = "turquoise",
   linkButtons,
   welcomeText,
 }: Readonly<HeroTextAndButtonsProps>) => {
-  const buttonColor = theme === "turquoise" ? "primary" : "secondary";
+  const defaultButtonColor = theme === "turquoise" ? "primary" : "secondary";
 
   return (
     <>
@@ -39,7 +39,7 @@ export const HeroTextAndButtons = ({
               variant="contained"
               size="large"
               href={l.href}
-              color={buttonColor}
+              color={l.buttonColor ?? defaultButtonColor}
             >
               {l.text}
             </CustomButton>

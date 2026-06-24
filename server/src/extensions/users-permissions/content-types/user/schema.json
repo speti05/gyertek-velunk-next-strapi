@@ -71,6 +71,21 @@
     },
     "phone": {
       "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "zip": {
+      "type": "string"
+    },
+    "street": {
+      "type": "string"
+    },
+    "houseNumber": {
+      "type": "string"
     }
   }
 }

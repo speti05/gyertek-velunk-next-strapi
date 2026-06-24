@@ -24,6 +24,7 @@ type CustomDialogProps = Omit<DialogProps, "open" | "onClose"> & {
   confirmLabel?: string;
   cancelLabel?: string;
   confirmDisabled?: boolean;
+  closeOnBackdropClick?: boolean;
 };
 
 export const CustomDialog: React.FC<CustomDialogProps> = ({
@@ -38,10 +39,18 @@ export const CustomDialog: React.FC<CustomDialogProps> = ({
   confirmLabel = DIALOG_CONFIRM_LABEL,
   cancelLabel = DIALOG_CANCEL_LABEL,
   confirmDisabled = false,
+  closeOnBackdropClick = false,
   ...props
 }) => {
   return (
-    <Dialog open={open} onClose={onClose} {...props}>
+    <Dialog
+      open={open}
+      onClose={(_, reason) => {
+        if (reason === "backdropClick" && !closeOnBackdropClick) return;
+        onClose();
+      }}
+      {...props}
+    >
       {(title || headerAction) && (
         <DialogTitle
           sx={

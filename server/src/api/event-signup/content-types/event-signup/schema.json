@@ -23,6 +23,64 @@
     "telephone": {
       "type": "string"
     },
+    "billingCountry": {
+      "type": "string"
+    },
+    "billingCity": {
+      "type": "string"
+    },
+    "billingZip": {
+      "type": "string"
+    },
+    "billingStreet": {
+      "type": "string"
+    },
+    "billingHouseNumber": {
+      "type": "string"
+    },
+    "wantInvoice": {
+      "type": "boolean",
+      "default": false
+    },
+    "companyName": {
+      "type": "string"
+    },
+    "taxNumber": {
+      "type": "string"
+    },
+    "birthCountry": {
+      "type": "string"
+    },
+    "birthPlace": {
+      "type": "string"
+    },
+    "birthDate": {
+      "type": "date"
+    },
+    "documentType": {
+      "type": "string"
+    },
+    "documentNumber": {
+      "type": "string"
+    },
+    "documentIssueDate": {
+      "type": "date"
+    },
+    "documentExpiryDate": {
+      "type": "date"
+    },
+    "allergies": {
+      "type": "text"
+    },
+    "fbLink": {
+      "type": "string"
+    },
+    "companions": {
+      "type": "json"
+    },
+    "notes": {
+      "type": "text"
+    },
     "event": {
       "type": "relation",
       "relation": "manyToOne",

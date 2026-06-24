@@ -23,7 +23,7 @@ const CustomAccordion: React.FC<CustomAccordionProps> = ({
 }) => {
   return (
     <Accordion disableGutters elevation={0} {...props}>
-      <AccordionSummary expandIcon={<CustomIcon name="expandMore" fontSize="large" />}>
+      <AccordionSummary expandIcon={<CustomIcon name="expandMore" fontSize="large" />} suppressHydrationWarning>
         <Box
           sx={{
             display: "flex",

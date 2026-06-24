@@ -6,6 +6,7 @@ import CustomButton from "@/components/custom-ui-components/custom-button/custom
 import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
 import { getStrapiURL } from "@/utils/get-strapi-url";
+import { MAX_EMAIL } from "@/components/custom-ui-components/custom-text-input/input-length-limits";
 import { useRecaptchaSubmit } from "@/hooks/use-recaptcha-submit";
 
 const INITIAL_STATE = {
@@ -52,7 +53,7 @@ export function Subscribe({
         </div>
         <div className="newsletter__form-wrap">
           <form className="newsletter__form" ref={formRef} onSubmit={handleSubmit}>
-            <CustomTextInput key={inputKey} name="email" type="text" placeholder={placeholder} />
+            <CustomTextInput key={inputKey} name="email" type="text" placeholder={placeholder} slotProps={{ htmlInput: { maxLength: MAX_EMAIL } }} />
             {(displayedSuccess || errorMessage) && (
               <div style={{ marginBottom: "3rem" }}>
                 <CustomAlertMessage successMessage={displayedSuccess} errorMessage={errorMessage} />

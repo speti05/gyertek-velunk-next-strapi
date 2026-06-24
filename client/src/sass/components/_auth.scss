@@ -13,7 +13,6 @@
     padding: 5rem 4rem;
     width: 100%;
     max-width: 54rem;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
     gap: 2.4rem;
@@ -204,5 +203,97 @@
     color: colors.$gy-v-dark-brown;
     cursor: pointer;
     user-select: none;
+  }
+
+  &__subsection-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: colors.$gy-v-dark-brown;
+    margin-top: 0.4rem;
+  }
+
+  &__address-row {
+    display: flex;
+    gap: 1.5rem;
+
+    & > * {
+      flex: 1;
+    }
+  }
+
+  &__tour-item--column {
+    flex-direction: column;
+    align-items: flex-start;
+    box-shadow: colors.$box-shadow;
+  }
+
+  &__tour-item-main {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    width: 100%;
+  }
+
+  &__signup-details {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &__signup-details-content {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  &__signup-details-section {
+    background: color-mix(in srgb, colors.$gy-v-light-beige 40%, white);
+    border-radius: 0.6rem;
+    padding: 1.2rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  &__signup-details-section-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: colors.$gy-v-dark-brown;
+    margin-bottom: 0.4rem;
+  }
+
+  &__signup-details-section_companion-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: colors.$gy-v-dark-green;
+    margin-bottom: 0.4rem;
+  }
+
+  &__signup-detail-row {
+    display: flex;
+    gap: 0.8rem;
+    font-size: 1.4rem;
+    flex-wrap: wrap;
+  }
+
+  &__signup-detail-label {
+    font-weight: 600;
+    color: colors.$gy-v-dark-brown;
+    flex-shrink: 0;
+  }
+
+  &__signup-detail-value {
+    color: colors.$gy-v-dark-brown;
+    opacity: 0.85;
+  }
+
+  &__signup-companion {
+    border-top: 1px solid color-mix(in srgb, colors.$gy-v-light-beige 30%, transparent);
+    padding-top: 0.8rem;
+    margin-top: 0.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
   }
 }

@@ -5,7 +5,7 @@ const baseColors = {
   darkBrown: "rgb(112 , 99, 76)", // gy-v-dark-brown
   lightBrown: "rgb(241, 232, 217)", // gy-v-light-brown
   gray: "rgb(156, 163, 175)", // gy-v-gray
-  red: " rgb(255, 0, 0)", // red for errors
+  red: " rgb(255, 0, 0)", // red for errors, required fields
 };
 
 export const colors = {
@@ -35,7 +35,9 @@ export const colors = {
   label: {
     main: darken(0.2, baseColors.lightBrown),
     focused: darken(0.4, baseColors.lightBrown),
+    green: baseColors.darkGreen,
     error: baseColors.red,
+    required: baseColors.red,
   },
   checkbox: {
     unchecked: darken(0.2, baseColors.lightBrown),
@@ -53,5 +55,9 @@ export const colors = {
     primary: { main: baseColors.darkGreen, hover: baseColors.darkBrown },
     secondary: { main: baseColors.darkBrown, hover: baseColors.darkGreen },
     white: { main: "#ffffff", hover: baseColors.lightBrown },
+  },
+  accordion: {
+    default: baseColors.lightBrown,
+    hover: darken(0.1, baseColors.lightBrown),
   },
 } as const;

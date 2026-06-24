@@ -1,4 +1,17 @@
-export const userEmailContent = (firstName: string, lastName: string, eventName: string) => `
+export const userEmailContent = (
+  firstName: string,
+  lastName: string,
+  eventName: string,
+  price?: string,
+  totalTravelers?: number,
+  currency?: string
+) => {
+  const numericPrice = price ? parseFloat(price.replace(/[^0-9.]/g, "")) : 0;
+  const travelers = totalTravelers ?? 1;
+  const totalPrice = numericPrice * travelers;
+  const totalPriceFormatted =
+    totalPrice > 0 ? `${totalPrice.toLocaleString("hu-HU")} ${currency ?? "Pénzegység"}` : null;
+  return `
   <tr>
     <td bgcolor="#ffffff" style="padding:48px 48px 40px;">
 
@@ -38,7 +51,7 @@ export const userEmailContent = (firstName: string, lastName: string, eventName:
         Örülünk, hogy velünk tartasz.
       </p>
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0 0 20px;">
-        A jelentkezésedet megkaptuk, a foglalásod az előleg beérkezése után válik véglegessé. Az utaláshoz szükséges adatokat lent találod:
+        A jelentkezésedet megkaptuk, a foglalásod az előleg beérkezése után válik véglegessé. Ajelentkezési részleteket megtalálod a profilodban.Az utaláshoz szükséges adatokat lent találod:
       </p>
 
       <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-radius:8px;overflow:hidden;border-left:4px solid #4FB6A9;margin-bottom:28px;">
@@ -46,6 +59,14 @@ export const userEmailContent = (firstName: string, lastName: string, eventName:
           <td bgcolor="#F1E8D9" style="padding:20px 24px;">
             <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin:0 0 10px;">Utalási adatok</p>
             <table cellpadding="0" cellspacing="0" border="0" width="100%">
+              ${
+                totalPriceFormatted
+                  ? `<tr>
+                <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:14px;font-weight:600;padding:3px 12px 3px 0;white-space:nowrap;">Fizetendő összeg:</td>
+                <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#333333;font-size:14px;font-weight:700;padding:3px 0;">${totalPriceFormatted}</td>
+              </tr>`
+                  : ""
+              }
               <tr>
                 <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:14px;font-weight:600;padding:3px 12px 3px 0;white-space:nowrap;">Kedvezményezett:</td>
                 <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#333333;font-size:14px;padding:3px 0;">Gyertek velünk</td>
@@ -108,68 +129,213 @@ export const userEmailContent = (firstName: string, lastName: string, eventName:
     </td>
   </tr>
 `;
+};
 
-export const adminEmailContent = (
-  firstName: string,
-  lastName: string,
-  userEmail: string,
-  eventName: string,
-  telephone: string
-) => `
+interface CompanionData {
+  lastName: string;
+  firstName: string;
+  phone: string;
+  birthCountry: string;
+  birthPlace: string;
+  birthDate: string;
+  documentType: string;
+  documentNumber: string;
+  documentIssueDate: string;
+  documentExpiryDate: string;
+  allergies: string;
+  fbLink: string;
+}
+
+function row(label: string, value: string | undefined, bg: string): string {
+  if (!value) return "";
+  return `
+        <tr>
+          <td bgcolor="${bg}" style="padding:14px 20px;">
+            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td width="35%" style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;padding-right:12px;">${label}</td>
+                <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#333333;font-size:16px;">${value}</td>
+              </tr>
+            </table>
+          </td>
+        </tr>`;
+}
+
+function section(title: string, rows: string): string {
+  if (!rows.trim()) return "";
+  return `
+      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-radius:8px;overflow:hidden;margin-bottom:24px;">
+        <tr>
+          <td bgcolor="#377F76" style="padding:12px 20px;">
+            <span style="font-family:'Source Sans 3',Arial,sans-serif;color:#ffffff;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;">${title}</span>
+          </td>
+        </tr>
+        ${rows}
+      </table>`;
+}
+
+function formatTaxNumber(digits: string | undefined): string | undefined {
+  if (!digits) return undefined;
+  const d = digits.replace(/\D/g, "");
+  if (d.length < 8) return d;
+  if (d.length === 8) return d;
+  if (d.length === 9) return `${d.slice(0, 8)}-${d.slice(8)}`;
+  return `${d.slice(0, 8)}-${d.slice(8, 9)}-${d.slice(9, 11)}`;
+}
+
+export const adminEmailContent = ({
+  firstName,
+  lastName,
+  userEmail,
+  eventName,
+  telephone,
+  billingCountry,
+  billingCity,
+  billingZip,
+  billingStreet,
+  billingHouseNumber,
+  wantInvoice,
+  companyName,
+  taxNumber,
+  birthCountry,
+  birthPlace,
+  birthDate,
+  documentType,
+  documentNumber,
+  documentIssueDate,
+  documentExpiryDate,
+  allergies,
+  fbLink,
+  companions,
+  notes,
+}: {
+  firstName: string;
+  lastName: string;
+  userEmail: string;
+  eventName: string;
+  telephone: string;
+  billingCountry?: string;
+  billingCity?: string;
+  billingZip?: string;
+  billingStreet?: string;
+  billingHouseNumber?: string;
+  wantInvoice?: boolean;
+  companyName?: string;
+  taxNumber?: string;
+  birthCountry?: string;
+  birthPlace?: string;
+  birthDate?: string;
+  documentType?: string;
+  documentNumber?: string;
+  documentIssueDate?: string;
+  documentExpiryDate?: string;
+  allergies?: string;
+  fbLink?: string;
+  companions?: CompanionData[];
+  notes?: string;
+}) => {
+  const billingAddress = [billingZip, billingCity, billingStreet, billingHouseNumber]
+    .filter(Boolean)
+    .join(" ");
+
+  const fbLinkHtml = (link: string) =>
+    `<a href="${link}" style="color:#377F76;text-decoration:none;" target="_blank">${link}</a>`;
+
+  const companionsSections = (companions ?? [])
+    .map((c, idx) => {
+      const companionRows = [
+        row("Név", `${c.lastName} ${c.firstName}`, "#F1E8D9"),
+        row("Telefonszám", c.phone, "#ffffff"),
+        row("Születési ország", c.birthCountry, "#F1E8D9"),
+        row("Születési hely", c.birthPlace, "#ffffff"),
+        row("Születési dátum", c.birthDate, "#F1E8D9"),
+        row("Okmány típusa", c.documentType, "#ffffff"),
+        row("Okmány száma", c.documentNumber, "#F1E8D9"),
+        row("Kiállítás dátuma", c.documentIssueDate, "#ffffff"),
+        row("Lejárat dátuma", c.documentExpiryDate, "#F1E8D9"),
+        row("Allergiák / egészségügyi info", c.allergies || undefined, "#ffffff"),
+        row("Facebook profil", c.fbLink ? fbLinkHtml(c.fbLink) : undefined, "#F1E8D9"),
+      ].join("");
+      return section(`${idx + 1}. kísérő adatai`, companionRows);
+    })
+    .join("");
+
+  const turaSection = section(
+    "Túra",
+    [
+      row(
+        "Túra neve",
+        `<strong style="font-family:'Luckiest Guy',cursive;color:#377F76;font-size:18px;letter-spacing:1px;font-weight:400;">${eventName}</strong>`,
+        "#F1E8D9"
+      ),
+    ].join("")
+  );
+
+  const jelentkezoSection = section(
+    "Jelentkező adatai",
+    [
+      row("Név", `${lastName} ${firstName}`, "#F1E8D9"),
+      row(
+        "Email",
+        `<a href="mailto:${userEmail}" style="color:#377F76;text-decoration:none;">${userEmail}</a>`,
+        "#ffffff"
+      ),
+      row("Telefonszám", telephone, "#F1E8D9"),
+      row("Számlázási cím (ország)", billingCountry, "#ffffff"),
+      row("Számlázási cím", billingAddress || undefined, "#F1E8D9"),
+    ].join("")
+  );
+
+  const szamlazasSection = section(
+    "Számlázás",
+    [
+      row("Kér számlát", wantInvoice ? "Igen" : "Nem", "#F1E8D9"),
+      ...(wantInvoice
+        ? [
+            row("Cégnév", companyName, "#ffffff"),
+            row("Adószám", formatTaxNumber(taxNumber), "#F1E8D9"),
+          ]
+        : []),
+    ].join("")
+  );
+
+  const utazasiSection = section(
+    "Utazási adatok",
+    [
+      row("Születési ország", birthCountry, "#F1E8D9"),
+      row("Születési hely", birthPlace, "#ffffff"),
+      row("Születési dátum", birthDate, "#F1E8D9"),
+      row("Okmány típusa", documentType, "#ffffff"),
+      row("Okmány száma", documentNumber, "#F1E8D9"),
+      row("Kiállítás dátuma", documentIssueDate, "#ffffff"),
+      row("Lejárat dátuma", documentExpiryDate, "#F1E8D9"),
+      row("Allergiák / egészségügyi info", allergies || undefined, "#ffffff"),
+      row("Facebook profil", fbLink ? fbLinkHtml(fbLink) : undefined, "#F1E8D9"),
+    ].join("")
+  );
+
+  const megjegyzesSection = notes ? section("Megjegyzés", row("Megjegyzés", notes, "#F1E8D9")) : "";
+
+  return `
   <tr>
     <td bgcolor="#ffffff" style="padding:48px;">
 
       <h2 style="font-family:'Luckiest Guy',cursive;color:#377F76;font-size:26px;margin:0 0 8px;letter-spacing:1px;font-weight:400;">Új túrajelentkezés érkezett</h2>
-      <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0 0 32px;">Az alábbi személy regisztrált az egyik túrátokra.</p>
+      <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0 0 24px;">Az alábbi személy regisztrált az egyik túrátokra.</p>
 
-      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-radius:8px;overflow:hidden;">
-        <tr>
-          <td bgcolor="#377F76" style="padding:12px 20px;">
-            <span style="font-family:'Source Sans 3',Arial,sans-serif;color:#ffffff;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;">Jelentkező adatai</span>
-          </td>
-        </tr>
-        <tr>
-          <td bgcolor="#F1E8D9" style="padding:14px 20px;">
-            <table width="100%" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td width="35%" style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;padding-right:12px;">Név</td>
-                <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#333333;font-size:16px;">${lastName} ${firstName}</td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td bgcolor="#ffffff" style="padding:14px 20px;">
-            <table width="100%" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td width="35%" style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;padding-right:12px;">Email</td>
-                <td><a href="mailto:${userEmail}" style="font-family:'Source Sans 3',Arial,sans-serif;color:#377F76;font-size:16px;text-decoration:none;">${userEmail}</a></td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td bgcolor="#F1E8D9" style="padding:14px 20px;">
-            <table width="100%" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td width="35%" style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;padding-right:12px;">Telefonszám</td>
-                <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#333333;font-size:16px;">${telephone}</td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td bgcolor="#ffffff" style="padding:14px 20px;">
-            <table width="100%" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td width="35%" style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;padding-right:12px;">Túra</td>
-                <td style="font-family:'Luckiest Guy',cursive;color:#377F76;font-size:18px;letter-spacing:1px;font-weight:400;">${eventName}</td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
+      ${turaSection}
+
+      ${jelentkezoSection}
+
+      ${szamlazasSection}
+
+      ${utazasiSection}
+
+      ${companionsSections}
+
+      ${megjegyzesSection}
 
     </td>
   </tr>
 `;
+};

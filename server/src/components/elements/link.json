@@ -14,6 +14,13 @@
     "isExternal": {
       "type": "boolean",
       "default": false
+    },
+    "buttonColor": {
+      "type": "enumeration",
+      "enum": [
+        "primary",
+        "secondary"
+      ]
     }
   }
 }

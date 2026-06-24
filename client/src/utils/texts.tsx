@@ -1,3 +1,10 @@
+import {
+  MAX_COMPANY_NAME,
+  TAX_NUMBER_DIGITS,
+  MIN_PLACE_NAME,
+  MIN_DOCUMENT_NUMBER,
+} from "@/components/custom-ui-components/custom-text-input/input-length-limits";
+
 // Events
 export const FEATURED_EVENTS_LABEL = "Kiemelt túrák";
 export const FEATURED_EVENTS_SEARCH_LABEL = "Keresés a kiemelt túrák között";
@@ -19,6 +26,7 @@ export const SITE_DESCRIPTION = "Túrák magyarországon és külföldön.";
 // General
 export const DIALOG_CONFIRM_LABEL = "OK";
 export const DIALOG_CANCEL_LABEL = "Mégse";
+export const DIALOG_PROCEED_LABEL = "Megerősít";
 export const LOADING_LABEL = "Töltés...";
 export const GO_HOME_LABEL = "Vissza a főoldalra";
 export const SERVER_SIDE_ERROR_LABEL = "Szerver oldali hiba.";
@@ -38,7 +46,13 @@ export const FORM_LABELS = {
   phone: "Telefonszám",
   submit: "Regisztráció",
   startDate: "Kezdés dátuma",
+  endDate: "Befejezés dátuma",
   price: "Részvételi díj",
+  country: "Ország",
+  city: "Város",
+  zip: "Irányítószám",
+  street: "Utca",
+  houseNumber: "Házszám",
 };
 
 export const MESSAGES = {
@@ -47,6 +61,11 @@ export const MESSAGES = {
   invalidLastName: "Add meg a vezetékneved",
   invalidTelephone: "Érvényes telefonszámot adj meg. ",
   enterPhoneNumber: "Add meg a telefonszámod. ",
+  invalidCountry: "Válassz országot",
+  invalidCity: "Add meg a várost",
+  invalidZip: "Add meg az irányítószámot",
+  invalidStreet: "Add meg az utcát",
+  invalidHouseNumber: "Add meg a házszámot",
   someThingWentWrong: "Hiba történt. Kérjük, próbáld újra később.",
   failedToSubscribe: "Sikertelen feliratkozás.",
   succesfullySubscribed: "Sikeresen feliratkoztál a hírlevelünkre!",
@@ -126,6 +145,7 @@ export const AUTH_TERMS_REQUIRED_ERROR = "Az ÁSZF elfogadása kötelező a regi
 // Profile
 export const PROFILE_TITLE = "Profilom";
 export const PROFILE_BASIC_DATA_SECTION = "Alapadatok";
+export const PROFILE_ADDRESS_SECTION = "Cím";
 export const PROFILE_MY_TOURS_SECTION = "Túráim";
 export const PROFILE_NO_TOURS_MESSAGE = "Még nem jelentkeztél túrára.";
 export const PROFILE_PAYMENT_PAID = "Befizetve";
@@ -133,7 +153,11 @@ export const PROFILE_PAYMENT_UNPAID = "Befizetés folyamatban";
 export const PROFILE_NEWSLETTER_SECTION = "Hírlevél";
 export const PROFILE_NEWSLETTER_SUBSCRIBE_LABEL = "Feliratkozom a hírlevélre";
 export const PROFILE_INCOMPLETE_WARNING =
-  "A neved és telefonszámod nincs kitöltve. Ezek elengedhetetlenek a túrajelentkezéshez.";
+  "A neved, telefonszámod és lakcímed nincs kitöltve. Ezek elengedhetetlenek a túrajelentkezéshez.";
+export const PROFILE_BASIC_DATA_READONLY_INFO =
+  "Az alapadatok nem módosíthatók. A változást emailben vagy telefonon tudod jelezni.";
+export const PROFILE_SIGNUP_DETAILS_SHOW = "Jelentkezés részleteinek megtekintése";
+export const PROFILE_SIGNUP_DETAILS_HIDE = "Részletek elrejtése";
 
 // Event signup confirmation
 export const SIGNUP_BUTTON_LABEL = "Jelentkezés";
@@ -141,15 +165,100 @@ export const SIGNUP_CONFIRM_TITLE = "Biztos, hogy jelentkezel erre a túrára?";
 export const SIGNUP_CONFIRM_YES = "Igen";
 export const SIGNUP_CONFIRM_NO = "Nem";
 export const SIGNUP_CONFIRM_AWAIT_EMAIL_LABEL =
-  "Elfogadom az ÁSZF-et, várom a tájékoztató emailt a túráról";
+  "Elolvastam és elfogadom az ÁSZF-et és az Adatvédelmi tájékoztatót";
 export const SIGNUP_TOUR_INFO_IN_PROFILE =
-  "A túrajelentkezési információk megtalálhatók a profilodban";
+  "A túrajelentkezési információk megtalálhatók a profilodban. A jelentkezésről email értesítést is kapsz, ahol további információkat találsz a túráról, a fizetésről és a további lépésekről.";
 export const SIGNUP_LOGIN_REQUIRED = "A jelentkezéshez kérjük,";
 export const SIGNUP_LOGIN_LINK = "jelentkezz be";
 export const SIGNUP_PROFILE_INCOMPLETE = "A jelentkezéshez kérjük, töltsd ki az";
-export const SIGNUP_PROFILE_LINK = "alapadataidat a profilodon";
+export const SIGNUP_PROFILE_LINK = "alapadataidat és lakcímedet a profilodon";
 export const SIGNUP_ALREADY_SIGNED_UP = "Már jelentkeztél erre a túrára.";
+export const SIGNUP_SUCCESS_TITLE = (eventTitle: string) => `Sikeres jelentkezés: ${eventTitle}`;
+export const SIGNUP_SUCCESS_CONTENT = "Köszönjük hogy regisztráltál a túránkra! Hamarosan jelentkezünk!";
+export const SIGNUP_SUCCESS_EMAIL_INFO = "Emailben értesítünk a következő lépésekről";
+export const SIGNUP_SUCCESS_PROFILE_INFO = "A jelentkezésed részletei a profilodban megtalálhatók";
+export const SIGNUP_SUCCESS_OK_LABEL = "Rendben";
 export const SIGNUP_ASZF_BUTTON_LABEL = "ÁSZF megtekintése";
+export const SIGNUP_PRIVACY_BUTTON_LABEL = "Adatvédelmi tájékoztató";
+
+// Signup dialog steps
+export const SIGNUP_DIALOG_TITLE_PREFIX = "Jelentkezés";
+export const SIGNUP_STEP_BILLING = "Számlázási adatok";
+export const SIGNUP_STEP_TRAVEL = "Utazási adatok";
+export const SIGNUP_STEP_COMPANIONS = "Túratársak";
+export const SIGNUP_STEP_SUMMARY = "Összegzés";
+export const SIGNUP_NEXT_LABEL = "Következő";
+export const SIGNUP_BACK_LABEL = "Vissza";
+export const SIGNUP_CLOSE_LABEL = "Bezárás";
+export const SIGNUP_ABORT_CONFIRM_TITLE = "Megszakítás";
+export const SIGNUP_ABORT_CONFIRM_CONTENT =
+  "Biztosan meg szeretnéd szakítani a jelentkezést? A megadott adatok elvesznek.";
+export const SIGNUP_ABORT_CONFIRM_CANCEL = "Mégse";
+export const SIGNUP_ABORT_CONFIRM_PROCEED = "Megszakít";
+
+export const SIGNUP_VALIDATION = {
+  required: "Kötelező mező",
+  missingAddress: "Hiányzó lakcím a profilból",
+  birthDateTooEarly: "A születési dátum nem lehet korábbi 1950.01.01-nél",
+  birthDateTooLate: "Legalább 18 évesnek kell lenned a jelentkezéshez",
+  issueDateOutOfRange: "A kiállítási dátumnak a születési dátum és a mai nap között kell lennie",
+  issueDateAfterExpiry: "A kiállítási dátumnak korábbinak kell lennie az érvényességi dátumnál",
+  expiryDateOutOfRange:
+    "Az érvényességi dátumnak a kiállítási dátum és a jelenlegi dátum + 30 év között kell lennie",
+  expiryBeforeStartDate: "Lejáró okmány érvényességi idő túrakezdés előtt",
+  taxNumberInvalid: `Az adószámnak pontosan ${TAX_NUMBER_DIGITS} számjegyből kell állnia (pl. 12345678-1-42)`,
+  companyNameTooLong: `A cégnév maximum ${MAX_COMPANY_NAME} karakter hosszú lehet`,
+  birthCountryRequired: "Add meg az ország nevét",
+  birthPlaceTooShort: `A helység neve legalább ${MIN_PLACE_NAME} karakter kell legyen`,
+  documentNumberTooShort: `Az okmányszámnak legalább ${MIN_DOCUMENT_NUMBER} karakterből kell állnia`,
+};
+export const SIGNUP_SUBMIT_LABEL = "Küldés";
+
+// Billing step
+export const SIGNUP_BILLING_INFO = "Az alábbi adatok a profilodból vannak előre kitöltve.";
+export const SIGNUP_BILLING_WANT_INVOICE = "Számlát kérek";
+export const SIGNUP_BILLING_COMPANY_NAME = "Cégnév";
+export const SIGNUP_BILLING_TAX_NUMBER = "Adószám";
+
+// Travel step
+export const SIGNUP_TRAVEL_BIRTH_COUNTRY = "Születési ország";
+export const SIGNUP_TRAVEL_BIRTH_PLACE = "Születési hely";
+export const SIGNUP_TRAVEL_BIRTH_DATE = "Születési dátum";
+export const SIGNUP_TRAVEL_DOCUMENT_TYPE = "Utazási okmány típusa";
+export const SIGNUP_TRAVEL_DOCUMENT_NUMBER = "Okmány száma";
+export const SIGNUP_TRAVEL_DOCUMENT_ISSUE_DATE = "Kiállítás dátuma";
+export const SIGNUP_TRAVEL_DOCUMENT_EXPIRY_DATE = "Lejárat dátuma";
+export const SIGNUP_TRAVEL_ALLERGIES = "Allergia vagy betegség, amiről jó ha tudunk (opcionális)";
+export const SIGNUP_TRAVEL_FB_LINK = "Facebook profil link (opcionális)";
+export const SIGNUP_TRAVEL_FB_INFO =
+  "A Facebook linkedet a közös kommunikációt megkönnyítő csoportba való meghíváshoz kérjük be. A csoportban osztjuk meg a túrával kapcsolatos legfrissebb információkat.";
+export const SIGNUP_DOCUMENT_TYPE_PASSPORT = "Útlevél";
+export const SIGNUP_DOCUMENT_TYPE_ID_CARD = "Személyi igazolvány";
+export const SIGNUP_DOCUMENT_TYPE_STUDENT_CARD = "Diákigazolvány";
+
+// Companions step
+export const SIGNUP_COMPANION_ADD_BUTTON = "Túratárs hozzáadása";
+export const SIGNUP_COMPANION_INFO =
+  'Ha mást is szeretnél túrára regisztrálni, kattints a "Túratárs hozzáadása" gombra.';
+export const SIGNUP_COMPANION_MAX_INFO =
+  "Maximum 5 túratársat lehet online hozzáadni. Ha többen szeretnétek részt venni, kérjük előbb vegyétek fel velünk telefonon vagy személyesen a kapcsolatot.";
+export const SIGNUP_COMPANION_TITLE = (i: number) => `${i}. túratárs`;
+export const SIGNUP_COMPANION_REMOVE = "Eltávolítás";
+
+// Summary step
+export const SIGNUP_SUMMARY_TRAVELER_UNIT = "fő";
+export const SIGNUP_SUMMARY_TRAVELERS = "Utazók száma";
+export const SIGNUP_SUMMARY_TRAVELER_NAMES = "Utazók nevei";
+export const SIGNUP_SUMMARY_SCHEDULE = "Ütemezés";
+export const SIGNUP_SUMMARY_TOTAL_PRICE = "Fizetendő végösszeg";
+export const SIGNUP_SUMMARY_NOTES = "Megjegyzés (opcionális)";
+
+// Hero with text / slideshow
+export const HERO_PREV_IMAGE_ARIA = "Előző kép";
+export const HERO_NEXT_IMAGE_ARIA = "Következő kép";
+export const HERO_DOT_IMAGE_ARIA = (idx: number) => `${idx + 1}. kép`;
+export const HERO_PAUSE_ARIA = "Automatikus váltás megállítása";
+export const HERO_PLAY_ARIA = "Automatikus váltás indítása";
 
 // Footer social links
 export const FOOTER_FACEBOOK_ARIA = "Látogass el Facebook oldalunkra";

@@ -241,6 +241,11 @@ const profileSchema = z.object({
     .string()
     .min(1, { message: MESSAGES.enterPhoneNumber })
     .regex(phoneRegex, { message: MESSAGES.invalidTelephone }),
+  country: z.string().min(1, { message: MESSAGES.invalidCountry }),
+  city: z.string().min(1, { message: MESSAGES.invalidCity }),
+  zip: z.string().min(1, { message: MESSAGES.invalidZip }),
+  street: z.string().min(1, { message: MESSAGES.invalidStreet }),
+  houseNumber: z.string().min(1, { message: MESSAGES.invalidHouseNumber }),
 });
 
 export async function updateProfileAction(prevState: any, formData: FormData) {
@@ -251,8 +256,13 @@ export async function updateProfileAction(prevState: any, formData: FormData) {
   const firstName = formData.get("firstName") as string;
   const lastName = formData.get("lastName") as string;
   const phone = formData.get("phone") as string;
+  const country = formData.get("country") as string;
+  const city = formData.get("city") as string;
+  const zip = formData.get("zip") as string;
+  const street = formData.get("street") as string;
+  const houseNumber = formData.get("houseNumber") as string;
 
-  const validated = profileSchema.safeParse({ firstName, lastName, phone });
+  const validated = profileSchema.safeParse({ firstName, lastName, phone, country, city, zip, street, houseNumber });
 
   if (!validated.success) {
     return {
@@ -268,11 +278,15 @@ export async function updateProfileAction(prevState: any, formData: FormData) {
     return { ...prevState, zodErrors: null, errorMessage: MESSAGES.tryAgain, successMessage: null };
   }
 
-  const { firstName: fn, lastName: ln, phone: ph } = validated.data;
   const result = await updateUserProfileService(jwt, profile.id, {
-    firstName: fn,
-    lastName: ln,
-    phone: ph,
+    firstName: validated.data.firstName,
+    lastName: validated.data.lastName,
+    phone: validated.data.phone,
+    country: validated.data.country,
+    city: validated.data.city,
+    zip: validated.data.zip,
+    street: validated.data.street,
+    houseNumber: validated.data.houseNumber,
   });
 
   if (!result) {

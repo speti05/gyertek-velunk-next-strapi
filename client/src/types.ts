@@ -3,6 +3,7 @@ export interface LinkProps {
   text: string;
   href: string;
   isExternal: boolean;
+  buttonColor?: "primary" | "secondary";
 }
 
 export interface CustomSearchParams {
@@ -181,8 +182,7 @@ export interface HeroWithCalendarProps extends Base<"blocks.hero-with-calendar">
 
 export interface HeroWithTextProps extends Base<"blocks.hero-with-text"> {
   headline: string;
-  image: ImageProps;
-  theme: "turquoise" | "brown";
+  images: ImageProps[];
   searchParams: CustomSearchParams;
   link?: LinkProps[];
   welcomeText?: string;

@@ -46,6 +46,7 @@ export default async function SingleEventRoute({ params, searchParams }: ParamsP
             eventId={event.documentId}
             eventTitle={event.title}
             startDate={event.startDate}
+            endDate={event.endDate}
             price={event.price}
             image={{ url: event?.image?.url, alt: event?.image?.alternativeText || "Event image" }}
             userProfile={userProfile}

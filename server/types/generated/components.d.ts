@@ -98,12 +98,8 @@ export interface BlocksHeroWithText extends Struct.ComponentSchema {
   };
   attributes: {
     headline: Schema.Attribute.String;
-    image: Schema.Attribute.Media<"images" | "files" | "videos" | "audios"> &
-      Schema.Attribute.Required;
+    images: Schema.Attribute.Media<"images", true> & Schema.Attribute.Required;
     link: Schema.Attribute.Component<"elements.link", true>;
-    theme: Schema.Attribute.Enumeration<["turquoise", "brown"]> &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<"turquoise">;
     welcomeText: Schema.Attribute.Text;
   };
 }
@@ -199,6 +195,7 @@ export interface ElementsLink extends Struct.ComponentSchema {
     displayName: "Link";
   };
   attributes: {
+    buttonColor: Schema.Attribute.Enumeration<["primary", "secondary"]>;
     href: Schema.Attribute.String;
     isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     text: Schema.Attribute.String;

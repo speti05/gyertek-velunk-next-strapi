@@ -13,6 +13,7 @@ import {
   AUTH_FORGOT_PASSWORD_TITLE,
   FORM_LABELS,
 } from "@/utils/texts";
+import { MAX_EMAIL } from "@/components/custom-ui-components/custom-text-input/input-length-limits";
 import { useFormStatus } from "react-dom";
 
 const INITIAL_STATE = {
@@ -47,6 +48,7 @@ function ForgotPasswordFormInner() {
             name="email"
             type="email"
             error={formState?.zodErrors?.email?.[0]}
+            slotProps={{ htmlInput: { maxLength: MAX_EMAIL } }}
           />
           <CustomAlertMessage errorMessage={formState?.errorMessage} />
           <div className="auth-page__buttons">

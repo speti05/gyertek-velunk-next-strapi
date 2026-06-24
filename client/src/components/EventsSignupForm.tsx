@@ -1,35 +1,34 @@
 "use client";
 
-import { useActionState, useRef, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
+import Image from "next/image";
 import { BlockRenderer } from "@/components/BlockRenderer";
 import { Block } from "@/types";
 import { formatDate } from "@/utils/format-date";
 import { StrapiImage } from "@/components/StrapiImage";
 import { eventsSubscribeAction } from "@/data/actions";
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
-import { useRecaptchaSubmit } from "@/hooks/use-recaptcha-submit";
+import { useRecaptchaAction } from "@/hooks/use-recaptcha-action";
 import { UserProfile } from "@/data/auth-service";
 import {
   FORM_LABELS,
   SIGNUP_BUTTON_LABEL,
-  SIGNUP_CONFIRM_TITLE,
-  SIGNUP_CONFIRM_YES,
-  SIGNUP_CONFIRM_NO,
   SIGNUP_LOGIN_REQUIRED,
   SIGNUP_LOGIN_LINK,
   SIGNUP_PROFILE_INCOMPLETE,
   SIGNUP_PROFILE_LINK,
   SIGNUP_ALREADY_SIGNED_UP,
-  SIGNUP_CONFIRM_AWAIT_EMAIL_LABEL,
-  SIGNUP_TOUR_INFO_IN_PROFILE,
-  SIGNUP_ASZF_BUTTON_LABEL,
+  SIGNUP_SUCCESS_TITLE,
+  SIGNUP_SUCCESS_CONTENT,
+  SIGNUP_SUCCESS_EMAIL_INFO,
+  SIGNUP_SUCCESS_PROFILE_INFO,
+  SIGNUP_SUCCESS_OK_LABEL,
   CURRENCY,
 } from "@/utils/texts";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 import { CustomDialog } from "@/components/custom-ui-components/custom-dialog/custom-dialog";
-import { CustomCheckbox } from "@/components/custom-ui-components/custom-checkbox/custom-checkbox";
-import { margin } from "polished";
+import { TourSignupDialog, SignupFormData } from "@/components/TourSignupDialog";
 
 const INITIAL_STATE = {
   zodErrors: null,
@@ -42,37 +41,47 @@ type EventSignupFormProps = {
   stayInTouchEventId?: string;
   blocks: Block[];
   eventId: string;
-  eventTitle: string;
+  eventTitle?: string;
   startDate?: string;
+  endDate?: string;
   price?: string;
   image?: {
     url: string;
     alt: string;
   };
-  userProfile: UserProfile | null;
-  alreadySignedUp: boolean;
+  userProfile?: UserProfile | null;
+  alreadySignedUp?: boolean;
 };
 
 function EventSignupFormInner({
   stayInTouchEventId,
   blocks,
   eventId,
-  eventTitle,
+  eventTitle = "",
   startDate,
+  endDate,
   price,
   image,
-  userProfile,
-  alreadySignedUp,
+  userProfile = null,
+  alreadySignedUp = false,
 }: EventSignupFormProps) {
   const [formState, formAction] = useActionState(eventsSubscribeAction, INITIAL_STATE);
-  const formRef = useRef<HTMLFormElement>(null);
-  const handleSubmit = useRecaptchaSubmit(formRef, formAction, "event_signup");
+  const dispatch = useRecaptchaAction(formAction, "event_signup");
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [awaitEmailConfirmed, setAwaitEmailConfirmed] = useState(false);
+  const [successDialogOpen, setSuccessDialogOpen] = useState(false);
 
-  function handleDialogClose() {
-    setDialogOpen(false);
-    setAwaitEmailConfirmed(false);
+  useEffect(() => {
+    if (formState?.successMessage) {
+      setDialogOpen(false);
+      setSuccessDialogOpen(true);
+    }
+  }, [formState?.successMessage]);
+
+  async function handleSignupComplete(data: SignupFormData) {
+    const formData = new FormData();
+    formData.set("eventId", eventId ?? stayInTouchEventId ?? "");
+    formData.set("signupData", JSON.stringify(data));
+    await dispatch(formData);
   }
 
   const errorMessage = formState?.strapiErrors?.message ?? formState?.errorMessage;
@@ -81,7 +90,12 @@ function EventSignupFormInner({
   const hasCompleteProfile = !!(
     userProfile?.firstName &&
     userProfile?.lastName &&
-    userProfile?.phone
+    userProfile?.phone &&
+    userProfile?.country &&
+    userProfile?.city &&
+    userProfile?.zip &&
+    userProfile?.street &&
+    userProfile?.houseNumber
   );
 
   function renderSignupArea() {
@@ -155,7 +169,7 @@ function EventSignupFormInner({
         )}
       </div>
 
-      <form ref={formRef} className="signup-form__form" onSubmit={handleSubmit}>
+      <div className="signup-form__form">
         {image && (
           <StrapiImage
             src={image.url}
@@ -166,66 +180,50 @@ function EventSignupFormInner({
           />
         )}
 
-        <input hidden type="text" name="eventId" defaultValue={eventId ?? stayInTouchEventId} />
-
         {renderSignupArea()}
 
         <CustomAlertMessage errorMessage={errorMessage} successMessage={successMessage} />
-      </form>
+      </div>
+
+      {userProfile && hasCompleteProfile && !alreadySignedUp && (
+        <TourSignupDialog
+          open={dialogOpen}
+          onClose={() => setDialogOpen(false)}
+          onComplete={handleSignupComplete}
+          userProfile={userProfile}
+          eventTitle={eventTitle}
+          startDate={startDate}
+          endDate={endDate}
+          price={price}
+        />
+      )}
 
       <CustomDialog
-        open={dialogOpen}
-        onClose={handleDialogClose}
-        title={SIGNUP_CONFIRM_TITLE}
-        cancelLabel={SIGNUP_CONFIRM_NO}
-        confirmLabel={SIGNUP_CONFIRM_YES}
-        confirmDisabled={!awaitEmailConfirmed}
-        onConfirm={() => {
-          handleDialogClose();
-          formRef.current?.requestSubmit();
-        }}
+        open={successDialogOpen}
+        onClose={() => setSuccessDialogOpen(false)}
+        title={SIGNUP_SUCCESS_TITLE(eventTitle)}
+        actions={
+          <CustomButton
+            variant="contained"
+            color="primary"
+            sx={{ flex: 1, m: 1 }}
+            onClick={() => setSuccessDialogOpen(false)}
+          >
+            {SIGNUP_SUCCESS_OK_LABEL}
+          </CustomButton>
+        }
       >
-        <div className="my-6">
-          <h4 className="text-center">{eventTitle}</h4>
-          <div className="grid grid-cols-2 gap-4 mt-10 mb-10">
-            {startDate && (
-              <>
-                <span>
-                  <strong>{FORM_LABELS.startDate}:</strong>
-                </span>
-                <span>{formatDate(startDate)}</span>
-              </>
-            )}
-            {price && (
-              <>
-                <span>
-                  <strong>{FORM_LABELS.price}: </strong>
-                </span>
-                <span>
-                  {price} {CURRENCY}
-                </span>
-              </>
-            )}
-          </div>
+        <p style={{ textAlign: "center", marginBottom: "16px" }}>{SIGNUP_SUCCESS_CONTENT}</p>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "16px" }}>
+          <Image
+            src="/GYERTEK V_kor.png"
+            alt="Gyertek Velünk"
+            width={120}
+            height={120}
+          />
         </div>
-        <CustomAlertMessage infoMessage={SIGNUP_TOUR_INFO_IN_PROFILE} />
-
-        <CustomButton
-          variant="outlined"
-          size="small"
-          sx={{ marginTop: "16px" }}
-          onClick={() => window.open("/aszf", "_blank")}
-        >
-          {SIGNUP_ASZF_BUTTON_LABEL}
-        </CustomButton>
-
-        <CustomCheckbox
-          sx={{ marginTop: margin(10) }}
-          checked={awaitEmailConfirmed}
-          size="large"
-          onChange={(e) => setAwaitEmailConfirmed((e.target as HTMLInputElement).checked)}
-          label={SIGNUP_CONFIRM_AWAIT_EMAIL_LABEL}
-        />
+        <CustomAlertMessage infoMessage={SIGNUP_SUCCESS_EMAIL_INFO} />
+        <CustomAlertMessage infoMessage={SIGNUP_SUCCESS_PROFILE_INFO} />
       </CustomDialog>
     </section>
   );

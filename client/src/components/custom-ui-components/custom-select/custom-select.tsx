@@ -16,6 +16,7 @@ type CustomSelectProps = SelectProps & {
   helperText?: string;
   required?: boolean;
   options?: { value: string | number; name: string }[];
+  renderOption?: (option: { value: string | number; name: string }) => React.ReactNode;
 };
 
 export const CustomSelect: React.FC<CustomSelectProps> = ({
@@ -24,6 +25,7 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
   helperText,
   required = false,
   id,
+  renderOption,
   ...props
 }) => {
   return (
@@ -55,8 +57,8 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
         {...props}
       >
         {props.options?.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.name}
+          <MenuItem key={option.value} value={option.value} className="no-list-style">
+            {renderOption ? renderOption(option) : option.name}
           </MenuItem>
         ))}
       </Select>

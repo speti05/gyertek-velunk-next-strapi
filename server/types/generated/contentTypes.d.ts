@@ -461,21 +461,40 @@ export interface ApiEventSignupEventSignup extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    allergies: Schema.Attribute.Text;
+    billingCity: Schema.Attribute.String;
+    billingCountry: Schema.Attribute.String;
+    billingHouseNumber: Schema.Attribute.String;
+    billingStreet: Schema.Attribute.String;
+    billingZip: Schema.Attribute.String;
+    birthCountry: Schema.Attribute.String;
+    birthDate: Schema.Attribute.Date;
+    birthPlace: Schema.Attribute.String;
+    companions: Schema.Attribute.JSON;
+    companyName: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+    documentExpiryDate: Schema.Attribute.Date;
+    documentIssueDate: Schema.Attribute.Date;
+    documentNumber: Schema.Attribute.String;
+    documentType: Schema.Attribute.String;
     email: Schema.Attribute.Email;
     event: Schema.Attribute.Relation<"manyToOne", "api::event.event">;
+    fbLink: Schema.Attribute.String;
     firstName: Schema.Attribute.String;
     isPaid: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     lastName: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<"oneToMany", "api::event-signup.event-signup"> &
       Schema.Attribute.Private;
+    notes: Schema.Attribute.Text;
     publishedAt: Schema.Attribute.DateTime;
+    taxNumber: Schema.Attribute.String;
     telephone: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
     user: Schema.Attribute.Relation<"manyToOne", "plugin::users-permissions.user">;
+    wantInvoice: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
   };
 }
 
@@ -1049,8 +1068,10 @@ export interface PluginUsersPermissionsUser extends Struct.CollectionTypeSchema 
   };
   attributes: {
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    city: Schema.Attribute.String;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    country: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
     email: Schema.Attribute.Email &
@@ -1059,6 +1080,7 @@ export interface PluginUsersPermissionsUser extends Struct.CollectionTypeSchema 
         minLength: 6;
       }>;
     firstName: Schema.Attribute.String;
+    houseNumber: Schema.Attribute.String;
     lastName: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<"oneToMany", "plugin::users-permissions.user"> &
@@ -1073,6 +1095,7 @@ export interface PluginUsersPermissionsUser extends Struct.CollectionTypeSchema 
     publishedAt: Schema.Attribute.DateTime;
     resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;
     role: Schema.Attribute.Relation<"manyToOne", "plugin::users-permissions.role">;
+    street: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
     username: Schema.Attribute.String &
@@ -1081,6 +1104,7 @@ export interface PluginUsersPermissionsUser extends Struct.CollectionTypeSchema 
       Schema.Attribute.SetMinMaxLength<{
         minLength: 3;
       }>;
+    zip: Schema.Attribute.String;
   };
 }
 

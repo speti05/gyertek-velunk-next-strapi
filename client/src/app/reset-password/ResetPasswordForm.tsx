@@ -13,6 +13,7 @@ import {
   AUTH_NEW_PASSWORD_LABEL,
   AUTH_CONFIRM_PASSWORD_LABEL,
 } from "@/utils/texts";
+import { MAX_PASSWORD } from "@/components/custom-ui-components/custom-text-input/input-length-limits";
 
 const INITIAL_STATE = {
   zodErrors: null,
@@ -42,6 +43,7 @@ function ResetPasswordFormInner({ code }: { code: string }) {
         name="password"
         type="password"
         error={formState?.zodErrors?.password?.[0]}
+        slotProps={{ htmlInput: { maxLength: MAX_PASSWORD } }}
       />
       <CustomTextInput
         id="passwordConfirmation"
@@ -49,6 +51,7 @@ function ResetPasswordFormInner({ code }: { code: string }) {
         name="passwordConfirmation"
         type="password"
         error={formState?.zodErrors?.passwordConfirmation?.[0]}
+        slotProps={{ htmlInput: { maxLength: MAX_PASSWORD } }}
       />
       <CustomAlertMessage errorMessage={formState?.errorMessage} />
       <div className="auth-page__buttons">

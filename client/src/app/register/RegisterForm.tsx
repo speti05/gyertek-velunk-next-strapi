@@ -25,6 +25,7 @@ import {
   AUTH_TERMS_REQUIRED_ERROR,
 } from "@/utils/texts";
 import CustomIcon from "@/components/custom-ui-components/custom-icon/custom-icon";
+import { MAX_EMAIL, MAX_PASSWORD } from "@/components/custom-ui-components/custom-text-input/input-length-limits";
 import { CustomCheckbox } from "@/components/custom-ui-components/custom-checkbox/custom-checkbox";
 
 const INITIAL_STATE = {
@@ -107,6 +108,7 @@ function RegisterFormInner() {
           name="email"
           type="email"
           error={formState?.zodErrors?.email?.[0]}
+          slotProps={{ htmlInput: { maxLength: MAX_EMAIL } }}
         />
         <CustomTextInput
           id="password"
@@ -115,6 +117,7 @@ function RegisterFormInner() {
           type="password"
           error={formState?.zodErrors?.password?.[0]}
           onChange={(e) => setPassword((e.target as HTMLInputElement).value)}
+          slotProps={{ htmlInput: { maxLength: MAX_PASSWORD } }}
         />
         <PasswordStrengthHint password={password} />
         <CustomTextInput
@@ -123,6 +126,7 @@ function RegisterFormInner() {
           name="passwordConfirmation"
           type="password"
           error={formState?.zodErrors?.passwordConfirmation?.[0]}
+          slotProps={{ htmlInput: { maxLength: MAX_PASSWORD } }}
         />
         <CustomAlertMessage errorMessage={formState?.errorMessage} />
         <CustomCheckbox

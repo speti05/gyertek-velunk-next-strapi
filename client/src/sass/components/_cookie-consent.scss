@@ -15,7 +15,7 @@
   max-width: calc(100vw - 3.2rem);
   background-color: colors.$gy-v-light-beige;
   border-radius: 1rem;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+  box-shadow: colors.$box-shadow;
   padding: 2.4rem;
 
   @include mixins.respond(phone) {

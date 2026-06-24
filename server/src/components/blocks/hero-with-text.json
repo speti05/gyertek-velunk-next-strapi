@@ -10,25 +10,13 @@
     "headline": {
       "type": "string"
     },
-    "image": {
+    "images": {
       "type": "media",
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
+        "images"
       ]
-    },
-    "theme": {
-      "type": "enumeration",
-      "enum": [
-        "turquoise",
-        "brown"
-      ],
-      "required": true,
-      "default": "turquoise"
     },
     "link": {
       "type": "component",

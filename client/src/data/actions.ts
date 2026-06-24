@@ -210,7 +210,6 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
     };
   }
 
-  // Get JWT from cookie
   const cookieStore = await cookies();
   const jwt = cookieStore.get("jwt")?.value;
   if (!jwt) {
@@ -222,7 +221,6 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
     };
   }
 
-  // Get user profile
   const userProfile = await getUserProfileService(jwt);
   if (!userProfile) {
     return {
@@ -233,7 +231,16 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
     };
   }
 
-  if (!userProfile.firstName || !userProfile.lastName || !userProfile.phone) {
+  if (
+    !userProfile.firstName ||
+    !userProfile.lastName ||
+    !userProfile.phone ||
+    !userProfile.country ||
+    !userProfile.city ||
+    !userProfile.zip ||
+    !userProfile.street ||
+    !userProfile.houseNumber
+  ) {
     return {
       ...prevState,
       zodErrors: null,
@@ -242,11 +249,52 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
     };
   }
 
+  const signupDataRaw = formData.get("signupData") as string | null;
+  if (!signupDataRaw) {
+    return {
+      ...prevState,
+      zodErrors: null,
+      strapiErrors: null,
+      errorMessage: MESSAGES.someThingWentWrong,
+    };
+  }
+
+  let signupData: any;
+  try {
+    signupData = JSON.parse(signupDataRaw);
+  } catch {
+    return {
+      ...prevState,
+      zodErrors: null,
+      strapiErrors: null,
+      errorMessage: MESSAGES.someThingWentWrong,
+    };
+  }
+
   const responseData = await eventsSubscribeService(jwt, {
     firstName: userProfile.firstName,
     lastName: userProfile.lastName,
     email: userProfile.email,
     telephone: userProfile.phone,
+    billingCountry: userProfile.country,
+    billingCity: userProfile.city,
+    billingZip: userProfile.zip,
+    billingStreet: userProfile.street,
+    billingHouseNumber: userProfile.houseNumber,
+    wantInvoice: signupData.wantInvoice ?? false,
+    companyName: signupData.companyName ?? "",
+    taxNumber: signupData.taxNumber ?? "",
+    birthCountry: signupData.birthCountry ?? "Magyarország",
+    birthPlace: signupData.birthPlace ?? "",
+    birthDate: signupData.birthDate ?? "",
+    documentType: signupData.documentType ?? "",
+    documentNumber: signupData.documentNumber ?? "",
+    documentIssueDate: signupData.documentIssueDate ?? "",
+    documentExpiryDate: signupData.documentExpiryDate ?? "",
+    allergies: signupData.allergies ?? "",
+    fbLink: signupData.fbLink ?? "",
+    companions: signupData.companions ?? [],
+    notes: signupData.notes ?? "",
     event: { connect: [eventId] },
   });
 
