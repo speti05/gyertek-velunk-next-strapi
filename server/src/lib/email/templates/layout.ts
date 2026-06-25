@@ -22,11 +22,11 @@ export const emailHeader = (subject: SystemEmailSubject | string) => `
   </tr>
 `;
 
-export const emailFooter = (siteUrl: string | undefined, year: number) => `
+export const emailFooter = (siteUrl: string | undefined, year: number, organizationName?: string) => `
   <tr>
     <td bgcolor="#70634C" style="padding:28px 40px;text-align:center;">
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#F1E8D9;font-size:14px;margin:0 0 6px;line-height:1.6;">
-        &copy; ${year} Gyertek velünk &mdash; Minden jog fenntartva.
+        &copy; ${year} ${organizationName} &mdash; Minden jog fenntartva.
       </p>
       ${siteUrl ? `<a href="${siteUrl}" style="font-family:'Source Sans 3',Arial,sans-serif;color:#B0DFD8;font-size:14px;text-decoration:none;">${siteUrl}</a>` : ""}
     </td>
@@ -36,7 +36,8 @@ export const emailFooter = (siteUrl: string | undefined, year: number) => `
 export const emailWrapper = (
   siteUrl: string | undefined,
   content: string,
-  subject: SystemEmailSubject | string
+  subject: SystemEmailSubject | string,
+  organizationName?: string
 ) => {
   const year = new Date().getFullYear();
   return `<!DOCTYPE html>
@@ -55,7 +56,7 @@ export const emailWrapper = (
         <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.12);">
           ${emailHeader(subject)}
           ${content}
-          ${emailFooter(siteUrl, year)}
+          ${emailFooter(siteUrl, year, organizationName)}
         </table>
       </td>
     </tr>

@@ -685,6 +685,34 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiSiteSettingSiteSetting extends Struct.SingleTypeSchema {
+  collectionName: "site_setting";
+  info: {
+    description: "Glob\u00E1lis be\u00E1ll\u00EDt\u00E1sok: banksz\u00E1mlasz\u00E1m, szervezet neve, kapcsolati adatok";
+    displayName: "Site Settings";
+    pluralName: "site-settings";
+    singularName: "site-setting";
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    bankAccountNumber: Schema.Attribute.String;
+    bankBeneficiaryName: Schema.Attribute.String;
+    contactEmail: Schema.Attribute.Email;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+    defaultCurrency: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<"oneToMany", "api::site-setting.site-setting"> &
+      Schema.Attribute.Private;
+    organizationName: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+  };
+}
+
 export interface PluginContentReleasesRelease extends Struct.CollectionTypeSchema {
   collectionName: "strapi_releases";
   info: {
@@ -1128,6 +1156,7 @@ declare module "@strapi/strapi" {
       "api::newsletter-signup.newsletter-signup": ApiNewsletterSignupNewsletterSignup;
       "api::newsletter.newsletter": ApiNewsletterNewsletter;
       "api::page.page": ApiPagePage;
+      "api::site-setting.site-setting": ApiSiteSettingSiteSetting;
       "plugin::content-releases.release": PluginContentReleasesRelease;
       "plugin::content-releases.release-action": PluginContentReleasesReleaseAction;
       "plugin::i18n.locale": PluginI18NLocale;

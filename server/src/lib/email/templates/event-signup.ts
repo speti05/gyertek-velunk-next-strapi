@@ -4,7 +4,11 @@ export const userEmailContent = (
   eventName: string,
   price?: string,
   totalTravelers?: number,
-  currency?: string
+  currency?: string,
+  bankAccountNumber?: string,
+  bankBeneficiaryName?: string,
+  contactEmail?: string,
+  organizationName?: string
 ) => {
   const numericPrice = price ? parseFloat(price.replace(/[^0-9.]/g, "")) : 0;
   const travelers = totalTravelers ?? 1;
@@ -69,11 +73,11 @@ export const userEmailContent = (
               }
               <tr>
                 <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:14px;font-weight:600;padding:3px 12px 3px 0;white-space:nowrap;">Kedvezményezett:</td>
-                <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#333333;font-size:14px;padding:3px 0;">Gyertek velünk</td>
+                <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#333333;font-size:14px;padding:3px 0;">${bankBeneficiaryName}</td>
               </tr>
               <tr>
                 <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:14px;font-weight:600;padding:3px 12px 3px 0;white-space:nowrap;">Bankszámlaszám:</td>
-                <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#333333;font-size:14px;padding:3px 0;">1177334601362103</td>
+                <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#333333;font-size:14px;padding:3px 0;">${bankAccountNumber}</td>
               </tr>
               <tr>
                 <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:14px;font-weight:600;padding:3px 12px 3px 0;white-space:nowrap;">Közlemény:</td>
@@ -116,14 +120,14 @@ export const userEmailContent = (
       </table>
 
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0 0 20px;">
-        Ha bármi kérdésed van, nyugodtan írj nekünk az <a href="mailto:info@gyertekvelunk.eu" style="color:#377F76;text-decoration:none;">info@gyertekvelunk.eu</a> email címre.
+        Ha bármi kérdésed van, nyugodtan írj nekünk az <a href="mailto:${contactEmail}" style="color:#377F76;text-decoration:none;">${contactEmail}</a> email címre.
       </p>
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0 0 8px;">
         Hamarosan találkozunk! ⛰️
       </p>
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0;">
         Üdvözlettel,<br>
-        <strong>A Gyertek Velünk csapata</strong>
+        <strong>A ${organizationName} csapata</strong>
       </p>
 
     </td>

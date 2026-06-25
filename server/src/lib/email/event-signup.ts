@@ -2,8 +2,7 @@ import path from "path";
 import { getTransporter } from "./mailer";
 import { emailWrapper, SystemEmailSubject } from "./templates/layout";
 import { userEmailContent, adminEmailContent } from "./templates/event-signup";
-
-const CURRENCY = "Ft";
+import { getSiteSettings } from "./get-site-settings";
 
 const headerAttachment = {
   filename: "email-fejlec-600.jpg",
@@ -63,21 +62,28 @@ export const sendSignupEmails = async (signupData: {
     allergies, fbLink, companions, notes, eventPrice,
   } = signupData;
   const siteUrl = process.env.SITE_URL;
+  const settings = await getSiteSettings();
+  const { organizationName, contactEmail, bankAccountNumber, bankBeneficiaryName, defaultCurrency } = settings;
 
   console.info(
     `Sending event signup emails for ${userEmail} (${firstName} ${lastName}) for event ${eventName}`
   );
 
   await t.sendMail({
-    from: `"Gyertek velünk" <${process.env.SMTP_USER}>`,
+    from: `"${organizationName}" <${process.env.SMTP_USER}>`,
     to: userEmail,
     subject: `Sikeres túrajelentkezés – ${eventName}`,
-    html: emailWrapper(siteUrl, userEmailContent(firstName, lastName, eventName, eventPrice, 1 + (companions?.length ?? 0), CURRENCY), SystemEmailSubject.EventSignup),
+    html: emailWrapper(
+      siteUrl,
+      userEmailContent(firstName, lastName, eventName, eventPrice, 1 + (companions?.length ?? 0), defaultCurrency, bankAccountNumber, bankBeneficiaryName, contactEmail, organizationName),
+      SystemEmailSubject.EventSignup,
+      organizationName
+    ),
     attachments: [headerAttachment],
   });
 
   await t.sendMail({
-    from: `"Gyertek velünk Túrajelentkezés" <${process.env.SMTP_USER}>`,
+    from: `"${organizationName} Túrajelentkezés" <${process.env.SMTP_USER}>`,
     to: process.env.ADMIN_EMAIL,
     subject: `Túrajelentkezés: ${eventName}`,
     html: emailWrapper(
@@ -90,7 +96,8 @@ export const sendSignupEmails = async (signupData: {
         documentType, documentNumber, documentIssueDate, documentExpiryDate,
         allergies, fbLink, companions, notes,
       }),
-      SystemEmailSubject.EventSignupAdmin
+      SystemEmailSubject.EventSignupAdmin,
+      organizationName
     ),
     attachments: [headerAttachment],
   });

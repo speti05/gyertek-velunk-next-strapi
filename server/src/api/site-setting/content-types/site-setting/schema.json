@@ -1,0 +1,31 @@
+{
+  "kind": "singleType",
+  "collectionName": "site_setting",
+  "info": {
+    "singularName": "site-setting",
+    "pluralName": "site-settings",
+    "displayName": "Site Settings",
+    "description": "Globális beállítások: bankszámlaszám, szervezet neve, kapcsolati adatok"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "organizationName": {
+      "type": "string"
+    },
+    "contactEmail": {
+      "type": "email"
+    },
+    "bankAccountNumber": {
+      "type": "string"
+    },
+    "bankBeneficiaryName": {
+      "type": "string"
+    },
+    "defaultCurrency": {
+      "type": "string"
+    }
+  }
+}

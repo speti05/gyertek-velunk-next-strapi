@@ -1,7 +1,8 @@
 export const newsletterEmailWrapper = (
   subject: string,
   content: string,
-  unsubscribeUrl: string
+  unsubscribeUrl: string,
+  organizationName?: string
 ) => {
   const year = new Date().getFullYear();
   const siteUrl = process.env.SITE_URL;
@@ -37,7 +38,7 @@ export const newsletterEmailWrapper = (
           <tr>
             <td bgcolor="#70634C" style="padding:28px 40px;text-align:center;">
               <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#F1E8D9;font-size:14px;margin:0 0 6px;line-height:1.6;">
-                &copy; ${year} Gyertek velünk &mdash; Minden jog fenntartva.
+                &copy; ${year} ${organizationName} &mdash; Minden jog fenntartva.
               </p>
               ${siteUrl ? `<a href="${siteUrl}" style="font-family:'Source Sans 3',Arial,sans-serif;color:#B0DFD8;font-size:14px;text-decoration:none;">${siteUrl}</a>` : ""}
               <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#c9bba8;font-size:12px;margin:16px 0 0;line-height:1.6;">
