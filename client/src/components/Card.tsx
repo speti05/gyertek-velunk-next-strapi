@@ -3,7 +3,7 @@ import { ImageProps } from "@/types";
 import CustomLink from "./custom-ui-components/custom-link/custom-link";
 import { StrapiImage } from "./StrapiImage";
 import { formatDate } from "@/utils/format-date";
-import { CARD_PRICE_LABEL, CURRENCY } from "@/utils/texts";
+import { CARD_PERSON, CURRENCY } from "@/utils/texts";
 import { TourDifficultyBadge } from "./TourDifficultyBadge";
 
 export interface CardProps {
@@ -53,9 +53,9 @@ export function Card({
         <div className="content-items__card-text__card-meta">
           {price && (
             <p>
-              <span>{CARD_PRICE_LABEL}: </span>
               {price}
               <span> {CURRENCY}</span>
+              <span> / {CARD_PERSON} </span>
             </p>
           )}
           {(startDate ?? createdAt) && <p>{formatDate(startDate ?? createdAt)}</p>}

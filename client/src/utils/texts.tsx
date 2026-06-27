@@ -35,7 +35,7 @@ export const ERROR_LABEL = "Hiba történt. Próbáld újra később.";
 export const NOT_FOUND_LABEL = "Sajnáljuk, ez az oldal jól elvándorolt.";
 export const TRY_AGAIN_LABEL = "Próbáld újra";
 
-export const CARD_PRICE_LABEL = "Ár";
+export const CARD_PERSON = "Fő";
 export const CURRENCY = "Ft";
 export const DIFFICULTY_LABEL = "Nehézség";
 
@@ -175,7 +175,8 @@ export const SIGNUP_PROFILE_INCOMPLETE = "A jelentkezéshez kérjük, töltsd ki
 export const SIGNUP_PROFILE_LINK = "alapadataidat és lakcímedet a profilodon";
 export const SIGNUP_ALREADY_SIGNED_UP = "Már jelentkeztél erre a túrára.";
 export const SIGNUP_SUCCESS_TITLE = (eventTitle: string) => `Sikeres jelentkezés: ${eventTitle}`;
-export const SIGNUP_SUCCESS_CONTENT = "Köszönjük hogy regisztráltál a túránkra! Hamarosan jelentkezünk!";
+export const SIGNUP_SUCCESS_CONTENT =
+  "Köszönjük hogy regisztráltál a túránkra! Hamarosan jelentkezünk!";
 export const SIGNUP_SUCCESS_EMAIL_INFO = "Emailben értesítünk a következő lépésekről";
 export const SIGNUP_SUCCESS_PROFILE_INFO = "A jelentkezésed részletei a profilodban megtalálhatók";
 export const SIGNUP_SUCCESS_OK_LABEL = "Rendben";
