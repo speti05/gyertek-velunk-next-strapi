@@ -29,6 +29,7 @@ import CustomLink from "@/components/custom-ui-components/custom-link/custom-lin
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 import { CustomDialog } from "@/components/custom-ui-components/custom-dialog/custom-dialog";
 import { TourSignupDialog, SignupFormData } from "@/components/TourSignupDialog";
+import { TourDifficultyBadge } from "@/components/TourDifficultyBadge";
 
 const INITIAL_STATE = {
   zodErrors: null,
@@ -45,6 +46,7 @@ type EventSignupFormProps = {
   startDate?: string;
   endDate?: string;
   price?: string;
+  difficulty?: number;
   image?: {
     url: string;
     alt: string;
@@ -61,6 +63,7 @@ function EventSignupFormInner({
   startDate,
   endDate,
   price,
+  difficulty,
   image,
   userProfile = null,
   alreadySignedUp = false,
@@ -159,14 +162,20 @@ function EventSignupFormInner({
             <span>{FORM_LABELS.startDate}:</span> {formatDate(startDate)}
           </p>
         )}
+        {endDate && (
+          <p className="signup-form__date">
+            <span>{FORM_LABELS.endDate}:</span> {formatDate(endDate)}
+          </p>
+        )}
         {price && (
           <p className="signup-form__price">
             <span>
-              {FORM_LABELS.price}:{price}
+              {FORM_LABELS.price}: {price}
             </span>
             <span>{CURRENCY}</span>
           </p>
         )}
+        {difficulty && <TourDifficultyBadge difficulty={difficulty} />}
       </div>
 
       <div className="signup-form__form">
@@ -215,12 +224,7 @@ function EventSignupFormInner({
       >
         <p style={{ textAlign: "center", marginBottom: "16px" }}>{SIGNUP_SUCCESS_CONTENT}</p>
         <div style={{ display: "flex", justifyContent: "center", marginBottom: "16px" }}>
-          <Image
-            src="/GYERTEK V_kor.png"
-            alt="Gyertek Velünk"
-            width={120}
-            height={120}
-          />
+          <Image src="/GYERTEK V_kor.png" alt="Gyertek Velünk" width={120} height={120} />
         </div>
         <CustomAlertMessage infoMessage={SIGNUP_SUCCESS_EMAIL_INFO} />
         <CustomAlertMessage infoMessage={SIGNUP_SUCCESS_PROFILE_INFO} />

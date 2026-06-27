@@ -56,6 +56,7 @@ export interface EventProps extends BaseBlogProps {
   startDate: string;
   endDate: string;
   stayInTouchEventId?: string;
+  difficulty?: number;
 }
 
 export interface EventSignupBlockProps extends Base<"blocks.event-signup-form"> {

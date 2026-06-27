@@ -514,6 +514,14 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
     description: Schema.Attribute.Text;
+    difficulty: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 10;
+          min: 1;
+        },
+        number
+      >;
     endDate: Schema.Attribute.Date;
     eventSignups: Schema.Attribute.Relation<"oneToMany", "api::event-signup.event-signup">;
     featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;

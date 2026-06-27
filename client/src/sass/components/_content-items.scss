@@ -67,13 +67,26 @@
     border-radius: 0 0 3.5rem 3.5rem;
     flex-grow: 1;
 
-    & h5 {
-      margin-bottom: 1rem;
-    }
-
     & p {
       margin-bottom: 1rem;
       font-size: 1.6rem;
+    }
+
+    &__card-meta {
+      p,
+      span {
+        font-weight: 700;
+        font-size: 1.6rem;
+        margin: 1rem 0;
+        text-align: center;
+      }
+    }
+
+    &__card-divider {
+      border: none;
+      border-top: 1px solid colors.$gy-v-dark-brown;
+      margin: 1rem 0;
+      opacity: 0.3;
     }
 
     &--event {
@@ -84,6 +97,31 @@
       & .bold {
         margin-top: auto;
       }
+    }
+  }
+
+  &__card-title {
+    align-self: center;
+    text-align: center;
+    height: 4.8rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    @media (min-width: 768px) {
+      height: 5.4rem;
+    }
+
+    @media (min-width: 1024px) {
+      height: 5.2rem;
+    }
+
+    & h5 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      word-break: break-word;
     }
   }
 }

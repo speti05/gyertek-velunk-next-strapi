@@ -31,13 +31,28 @@ interface SignupDetailsToggleProps {
   signup: EventSignupEntry;
 }
 
-function DetailRow({ label, value, href }: { label: string; value: string | null | undefined; href?: string }) {
+function DetailRow({
+  label,
+  value,
+  href,
+}: {
+  label: string;
+  value: string | null | undefined;
+  href?: string;
+}) {
   if (!value) return null;
   return (
     <div className="auth-page__signup-detail-row">
       <span className="auth-page__signup-detail-label">{label}:</span>
       {href ? (
-        <a href={href} target="_blank" rel="noopener noreferrer" className="auth-page__signup-detail-value">{value}</a>
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="auth-page__signup-detail-value"
+        >
+          {value}
+        </a>
       ) : (
         <span className="auth-page__signup-detail-value">{value}</span>
       )}
@@ -93,7 +108,11 @@ export function SignupDetailsToggle({ signup }: SignupDetailsToggleProps) {
               value={signup.documentExpiryDate ? formatDate(signup.documentExpiryDate) : null}
             />
             <DetailRow label={SIGNUP_TRAVEL_ALLERGIES} value={signup.allergies} />
-            <DetailRow label={SIGNUP_TRAVEL_FB_LINK} value={signup.fbLink} href={signup.fbLink ?? undefined} />
+            <DetailRow
+              label={SIGNUP_TRAVEL_FB_LINK}
+              value={signup.fbLink}
+              href={signup.fbLink ?? undefined}
+            />
           </div>
 
           {signup.companions && signup.companions.length > 0 && (
@@ -133,7 +152,11 @@ export function SignupDetailsToggle({ signup }: SignupDetailsToggleProps) {
                     }
                   />
                   <DetailRow label={SIGNUP_TRAVEL_ALLERGIES} value={companion.allergies} />
-                  <DetailRow label={SIGNUP_TRAVEL_FB_LINK} value={companion.fbLink} href={companion.fbLink ?? undefined} />
+                  <DetailRow
+                    label={SIGNUP_TRAVEL_FB_LINK}
+                    value={companion.fbLink}
+                    href={companion.fbLink ?? undefined}
+                  />
                 </div>
               ))}
             </div>
@@ -142,7 +165,7 @@ export function SignupDetailsToggle({ signup }: SignupDetailsToggleProps) {
           {signup.notes && (
             <div className="auth-page__signup-details-section">
               <h4 className="auth-page__signup-details-section-title">{SIGNUP_SUMMARY_NOTES}</h4>
-              <p className="auth-page__signup-detail-value">{signup.notes}</p>
+              <span className="auth-page__signup-detail-value">{signup.notes}</span>
             </div>
           )}
 

@@ -55,6 +55,11 @@
     },
     "endDate": {
       "type": "date"
+    },
+    "difficulty": {
+      "type": "integer",
+      "min": 1,
+      "max": 10
     }
   }
 }

@@ -37,6 +37,7 @@ export const TRY_AGAIN_LABEL = "Próbáld újra";
 
 export const CARD_PRICE_LABEL = "Ár";
 export const CURRENCY = "Ft";
+export const DIFFICULTY_LABEL = "Nehézség";
 
 export const FORM_LABELS = {
   firstName: "Keresztnév",
