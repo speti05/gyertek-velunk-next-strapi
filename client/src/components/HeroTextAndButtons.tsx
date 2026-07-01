@@ -22,7 +22,7 @@ export const HeroTextAndButtons = ({
     <>
       {headline && (
         <div className={`hero__headline  hero__headline--${theme}`}>
-          <h1>{headline}</h1>
+          <h2>{headline}</h2>
         </div>
       )}
       {welcomeText && (

@@ -7,6 +7,7 @@ import {
   FOOTER_FACEBOOK_ARIA,
   FOOTER_INSTAGRAM_ARIA,
   FOOTER_TIKTOK_ARIA,
+  LOGO_ALT_FALLBACK,
 } from "@/utils/texts";
 import { logoutAction } from "@/data/auth-actions";
 import { useAuth } from "@/context/auth-context";
@@ -129,12 +130,12 @@ export function Header({ data, socialLinks }: HeaderProps) {
         </nav>
         {activeSocialLinks.length > 0 && (
           <>
-            <CustomTooltip title={logo.image.alternativeText || "Gyertek velünk"} placement="top">
+            <CustomTooltip title={logo.image.alternativeText || LOGO_ALT_FALLBACK} placement="top">
               <span className="header__logo_wrapper">
                 <CustomLink href="/" className="navbar__logo-link" color="white" underline="none">
                   <StrapiImage
                     src={logo.image.url}
-                    alt={logo.image.alternativeText || "Gyertek velünk"}
+                    alt={logo.image.alternativeText || LOGO_ALT_FALLBACK}
                     className={`header__logo `}
                     width={256}
                     height={174}

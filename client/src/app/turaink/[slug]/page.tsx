@@ -9,6 +9,7 @@ import { EventCard } from "@/components/EventCard";
 import { cookies } from "next/headers";
 import { getUserProfileService } from "@/data/auth-service";
 import { getUserEventSignupsLoader } from "@/data/loaders";
+import { TOUR_SIGNUP_HEADLINE, FEATURED_EVENTS_LABEL } from "@/utils/texts";
 
 async function loader(slug: string) {
   const { data } = await getContentBySlug(slug, "/api/events");
@@ -39,7 +40,7 @@ export default async function SingleEventRoute({ params, searchParams }: ParamsP
   return (
     <>
       <div className="container">
-        <h2 className={`content-items__headline content-items--center`}>Túrajelentkezés</h2>
+        <h2 className={`content-items__headline content-items--center`}>{TOUR_SIGNUP_HEADLINE}</h2>
         <div className="event-page">
           <EventSignupForm
             blocks={blocks}
@@ -58,7 +59,7 @@ export default async function SingleEventRoute({ params, searchParams }: ParamsP
         <ContentList
           contentCollectionType="events"
           searchParams={await searchParams}
-          headline="Kiemelt túrák"
+          headline={FEATURED_EVENTS_LABEL}
           component={EventCard}
           featured={true}
         />

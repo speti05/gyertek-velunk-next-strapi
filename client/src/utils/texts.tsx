@@ -18,12 +18,15 @@ export const ARTICLES_LABEL = "Beszámolóink";
 export const ARTICLES_SEARCH_LABEL = "Keresés a beszámolók között";
 
 export const TOUR_CALENDAR_LABEL = "Túranaptár";
+export const TOUR_SIGNUP_HEADLINE = "Túrajelentkezés";
 
 // Metadata
 export const SITE_TITLE = "Gyertek Velünk";
 export const SITE_DESCRIPTION = "Túrák magyarországon és külföldön.";
+export const LOGO_ALT_FALLBACK = "Gyertek velünk";
 
 // General
+export const SEARCH_PLACEHOLDER = "Keresés";
 export const DIALOG_CONFIRM_LABEL = "OK";
 export const DIALOG_CANCEL_LABEL = "Mégse";
 export const DIALOG_PROCEED_LABEL = "Megerősít";
@@ -221,6 +224,7 @@ export const SIGNUP_BILLING_INFO = "Az alábbi adatok a profilodból vannak elő
 export const SIGNUP_BILLING_WANT_INVOICE = "Számlát kérek";
 export const SIGNUP_BILLING_COMPANY_NAME = "Cégnév";
 export const SIGNUP_BILLING_TAX_NUMBER = "Adószám";
+export const SIGNUP_BILLING_ADDRESS_LABEL = "Cím";
 
 // Travel step
 export const SIGNUP_TRAVEL_BIRTH_COUNTRY = "Születési ország";
@@ -239,6 +243,7 @@ export const SIGNUP_DOCUMENT_TYPE_ID_CARD = "Személyi igazolvány";
 export const SIGNUP_DOCUMENT_TYPE_STUDENT_CARD = "Diákigazolvány";
 
 // Companions step
+export const SIGNUP_BIRTH_COUNTRY_OTHER = "Egyéb";
 export const SIGNUP_COMPANION_ADD_BUTTON = "Túratárs hozzáadása";
 export const SIGNUP_COMPANION_INFO =
   'Ha mást is szeretnél túrára regisztrálni, kattints a "Túratárs hozzáadása" gombra.';
@@ -321,6 +326,24 @@ export const CONTACT_REQUEST_PHONE_OPTION = "Telefonon keress";
 export const CONTACT_REQUEST_EMAIL_OPTION = "Emailben keress";
 export const CONTACT_REQUEST_SUBMIT_LABEL = "Küldés";
 export const CONTACT_REQUEST_NEW_REQUEST_LABEL = "Küldök másikat";
+
+// Calendar
+export const CALENDAR_DAYS_OF_WEEK = ["Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"];
+export const CALENDAR_MONTH_NAMES = [
+  "Január",
+  "Február",
+  "Március",
+  "Április",
+  "Május",
+  "Június",
+  "Július",
+  "Augusztus",
+  "Szeptember",
+  "Október",
+  "November",
+  "December",
+];
+export const CALENDAR_TODAY_LABEL = "Ma";
 
 // Cookie consent - data values
 export const COOKIE_DOMAIN_SITE = "saját weboldal";

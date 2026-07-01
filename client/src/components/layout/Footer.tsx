@@ -1,5 +1,5 @@
 import type { LinkProps, LogoProps, SocialLinksProps } from "@/types";
-import { FOOTER_FACEBOOK_ARIA, FOOTER_INSTAGRAM_ARIA, FOOTER_TIKTOK_ARIA } from "@/utils/texts";
+import { FOOTER_FACEBOOK_ARIA, FOOTER_INSTAGRAM_ARIA, FOOTER_TIKTOK_ARIA, LOGO_ALT_FALLBACK } from "@/utils/texts";
 import CustomLink from "../custom-ui-components/custom-link/custom-link";
 import { StrapiImage } from "../StrapiImage";
 import CustomIcon, { type IconName } from "../custom-ui-components/custom-icon/custom-icon";
@@ -40,11 +40,11 @@ export function Footer({ data }: FooterProps) {
   return (
     <footer className="footer">
       <span className="footer__logo-wrapper">
-        <CustomTooltip title={logo.image.alternativeText || "Gyertek velünk"} placement="top">
+        <CustomTooltip title={logo.image.alternativeText || LOGO_ALT_FALLBACK} placement="top">
           <CustomLink href="/" className="navbar__logo-link" color="white" underline="none">
             <StrapiImage
               src={logo.image.url}
-              alt={logo.image.alternativeText || "Gyertek velünk"}
+              alt={logo.image.alternativeText || LOGO_ALT_FALLBACK}
               width={100}
               height={100}
               className="footer__logo"

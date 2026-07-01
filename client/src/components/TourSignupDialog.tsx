@@ -63,6 +63,8 @@ import {
   SIGNUP_ABORT_CONFIRM_CANCEL,
   SIGNUP_ABORT_CONFIRM_PROCEED,
   SIGNUP_VALIDATION,
+  SIGNUP_BIRTH_COUNTRY_OTHER,
+  SIGNUP_BILLING_ADDRESS_LABEL,
 } from "@/utils/texts";
 import Typography from "@mui/material/Typography";
 import { colors } from "@/sass/mui-override/colors";
@@ -88,7 +90,7 @@ function formatTaxNumberDisplay(digits: string): string {
   return `${digits.slice(0, 8)}-${digits.slice(8, 9)}-${digits.slice(9, TAX_NUMBER_DIGITS)}`;
 }
 
-const BIRTH_COUNTRY_OTHER = "Egyéb";
+const BIRTH_COUNTRY_OTHER = SIGNUP_BIRTH_COUNTRY_OTHER;
 const BIRTH_COUNTRY_OPTIONS = [
   { value: BIRTH_COUNTRY_OTHER, name: BIRTH_COUNTRY_OTHER },
   ...EUROPEAN_COUNTRIES,
@@ -501,7 +503,7 @@ export function TourSignupDialog({
             </div>
             <CustomTextInput label={FORM_LABELS.phone} value={userProfile.phone ?? ""} disabled />
             <Typography variant="body1" sx={{ fontWeight: 600, mt: 1 }}>
-              Cím
+              {SIGNUP_BILLING_ADDRESS_LABEL}
             </Typography>
             <CustomSelect
               id="billing-country"

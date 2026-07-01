@@ -7,23 +7,11 @@ import { ArrowRightCircle } from "@deemlol/next-icons";
 import { CalendarEvent } from "./CalendarTypes";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 import { CustomSelect } from "@/components/custom-ui-components/custom-select/custom-select";
+import { CALENDAR_DAYS_OF_WEEK, CALENDAR_MONTH_NAMES, CALENDAR_TODAY_LABEL } from "@/utils/texts";
 
-const daysOfWeek = ["Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"];
-const monthNames = [
-  "Január",
-  "Február",
-  "Március",
-  "Április",
-  "Május",
-  "Június",
-  "Július",
-  "Augusztus",
-  "Szeptember",
-  "Október",
-  "November",
-  "December",
-];
-const todayText = "Ma";
+const daysOfWeek = CALENDAR_DAYS_OF_WEEK;
+const monthNames = CALENDAR_MONTH_NAMES;
+const todayText = CALENDAR_TODAY_LABEL;
 
 interface ContinuousCalendarProps {
   clickHandler: (calendarEvent: CalendarEvent | undefined) => void;

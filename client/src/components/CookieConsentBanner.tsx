@@ -34,6 +34,7 @@ import {
   COOKIE_EXPIRY_6_MONTHS,
   COOKIE_EXPIRY_1_YEAR,
   COOKIE_EXPIRY_2_YEARS,
+  COOKIE_PREFS_CLOSE,
 } from "@/utils/texts";
 
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
@@ -181,7 +182,7 @@ export function CookieConsentBanner() {
   );
 
   const closeButton = (
-    <CustomIconButton onClick={() => closePreferences()} size="large" aria-label="Bezárás">
+    <CustomIconButton onClick={() => closePreferences()} size="large" aria-label={COOKIE_PREFS_CLOSE}>
       <CustomIcon name="close" fontSize="large" />
     </CustomIconButton>
   );

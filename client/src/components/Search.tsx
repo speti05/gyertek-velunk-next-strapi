@@ -3,6 +3,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
 import { ContentCollectionType } from "@/types";
+import { SEARCH_PLACEHOLDER } from "@/utils/texts";
 
 interface SearchProps {
   placeHolder?: string;
@@ -14,8 +15,6 @@ export function Search({ placeHolder, contentCollectionType }: Readonly<SearchPr
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
-  const SEARCH_PLACEHOLDER = "Keresés";
-
   // Create a debounced search handler that only triggers 300ms after the user stops typing
   const handleSearch = useDebouncedCallback((term: string) => {
     // Create a new URLSearchParams instance with current params
