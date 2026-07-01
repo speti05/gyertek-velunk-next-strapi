@@ -98,7 +98,7 @@ export default async function RootLayout({
           >
             <AuthProvider isLoggedIn={isLoggedIn} userEmail={userEmail}>
               <RecaptchaProvider>
-                <Header data={header} />
+                <Header data={header} socialLinks={footer} />
                 {children}
                 <Footer data={footer} />
                 <CookieConsentInit />

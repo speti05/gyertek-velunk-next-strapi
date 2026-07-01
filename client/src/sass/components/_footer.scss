@@ -11,7 +11,20 @@ $font-color-hovered: colors.$gy-v-light-brown;
   color: $font-color;
   padding: 6rem 4.8rem 4.5rem;
 
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("/tree_texture.jpg");
+    background-repeat: repeat;
+    background-size: 1500px auto;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
   &__social_nav {
+    position: relative;
+    z-index: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,6 +36,8 @@ $font-color-hovered: colors.$gy-v-light-brown;
   }
 
   &__nav {
+    position: relative;
+    z-index: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -30,6 +45,7 @@ $font-color-hovered: colors.$gy-v-light-brown;
   }
 
   &__logo-wrapper {
+    z-index: 1;
     position: absolute;
     top: calc($logo-size / -2);
     left: 50%;
@@ -40,6 +56,8 @@ $font-color-hovered: colors.$gy-v-light-brown;
   }
 
   &__logo {
+    z-index: 999;
+    position: relative;
     width: 100%;
     height: auto;
   }
@@ -77,6 +95,8 @@ $font-color-hovered: colors.$gy-v-light-brown;
   }
 
   &__policies {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;

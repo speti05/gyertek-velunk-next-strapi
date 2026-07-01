@@ -60,6 +60,7 @@ export const theme = createTheme({
           fontOpticalSizing: "auto",
           fontWeight: 300,
           fontStyle: "normal",
+          textAlign: "center",
         },
         // Primary
         containedPrimary: {

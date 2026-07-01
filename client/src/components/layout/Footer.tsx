@@ -39,8 +39,8 @@ export function Footer({ data }: FooterProps) {
 
   return (
     <footer className="footer">
-      <CustomTooltip title={logo.image.alternativeText || "Gyertek velünk"} placement="top">
-        <span className="footer__logo-wrapper">
+      <span className="footer__logo-wrapper">
+        <CustomTooltip title={logo.image.alternativeText || "Gyertek velünk"} placement="top">
           <CustomLink href="/" className="navbar__logo-link" color="white" underline="none">
             <StrapiImage
               src={logo.image.url}
@@ -50,8 +50,8 @@ export function Footer({ data }: FooterProps) {
               className="footer__logo"
             />
           </CustomLink>
-        </span>
-      </CustomTooltip>
+        </CustomTooltip>
+      </span>
       <nav className="footer__social_nav">
         {activeSocialLinks.length > 0 && (
           <ul className="footer__social no-list-style">

@@ -4,6 +4,12 @@ $font-color: colors.$gy-v-white;
 $font-color-hovered: colors.$gy-v-light-brown;
 $header-background-color: colors.$gy-v-dark-green;
 
+:root {
+  --navbar-height: 100px;
+  --social-bar-height: 4.6rem;
+  --header-height: calc(var(--navbar-height) + var(--social-bar-height));
+}
+
 li {
   list-style: none;
 }
@@ -11,22 +17,13 @@ li {
   width: 100%;
   height: 100px;
   display: flex;
+  flex-flow: row-reverse;
   align-items: center;
   justify-content: space-between;
   padding: 0 5%;
   font-size: 3rem;
   color: $font-color;
   background-color: $header-background-color;
-
-  &__logo-link {
-    margin-bottom: -65px !important;
-  }
-
-  img.header__logo {
-    height: auto;
-    max-width: 20rem;
-    filter: drop-shadow(10px 10px 10px #222);
-  }
 }
 .nav-menu {
   display: flex;
@@ -93,7 +90,62 @@ li {
     color: $font-color-hovered;
   }
 }
-@media (max-width: 760px) {
+.header__social-bar {
+  position: relative;
+  background-color: colors.$gy-v-dark-brown;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0.8rem 5% 0 calc(5% + 22rem);
+  overflow: hidden;
+  height: var(--social-bar-height);
+  flex-flow: row-reverse;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("/tree_texture.jpg");
+    background-repeat: repeat;
+    background-size: 600px auto;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+}
+
+.header__social {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+
+  li {
+    width: 4rem;
+  }
+}
+
+.header__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  color: colors.$gy-v-white;
+}
+
+.header__logo_wrapper {
+  z-index: 998;
+  position: absolute;
+  top: 1.6rem;
+
+  a.navbar__logo-link {
+    img.header__logo {
+      position: relative;
+      filter: drop-shadow(10px 10px 10px #222);
+    }
+  }
+}
+
+@media (max-width: 860px) {
   .bar {
     display: block;
     background-color: $font-color;
