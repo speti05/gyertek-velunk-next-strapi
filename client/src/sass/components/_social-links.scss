@@ -1,0 +1,46 @@
+@use "../base/colors";
+
+$size: 1.5rem;
+$width: 4rem;
+
+.social-links {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  font-size: $size;
+
+  &__list {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+
+    li {
+      width: $width;
+      font-size: $size;
+    }
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $size;
+    height: $size;
+    color: colors.$gy-v-white;
+  }
+
+  &--footer {
+    justify-content: center;
+    margin: 2rem 0 3.5rem 0;
+  }
+
+  &--header {
+    justify-content: flex-start;
+    padding-left: 200px;
+    padding-right: 3rem;
+    overflow: hidden;
+    height: var(--social-bar-height);
+    flex-flow: row-reverse;
+  }
+}

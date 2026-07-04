@@ -29,3 +29,11 @@ $breakpoint argument choices:
     } // 1800px
   }
 }
+
+// Outline + shadow for light headline text placed over busy background images
+@mixin headline-text-outline {
+  -webkit-text-stroke: 1.5px rgba(10, 31, 28, 0.7);
+  text-shadow:
+    0 2px 16px rgba(0, 0, 0, 0.55),
+    0 0 4px rgba(0, 0, 0, 0.4);
+}

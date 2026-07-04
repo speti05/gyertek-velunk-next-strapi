@@ -4,19 +4,16 @@ import {
   AUTH_LOGIN_LABEL,
   AUTH_LOGOUT_LABEL,
   AUTH_PROFILE_NAV_LABEL,
-  FOOTER_FACEBOOK_ARIA,
-  FOOTER_INSTAGRAM_ARIA,
-  FOOTER_TIKTOK_ARIA,
-  FOOTER_YOUTUBE_ARIA,
   LOGO_ALT_FALLBACK,
 } from "@/utils/texts";
 import { logoutAction } from "@/data/auth-actions";
 import { useAuth } from "@/context/auth-context";
-import CustomIcon, { type IconName } from "../custom-ui-components/custom-icon/custom-icon";
+import CustomIcon from "../custom-ui-components/custom-icon/custom-icon";
 import CustomTooltip from "../custom-ui-components/custom-tooltip/custom-tooltip";
 import CustomLink from "../custom-ui-components/custom-link/custom-link";
 import { useState } from "react";
 import { StrapiImage } from "../StrapiImage";
+import { SocialLinks } from "./SocialLinks";
 
 interface HeaderProps {
   data: {
@@ -27,17 +24,6 @@ interface HeaderProps {
   socialLinks?: SocialLinksProps;
 }
 
-const SOCIAL_LINKS: {
-  key: "facebook" | "instagram" | "tiktok" | "youtube";
-  ariaLabel: string;
-  iconName: IconName;
-}[] = [
-  { key: "facebook", ariaLabel: FOOTER_FACEBOOK_ARIA, iconName: "facebook" },
-  { key: "instagram", ariaLabel: FOOTER_INSTAGRAM_ARIA, iconName: "instagram" },
-  { key: "tiktok", ariaLabel: FOOTER_TIKTOK_ARIA, iconName: "tiktok" },
-  { key: "youtube", ariaLabel: FOOTER_YOUTUBE_ARIA, iconName: "youtube" },
-];
-
 export function Header({ data, socialLinks }: HeaderProps) {
   const [isActive, setIsActive] = useState(false);
   const { isLoggedIn, userEmail } = useAuth();
@@ -46,46 +32,11 @@ export function Header({ data, socialLinks }: HeaderProps) {
   const { logo, navigation } = data;
   const displayName = userEmail ? userEmail.split("@")[0] : "";
 
-  const urlMap = {
-    facebook: socialLinks?.facebookUrl,
-    instagram: socialLinks?.instagramUrl,
-    tiktok: socialLinks?.tiktokUrl,
-    youtube: socialLinks?.youtubeUrl,
-  };
-  const activeSocialLinks = SOCIAL_LINKS.filter(({ key }) => urlMap[key]);
-
   return (
     <>
       <header>
         <nav className="navbar">
-          {activeSocialLinks.length > 0 && (
-            <>
-              <div className="header__social-bar">
-                <ul className="header__social no-list-style">
-                  {activeSocialLinks.map(({ key, ariaLabel, iconName }) => (
-                    <li key={key}>
-                      <CustomTooltip title={key} placement="bottom">
-                        <span>
-                          <CustomLink
-                            href={urlMap[key]!}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={ariaLabel}
-                            className="header__social-link"
-                            color="white"
-                            underline="none"
-                            isHoverScaled
-                          >
-                            <CustomIcon name={iconName} size="3x" />
-                          </CustomLink>
-                        </span>
-                      </CustomTooltip>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </>
-          )}
+          <SocialLinks socialLinks={socialLinks} as="div" variant="header" tooltipPlacement="bottom" />
           <ul className={`nav-menu ${isActive ? "active" : ""} no-list-style`}>
             {navigation.map((item) => (
               <li key={item.id}>

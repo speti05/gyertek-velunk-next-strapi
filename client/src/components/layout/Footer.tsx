@@ -1,15 +1,9 @@
 import type { LinkProps, LogoProps, SocialLinksProps } from "@/types";
-import {
-  FOOTER_FACEBOOK_ARIA,
-  FOOTER_INSTAGRAM_ARIA,
-  FOOTER_TIKTOK_ARIA,
-  FOOTER_YOUTUBE_ARIA,
-  LOGO_ALT_FALLBACK,
-} from "@/utils/texts";
+import { LOGO_ALT_FALLBACK } from "@/utils/texts";
 import CustomLink from "../custom-ui-components/custom-link/custom-link";
 import { StrapiImage } from "../StrapiImage";
-import CustomIcon, { type IconName } from "../custom-ui-components/custom-icon/custom-icon";
 import CustomTooltip from "../custom-ui-components/custom-tooltip/custom-tooltip";
+import { SocialLinks } from "./SocialLinks";
 
 interface FooterProps {
   data: {
@@ -20,30 +14,10 @@ interface FooterProps {
   } & SocialLinksProps;
 }
 
-const SOCIAL_LINKS: {
-  key: "facebook" | "instagram" | "tiktok" | "youtube";
-  ariaLabel: string;
-  iconName: IconName;
-}[] = [
-  { key: "facebook", ariaLabel: FOOTER_FACEBOOK_ARIA, iconName: "facebook" },
-  { key: "instagram", ariaLabel: FOOTER_INSTAGRAM_ARIA, iconName: "instagram" },
-  { key: "tiktok", ariaLabel: FOOTER_TIKTOK_ARIA, iconName: "tiktok" },
-  { key: "youtube", ariaLabel: FOOTER_YOUTUBE_ARIA, iconName: "youtube" },
-];
-
-const socialUrlMap = (data: SocialLinksProps) => ({
-  facebook: data.facebookUrl,
-  instagram: data.instagramUrl,
-  tiktok: data.tiktokUrl,
-  youtube: data.youtubeUrl,
-});
-
 export function Footer({ data }: FooterProps) {
   if (!data) return null;
 
   const { logo, navigation, policies, copy } = data;
-  const urlMap = socialUrlMap(data);
-  const activeSocialLinks = SOCIAL_LINKS.filter(({ key }) => urlMap[key]);
 
   return (
     <footer className="footer">
@@ -60,32 +34,7 @@ export function Footer({ data }: FooterProps) {
           </CustomLink>
         </CustomTooltip>
       </span>
-      <nav className="footer__social_nav">
-        {activeSocialLinks.length > 0 && (
-          <ul className="footer__social no-list-style">
-            {activeSocialLinks.map(({ key, ariaLabel, iconName }) => (
-              <li key={key}>
-                <CustomTooltip title={key} placement="top">
-                  <span>
-                    <CustomLink
-                      href={urlMap[key]!}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={ariaLabel}
-                      className="footer__social-link"
-                      color="white"
-                      underline="none"
-                      isHoverScaled
-                    >
-                      <CustomIcon name={iconName} size="2x" />
-                    </CustomLink>
-                  </span>
-                </CustomTooltip>
-              </li>
-            ))}
-          </ul>
-        )}
-      </nav>
+      <SocialLinks socialLinks={data} as="nav" variant="footer" tooltipPlacement="top" />
       <nav className="footer__nav">
         <ul className="footer__links no-list-style">
           {navigation.map((item) => (

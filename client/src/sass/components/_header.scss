@@ -89,36 +89,6 @@ li {
     color: $font-color-hovered;
   }
 }
-.header__social-bar {
-  font-size: 1rem;
-  position: relative;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding-left: 200px;
-  padding-right: 3rem;
-  overflow: hidden;
-  height: var(--social-bar-height);
-  flex-flow: row-reverse;
-}
-
-.header__social {
-  display: flex;
-  align-items: center;
-  gap: 3rem;
-
-  li {
-    width: 4rem;
-  }
-}
-
-.header__social-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: colors.$gy-v-white;
-}
-
 .header__logo_wrapper {
   z-index: 998;
   position: absolute;
