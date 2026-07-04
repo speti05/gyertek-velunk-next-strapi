@@ -3,7 +3,7 @@
 import React from "react";
 import { Chip, type ChipProps } from "@mui/material";
 
-type CustomChipColor = "success" | "warning" | "error" | "default";
+type CustomChipColor = "success" | "warning" | "error" | "info" | "default";
 type CustomChipSize = "small" | "medium" | "large";
 
 interface CustomChipProps extends Omit<ChipProps, "color" | "size"> {

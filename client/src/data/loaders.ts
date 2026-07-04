@@ -333,10 +333,12 @@ export interface CompanionData {
   fbLink: string;
 }
 
+export type PaymentStatus = "pending" | "deposit_paid" | "paid" | "cancelled";
+
 export interface EventSignupEntry {
   id: number;
   documentId: string;
-  isPaid: boolean;
+  paymentStatus: PaymentStatus;
   firstName: string | null;
   lastName: string | null;
   telephone: string | null;
@@ -400,7 +402,7 @@ export async function getUserEventSignupsLoader(jwt: string): Promise<EventSignu
       },
     },
     fields: [
-      "isPaid",
+      "paymentStatus",
       "firstName",
       "lastName",
       "telephone",

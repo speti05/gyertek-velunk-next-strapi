@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { logoutAction } from "@/data/auth-actions";
 import { SubmitButtonNoSSR } from "@/components/SubmitButtonNoSSR";
-import { getUserEventSignupsLoader, getUserProfilePageLoader } from "@/data/loaders";
+import { getUserEventSignupsLoader, getUserProfilePageLoader, type PaymentStatus } from "@/data/loaders";
 import { ProfileForm } from "./ProfileForm";
 import { SignupDetailsToggle } from "./SignupDetailsToggle";
 import { formatDate } from "@/utils/format-date";
@@ -14,11 +14,20 @@ import {
   YOUR_PROFILE_TITLE,
   PROFILE_MY_TOURS_SECTION,
   PROFILE_NO_TOURS_MESSAGE,
+  PROFILE_PAYMENT_PENDING,
+  PROFILE_PAYMENT_DEPOSIT_PAID,
   PROFILE_PAYMENT_PAID,
-  PROFILE_PAYMENT_UNPAID,
+  PROFILE_PAYMENT_CANCELLED,
   FORM_LABELS,
   CURRENCY,
 } from "@/utils/texts";
+
+const PAYMENT_STATUS_CHIP: Record<PaymentStatus, { label: string; color: "success" | "warning" | "error" | "info" }> = {
+  pending: { label: PROFILE_PAYMENT_PENDING, color: "warning" },
+  deposit_paid: { label: PROFILE_PAYMENT_DEPOSIT_PAID, color: "info" },
+  paid: { label: PROFILE_PAYMENT_PAID, color: "success" },
+  cancelled: { label: PROFILE_PAYMENT_CANCELLED, color: "error" },
+};
 
 export default async function ProfilePage() {
   const cookieStore = await cookies();
@@ -96,8 +105,8 @@ export default async function ProfilePage() {
                       </div>
                       <div>
                         <CustomChip
-                          label={signup.isPaid ? PROFILE_PAYMENT_PAID : PROFILE_PAYMENT_UNPAID}
-                          color={signup.isPaid ? "success" : "warning"}
+                          label={PAYMENT_STATUS_CHIP[signup.paymentStatus].label}
+                          color={PAYMENT_STATUS_CHIP[signup.paymentStatus].color}
                           size="large"
                         />
                       </div>

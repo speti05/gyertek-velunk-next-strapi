@@ -482,12 +482,14 @@ export interface ApiEventSignupEventSignup extends Struct.CollectionTypeSchema {
     event: Schema.Attribute.Relation<"manyToOne", "api::event.event">;
     fbLink: Schema.Attribute.String;
     firstName: Schema.Attribute.String;
-    isPaid: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     lastName: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<"oneToMany", "api::event-signup.event-signup"> &
       Schema.Attribute.Private;
     notes: Schema.Attribute.Text;
+    paymentStatus: Schema.Attribute.Enumeration<["pending", "deposit_paid", "paid", "cancelled"]> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<"pending">;
     publishedAt: Schema.Attribute.DateTime;
     taxNumber: Schema.Attribute.String;
     telephone: Schema.Attribute.String;

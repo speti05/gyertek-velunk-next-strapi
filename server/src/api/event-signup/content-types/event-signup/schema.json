@@ -92,9 +92,11 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user"
     },
-    "isPaid": {
-      "type": "boolean",
-      "default": false
+    "paymentStatus": {
+      "type": "enumeration",
+      "enum": ["pending", "deposit_paid", "paid", "cancelled"],
+      "default": "pending",
+      "required": true
     }
   }
 }
