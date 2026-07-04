@@ -31,6 +31,9 @@
     },
     "tiktokUrl": {
       "type": "string"
+    },
+    "youtubeUrl": {
+      "type": "string"
     }
   }
 }

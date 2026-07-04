@@ -1,5 +1,11 @@
 import type { LinkProps, LogoProps, SocialLinksProps } from "@/types";
-import { FOOTER_FACEBOOK_ARIA, FOOTER_INSTAGRAM_ARIA, FOOTER_TIKTOK_ARIA, LOGO_ALT_FALLBACK } from "@/utils/texts";
+import {
+  FOOTER_FACEBOOK_ARIA,
+  FOOTER_INSTAGRAM_ARIA,
+  FOOTER_TIKTOK_ARIA,
+  FOOTER_YOUTUBE_ARIA,
+  LOGO_ALT_FALLBACK,
+} from "@/utils/texts";
 import CustomLink from "../custom-ui-components/custom-link/custom-link";
 import { StrapiImage } from "../StrapiImage";
 import CustomIcon, { type IconName } from "../custom-ui-components/custom-icon/custom-icon";
@@ -15,19 +21,21 @@ interface FooterProps {
 }
 
 const SOCIAL_LINKS: {
-  key: "facebook" | "instagram" | "tiktok";
+  key: "facebook" | "instagram" | "tiktok" | "youtube";
   ariaLabel: string;
   iconName: IconName;
 }[] = [
   { key: "facebook", ariaLabel: FOOTER_FACEBOOK_ARIA, iconName: "facebook" },
   { key: "instagram", ariaLabel: FOOTER_INSTAGRAM_ARIA, iconName: "instagram" },
   { key: "tiktok", ariaLabel: FOOTER_TIKTOK_ARIA, iconName: "tiktok" },
+  { key: "youtube", ariaLabel: FOOTER_YOUTUBE_ARIA, iconName: "youtube" },
 ];
 
 const socialUrlMap = (data: SocialLinksProps) => ({
   facebook: data.facebookUrl,
   instagram: data.instagramUrl,
   tiktok: data.tiktokUrl,
+  youtube: data.youtubeUrl,
 });
 
 export function Footer({ data }: FooterProps) {

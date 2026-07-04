@@ -227,6 +227,7 @@ export interface LayoutFooter extends Struct.ComponentSchema {
     navigation: Schema.Attribute.Component<"elements.link", true>;
     policies: Schema.Attribute.Component<"elements.link", true>;
     tiktokUrl: Schema.Attribute.String;
+    youtubeUrl: Schema.Attribute.String;
   };
 }
 

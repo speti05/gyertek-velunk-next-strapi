@@ -7,6 +7,7 @@ import {
   FOOTER_FACEBOOK_ARIA,
   FOOTER_INSTAGRAM_ARIA,
   FOOTER_TIKTOK_ARIA,
+  FOOTER_YOUTUBE_ARIA,
   LOGO_ALT_FALLBACK,
 } from "@/utils/texts";
 import { logoutAction } from "@/data/auth-actions";
@@ -27,13 +28,14 @@ interface HeaderProps {
 }
 
 const SOCIAL_LINKS: {
-  key: "facebook" | "instagram" | "tiktok";
+  key: "facebook" | "instagram" | "tiktok" | "youtube";
   ariaLabel: string;
   iconName: IconName;
 }[] = [
   { key: "facebook", ariaLabel: FOOTER_FACEBOOK_ARIA, iconName: "facebook" },
   { key: "instagram", ariaLabel: FOOTER_INSTAGRAM_ARIA, iconName: "instagram" },
   { key: "tiktok", ariaLabel: FOOTER_TIKTOK_ARIA, iconName: "tiktok" },
+  { key: "youtube", ariaLabel: FOOTER_YOUTUBE_ARIA, iconName: "youtube" },
 ];
 
 export function Header({ data, socialLinks }: HeaderProps) {
@@ -48,6 +50,7 @@ export function Header({ data, socialLinks }: HeaderProps) {
     facebook: socialLinks?.facebookUrl,
     instagram: socialLinks?.instagramUrl,
     tiktok: socialLinks?.tiktokUrl,
+    youtube: socialLinks?.youtubeUrl,
   };
   const activeSocialLinks = SOCIAL_LINKS.filter(({ key }) => urlMap[key]);
 

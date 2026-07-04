@@ -32,6 +32,7 @@ export interface SocialLinksProps {
   facebookUrl?: string;
   instagramUrl?: string;
   tiktokUrl?: string;
+  youtubeUrl?: string;
 }
 
 interface BaseBlogProps {

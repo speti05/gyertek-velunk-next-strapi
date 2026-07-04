@@ -5,7 +5,7 @@ import type { SvgIconProps } from "@mui/material/SvgIcon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import type { SizeProp } from "@fortawesome/fontawesome-svg-core";
-import { faFacebook, faInstagram, faTiktok } from "@fortawesome/free-brands-svg-icons";
+import { faFacebook, faInstagram, faTiktok, faYoutube } from "@fortawesome/free-brands-svg-icons";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
@@ -31,6 +31,7 @@ const ICON_MAP = {
   facebook: { type: "fa" as const, icon: faFacebook },
   instagram: { type: "fa" as const, icon: faInstagram },
   tiktok: { type: "fa" as const, icon: faTiktok },
+  youtube: { type: "fa" as const, icon: faYoutube },
 };
 
 export type IconName = keyof typeof ICON_MAP;

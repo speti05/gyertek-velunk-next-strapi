@@ -271,6 +271,7 @@ export const HERO_PLAY_ARIA = "Automatikus váltás indítása";
 export const FOOTER_FACEBOOK_ARIA = "Látogass el Facebook oldalunkra";
 export const FOOTER_INSTAGRAM_ARIA = "Látogass el Instagram oldalunkra";
 export const FOOTER_TIKTOK_ARIA = "Látogass el TikTok oldalunkra";
+export const FOOTER_YOUTUBE_ARIA = "Látogass el YouTube oldalunkra";
 
 // Cookie consent - banner
 export const COOKIE_BANNER_TITLE = "Sütik használata";
