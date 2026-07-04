@@ -156,6 +156,7 @@ export interface BlocksSearchableCardList extends Struct.ComponentSchema {
       Schema.Attribute.Required;
     featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     headline: Schema.Attribute.String & Schema.Attribute.Required;
+    isMainContent: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     pageSize: Schema.Attribute.Integer & Schema.Attribute.Required & Schema.Attribute.DefaultTo<3>;
     searchPlaceHolder: Schema.Attribute.String;
     showPagination: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;

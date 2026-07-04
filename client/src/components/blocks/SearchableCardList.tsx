@@ -12,6 +12,7 @@ export function SearchableCardList({
   showPagination,
   featured,
   showSearch,
+  isMainContent = false,
 }: SearchableCardListProps) {
   const componentToUse = (() => {
     switch (contentCollectionType) {
@@ -39,6 +40,7 @@ export function SearchableCardList({
       searchParams={searchParams}
       showSearch={showSearch}
       component={componentToUse}
+      isMainContentOfTheScreen={isMainContent}
     />
   );
 }

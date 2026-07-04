@@ -55,6 +55,34 @@ export function Header({ data, socialLinks }: HeaderProps) {
     <>
       <header>
         <nav className="navbar">
+          {activeSocialLinks.length > 0 && (
+            <>
+              <div className="header__social-bar">
+                <ul className="header__social no-list-style">
+                  {activeSocialLinks.map(({ key, ariaLabel, iconName }) => (
+                    <li key={key}>
+                      <CustomTooltip title={key} placement="bottom">
+                        <span>
+                          <CustomLink
+                            href={urlMap[key]!}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={ariaLabel}
+                            className="header__social-link"
+                            color="white"
+                            underline="none"
+                            isHoverScaled
+                          >
+                            <CustomIcon name={iconName} size="3x" />
+                          </CustomLink>
+                        </span>
+                      </CustomTooltip>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </>
+          )}
           <ul className={`nav-menu ${isActive ? "active" : ""} no-list-style`}>
             {navigation.map((item) => (
               <li key={item.id}>
@@ -128,47 +156,19 @@ export function Header({ data, socialLinks }: HeaderProps) {
             <span className="bar"></span>
           </div>
         </nav>
-        {activeSocialLinks.length > 0 && (
-          <>
-            <CustomTooltip title={logo.image.alternativeText || LOGO_ALT_FALLBACK} placement="top">
-              <span className="header__logo_wrapper">
-                <CustomLink href="/" className="navbar__logo-link" color="white" underline="none">
-                  <StrapiImage
-                    src={logo.image.url}
-                    alt={logo.image.alternativeText || LOGO_ALT_FALLBACK}
-                    className={`header__logo `}
-                    width={256}
-                    height={174}
-                  />
-                </CustomLink>
-              </span>
-            </CustomTooltip>
-            <div className="header__social-bar">
-              <ul className="header__social no-list-style">
-                {activeSocialLinks.map(({ key, ariaLabel, iconName }) => (
-                  <li key={key}>
-                    <CustomTooltip title={key} placement="bottom">
-                      <span>
-                        <CustomLink
-                          href={urlMap[key]!}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={ariaLabel}
-                          className="header__social-link"
-                          color="white"
-                          underline="none"
-                          isHoverScaled
-                        >
-                          <CustomIcon name={iconName} size="3x" />
-                        </CustomLink>
-                      </span>
-                    </CustomTooltip>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </>
-        )}
+        <CustomTooltip title={logo.image.alternativeText || LOGO_ALT_FALLBACK} placement="top">
+          <span className="header__logo_wrapper">
+            <CustomLink href="/" className="navbar__logo-link" color="white" underline="none">
+              <StrapiImage
+                src={logo.image.url}
+                alt={logo.image.alternativeText || LOGO_ALT_FALLBACK}
+                className={`header__logo `}
+                width={256}
+                height={174}
+              />
+            </CustomLink>
+          </span>
+        </CustomTooltip>
       </header>
     </>
   );

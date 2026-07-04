@@ -10,6 +10,7 @@ import { cookies } from "next/headers";
 import { getUserProfileService } from "@/data/auth-service";
 import { getUserEventSignupsLoader } from "@/data/loaders";
 import { TOUR_SIGNUP_HEADLINE, FEATURED_EVENTS_LABEL } from "@/utils/texts";
+import { ContentListHeadline } from "@/components/ContentListHeadline";
 
 async function loader(slug: string) {
   const { data } = await getContentBySlug(slug, "/api/events");
@@ -40,7 +41,7 @@ export default async function SingleEventRoute({ params, searchParams }: ParamsP
   return (
     <>
       <div className="container">
-        <h2 className={`content-items__headline content-items--center`}>{TOUR_SIGNUP_HEADLINE}</h2>
+        <ContentListHeadline headline={TOUR_SIGNUP_HEADLINE} isMain={true} />
         <div className="event-page">
           <EventSignupForm
             blocks={blocks}

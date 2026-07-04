@@ -12,7 +12,7 @@ export interface CustomSearchParams {
 }
 
 export interface PageParams {
-  params?: Promise<{ slug: string }>;
+  params?: Promise<{ slug: string; title?: string }>;
   searchParams?: Promise<CustomSearchParams>;
 }
 
@@ -169,6 +169,7 @@ export interface SearchableCardListProps extends Base<"blocks.searchable-card-li
   showPagination: boolean;
   featured: boolean;
   contentCollectionType: ContentCollectionType;
+  isMainContent?: boolean;
 }
 
 export interface HeroWithCalendarProps extends Base<"blocks.hero-with-calendar"> {

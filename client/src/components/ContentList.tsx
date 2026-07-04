@@ -4,6 +4,7 @@ import { getContent } from "@/data/loaders";
 import { PaginationComponent } from "@/components/PaginationComponent";
 import { SearchNoSSR } from "@/components/SearchNoSSR";
 import { removeAccents } from "@/utils/text-utils";
+import { ContentListHeadline } from "@/components/ContentListHeadline";
 
 interface ContentListProps {
   headline: string;
@@ -18,6 +19,7 @@ interface ContentListProps {
   page?: string;
   showPagination?: boolean;
   contentCollectionType: ContentCollectionType;
+  isMainContentOfTheScreen?: boolean;
 }
 
 async function loader<Type>(
@@ -45,11 +47,11 @@ export async function ContentList({
   searchPlaceHolder,
   showPagination,
   contentCollectionType,
+  isMainContentOfTheScreen = false,
 }: Readonly<ContentListProps>) {
   const pageParam = `${contentCollectionType}Page`;
   const path = `/api/${contentCollectionType}`;
   const queryParam = `${contentCollectionType}Query`;
-  // Get the page number using the specific pageParam
   const page = searchParams?.[pageParam] || "1";
   const query = searchParams?.[queryParam] || "";
   const { data, pageCount } = await loader<EventProps>(path, featured, query, page, pageSize);
@@ -59,12 +61,12 @@ export async function ContentList({
 
   return (
     <section className="content-items content-items container">
-      <h3
-        className={`content-items__headline ${`content-items--${headlineAlignment}`}`}
-        id={navigationId}
-      >
-        {headline}
-      </h3>
+      <ContentListHeadline
+        headline={headline}
+        alignment={headlineAlignment}
+        isMain={isMainContentOfTheScreen}
+        navigationId={navigationId}
+      />
       {!!showSearch && (
         <SearchNoSSR
           placeHolder={searchPlaceHolder}

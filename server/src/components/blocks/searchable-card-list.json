@@ -45,6 +45,10 @@
         "turaink",
         "beszamolok"
       ]
+    },
+    "isMainContent": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

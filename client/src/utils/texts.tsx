@@ -150,7 +150,7 @@ export const AUTH_TERMS_REQUIRED_ERROR = "Az ÁSZF elfogadása kötelező a regi
 export const PROFILE_TITLE = "Profilom";
 export const PROFILE_BASIC_DATA_SECTION = "Alapadatok";
 export const PROFILE_ADDRESS_SECTION = "Cím";
-export const PROFILE_MY_TOURS_SECTION = "Túráim";
+export const PROFILE_MY_TOURS_SECTION = "Túráid";
 export const PROFILE_NO_TOURS_MESSAGE = "Még nem jelentkeztél túrára.";
 export const PROFILE_PAYMENT_PAID = "Befizetve";
 export const PROFILE_PAYMENT_UNPAID = "Befizetés folyamatban";
@@ -328,7 +328,15 @@ export const CONTACT_REQUEST_SUBMIT_LABEL = "Küldés";
 export const CONTACT_REQUEST_NEW_REQUEST_LABEL = "Küldök másikat";
 
 // Calendar
-export const CALENDAR_DAYS_OF_WEEK = ["Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"];
+export const CALENDAR_DAYS_OF_WEEK = [
+  "Vasárnap",
+  "Hétfő",
+  "Kedd",
+  "Szerda",
+  "Csütörtök",
+  "Péntek",
+  "Szombat",
+];
 export const CALENDAR_MONTH_NAMES = [
   "Január",
   "Február",

@@ -1,0 +1,49 @@
+@use "../base/colors";
+
+.content-items__headline {
+  padding-top: 6rem;
+}
+
+.content-list-headline {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  background-image: url("/mountain_header.svg");
+  background-size: cover;
+  background-position: center 70%;
+  background-color: #d8e8e2;
+  overflow: hidden;
+  margin-bottom: 6rem;
+
+  &__backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(1px);
+  }
+
+  &__title {
+    position: relative;
+    z-index: 1;
+    max-width: 120rem;
+    margin: 0 auto;
+    padding: 10rem 4rem;
+    color: colors.$gy-v-white;
+    -webkit-text-stroke: 1.5px rgba(10, 31, 28, 0.7);
+    text-shadow:
+      0 2px 16px rgba(0, 0, 0, 0.55),
+      0 0 4px rgba(0, 0, 0, 0.4);
+  }
+
+  &--center &__title {
+    text-align: center;
+  }
+
+  &--right &__title {
+    text-align: right;
+  }
+
+  &--left &__title {
+    text-align: left;
+  }
+}
