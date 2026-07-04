@@ -65,6 +65,7 @@ import {
   SIGNUP_VALIDATION,
   SIGNUP_BIRTH_COUNTRY_OTHER,
   SIGNUP_BILLING_ADDRESS_LABEL,
+  SIGNUP_TOUR_CONTRACT_LABEL,
 } from "@/utils/texts";
 import Typography from "@mui/material/Typography";
 import { colors } from "@/sass/mui-override/colors";
@@ -662,7 +663,10 @@ export function TourSignupDialog({
                 required
                 slotProps={{
                   inputLabel: { shrink: true },
-                  htmlInput: { min: [documentIssueDate, startDate].filter(Boolean).sort().at(-1) || undefined, max: getMaxExpiryDate() },
+                  htmlInput: {
+                    min: [documentIssueDate, startDate].filter(Boolean).sort().at(-1) || undefined,
+                    max: getMaxExpiryDate(),
+                  },
                 }}
               />
             </div>
@@ -754,7 +758,11 @@ export function TourSignupDialog({
                   }}
                   options={BIRTH_COUNTRY_OPTIONS}
                   renderOption={(option) =>
-                    option.value === BIRTH_COUNTRY_OTHER ? <strong>{option.name}</strong> : option.name
+                    option.value === BIRTH_COUNTRY_OTHER ? (
+                      <strong>{option.name}</strong>
+                    ) : (
+                      option.name
+                    )
                   }
                   required
                 />
@@ -829,7 +837,15 @@ export function TourSignupDialog({
                     onChange={(e) => updateCompanion(idx, "documentExpiryDate", e.target.value)}
                     error={stepErrors[`companion_${idx}_documentExpiryDate`]}
                     required
-                    slotProps={{ inputLabel: { shrink: true }, htmlInput: { min: [companion.documentIssueDate, startDate].filter(Boolean).sort().at(-1) || undefined, max: getMaxExpiryDate() } }}
+                    slotProps={{
+                      inputLabel: { shrink: true },
+                      htmlInput: {
+                        min:
+                          [companion.documentIssueDate, startDate].filter(Boolean).sort().at(-1) ||
+                          undefined,
+                        max: getMaxExpiryDate(),
+                      },
+                    }}
                   />
                 </div>
                 <CustomTextInput
@@ -864,7 +880,9 @@ export function TourSignupDialog({
             <div className="tour-signup-summary">
               <div className="grid grid-cols-2 gap-3">
                 <span className="font-semibold">{SIGNUP_SUMMARY_TRAVELERS}:</span>
-                <span>{totalTravelers} {SIGNUP_SUMMARY_TRAVELER_UNIT}</span>
+                <span>
+                  {totalTravelers} {SIGNUP_SUMMARY_TRAVELER_UNIT}
+                </span>
 
                 <span className="font-semibold">{SIGNUP_SUMMARY_TRAVELER_NAMES}:</span>
                 <span>
@@ -914,7 +932,7 @@ export function TourSignupDialog({
 
             <CustomAlertMessage infoMessage={SIGNUP_TOUR_INFO_IN_PROFILE} />
 
-            <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+            <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", flexDirection: "column" }}>
               <CustomButton
                 variant="outlined"
                 size="small"
@@ -928,6 +946,13 @@ export function TourSignupDialog({
                 onClick={() => window.open("/adatvedelem", "_blank")}
               >
                 {SIGNUP_PRIVACY_BUTTON_LABEL}
+              </CustomButton>
+              <CustomButton
+                variant="outlined"
+                size="small"
+                onClick={() => window.open("/utazasi-szerzodes", "_blank")}
+              >
+                {SIGNUP_TOUR_CONTRACT_LABEL}
               </CustomButton>
             </Box>
 

@@ -185,6 +185,7 @@ export const SIGNUP_SUCCESS_PROFILE_INFO = "A jelentkezésed részletei a profil
 export const SIGNUP_SUCCESS_OK_LABEL = "Rendben";
 export const SIGNUP_ASZF_BUTTON_LABEL = "ÁSZF megtekintése";
 export const SIGNUP_PRIVACY_BUTTON_LABEL = "Adatvédelmi tájékoztató";
+export const SIGNUP_TOUR_CONTRACT_LABEL = "Utazási szerződés";
 
 // Signup dialog steps
 export const SIGNUP_DIALOG_TITLE_PREFIX = "Jelentkezés";
