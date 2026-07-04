@@ -11,7 +11,7 @@ import CustomChip from "@/components/custom-ui-components/custom-chip/custom-chi
 import { StrapiImage } from "@/components/StrapiImage";
 import {
   AUTH_LOGOUT_LABEL,
-  AUTH_HELLO,
+  YOUR_PROFILE_TITLE,
   PROFILE_MY_TOURS_SECTION,
   PROFILE_NO_TOURS_MESSAGE,
   PROFILE_PAYMENT_PAID,
@@ -38,7 +38,7 @@ export default async function ProfilePage() {
   return (
     <main className="auth-page auth-page--profile">
       <div className="auth-page__card auth-page__card--wide">
-        <h1 className="auth-page__title">{AUTH_HELLO(firstName ?? usernameFromEmail)}</h1>
+        <h1 className="auth-page__title">{YOUR_PROFILE_TITLE}</h1>
 
         <ProfileForm
           email={displayEmail}

@@ -117,7 +117,7 @@ export const AUTH_DIVIDER_LABEL = "vagy";
 export const AUTH_NO_ACCOUNT_HINT = "Még nincs fiókod?";
 export const AUTH_WELCOME_MESSAGE = "Örülünk, hogy itt vagy.";
 export const AUTH_PROFILE_NAV_LABEL = "Profilod";
-export const AUTH_HELLO = (name: string) => `Helló, ${name}!`;
+export const YOUR_PROFILE_TITLE = "Profilod";
 export const AUTH_FORGOT_PASSWORD_LABEL = "Elfelejtett jelszó?";
 export const AUTH_FORGOT_PASSWORD_TITLE = "Elfelejtett jelszó";
 export const AUTH_FORGOT_PASSWORD_SUCCESS =
