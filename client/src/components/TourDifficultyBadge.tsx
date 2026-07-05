@@ -6,11 +6,16 @@ const HIKER_PATH =
 interface TourDifficultyBadgeProps {
   difficulty: number;
   variant?: "green" | "brown";
+  size?: "medium" | "large";
 }
 
-export function TourDifficultyBadge({ difficulty, variant = "green" }: Readonly<TourDifficultyBadgeProps>) {
+export function TourDifficultyBadge({
+  difficulty,
+  variant = "green",
+  size = "medium",
+}: Readonly<TourDifficultyBadgeProps>) {
   return (
-    <div className={`difficulty-badge difficulty-badge--${variant}`}>
+    <div className={`difficulty-badge difficulty-badge--${variant} difficulty-badge--${size}`}>
       <div className="difficulty-badge__icons">
         {Array.from({ length: 10 }, (_, i) => (
           <svg

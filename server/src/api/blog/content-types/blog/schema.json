@@ -25,11 +25,11 @@
       "type": "string"
     },
     "image": {
+      "type": "media",
+      "multiple": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "blocks": {
       "type": "dynamiczone",
@@ -38,7 +38,9 @@
         "blocks.paragraph-with-image",
         "blocks.hero-section",
         "blocks.heading",
-        "blocks.full-image"
+        "blocks.full-image",
+        "blocks.youtube-video",
+        "blocks.picture-gallery"
       ]
     }
   }

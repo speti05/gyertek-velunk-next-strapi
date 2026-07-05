@@ -82,7 +82,9 @@ type ComponentType =
   | "blocks.hero-with-text"
   | "blocks.hero-with-calendar"
   | "blocks.event-signup-form"
-  | "blocks.contact-request-form";
+  | "blocks.contact-request-form"
+  | "blocks.youtube-video"
+  | "blocks.picture-gallery";
 
 interface Base<T extends ComponentType, D extends object = Record<string, unknown>> {
   id: number;
@@ -116,7 +118,9 @@ export type Block =
   | HeroWithTextProps
   | HeroWithCalendarProps
   | EventSignupBlockProps
-  | ContactRequestBlockProps;
+  | ContactRequestBlockProps
+  | YoutubeVideoProps
+  | PictureGalleryProps;
 
 export interface HeroSectionProps extends Base<"blocks.hero-section"> {
   theme: "turquoise" | "brown";
@@ -206,6 +210,24 @@ export interface FullImageProps extends Base<"blocks.full-image"> {
 
 export interface TextBlockProps extends Base<"blocks.text-content-block"> {
   content: string;
+}
+
+export interface YoutubeVideoProps extends Base<"blocks.youtube-video"> {
+  title?: string;
+  videoUrl: string;
+  description?: string;
+  aspectRatio?: "16:9" | "9:16";
+  startTime?: number;
+  privacyMode?: boolean;
+}
+
+export interface PictureGalleryProps extends Base<"blocks.picture-gallery"> {
+  title?: string;
+  description?: string;
+  images: ImageProps[];
+  aspectRatio?: "16:9" | "4:3" | "1:1";
+  autoplay?: boolean;
+  slideIntervalMs?: number;
 }
 
 export type ContentCollectionType = "events" | "articles" | "blogs";

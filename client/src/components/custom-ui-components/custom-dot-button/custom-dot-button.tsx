@@ -11,7 +11,7 @@ interface CustomDotButtonProps {
 const CustomDotButton: React.FC<CustomDotButtonProps> = ({ active, onClick, ariaLabel }) => {
   return (
     <button
-      className={`hero__dot${active ? " hero__dot--active" : ""}`}
+      className={`gallery__dot${active ? " gallery__dot--active" : ""}`}
       onClick={onClick}
       aria-label={ariaLabel}
       suppressHydrationWarning

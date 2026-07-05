@@ -43,6 +43,7 @@ type EventSignupFormProps = {
   blocks: Block[];
   eventId: string;
   eventTitle?: string;
+  description?: string;
   startDate?: string;
   endDate?: string;
   price?: string;
@@ -60,6 +61,7 @@ function EventSignupFormInner({
   blocks,
   eventId,
   eventTitle = "",
+  description,
   startDate,
   endDate,
   price,
@@ -155,27 +157,36 @@ function EventSignupFormInner({
 
   return (
     <section className="signup-form">
+      <div className="signup-form__title-row">
+        <h2 className="signup-form__headline">{eventTitle}</h2>
+        {difficulty && <TourDifficultyBadge difficulty={difficulty} size="large" />}
+      </div>
+
       <div className="signup-form__info">
-        <BlockRenderer blocks={blocks} />
-        {startDate && (
-          <p className="signup-form__date">
-            <span>{FORM_LABELS.startDate}:</span> {formatDate(startDate)}
-          </p>
-        )}
-        {endDate && (
-          <p className="signup-form__date">
-            <span>{FORM_LABELS.endDate}:</span> {formatDate(endDate)}
-          </p>
-        )}
-        {price && (
-          <p className="signup-form__price">
-            <span>
-              {FORM_LABELS.price}: {price}
-            </span>
-            <span>{CURRENCY}</span>
-          </p>
-        )}
-        {difficulty && <TourDifficultyBadge difficulty={difficulty} />}
+        {description && <p className="signup-form__description">{description}</p>}
+
+        <dl className="signup-form__details">
+          {startDate && (
+            <div className="signup-form__details-row">
+              <dt>{FORM_LABELS.startDate}</dt>
+              <dd>{formatDate(startDate)}</dd>
+            </div>
+          )}
+          {endDate && (
+            <div className="signup-form__details-row">
+              <dt>{FORM_LABELS.endDate}</dt>
+              <dd>{formatDate(endDate)}</dd>
+            </div>
+          )}
+          {price && (
+            <div className="signup-form__details-row">
+              <dt>{FORM_LABELS.price}</dt>
+              <dd>
+                {price} {CURRENCY}
+              </dd>
+            </div>
+          )}
+        </dl>
       </div>
 
       <div className="signup-form__form">
@@ -193,6 +204,8 @@ function EventSignupFormInner({
 
         <CustomAlertMessage errorMessage={errorMessage} successMessage={successMessage} />
       </div>
+
+      <BlockRenderer blocks={blocks} />
 
       {userProfile && hasCompleteProfile && !alreadySignedUp && (
         <TourSignupDialog

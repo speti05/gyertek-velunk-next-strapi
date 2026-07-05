@@ -44,7 +44,9 @@
       "type": "dynamiczone",
       "components": [
         "blocks.heading",
-        "blocks.paragraph"
+        "blocks.paragraph",
+        "blocks.youtube-video",
+        "blocks.picture-gallery"
       ]
     },
     "eventSignups": {

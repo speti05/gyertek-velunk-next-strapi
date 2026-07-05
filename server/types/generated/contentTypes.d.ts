@@ -406,6 +406,8 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
         "blocks.hero-section",
         "blocks.heading",
         "blocks.full-image",
+        "blocks.youtube-video",
+        "blocks.picture-gallery",
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -443,6 +445,8 @@ export interface ApiBlogBlog extends Struct.CollectionTypeSchema {
         "blocks.hero-section",
         "blocks.heading",
         "blocks.full-image",
+        "blocks.youtube-video",
+        "blocks.picture-gallery",
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -548,7 +552,9 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    blocks: Schema.Attribute.DynamicZone<["blocks.heading", "blocks.paragraph"]>;
+    blocks: Schema.Attribute.DynamicZone<
+      ["blocks.heading", "blocks.paragraph", "blocks.youtube-video", "blocks.picture-gallery"]
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
     description: Schema.Attribute.Text;

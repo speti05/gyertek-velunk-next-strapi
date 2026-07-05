@@ -29,6 +29,8 @@ export const CONTENT_LIST_EMPTY_DESCRIPTION =
 export const TOUR_CALENDAR_LABEL = "Túranaptár";
 export const TOUR_SIGNUP_HEADLINE = "Túrajelentkezés";
 
+export const YOUTUBE_VIDEO_FALLBACK_TITLE = "YouTube videó";
+
 // Metadata
 export const SITE_TITLE = "Gyertek Velünk";
 export const SITE_DESCRIPTION = "Túrák magyarországon és külföldön.";
@@ -60,7 +62,7 @@ export const FORM_LABELS = {
   submit: "Regisztráció",
   startDate: "Kezdés dátuma",
   endDate: "Befejezés dátuma",
-  price: "Részvételi díj",
+  price: "Részvételi díj (/fő)",
   country: "Ország",
   city: "Város",
   zip: "Irányítószám",
@@ -272,12 +274,12 @@ export const SIGNUP_SUMMARY_SCHEDULE = "Ütemezés";
 export const SIGNUP_SUMMARY_TOTAL_PRICE = "Fizetendő végösszeg";
 export const SIGNUP_SUMMARY_NOTES = "Megjegyzés (opcionális)";
 
-// Hero with text / slideshow
-export const HERO_PREV_IMAGE_ARIA = "Előző kép";
-export const HERO_NEXT_IMAGE_ARIA = "Következő kép";
-export const HERO_DOT_IMAGE_ARIA = (idx: number) => `${idx + 1}. kép`;
-export const HERO_PAUSE_ARIA = "Automatikus váltás megállítása";
-export const HERO_PLAY_ARIA = "Automatikus váltás indítása";
+// Gallery slideshow (nav arrows, dots, play/pause)
+export const GALLERY_PREV_IMAGE_ARIA = "Előző kép";
+export const GALLERY_NEXT_IMAGE_ARIA = "Következő kép";
+export const GALLERY_DOT_IMAGE_ARIA = (idx: number) => `${idx + 1}. kép`;
+export const GALLERY_PAUSE_ARIA = "Automatikus váltás megállítása";
+export const GALLERY_PLAY_ARIA = "Automatikus váltás indítása";
 
 // Footer social links
 export const FOOTER_FACEBOOK_ARIA = "Látogass el Facebook oldalunkra";

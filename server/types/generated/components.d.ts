@@ -143,6 +143,29 @@ export interface BlocksParagraphWithImage extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksPictureGallery extends Struct.ComponentSchema {
+  collectionName: "components_blocks_picture_galleries";
+  info: {
+    displayName: "Picture Gallery";
+  };
+  attributes: {
+    aspectRatio: Schema.Attribute.Enumeration<["16:9", "4:3", "1:1"]> &
+      Schema.Attribute.DefaultTo<"16:9">;
+    autoplay: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    description: Schema.Attribute.Text;
+    images: Schema.Attribute.Media<"images", true> & Schema.Attribute.Required;
+    slideIntervalMs: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1000;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<5000>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface BlocksSearchableCardList extends Struct.ComponentSchema {
   collectionName: "components_blocks_searchable_card_lists";
   info: {
@@ -187,6 +210,28 @@ export interface BlocksTextContentBlock extends Struct.ComponentSchema {
   };
   attributes: {
     content: Schema.Attribute.RichText;
+  };
+}
+
+export interface BlocksYoutubeVideo extends Struct.ComponentSchema {
+  collectionName: "components_blocks_youtube_videos";
+  info: {
+    displayName: "Youtube Video";
+  };
+  attributes: {
+    aspectRatio: Schema.Attribute.Enumeration<["16:9", "9:16"]> &
+      Schema.Attribute.DefaultTo<"16:9">;
+    description: Schema.Attribute.Text;
+    privacyMode: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    startTime: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    title: Schema.Attribute.String;
+    videoUrl: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -258,9 +303,11 @@ declare module "@strapi/strapi" {
       "blocks.info-block": BlocksInfoBlock;
       "blocks.paragraph": BlocksParagraph;
       "blocks.paragraph-with-image": BlocksParagraphWithImage;
+      "blocks.picture-gallery": BlocksPictureGallery;
       "blocks.searchable-card-list": BlocksSearchableCardList;
       "blocks.subscribe": BlocksSubscribe;
       "blocks.text-content-block": BlocksTextContentBlock;
+      "blocks.youtube-video": BlocksYoutubeVideo;
       "elements.link": ElementsLink;
       "elements.logo": ElementsLogo;
       "layout.footer": LayoutFooter;

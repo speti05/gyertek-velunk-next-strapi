@@ -13,6 +13,8 @@ import { SearchableCardList } from "@/components/blocks/SearchableCardList";
 import { EventSignupBlock } from "@/components/blocks/EventSignupBlock";
 import { HeroWithTextBlock } from "@/components//blocks/HeroWithText";
 import { ContactRequestBlock } from "@/components/blocks/ContactRequestBlock";
+import { YoutubeVideo } from "@/components/blocks/YoutubeVideo";
+import { PictureGallery } from "@/components/blocks/PictureGallery";
 function blockRenderer(
   block: Block,
   index: number,
@@ -46,6 +48,10 @@ function blockRenderer(
       return <HeroWithTextBlock {...block} key={index} />;
     case "blocks.contact-request-form":
       return <ContactRequestBlock {...block} key={index} />;
+    case "blocks.youtube-video":
+      return <YoutubeVideo {...block} key={index} />;
+    case "blocks.picture-gallery":
+      return <PictureGallery {...block} key={index} />;
     case "blocks.event-signup-form":
       return (
         <EventSignupBlock

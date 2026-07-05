@@ -47,6 +47,7 @@ export default async function SingleEventRoute({ params, searchParams }: ParamsP
             blocks={blocks}
             eventId={event.documentId}
             eventTitle={event.title}
+            description={event.description}
             startDate={event.startDate}
             endDate={event.endDate}
             price={event.price}

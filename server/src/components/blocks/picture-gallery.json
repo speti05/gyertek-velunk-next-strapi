@@ -1,0 +1,41 @@
+{
+  "collectionName": "components_blocks_picture_galleries",
+  "info": {
+    "displayName": "Picture Gallery"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "aspectRatio": {
+      "type": "enumeration",
+      "enum": [
+        "16:9",
+        "4:3",
+        "1:1"
+      ],
+      "default": "16:9"
+    },
+    "autoplay": {
+      "type": "boolean",
+      "default": true
+    },
+    "slideIntervalMs": {
+      "type": "integer",
+      "min": 1000,
+      "default": 5000
+    }
+  }
+}

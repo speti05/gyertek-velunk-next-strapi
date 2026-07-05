@@ -295,6 +295,16 @@ const blogPopulate = {
       "blocks.hero-with-text": {
         populate: true,
       },
+      "blocks.youtube-video": {
+        populate: true,
+      },
+      "blocks.picture-gallery": {
+        populate: {
+          images: {
+            fields: ["url", "alternativeText"],
+          },
+        },
+      },
     },
   },
 };
