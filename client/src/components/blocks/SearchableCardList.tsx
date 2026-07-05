@@ -1,4 +1,5 @@
 import { BlogCard } from "../BlogCard";
+import { BlogPostCard } from "../BlogPostCard";
 import { ContentList } from "../ContentList";
 import { EventCard } from "../EventCard";
 import { SearchableCardListProps } from "@/types";
@@ -22,6 +23,9 @@ export function SearchableCardList({
       // beszámolók
       case "articles":
         return BlogCard;
+      // blog
+      case "blogs":
+        return BlogPostCard;
       default:
         throw new Error(
           `Unsupported content collection type in SearchableCardList (Card): ${contentCollectionType}`

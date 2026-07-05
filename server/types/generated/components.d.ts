@@ -151,8 +151,8 @@ export interface BlocksSearchableCardList extends Struct.ComponentSchema {
     icon: "apps";
   };
   attributes: {
-    basePathForSubPages: Schema.Attribute.Enumeration<["turaink", "beszamolok"]>;
-    contentCollectionType: Schema.Attribute.Enumeration<["events", "articles"]> &
+    basePathForSubPages: Schema.Attribute.Enumeration<["turaink", "beszamolok", "blog"]>;
+    contentCollectionType: Schema.Attribute.Enumeration<["events", "articles", "blogs"]> &
       Schema.Attribute.Required;
     featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     headline: Schema.Attribute.String & Schema.Attribute.Required;

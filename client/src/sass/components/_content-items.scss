@@ -100,6 +100,20 @@
     opacity: 0.3;
   }
 
+  &__empty {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 55rem;
+    text-align: center;
+  }
+
+  &__empty-title {
+    margin-bottom: 1rem;
+  }
+
   &__card-title {
     align-self: center;
     text-align: center;

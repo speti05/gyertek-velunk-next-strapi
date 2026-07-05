@@ -102,7 +102,19 @@ li {
   }
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1500px) {
+  .navbar {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 1400px) {
+  .navbar {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 1250px) {
   .bar {
     display: block;
     background-color: $font-color;

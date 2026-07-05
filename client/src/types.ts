@@ -52,6 +52,9 @@ interface BaseBlogProps {
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ArticleProps extends BaseBlogProps {}
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BlogProps extends Omit<BaseBlogProps, "featured"> {}
+
 export interface EventProps extends BaseBlogProps {
   price: string;
   startDate: string;
@@ -205,4 +208,4 @@ export interface TextBlockProps extends Base<"blocks.text-content-block"> {
   content: string;
 }
 
-export type ContentCollectionType = "events" | "articles";
+export type ContentCollectionType = "events" | "articles" | "blogs";

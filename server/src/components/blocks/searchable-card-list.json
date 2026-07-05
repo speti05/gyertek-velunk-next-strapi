@@ -35,7 +35,8 @@
       "type": "enumeration",
       "enum": [
         "events",
-        "articles"
+        "articles",
+        "blogs"
       ],
       "required": true
     },
@@ -43,7 +44,8 @@
       "type": "enumeration",
       "enum": [
         "turaink",
-        "beszamolok"
+        "beszamolok",
+        "blog"
       ]
     },
     "isMainContent": {

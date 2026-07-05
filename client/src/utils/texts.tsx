@@ -17,6 +17,15 @@ export const FEATURED_ARTICLES_SEARCH_LABEL = "Keresés a kiemelt beszámolók k
 export const ARTICLES_LABEL = "Beszámolóink";
 export const ARTICLES_SEARCH_LABEL = "Keresés a beszámolók között";
 
+// Blog
+export const BLOG_LABEL = "Blogunk";
+export const BLOG_SEARCH_LABEL = "Keresés a blogbejegyzések között";
+
+// Content list
+export const CONTENT_LIST_EMPTY_TITLE = "Nincs találat.";
+export const CONTENT_LIST_EMPTY_DESCRIPTION =
+  "Egyelőre nincs ilyen típusú bejegyzés, ami a keresési feltételeknek megfelel.";
+
 export const TOUR_CALENDAR_LABEL = "Túranaptár";
 export const TOUR_SIGNUP_HEADLINE = "Túrajelentkezés";
 

@@ -182,7 +182,11 @@ export function CookieConsentBanner() {
   );
 
   const closeButton = (
-    <CustomIconButton onClick={() => closePreferences()} size="large" aria-label={COOKIE_PREFS_CLOSE}>
+    <CustomIconButton
+      onClick={() => closePreferences()}
+      size="large"
+      aria-label={COOKIE_PREFS_CLOSE}
+    >
       <CustomIcon name="close" fontSize="large" />
     </CustomIconButton>
   );
@@ -221,7 +225,6 @@ export function CookieConsentBanner() {
         maxWidth="sm"
         fullWidth
         scroll="paper"
-        disableScrollLock
       >
         <Box sx={{ p: 0 }}>
           <CustomAccordion
