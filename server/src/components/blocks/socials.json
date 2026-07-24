@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_blocks_socials",
+  "info": {
+    "displayName": "Socials"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "text",
+      "required": true,
+      "maxLength": 500
+    },
+    "isTopMarginReseted": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

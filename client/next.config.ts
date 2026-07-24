@@ -29,6 +29,10 @@ const nextConfig = {
       },
       // Add your VPS IP or domain here for production image loading:
       // { protocol: "http", hostname: "YOUR_VPS_IP_OR_DOMAIN", port: "1337", pathname: "/uploads/**" },
+      {
+        protocol: "https",
+        hostname: "i.ytimg.com",
+      },
     ],
   },
 };

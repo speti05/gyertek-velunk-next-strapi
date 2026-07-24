@@ -15,6 +15,7 @@ import { HeroWithTextBlock } from "@/components//blocks/HeroWithText";
 import { ContactRequestBlock } from "@/components/blocks/ContactRequestBlock";
 import { YoutubeVideo } from "@/components/blocks/YoutubeVideo";
 import { PictureGallery } from "@/components/blocks/PictureGallery";
+import { Socials } from "@/components/blocks/Socials";
 function blockRenderer(
   block: Block,
   index: number,
@@ -52,6 +53,8 @@ function blockRenderer(
       return <YoutubeVideo {...block} key={index} />;
     case "blocks.picture-gallery":
       return <PictureGallery {...block} key={index} />;
+    case "blocks.socials":
+      return <Socials {...block} key={index} />;
     case "blocks.event-signup-form":
       return (
         <EventSignupBlock

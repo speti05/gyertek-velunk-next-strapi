@@ -33,7 +33,8 @@
         "blocks.hero-with-calendar",
         "blocks.event-signup-form",
         "blocks.text-content-block",
-        "blocks.contact-request-form"
+        "blocks.contact-request-form",
+        "blocks.socials"
       ]
     }
   }

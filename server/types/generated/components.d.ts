@@ -187,6 +187,21 @@ export interface BlocksSearchableCardList extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksSocials extends Struct.ComponentSchema {
+  collectionName: "components_blocks_socials";
+  info: {
+    displayName: "Socials";
+  };
+  attributes: {
+    isTopMarginReseted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    text: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+      }>;
+  };
+}
+
 export interface BlocksSubscribe extends Struct.ComponentSchema {
   collectionName: "components_blocks_subscribes";
   info: {
@@ -305,6 +320,7 @@ declare module "@strapi/strapi" {
       "blocks.paragraph-with-image": BlocksParagraphWithImage;
       "blocks.picture-gallery": BlocksPictureGallery;
       "blocks.searchable-card-list": BlocksSearchableCardList;
+      "blocks.socials": BlocksSocials;
       "blocks.subscribe": BlocksSubscribe;
       "blocks.text-content-block": BlocksTextContentBlock;
       "blocks.youtube-video": BlocksYoutubeVideo;

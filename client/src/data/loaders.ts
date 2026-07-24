@@ -149,6 +149,9 @@ const pageBySlugQuery = (slug: string) =>
           "blocks.contact-request-form": {
             populate: true,
           },
+          "blocks.socials": {
+            populate: true,
+          },
         },
       },
     },

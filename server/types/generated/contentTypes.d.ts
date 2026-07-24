@@ -721,6 +721,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         "blocks.event-signup-form",
         "blocks.text-content-block",
         "blocks.contact-request-form",
+        "blocks.socials",
       ]
     >;
     createdAt: Schema.Attribute.DateTime;

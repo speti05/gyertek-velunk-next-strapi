@@ -287,6 +287,12 @@ export const FOOTER_INSTAGRAM_ARIA = "Látogass el Instagram oldalunkra";
 export const FOOTER_TIKTOK_ARIA = "Látogass el TikTok oldalunkra";
 export const FOOTER_YOUTUBE_ARIA = "Látogass el YouTube oldalunkra";
 
+// Socials block
+export const SOCIALS_FACEBOOK_LABEL = "Facebook";
+export const SOCIALS_INSTAGRAM_LABEL = "Instagram";
+export const SOCIALS_TIKTOK_LABEL = "TikTok";
+export const SOCIALS_YOUTUBE_LABEL = "YouTube";
+
 // Cookie consent - banner
 export const COOKIE_BANNER_TITLE = "Sütik használata";
 export const COOKIE_BANNER_DESCRIPTION =
