@@ -961,6 +961,7 @@ export function TourSignupDialog({
               onChange={(e) => setAccepted((e.target as HTMLInputElement).checked)}
               label={SIGNUP_CONFIRM_AWAIT_EMAIL_LABEL}
               error={!accepted}
+              isMandatory
             />
           </Box>
         )}

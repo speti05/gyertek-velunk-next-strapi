@@ -188,6 +188,7 @@ export const theme = createTheme({
           // Required asterisk
           "& .MuiFormLabel-asterisk": {
             color: colors.label.required,
+            fontSize: "2rem",
           },
         },
         shrink: {

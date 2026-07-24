@@ -49,6 +49,7 @@ export const ERROR_LABEL = "Hiba történt, nagyon sajnáljuk. Próbáld újra k
 export const NOT_FOUND_LABEL =
   "Sajnáljuk, ez az oldal jól elvándorolt, vagy csak egyszerűen hibás a link.";
 export const TRY_AGAIN_LABEL = "Próbáld újra";
+export const MANDATORY_CHECKBOX_TOOLTIP = "Kötelezően kipipálandó";
 
 export const CARD_PERSON = "Fő";
 export const CURRENCY = "Ft";
@@ -155,8 +156,11 @@ export const AUTH_SHOW_PASSWORD_LABEL = "Jelszó megjelenítése";
 export const AUTH_HIDE_PASSWORD_LABEL = "Jelszó elrejtése";
 export const AUTH_TERMS_ACCEPT_PREFIX = "Elolvastam és elfogadom az ";
 export const AUTH_TERMS_LINK_LABEL = "ÁSZF-et";
+export const AUTH_TERMS_ACCEPT_INFIX = " és az ";
+export const AUTH_PRIVACY_LINK_LABEL = "Adatvédelmi tájékoztatót";
 export const AUTH_TERMS_ACCEPT_SUFFIX = ".";
-export const AUTH_TERMS_REQUIRED_ERROR = "Az ÁSZF elfogadása kötelező a regisztrációhoz.";
+export const AUTH_TERMS_REQUIRED_ERROR =
+  "Az ÁSZF és az Adatvédelmi tájékoztató elfogadása kötelező a regisztrációhoz.";
 
 // Profile
 export const PROFILE_TITLE = "Profilom";
@@ -183,7 +187,7 @@ export const SIGNUP_CONFIRM_TITLE = "Biztos, hogy jelentkezel erre a túrára?";
 export const SIGNUP_CONFIRM_YES = "Igen";
 export const SIGNUP_CONFIRM_NO = "Nem";
 export const SIGNUP_CONFIRM_AWAIT_EMAIL_LABEL =
-  "Elolvastam és elfogadom az ÁSZF-et és az Adatvédelmi tájékoztatót";
+  "Tisztában vagyok az ÁSZF és az Adatvédelmi tájékoztató tartalmával, elolvastam az utazási szerződést";
 export const SIGNUP_TOUR_INFO_IN_PROFILE =
   "A túrajelentkezési információk megtalálhatók a profilodban. A jelentkezésről email értesítést is kapsz, ahol további információkat találsz a túráról, a fizetésről és a további lépésekről.";
 export const SIGNUP_LOGIN_REQUIRED = "A jelentkezéshez kérjük,";

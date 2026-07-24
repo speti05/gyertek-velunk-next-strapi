@@ -21,11 +21,16 @@ import {
   FORM_LABELS,
   AUTH_TERMS_ACCEPT_PREFIX,
   AUTH_TERMS_LINK_LABEL,
+  AUTH_TERMS_ACCEPT_INFIX,
+  AUTH_PRIVACY_LINK_LABEL,
   AUTH_TERMS_ACCEPT_SUFFIX,
   AUTH_TERMS_REQUIRED_ERROR,
 } from "@/utils/texts";
 import CustomIcon from "@/components/custom-ui-components/custom-icon/custom-icon";
-import { MAX_EMAIL, MAX_PASSWORD } from "@/components/custom-ui-components/custom-text-input/input-length-limits";
+import {
+  MAX_EMAIL,
+  MAX_PASSWORD,
+} from "@/components/custom-ui-components/custom-text-input/input-length-limits";
 import { CustomCheckbox } from "@/components/custom-ui-components/custom-checkbox/custom-checkbox";
 
 const INITIAL_STATE = {
@@ -91,7 +96,9 @@ function RegisterFormInner() {
         <h1 className="auth-page__title auth-page__title--register">{AUTH_REGISTER_LABEL}</h1>
         <CustomAlertMessage successMessage={formState.successMessage} />
         <p className="auth-page__forgot-link">
-          <CustomLink href="/login" color="secondary">{AUTH_BACK_TO_LOGIN}</CustomLink>
+          <CustomLink href="/login" color="secondary">
+            {AUTH_BACK_TO_LOGIN}
+          </CustomLink>
         </p>
       </>
     );
@@ -140,13 +147,17 @@ function RegisterFormInner() {
           label={
             <span>
               {AUTH_TERMS_ACCEPT_PREFIX}
+              <CustomLink href="/aszf" target="_blank" rel="noopener noreferrer" color="primary">
+                {AUTH_TERMS_LINK_LABEL}
+              </CustomLink>
+              {AUTH_TERMS_ACCEPT_INFIX}
               <CustomLink
-                href="/felhasznalasi-feltetelek"
+                href="/adatvedelem"
                 target="_blank"
                 rel="noopener noreferrer"
                 color="primary"
               >
-                {AUTH_TERMS_LINK_LABEL}
+                {AUTH_PRIVACY_LINK_LABEL}
               </CustomLink>
               {AUTH_TERMS_ACCEPT_SUFFIX}
             </span>
