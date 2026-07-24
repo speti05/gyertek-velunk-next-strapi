@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { FOOTER_TIKTOK_ARIA, SOCIALS_TIKTOK_LABEL } from "@/utils/texts";
 import { SocialBoxTitle } from "@/components/blocks/socials/SocialBoxTitle";
+import { SocialEmbedLoader } from "@/components/blocks/socials/SocialEmbedLoader";
 
 declare global {
   interface Window {
@@ -49,6 +50,7 @@ export function TiktokEmbed({ url }: Readonly<{ url: string }>) {
     <div className="socials-block__item socials-block__item--tiktok" aria-label={FOOTER_TIKTOK_ARIA}>
       <SocialBoxTitle url={url} iconName="tiktok" label={SOCIALS_TIKTOK_LABEL} />
       <div className="socials-block__item-content">
+        <SocialEmbedLoader />
         <blockquote className="tiktok-embed" cite={url} data-unique-id={username} data-embed-type="creator">
           <section />
         </blockquote>

@@ -3,6 +3,7 @@ import { FOOTER_YOUTUBE_ARIA, SOCIALS_YOUTUBE_LABEL } from "@/utils/texts";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import CustomIcon from "@/components/custom-ui-components/custom-icon/custom-icon";
 import { SocialBoxTitle } from "@/components/blocks/socials/SocialBoxTitle";
+import { SocialEmbedLoader } from "@/components/blocks/socials/SocialEmbedLoader";
 
 const YOUTUBE_CHANNELS_URL = "https://www.googleapis.com/youtube/v3/channels";
 const YOUTUBE_PLAYLIST_ITEMS_URL = "https://www.googleapis.com/youtube/v3/playlistItems";
@@ -129,6 +130,7 @@ export async function YoutubeChannelEmbed({ url }: Readonly<{ url: string }>) {
     <div className="socials-block__item socials-block__item--youtube">
       <SocialBoxTitle url={url} iconName="youtube" label={SOCIALS_YOUTUBE_LABEL} />
       <div className="socials-block__item-content">
+        <SocialEmbedLoader />
         <div className="socials-block__videos">
           {videos.map((video) => (
             <CustomLink

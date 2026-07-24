@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { SOCIALS_FACEBOOK_LABEL } from "@/utils/texts";
 import { SocialBoxTitle } from "@/components/blocks/socials/SocialBoxTitle";
+import { SocialEmbedLoader } from "@/components/blocks/socials/SocialEmbedLoader";
 
 declare global {
   interface Window {
@@ -38,6 +39,7 @@ export function FacebookEmbed({ url }: Readonly<{ url: string }>) {
     <div className="socials-block__item socials-block__item--facebook">
       <SocialBoxTitle url={url} iconName="facebook" label={SOCIALS_FACEBOOK_LABEL} />
       <div className="socials-block__item-content">
+        <SocialEmbedLoader />
         <div
           className="fb-page"
           data-href={url}
