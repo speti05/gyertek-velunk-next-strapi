@@ -43,10 +43,11 @@ export const DIALOG_CANCEL_LABEL = "Mégse";
 export const DIALOG_PROCEED_LABEL = "Megerősít";
 export const LOADING_LABEL = "Töltés...";
 export const GO_HOME_LABEL = "Vissza a főoldalra";
-export const SERVER_SIDE_ERROR_LABEL = "Szerver oldali hiba.";
-export const PAGE_NOT_FOUND_LABEL = "Az oldal nem található.";
-export const ERROR_LABEL = "Hiba történt. Próbáld újra később.";
-export const NOT_FOUND_LABEL = "Sajnáljuk, ez az oldal jól elvándorolt.";
+export const SERVER_SIDE_ERROR_LABEL = "Szerver oldali hiba";
+export const PAGE_NOT_FOUND_LABEL = "Az oldal nem található";
+export const ERROR_LABEL = "Hiba történt, nagyon sajnáljuk. Próbáld újra később.";
+export const NOT_FOUND_LABEL =
+  "Sajnáljuk, ez az oldal jól elvándorolt, vagy csak egyszerűen hibás a link.";
 export const TRY_AGAIN_LABEL = "Próbáld újra";
 
 export const CARD_PERSON = "Fő";

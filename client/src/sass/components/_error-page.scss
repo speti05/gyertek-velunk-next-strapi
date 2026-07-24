@@ -1,0 +1,94 @@
+@use "../base/colors";
+
+body.error-shell {
+  background-color: colors.$gy-v-light-beige;
+}
+
+.error-shell {
+  &__footer-copy {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-top: 3rem;
+  }
+}
+
+.error-page {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 2rem;
+
+  &__card {
+    background-color: colors.$gy-v-light-beige;
+    border-radius: 1.6rem;
+    box-shadow: colors.$box-shadow;
+    padding: 4rem;
+    width: 100%;
+    max-width: 90rem;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 3rem;
+    text-align: center;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      align-items: center;
+      text-align: left;
+      gap: 4rem;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.6rem;
+
+    @media (min-width: 768px) {
+      align-items: flex-start;
+      flex: 1;
+    }
+  }
+
+  &__image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 1.2rem;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    @media (min-width: 768px) {
+      width: 36rem;
+      aspect-ratio: 1 / 1;
+    }
+
+    img {
+      object-fit: cover;
+    }
+  }
+
+  &__title {
+    color: colors.$gy-v-dark-green;
+  }
+
+  &__description {
+    max-width: 48rem;
+    color: colors.$gy-v-dark-brown;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.6rem;
+    margin-top: 0.8rem;
+
+    @media (min-width: 768px) {
+      justify-content: flex-start;
+    }
+  }
+}

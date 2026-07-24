@@ -1,21 +1,6 @@
-"use client";
-
-import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
-import { GO_HOME_LABEL, NOT_FOUND_LABEL, PAGE_NOT_FOUND_LABEL } from "@/utils/texts";
-import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
+import { ErrorPage } from "@/components/ErrorPage";
+import { NOT_FOUND_LABEL, PAGE_NOT_FOUND_LABEL } from "@/utils/texts";
 
 export default function NotFound() {
-  return (
-    <div className="flex flex-col items-center justify-center flex-1 mb-40 mt-20">
-      <h2 className="mb-8">404</h2>
-      <h5 className="mb-8">{PAGE_NOT_FOUND_LABEL}</h5>
-      <p className="mb-8 text-center max-w-md">{NOT_FOUND_LABEL}</p>
-
-      <CustomButton variant="contained" color="primary">
-        <CustomLink href="/" color="inherit" underline="none">
-          {GO_HOME_LABEL}
-        </CustomLink>
-      </CustomButton>
-    </div>
-  );
+  return <ErrorPage title={PAGE_NOT_FOUND_LABEL} description={NOT_FOUND_LABEL} />;
 }

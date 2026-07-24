@@ -84,6 +84,9 @@ export default async function RootLayout({
   const { initialHasResponded, initialRecaptchaConsented, initialAnalyticsConsented } =
     parseInitialConsent(cookieStore.get("cc_cookie")?.value);
 
+  // Test error handling in RootLayout
+  //throw new Error("Test error in RootLayout");
+
   return (
     <html lang="en">
       <body
