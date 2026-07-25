@@ -21,15 +21,25 @@ type ListItemNode = {
   children: InlineNode[];
 };
 
+type ImageNode = {
+  url: string;
+  alternativeText?: string | null;
+};
+
 type BlockNode = {
   type: string;
   level?: number;
   format?: "ordered" | "unordered";
-  url?: string;
-  alt?: string;
+  image?: ImageNode;
   language?: string;
   children?: (InlineNode | ListItemNode | BlockNode)[];
 };
+
+function resolveMediaUrl(url: string): string {
+  if (/^https?:\/\//i.test(url)) return url;
+  const base = process.env.STRAPI_URL ?? "http://localhost:1337";
+  return `${base}${url.startsWith("/") ? "" : "/"}${url}`;
+}
 
 function escapeHtml(text: string): string {
   return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -93,7 +103,10 @@ function renderBlock(block: BlockNode): string {
       return `<pre style="background:#f4f4f4;padding:16px;border-radius:6px;font-size:14px;overflow-x:auto;margin:0 0 16px;font-family:monospace;white-space:pre-wrap;"><code>${content}</code></pre>`;
     }
     case "image": {
-      return `<img src="${block.url}" alt="${block.alt ?? ""}" style="max-width:100%;height:auto;margin:16px 0;display:block;" />`;
+      if (!block.image?.url) return "";
+      const src = resolveMediaUrl(block.image.url);
+      const alt = escapeHtml(block.image.alternativeText ?? "");
+      return `<img src="${src}" alt="${alt}" style="max-width:100%;height:auto;margin:16px 0;display:block;" />`;
     }
     default:
       return "";

@@ -122,6 +122,9 @@ export const userEmailContent = (
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0 0 20px;">
         Ha bármi kérdésed van, nyugodtan írj nekünk az <a href="mailto:${contactEmail}" style="color:#377F76;text-decoration:none;">${contactEmail}</a> email címre.
       </p>
+      <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0 0 20px;">
+        Csatolmányban megtalálod az <strong>utazási szerződést</strong>.
+      </p>
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0 0 8px;">
         Hamarosan találkozunk! ⛰️
       </p>
