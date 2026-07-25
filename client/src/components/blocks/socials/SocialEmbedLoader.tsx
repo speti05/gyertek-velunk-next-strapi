@@ -1,12 +1,12 @@
 "use client";
 
-import CircularProgress from "@mui/material/CircularProgress";
+import CustomCircularProgress from "@/components/custom-ui-components/custom-circular-progress/custom-circular-progress";
 import { LOADING_LABEL } from "@/utils/texts";
 
 export function SocialEmbedLoader() {
   return (
     <div className="socials-block__loader" aria-label={LOADING_LABEL}>
-      <CircularProgress enableTrackSlot size="4rem" />
+      <CustomCircularProgress enableTrackSlot size="4rem" />
     </div>
   );
 }

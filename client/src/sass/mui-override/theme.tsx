@@ -436,6 +436,14 @@ export const theme = createTheme({
       ],
     },
 
+    MuiCircularProgress: {
+      styleOverrides: {
+        root: {
+          color: colors.button.primary.main,
+        },
+      },
+    },
+
     MuiChip: {
       styleOverrides: {
         root: {
