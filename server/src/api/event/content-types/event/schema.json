@@ -58,6 +58,10 @@
     "endDate": {
       "type": "date"
     },
+    "registrationDeadline": {
+      "type": "date",
+      "required": true
+    },
     "difficulty": {
       "type": "integer",
       "min": 1,

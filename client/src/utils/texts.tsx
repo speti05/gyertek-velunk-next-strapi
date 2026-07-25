@@ -64,6 +64,7 @@ export const FORM_LABELS = {
   submit: "Regisztráció",
   startDate: "Kezdés dátuma",
   endDate: "Befejezés dátuma",
+  registrationDeadline: "Jelentkezési határidő",
   price: "Részvételi díj (/fő)",
   country: "Ország",
   city: "Város",
@@ -195,6 +196,8 @@ export const SIGNUP_LOGIN_LINK = "jelentkezz be";
 export const SIGNUP_PROFILE_INCOMPLETE = "A jelentkezéshez kérjük, töltsd ki az";
 export const SIGNUP_PROFILE_LINK = "alapadataidat és lakcímedet a profilodon";
 export const SIGNUP_ALREADY_SIGNED_UP = "Már jelentkeztél erre a túrára.";
+export const SIGNUP_DEADLINE_PASSED_WARNING =
+  "Erre a túrára már nem lehet jelentkezni, a jelentkezési határidő lejárt.";
 export const SIGNUP_SUCCESS_TITLE = (eventTitle: string) => `Sikeres jelentkezés: ${eventTitle}`;
 export const SIGNUP_SUCCESS_CONTENT =
   "Köszönjük hogy regisztráltál a túránkra! Hamarosan jelentkezünk!";

@@ -575,6 +575,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     price: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    registrationDeadline: Schema.Attribute.Date & Schema.Attribute.Required;
     slug: Schema.Attribute.UID<"title">;
     startDate: Schema.Attribute.Date;
     title: Schema.Attribute.String;

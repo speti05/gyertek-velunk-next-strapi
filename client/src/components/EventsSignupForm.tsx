@@ -18,6 +18,7 @@ import {
   SIGNUP_PROFILE_INCOMPLETE,
   SIGNUP_PROFILE_LINK,
   SIGNUP_ALREADY_SIGNED_UP,
+  SIGNUP_DEADLINE_PASSED_WARNING,
   SIGNUP_SUCCESS_TITLE,
   SIGNUP_SUCCESS_CONTENT,
   SIGNUP_SUCCESS_EMAIL_INFO,
@@ -46,6 +47,7 @@ type EventSignupFormProps = {
   description?: string;
   startDate?: string;
   endDate?: string;
+  registrationDeadline?: string;
   price?: string;
   difficulty?: number;
   image?: {
@@ -64,6 +66,7 @@ function EventSignupFormInner({
   description,
   startDate,
   endDate,
+  registrationDeadline,
   price,
   difficulty,
   image,
@@ -103,10 +106,12 @@ function EventSignupFormInner({
     userProfile?.houseNumber
   );
 
+  const isDeadlinePassed = !!registrationDeadline && new Date() > new Date(registrationDeadline);
+
   function renderSignupArea() {
     if (successMessage) return null;
 
-    const isDisabled = alreadySignedUp || !userProfile || !hasCompleteProfile;
+    const isDisabled = alreadySignedUp || isDeadlinePassed || !userProfile || !hasCompleteProfile;
 
     return (
       <>
@@ -122,9 +127,13 @@ function EventSignupFormInner({
           {SIGNUP_BUTTON_LABEL}
         </CustomButton>
 
-        {alreadySignedUp && <CustomAlertMessage infoMessage={SIGNUP_ALREADY_SIGNED_UP} />}
+        {isDeadlinePassed && <CustomAlertMessage warningMessage={SIGNUP_DEADLINE_PASSED_WARNING} />}
 
-        {!alreadySignedUp && !userProfile && (
+        {!isDeadlinePassed && alreadySignedUp && (
+          <CustomAlertMessage infoMessage={SIGNUP_ALREADY_SIGNED_UP} />
+        )}
+
+        {!isDeadlinePassed && !alreadySignedUp && !userProfile && (
           <CustomAlertMessage
             infoMessage={
               <>
@@ -138,7 +147,7 @@ function EventSignupFormInner({
           />
         )}
 
-        {!alreadySignedUp && userProfile && !hasCompleteProfile && (
+        {!isDeadlinePassed && !alreadySignedUp && userProfile && !hasCompleteProfile && (
           <CustomAlertMessage
             infoMessage={
               <>
@@ -178,6 +187,12 @@ function EventSignupFormInner({
               <dd>{formatDate(endDate)}</dd>
             </div>
           )}
+          {registrationDeadline && (
+            <div className="signup-form__details-row">
+              <dt>{FORM_LABELS.registrationDeadline}</dt>
+              <dd>{formatDate(registrationDeadline)}</dd>
+            </div>
+          )}
           {price && (
             <div className="signup-form__details-row">
               <dt>{FORM_LABELS.price}</dt>
@@ -207,7 +222,7 @@ function EventSignupFormInner({
 
       <BlockRenderer blocks={blocks} />
 
-      {userProfile && hasCompleteProfile && !alreadySignedUp && (
+      {userProfile && hasCompleteProfile && !alreadySignedUp && !isDeadlinePassed && (
         <TourSignupDialog
           open={dialogOpen}
           onClose={() => setDialogOpen(false)}

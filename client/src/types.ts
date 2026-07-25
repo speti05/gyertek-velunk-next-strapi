@@ -59,6 +59,7 @@ export interface EventProps extends BaseBlogProps {
   price: string;
   startDate: string;
   endDate: string;
+  registrationDeadline: string;
   stayInTouchEventId?: string;
   difficulty?: number;
 }
