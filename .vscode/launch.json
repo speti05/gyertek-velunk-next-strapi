@@ -28,6 +28,21 @@
       "env": {
         "NODE_ENV": "development"
       }
+    },
+    {
+      "name": "Server (develop, no_content db)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["run", "develop"],
+      "cwd": "${workspaceFolder}/server",
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"],
+      "autoAttachChildProcesses": false,
+      "env": {
+        "NODE_ENV": "development",
+        "DATABASE_FILENAME": ".tmp/no_content/data.db"
+      }
     }
   ],
   "compounds": [
