@@ -3,6 +3,7 @@ import { getTransporter } from "./mailer";
 import { emailWrapper, SystemEmailSubject } from "./templates/layout";
 import { userEmailContent, adminEmailContent } from "./templates/event-signup";
 import { getSiteSettings } from "./get-site-settings";
+import { getTravelContractAttachment } from "./travel-contract-attachment";
 
 const headerAttachment = {
   filename: "email-fejlec-600.jpg",
@@ -69,6 +70,11 @@ export const sendSignupEmails = async (signupData: {
     `Sending event signup emails for ${userEmail} (${firstName} ${lastName}) for event ${eventName}`
   );
 
+  const travelContractAttachment = await getTravelContractAttachment().catch((err) => {
+    console.error("Failed to build travel contract attachment:", err);
+    return null;
+  });
+
   await t.sendMail({
     from: `"${organizationName}" <${process.env.SMTP_USER}>`,
     to: userEmail,
@@ -79,7 +85,9 @@ export const sendSignupEmails = async (signupData: {
       SystemEmailSubject.EventSignup,
       organizationName
     ),
-    attachments: [headerAttachment],
+    attachments: travelContractAttachment
+      ? [headerAttachment, travelContractAttachment]
+      : [headerAttachment],
   });
 
   await t.sendMail({
