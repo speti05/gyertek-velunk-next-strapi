@@ -91,6 +91,10 @@
     background-color: colors.$gy-v-white;
   }
 
+  &__item--tiktok &__item-content:not([data-loaded="true"]) > *:not(.socials-block__loader) {
+    visibility: hidden;
+  }
+
   &__item--facebook &__item-content {
     .fb-page {
       width: 100%;

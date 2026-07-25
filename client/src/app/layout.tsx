@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Luckiest_Guy, Source_Sans_3 } from "next/font/google";
+// @ts-ignore-next-line
 import "../sass/main.scss";
+// @ts-ignore-next-line
 import "./globals.css";
+// @ts-ignore-next-line
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import { cookies } from "next/headers";
@@ -10,6 +13,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "@/utils/texts";
 
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { ScrollToHash } from "@/components/ScrollToHash";
 import { MuiThemeProvider } from "@/components/providers/theme-provider/theme-provider";
 import { AuthProvider } from "@/context/auth-context";
 import { CookieConsentProvider } from "@/context/cookie-consent-context";
@@ -101,6 +105,7 @@ export default async function RootLayout({
           >
             <AuthProvider isLoggedIn={isLoggedIn} userEmail={userEmail}>
               <RecaptchaProvider>
+                <ScrollToHash />
                 <Header data={header} socialLinks={footer} />
                 {children}
                 <Footer data={footer} />
