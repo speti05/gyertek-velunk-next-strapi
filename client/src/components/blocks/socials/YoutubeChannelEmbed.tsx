@@ -1,21 +1,14 @@
-import Image from "next/image";
 import { FOOTER_YOUTUBE_ARIA, SOCIALS_YOUTUBE_LABEL } from "@/utils/texts";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import CustomIcon from "@/components/custom-ui-components/custom-icon/custom-icon";
 import { SocialBoxTitle } from "@/components/blocks/socials/SocialBoxTitle";
-import { SocialEmbedLoader } from "@/components/blocks/socials/SocialEmbedLoader";
+import { YoutubeVideoGrid, type YoutubeVideoItem } from "@/components/blocks/socials/YoutubeVideoGrid";
 
 const YOUTUBE_CHANNELS_URL = "https://www.googleapis.com/youtube/v3/channels";
 const YOUTUBE_PLAYLIST_ITEMS_URL = "https://www.googleapis.com/youtube/v3/playlistItems";
 const CHANNEL_ID_CACHE_SECONDS = 60 * 60 * 24;
 const LATEST_VIDEOS_CACHE_SECONDS = 60 * 60;
 const LATEST_VIDEOS_COUNT = 6;
-
-interface YoutubeVideoItem {
-  id: string;
-  title: string;
-  thumbnailUrl: string;
-}
 
 interface YoutubeChannelsResponse {
   items?: { id?: string }[];
@@ -130,22 +123,7 @@ export async function YoutubeChannelEmbed({ url }: Readonly<{ url: string }>) {
     <div className="socials-block__item socials-block__item--youtube">
       <SocialBoxTitle url={url} iconName="youtube" label={SOCIALS_YOUTUBE_LABEL} />
       <div className="socials-block__item-content">
-        <SocialEmbedLoader />
-        <div className="socials-block__videos">
-          {videos.map((video) => (
-            <CustomLink
-              key={video.id}
-              href={`https://www.youtube.com/watch?v=${video.id}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              underline="none"
-              className="socials-block__video"
-            >
-              <Image src={video.thumbnailUrl} alt={video.title} width={320} height={180} />
-              <span className="socials-block__video-title">{video.title}</span>
-            </CustomLink>
-          ))}
-        </div>
+        <YoutubeVideoGrid videos={videos} />
       </div>
     </div>
   );

@@ -296,6 +296,8 @@ export const FOOTER_TIKTOK_ARIA = "Látogass el TikTok oldalunkra";
 export const FOOTER_YOUTUBE_ARIA = "Látogass el YouTube oldalunkra";
 
 // Socials block
+export const SOCIALS_EMBED_LOAD_ERROR =
+  "A tartalom betöltése nem sikerült. Ennek gyakran egy hirdetésblokkoló (AdBlock) böngészőbővítmény az oka - kérjük, kapcsold ki, majd töltsd újra az oldalt.";
 export const SOCIALS_FACEBOOK_LABEL = "Facebook";
 export const SOCIALS_INSTAGRAM_LABEL = "Instagram";
 export const SOCIALS_TIKTOK_LABEL = "TikTok";

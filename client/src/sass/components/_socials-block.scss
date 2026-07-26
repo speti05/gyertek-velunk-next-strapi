@@ -126,6 +126,10 @@
     padding: 1.5rem;
     overflow-y: auto;
     background-color: colors.$gy-v-white;
+
+    &:not([data-loaded="true"]) {
+      visibility: hidden;
+    }
   }
 
   &__video {

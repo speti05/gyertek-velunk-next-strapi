@@ -1,11 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { FOOTER_TIKTOK_ARIA, SOCIALS_TIKTOK_LABEL } from "@/utils/texts";
-import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
-import CustomIcon from "@/components/custom-ui-components/custom-icon/custom-icon";
+import { useEffect, useRef } from "react";
+import { FOOTER_TIKTOK_ARIA, SOCIALS_EMBED_LOAD_ERROR, SOCIALS_TIKTOK_LABEL } from "@/utils/texts";
 import { SocialBoxTitle } from "@/components/blocks/socials/SocialBoxTitle";
 import { SocialEmbedLoader } from "@/components/blocks/socials/SocialEmbedLoader";
+import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
+import {
+  useSocialEmbedTimeout,
+  watchForEmbedIframeLoad,
+} from "@/components/blocks/socials/useSocialEmbedTimeout";
 
 declare global {
   interface Window {
@@ -14,7 +17,6 @@ declare global {
 }
 
 const TIKTOK_EMBED_SCRIPT_SRC = "https://www.tiktok.com/embed.js";
-const TIKTOK_EMBED_TIMEOUT_MS = 8000;
 
 function getTiktokUsername(url: string): string | null {
   try {
@@ -47,69 +49,45 @@ function loadTiktokEmbedScript(): Promise<void> {
   });
 }
 
-function TiktokLinkFallback({ url }: Readonly<{ url: string }>) {
-  return (
-    <div className="socials-block__item socials-block__item--tiktok socials-block__item--link">
-      <SocialBoxTitle url={url} iconName="tiktok" label={SOCIALS_TIKTOK_LABEL} />
-      <div className="socials-block__item-content">
-        <CustomLink
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={FOOTER_TIKTOK_ARIA}
-          underline="none"
-        >
-          <CustomIcon name="tiktok" size="3x" />
-        </CustomLink>
-      </div>
-    </div>
-  );
-}
-
 export function TiktokEmbed({ url }: Readonly<{ url: string }>) {
   const username = getTiktokUsername(url);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [hasFailed, setHasFailed] = useState(false);
+  const { isLoaded, hasFailed, markLoaded } = useSocialEmbedTimeout();
 
   useEffect(() => {
     if (!username) return;
     const container = containerRef.current;
     if (!container) return;
 
-    let cancelled = false;
-    const observer = new MutationObserver(() => {
-      if (container.querySelector("iframe")) setIsLoaded(true);
-    });
-    observer.observe(container, { childList: true, subtree: true });
+    const stopWatching = watchForEmbedIframeLoad(container, markLoaded);
 
+    let cancelled = false;
     loadTiktokEmbedScript().then(() => {
       if (!cancelled) window.tiktokEmbed?.lib?.render?.();
     });
 
-    const timeoutId = window.setTimeout(() => {
-      if (!cancelled && !container.querySelector("iframe")) setHasFailed(true);
-    }, TIKTOK_EMBED_TIMEOUT_MS);
-
     return () => {
       cancelled = true;
-      observer.disconnect();
-      window.clearTimeout(timeoutId);
+      stopWatching();
     };
-  }, [username]);
+  }, [username, markLoaded]);
 
   if (!username) return null;
-
-  if (hasFailed) return <TiktokLinkFallback url={url} />;
 
   return (
     <div className="socials-block__item socials-block__item--tiktok" aria-label={FOOTER_TIKTOK_ARIA}>
       <SocialBoxTitle url={url} iconName="tiktok" label={SOCIALS_TIKTOK_LABEL} />
-      <div className="socials-block__item-content" data-loaded={isLoaded} ref={containerRef}>
-        <SocialEmbedLoader />
-        <blockquote className="tiktok-embed" cite={url} data-unique-id={username} data-embed-type="creator">
-          <section />
-        </blockquote>
+      <div className="socials-block__item-content" data-loaded={isLoaded || hasFailed} ref={containerRef}>
+        {hasFailed ? (
+          <CustomAlertMessage warningMessage={SOCIALS_EMBED_LOAD_ERROR} />
+        ) : (
+          <>
+            <SocialEmbedLoader />
+            <blockquote className="tiktok-embed" cite={url} data-unique-id={username} data-embed-type="creator">
+              <section />
+            </blockquote>
+          </>
+        )}
       </div>
     </div>
   );
