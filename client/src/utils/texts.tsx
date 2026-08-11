@@ -31,6 +31,11 @@ export const PICTURE_GALLERY_EMPTY_TITLE = "Nincsenek képek.";
 export const PICTURE_GALLERY_EMPTY_DESCRIPTION =
   "Ehhez a galériához még nem tartoznak megjeleníthető képek.";
 
+// Hero with text
+export const HERO_WITH_TEXT_EMPTY_TITLE = "Nincsenek képek.";
+export const HERO_WITH_TEXT_EMPTY_DESCRIPTION =
+  "Ehhez a szekcióhoz még nem tartoznak megjeleníthető képek.";
+
 export const TOUR_CALENDAR_LABEL = "Túranaptár";
 export const TOUR_SIGNUP_HEADLINE = "Túrajelentkezés";
 

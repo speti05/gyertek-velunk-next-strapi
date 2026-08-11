@@ -32,7 +32,7 @@ const CustomGallery: React.FC<CustomGalleryProps> = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [paused, setPaused] = useState(false);
-  const count = images.length;
+  const count = images?.length ?? 0;
 
   const goNext = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % count);
@@ -47,6 +47,8 @@ const CustomGallery: React.FC<CustomGalleryProps> = ({
     const timer = setInterval(goNext, slideIntervalMs);
     return () => clearInterval(timer);
   }, [goNext, count, paused, autoplay, slideIntervalMs]);
+
+  if (count === 0) return null;
 
   return (
     <>
