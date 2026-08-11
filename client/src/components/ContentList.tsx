@@ -5,6 +5,7 @@ import { PaginationComponent } from "@/components/PaginationComponent";
 import { SearchNoSSR } from "@/components/SearchNoSSR";
 import { removeAccents } from "@/utils/text-utils";
 import { ContentListHeadline } from "@/components/ContentListHeadline";
+import { EmptyContent } from "@/components/EmptyContent";
 import { CONTENT_LIST_EMPTY_TITLE, CONTENT_LIST_EMPTY_DESCRIPTION } from "@/utils/texts";
 
 interface ContentListProps {
@@ -80,10 +81,10 @@ export async function ContentList({
             <Component key={article.documentId} {...article} basePath={path} />
           ))
         ) : (
-          <div className="content-items__empty">
-            <h3 className="content-items__empty-title">{CONTENT_LIST_EMPTY_TITLE}</h3>
-            <p className="content-items__empty-description">{CONTENT_LIST_EMPTY_DESCRIPTION}</p>
-          </div>
+          <EmptyContent
+            title={CONTENT_LIST_EMPTY_TITLE}
+            description={CONTENT_LIST_EMPTY_DESCRIPTION}
+          />
         )}
       </div>
       {showPagination && <PaginationComponent pageCount={pageCount} pageParam={pageParam} />}

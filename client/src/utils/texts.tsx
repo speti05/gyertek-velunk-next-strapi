@@ -26,6 +26,11 @@ export const CONTENT_LIST_EMPTY_TITLE = "Nincs találat.";
 export const CONTENT_LIST_EMPTY_DESCRIPTION =
   "Egyelőre nincs ilyen típusú bejegyzés, ami a keresési feltételeknek megfelel.";
 
+// Picture gallery
+export const PICTURE_GALLERY_EMPTY_TITLE = "Nincsenek képek.";
+export const PICTURE_GALLERY_EMPTY_DESCRIPTION =
+  "Ehhez a galériához még nem tartoznak megjeleníthető képek.";
+
 export const TOUR_CALENDAR_LABEL = "Túranaptár";
 export const TOUR_SIGNUP_HEADLINE = "Túrajelentkezés";
 

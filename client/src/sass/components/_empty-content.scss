@@ -1,0 +1,28 @@
+@use "../base/colors";
+
+.empty-content {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 55rem;
+  text-align: center;
+
+  &__illustration {
+    width: 30rem;
+    height: 30rem;
+    max-width: 100%;
+    margin-bottom: 2.5rem;
+  }
+
+  &__title {
+    margin-bottom: 1rem;
+    color: colors.$gy-v-dark-brown;
+  }
+
+  &__description {
+    max-width: 44rem;
+    color: colors.$gy-v-dark-brown;
+  }
+}
