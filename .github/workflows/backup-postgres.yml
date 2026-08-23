@@ -1,0 +1,33 @@
+name: Backup Postgres (reusable)
+
+on:
+  workflow_call:
+    inputs:
+      backup_dir:
+        description: Subdirectory under backups/ to store dumps in (keeps deploy and scheduled backups separate)
+        required: true
+        type: string
+      retain:
+        description: Number of most recent dumps to keep in that subdirectory
+        required: true
+        type: number
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump and rotate backups
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /opt/gyertek-velunk
+            mkdir -p "backups/${{ inputs.backup_dir }}"
+            if docker compose ps --status running postgres | grep -q postgres; then
+              docker compose exec -T postgres sh -c 'pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB"' > "backups/${{ inputs.backup_dir }}/backup_$(date +%Y%m%d%H%M%S).sql"
+              ls -1t "backups/${{ inputs.backup_dir }}"/backup_*.sql | tail -n +$(( ${{ inputs.retain }} + 1 )) | xargs -r rm --
+            else
+              echo "postgres container not running yet (first deploy?) - skipping backup"
+            fi

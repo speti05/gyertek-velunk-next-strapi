@@ -1,0 +1,46 @@
+# Version control
+.git
+.gitignore
+
+# Dependencies (installed fresh inside the image)
+node_modules
+client/node_modules
+server/node_modules
+
+# Build output
+client/.next
+client/tsconfig.tsbuildinfo
+server/dist
+server/.strapi
+server/.strapi-updater.json
+
+# Strapi local data (persisted via volume, not baked into the image)
+server/.tmp
+
+# Env files (injected at runtime, not baked into the image)
+.env
+.env.production
+client/.env.local
+server/.env
+server/.env.production
+!*.env.example
+!*.env.local.example
+
+# Seed data / large assets (not needed to build the image)
+seed-data.tar.gz
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor / tooling
+.vscode
+.claude
+.sticky-notes
+.DS_Store
+
+# Docs
+README.md
+client/README.md
+server/README.md
