@@ -23,6 +23,19 @@ value in the correct location by hand.
 | `VPS_SSH_KEY` | Secrets | not used in local development (See FIRST_DEPLOYMENT.md) |
 | `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` | Secrets | build-time, referenced as `secrets.` |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Variables | build-time, referenced as `vars.` |
+| `NEXT_PUBLIC_STRAPI_URL` | Variables | build-time, referenced as `vars.` — set it to `https://admin.gyertekvelunk.eu` |
+
+`NEXT_PUBLIC_STRAPI_URL` is the **public** Strapi origin. It is used for media
+URLs and for the CSP `frame-ancestors` header, so it must be a host the browser
+can reach — not the internal `http://strapi:1337`, which only exists inside the
+Docker network. Server-side API calls keep using `STRAPI_API_URL` (set in
+`docker-compose.yml`) and stay on that internal network.
+
+Getting this wrong shows up as broken images: client components fall back to
+`http://localhost:1337`, and Next's image optimizer then refuses the fetch with
+`upstream image ... resolved to private ip`. Because the value is inlined at
+build time, fixing it requires re-running the deploy workflow — restarting the
+container is not enough.
 
 > Note:the NEXT values are actually public (they appear in the browser). The
 > Secrets vs Variables split here is only a convention, not a security

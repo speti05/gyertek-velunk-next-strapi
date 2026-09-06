@@ -5,7 +5,7 @@ import { subscribeAction } from "@/data/actions";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
-import { getStrapiURL } from "@/utils/get-strapi-url";
+import { getStrapiMediaURL } from "@/utils/get-strapi-url";
 import { MAX_EMAIL } from "@/components/custom-ui-components/custom-text-input/input-length-limits";
 import { useRecaptchaSubmit } from "@/hooks/use-recaptcha-submit";
 
@@ -41,7 +41,7 @@ export function Subscribe({
   const zodErrors = formState?.zodErrors?.email;
   const errorMessage = zodErrors || formState?.errorMessage;
 
-  const imageUrl = `${getStrapiURL()}${image?.url}`;
+  const imageUrl = `${getStrapiMediaURL()}${image?.url}`;
 
   return (
     <section className="newsletter" style={{ backgroundImage: `url(${imageUrl})` }}>

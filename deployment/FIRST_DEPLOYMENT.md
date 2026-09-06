@@ -108,8 +108,18 @@ Actions will use to connect:
 
 ```bash
 ssh-keygen -t ed25519 -f gh-actions-deploy -N ""
+
+# this command will create two files in the current folder:
+# 1: gh-actions-deploy (private key) - keep this secret, it goes into a GitHub secret .Its content goes to the `VPS_SSH_KEY` secret in the repo settings
+
+# looks like something like this:
+# -----BEGIN OPENSSH PRIVATE KEY-----
+# blallballaaVErylongkeyasddfsdfdsfsfd....
+# -----END OPENSSH PRIVATE KEY-----
+
+# 2: gh-actions-deploy.pub (public key) - append this to ~/.ssh/authorized_keys on the VPS
 # append gh-actions-deploy.pub to ~/.ssh/authorized_keys on the VPS
-# keep gh-actions-deploy (the private key) - it goes into a GitHub secret below
+type gh-actions-deploy.pub | ssh user@VPS_IP "mkdir -p ~/.ssh && chmod 700 ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
 ```
 
 The `gyertek-velunk-server`/`gyertek-velunk-client` GHCR packages are set to
@@ -189,6 +199,16 @@ keeps serving the existing WordPress site. Only repoint them once you've
 verified the new stack works (step 8) — TLS issuance in step 9 also requires
 these records to already resolve to the VPS.
 
+verify the DNS change has propagated (it can take 10 minutes,if TTL is 600) with:
+
+```bash
+    getent ahosts gyertekvelunk.eu       # should list both the v4 and v6 VPS addresses
+
+    curl.exe -4 http://gyertekvelunk.eu/
+    curl.exe -6 http://gyertekvelunk.eu/
+
+```
+
 ## 7. Running a deploy
 
 The workflow (`.github/workflows/deploy.yml`) only runs when triggered
@@ -220,76 +240,365 @@ DNS points at the VPS.
 
 ## 8. Issuing TLS certificates
 
-Only do this once DNS (step 6) already resolves to the VPS, otherwise
-Let's Encrypt's validation request will fail.
+Only start this once DNS (step 6) already resolves to the VPS - Let's Encrypt
+validates by fetching a file over plain HTTP on port 80, so it fails otherwise.
 
-"you@example.com" - provide your own email for Let's Encrypt notifications (renewal failures, etc.)
+**This whole step is safe to restart from the top.** If an earlier attempt left
+things half-finished, just work through 8.1 - 8.6 in order: 8.2 puts nginx back
+into a known-good state before anything else happens.
+
+### Which window to run what in
+
+Keep two terminals open side by side - it saves a lot of confusion:
+
+| Window    | What it is                                   | How to open it                                                        |
+| --------- | -------------------------------------------- | --------------------------------------------------------------------- |
+| **[VPS]** | An SSH session on the server                 | PowerShell -> `ssh user@VPS_IP` -> `cd /opt/gyertek-velunk`           |
+| **[LOC]** | A plain PowerShell in your local repo folder | A **second** PowerShell window -> `cd "C:\path-to-your-project-root"` |
+
+Every block below is tagged **[VPS]** or **[LOC]**. Don't run a **[LOC]** block
+inside the SSH session - `scp` there would try to copy from the server, which is
+not what you want. Run the blocks one at a time and check the expected output
+before moving on; skipping ahead is what makes this step hard to unpick.
+
+### 8.1 Check that DNS points at this VPS
+
+**[VPS]**
 
 ```bash
 cd /opt/gyertek-velunk
-
-
-docker compose run --rm certbot certonly --webroot \
-  -w /var/www/certbot \
-  -d gyertekvelunk.eu -d www.gyertekvelunk.eu \
-  --email you@example.com --agree-tos --no-eff-email
-
-docker compose run --rm certbot certonly --webroot \
-  -w /var/www/certbot \
-  -d admin.gyertekvelunk.eu \
-  --email you@example.com --agree-tos --no-eff-email
+getent hosts gyertekvelunk.eu www.gyertekvelunk.eu admin.gyertekvelunk.eu
+curl -s ifconfig.me; echo
 ```
 
-Then swap the bootstrap HTTP-only configs for the HTTPS-enabled ones and
-reload nginx (no downtime):
+All three hostnames must resolve to the address `ifconfig.me` prints (this
+VPS). If any of them still points somewhere else, go back to step 6 and wait
+for propagation - **do not** run certbot yet. Let's Encrypt allows only 5
+failed validations per hostname per hour, and burning through them means
+waiting an hour before you can try again.
+
+### 8.2 Start from the HTTP-only bootstrap configs
+
+certbot needs port 80 answering over plain HTTP, which only the _bootstrap_
+configs do. Check which set is currently active:
+
+**[VPS]**
+
+```bash
+ls deployment/nginx deployment/nginx/conf.d
+```
+
+Expected: the two `*.conf.ssl` files sit in `deployment/nginx/`, and `conf.d/`
+holds the two bootstrap `*.conf` files. **If that is what you see, skip to 8.3.**
+
+If `conf.d/` holds the SSL versions instead (an earlier attempt moved them
+there), move them back out and re-copy the bootstrap files, which are still
+tracked in git locally:
+
+**[VPS]**
+
+```bash
+mv deployment/nginx/conf.d/gyertekvelunk.eu.conf deployment/nginx/gyertekvelunk.eu.conf.ssl
+mv deployment/nginx/conf.d/admin.gyertekvelunk.eu.conf deployment/nginx/admin.gyertekvelunk.eu.conf.ssl
+```
+
+**[LOC]**
+
+```powershell
+cd "C:\path-to-your-project-root"
+scp deployment/nginx/conf.d/*.conf user@VPS_IP:/opt/gyertek-velunk/deployment/nginx/conf.d/
+```
+
+Then bring nginx back up and confirm plain HTTP works:
+
+**[VPS]**
+
+```bash
+docker compose up -d nginx
+docker compose exec nginx nginx -t
+docker compose exec nginx nginx -s reload
+curl -I http://gyertekvelunk.eu
+```
+
+`nginx -t` must print `syntax is ok` / `test is successful`, and the `curl` must
+return an HTTP status line (200 or a 3xx), not a connection error. Don't go
+further until both are true.
+
+### 8.3 Issue the certificates
+
+Replace `you@example.com` with your own address (Let's Encrypt uses it for
+expiry and renewal-failure notices). Run the commands **one at a time** - each
+is a single line, so paste it whole.
+
+**Always run each command with `--dry-run` first, and only re-run it without
+the flag once the dry run succeeds.** Reason: Let's Encrypt enforces a limit of
+**5 failed validations per hostname per hour**. Hit it and you are locked out of
+that hostname for an hour - which, mid-deployment, is a long time to stare at a
+broken site. And validation failures are the norm on a first deployment: a stale
+DNS record, an AAAA pointing at the old host, nginx serving the wrong config.
+`--dry-run` runs the identical request against Let's Encrypt's **staging**
+environment, which has far higher limits, so a failure there costs nothing. It
+exercises the whole path - DNS resolution, port 80 reachability, the webroot,
+the challenge file - and only skips issuing a real certificate. In other words:
+a passing dry run is proof that the real run will work, bought for free.
+
+#### First: the dry runs
+
+**[VPS]**
+
+```bash
+docker compose run --rm --entrypoint certbot certbot certonly --webroot -w /var/www/certbot -d gyertekvelunk.eu -d www.gyertekvelunk.eu --email you@example.com --agree-tos --no-eff-email --dry-run
+```
+
+```bash
+docker compose run --rm --entrypoint certbot certbot certonly --webroot -w /var/www/certbot -d admin.gyertekvelunk.eu --email you@example.com --agree-tos --no-eff-email --dry-run
+```
+
+Each must end with **`The dry run was successful.`** If either fails, fix the
+cause and repeat the dry run - as often as needed, it stays free. The
+troubleshooting section below covers the usual causes; the `Detail:` line in the
+error names the IP address Let's Encrypt actually connected to, which is the
+single most useful clue (if it is not your VPS's address, the problem is DNS).
+
+Note that a dry run writes **no certificate** - `/etc/letsencrypt/live/` stays
+empty afterwards. That is expected, not a failure.
+
+#### Then: the real runs
+
+Only once both dry runs pass, run the exact same commands **without**
+`--dry-run`:
+
+**[VPS]**
+
+```bash
+docker compose run --rm --entrypoint certbot certbot certonly --webroot -w /var/www/certbot -d gyertekvelunk.eu -d www.gyertekvelunk.eu --email you@example.com --agree-tos --no-eff-email
+```
+
+```bash
+docker compose run --rm --entrypoint certbot certbot certonly --webroot -w /var/www/certbot -d admin.gyertekvelunk.eu --email you@example.com --agree-tos --no-eff-email
+```
+
+Each should finish within seconds and print `Successfully received certificate`
+plus the path under `/etc/letsencrypt/live/`.
+
+#### Why `--entrypoint certbot` is required
+
+It is not optional. The `certbot` service in `docker-compose.yml` overrides the
+image's entrypoint with the renewal loop
+(`sh -c "... while :; do certbot renew; sleep 12h; done"`). Without the flag,
+`certonly ...` is passed as positional arguments to that `sh -c` script, which
+ignores them - so the container silently runs the renewal loop (finding nothing
+to renew) and hangs on `sleep 12h` instead of issuing anything. The flag
+restores the image's default entrypoint so the arguments take effect.
+
+> **If a command just sits there** printing nothing (or something about renewal)
+> instead of finishing: that is the missing `--entrypoint certbot`. Press
+> `Ctrl+C` and re-run the line exactly as written above. No certificate was
+> issued, and nothing was damaged.
+
+### 8.4 Verify the certificates actually exist
+
+**[VPS]**
+
+```bash
+docker compose run --rm --entrypoint sh certbot -c "ls -la /etc/letsencrypt/live/"
+```
+
+You must see a directory for `gyertekvelunk.eu` **and** one for
+`admin.gyertekvelunk.eu`. If either is missing, do not continue to 8.5 - the
+nginx reload there would fail with the same "cannot load certificate" error. Go
+back to 8.1/8.3 and fix the cause first.
+
+If a directory carries a numeric suffix (`admin.gyertekvelunk.eu-0001`, left by
+an earlier partial issuance), the `ssl_certificate` / `ssl_certificate_key`
+paths in the matching `.conf.ssl` file must be pointed at that exact directory
+name before you continue.
+
+### 8.5 Swap in the HTTPS configs and reload
+
+Only now, with both certificates confirmed present:
+
+**[VPS]**
 
 ```bash
 mv deployment/nginx/gyertekvelunk.eu.conf.ssl deployment/nginx/conf.d/gyertekvelunk.eu.conf
 mv deployment/nginx/admin.gyertekvelunk.eu.conf.ssl deployment/nginx/conf.d/admin.gyertekvelunk.eu.conf
+docker compose exec nginx nginx -t
 docker compose exec nginx nginx -s reload
 ```
 
-The `certbot` service in `docker-compose.yml` keeps running in the
-background and renews certificates automatically (checks every 12h; Let's
-Encrypt certs are renewed ~30 days before their 90-day expiry). nginx itself
-does **not** auto-reload on renewal, so add a weekly cron job on the VPS to
-pick up renewed certs:
+Always run `nginx -t` before the reload - it validates the config without
+touching the running server, so a mistake here costs no downtime. A failed
+`reload` leaves the _running_ nginx on its previous config, but the files on
+disk are already the SSL ones, so the next `docker compose up -d` would
+crash-loop nginx. That is exactly the state 8.2 undoes.
+
+### 8.6 Verify HTTPS
+
+**[LOC]** - in PowerShell `curl` is an alias for `Invoke-WebRequest`, so call
+`curl.exe` explicitly:
+
+```powershell
+curl.exe -I https://gyertekvelunk.eu
+curl.exe -I https://admin.gyertekvelunk.eu
+curl.exe -I http://gyertekvelunk.eu     # expect 301 -> https
+```
+
+Then open both hostnames in a browser and check the padlock.
+
+### Troubleshooting: "cannot load certificate"
+
+```
+[emerg] cannot load certificate "/etc/letsencrypt/live/admin.gyertekvelunk.eu/fullchain.pem":
+BIO_new_file() failed (... No such file or directory ...)
+```
+
+The certificate named in the message was never issued - almost always a certbot
+run without `--entrypoint certbot` (8.3), or DNS not yet resolving to the VPS
+(8.1). nginx reports only the _first_ failure it hits and loads `conf.d/`
+alphabetically, so an error naming `admin.` tells you nothing about whether the
+main domain's certificate exists - check both in 8.4.
+
+Recovery: restart this step at 8.2, which moves the SSL configs back out and
+restores plain HTTP, then continue through 8.3 - 8.6.
+
+### Automatic renewal
+
+The `certbot` service in `docker-compose.yml` keeps running in the background
+and renews certificates automatically (checks every 12h; Let's Encrypt certs are
+renewed ~30 days before their 90-day expiry). nginx itself does **not**
+auto-reload on renewal, so add a weekly crfon job on the VPS to pick up renewed
+certs:
+
+**[VPS]**
 
 ```bash
-# crontab -e
-0 4 * * 0 cd /opt/gyertek-velunk && docker compose exec nginx nginx -s reload
+(crontab -l 2>/dev/null; echo "0 4 * * 0 cd /opt/gyertek-velunk && docker compose exec -T nginx nginx -s reload") | crontab -
+
+# list the cron jobs to verify it was added:
+crontab -l
 ```
 
 ## 9. Importing seed data
 
-Once Postgres is up and empty (first deploy only):
+Use **`seed-data-live.tar.gz`** for the production import, not `seed-data.tar.gz`.
 
-```bash
-scp seed-data.tar.gz deployuser@VPS_IP:/opt/gyertek-velunk/
-ssh deployuser@VPS_IP
-cd /opt/gyertek-velunk
-docker compose cp seed-data.tar.gz strapi:/opt/app/seed-data.tar.gz
-docker compose exec strapi yarn strapi import -f /opt/app/seed-data.tar.gz --force
-docker compose exec strapi rm /opt/app/seed-data.tar.gz
-rm seed-data.tar.gz
+`seed-data.tar.gz` is the full development export - it also carries articles,
+blogs, newsletters, event signups and contact requests from the dev database,
+several of which contain real personal data (names, e-mail addresses, birth
+dates, document numbers) that has no business being in the live database.
+`seed-data-live.tar.gz` is the trimmed version, containing only what the live
+site needs to come up:
+
+| Content                     | Records                                                                                                                       |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Page                        | 14 (7 pages, draft + published: `rolunk`, `beszamolok`, `blog`, `aszf`, `adatvedelem`, `utazasi-szerzodes`, `hibabejelentes`) |
+| Global (single type)        | 2 (draft + published)                                                                                                         |
+| Home Page (single type)     | 2 (draft + published)                                                                                                         |
+| Site Settings (single type) | 1                                                                                                                             |
+| Media library               | 35 file records + 2 folders, 143 files under `assets/uploads/`                                                                |
+| Roles & permissions         | 2 roles + 33 permissions (this restores the Public role's endpoint access)                                                    |
+| Locales                     | 2                                                                                                                             |
+
+Everything else - articles, blogs, events, newsletters, signups, contact
+requests, and the dev `admin::session` rows - is deliberately excluded. Add that
+content through the admin panel on the live site instead.
+
+Regenerate `seed-data-live.tar.gz` from a fresh export with
+`deployment/build-live-seed.py` (run it from the repo root) ONLY if the base content ever changes.
+
+### 9.1 Import the content
+
+**[LOC]**
+
+```powershell
+scp seed-data-live.tar.gz user@VPS_IP:/opt/gyertek-velunk/
 ```
 
-If there's existing media in `server/public/uploads` that needs to carry
-over too (the import above only restores DB records, not the actual files):
+**[VPS]**
 
 ```bash
-tar czf uploads.tar.gz -C server/public uploads
-scp uploads.tar.gz deployuser@VPS_IP:/opt/gyertek-velunk/
-ssh deployuser@VPS_IP
 cd /opt/gyertek-velunk
-docker compose cp uploads.tar.gz strapi:/opt/app/uploads.tar.gz
-docker compose exec strapi sh -c "cd /opt/app/public && tar xzf /opt/app/uploads.tar.gz --strip-components=1"
-docker compose exec strapi rm /opt/app/uploads.tar.gz
+docker compose cp seed-data-live.tar.gz strapi:/opt/app/seed-data-live.tar.gz
+docker compose exec strapi yarn strapi import -f /opt/app/seed-data-live.tar.gz --force --exclude files
 ```
 
-After importing, create a fresh, strong-password admin user via
-`https://admin.gyertekvelunk.eu/admin` and remove/deactivate any admin
-account that came from the imported dev data.
+`--exclude files` is **required**. Without it the import tries to back up the
+existing assets by renaming `public/uploads` to `public/uploads_backup_<ts>` -
+but that directory is a Docker volume mount point, and a mount point cannot be
+renamed. The rename fails with `EBUSY` and Strapi reports it as the misleading
+`The backup folder for the assets could not be created inside the public folder.
+Please ensure Strapi has write permissions on the public directory`. It is not a
+permissions problem; the container runs as root.
+
+`--force` **deletes the existing content** before importing. Your admin account
+survives (the `admin_users` table is never part of an export), but the Public
+role's permissions are overwritten by the ones in the archive.
+
+### 9.2 Restore the media files
+
+The step above imported the media _records_ but not the actual files, so put
+those in place from the same archive:
+
+**[VPS]**
+
+```bash
+docker compose exec strapi sh -c "mkdir -p /tmp/seed && tar xzf /opt/app/seed-data-live.tar.gz -C /tmp/seed && cp -a /tmp/seed/assets/uploads/. /opt/app/public/uploads/ && ls /opt/app/public/uploads | wc -l && rm -rf /tmp/seed"
+```
+
+Expect a count of ~143. The archive is unpacked in full rather than by
+subdirectory because Alpine's busybox `tar` matches member names exactly and the
+archive has no `assets/uploads/` directory entry - `tar xzf … assets/uploads`
+fails with `not found in archive`.
+
+`cp -a` writes _through_ the volume mount, which is fine; only renaming the
+mount point itself is impossible.
+
+### 9.3 Clean up and restart
+
+**[VPS]**
+
+```bash
+docker compose exec strapi rm /opt/app/seed-data-live.tar.gz
+docker compose up -d --force-recreate client
+```
+
+The client is force-recreated rather than restarted so that Next.js's on-disk
+fetch cache is discarded - otherwise it keeps serving the responses it cached
+before the import.
+
+### 9.4 Verify
+
+**[VPS]**
+
+```bash
+docker compose exec postgres psql -U strapi -d strapi -c "select 'home_pages' t, count(*) from home_pages union all select 'globals', count(*) from globals union all select 'pages', count(*) from pages;"
+docker compose logs --tail=30 strapi | grep -E "api/(global|home-page)"
+```
+
+The counts must be non-zero, and the API requests must return `200` - a `403`
+means the Public role is missing an endpoint permission, a `404` means the
+single type exists only as a draft and needs publishing in the admin panel.
+
+Watch the import output itself for `error:` lines too. A foreign-key violation
+(`Key (…) is not present in table …`) aborts the transaction, and every write
+after it is silently discarded - the import then appears to finish while leaving
+the database half-empty.
+
+### 9.5 Admin account
+
+Admin panel accounts are never included in an export, so `/admin` shows the
+"Welcome to Strapi" registration form on a fresh database. That is expected.
+
+Create the account from the command line rather than the browser, so the
+password is not sent in the clear before TLS is up (and does not land in your
+shell history - run it with no flags and it prompts):
+
+**[VPS]**
+
+```bash
+docker compose exec strapi yarn strapi admin:create-user
+```
 
 ## 10. Backups
 
