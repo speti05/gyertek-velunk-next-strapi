@@ -51,20 +51,22 @@ $font-color-hovered: colors.$gy-v-light-brown;
 
   &__links {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     list-style: none;
     gap: 6rem;
   }
 
   &__policies-nav {
     display: flex;
+    flex-wrap: wrap;
     list-style: none;
 
     justify-content: center;
+    align-items: center;
+    gap: 3.5rem;
     margin-bottom: 3.5rem;
-
-    & li:not(:last-of-type) {
-      margin-right: 3.5rem;
-    }
   }
 
   &__policies {
@@ -77,5 +79,16 @@ $font-color-hovered: colors.$gy-v-light-brown;
 
   .copy {
     text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    padding: 6rem 2rem 4rem;
+
+    &__links,
+    &__policies-nav {
+      flex-direction: column;
+      gap: 2rem;
+      text-align: center;
+    }
   }
 }

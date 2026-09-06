@@ -8,6 +8,8 @@ $header-background-color: colors.$gy-v-dark-green;
   --navbar-height: 100px;
   --social-bar-height: 4.6rem;
   --header-height: var(--navbar-height);
+  // logo scales with the viewport, never wider than its intrinsic 256px
+  --header-logo-width: clamp(110px, 38vw, 256px);
 }
 
 li {
@@ -95,8 +97,12 @@ li {
   top: 0;
 
   a.navbar__logo-link {
+    display: block;
+
     img.header__logo {
       position: relative;
+      width: var(--header-logo-width);
+      height: auto;
       filter: drop-shadow(10px 10px 10px #222);
     }
   }

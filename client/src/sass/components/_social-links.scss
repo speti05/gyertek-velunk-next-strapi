@@ -37,10 +37,31 @@ $width: 4rem;
 
   &--header {
     justify-content: flex-start;
-    padding-left: 200px;
+    // Keeps the icons clear of the logo: the logo is positioned at the header's
+    // left edge, while this bar only starts at the navbar's 5% side padding.
+    // 1st term: the original desktop reserve, 2nd: the real logo overhang.
+    padding-left: max(
+      calc(var(--header-logo-width, 256px) - 56px),
+      calc(var(--header-logo-width, 256px) - 5vw + 1rem)
+    );
     padding-right: 3rem;
     overflow: hidden;
     height: var(--social-bar-height);
     flex-flow: row-reverse;
+
+    @media (max-width: 600px) {
+      padding-right: 1.5rem;
+      justify-content: flex-end;
+
+      .social-links__list {
+        gap: 2rem;
+
+        // trims the empty slack around each icon so all four still fit
+        // next to the logo
+        li {
+          width: 3rem;
+        }
+      }
+    }
   }
 }
