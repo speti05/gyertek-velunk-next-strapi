@@ -82,8 +82,9 @@ jobs:
             docker compose up -d
 
             # The compose file tracks :latest, so verify that the containers really run the
-            # images built from THIS commit. Catches a stale :latest (e.g. a re-run of an
-            # older workflow run) instead of silently deploying old code.
+            # images built from THIS commit. "up -d" sometimes leaves a container on its old
+            # image even after the tag moved, and a stale :latest (e.g. a re-run of an older
+            # workflow run) would deploy old code silently.
             for service in strapi client; do
               case "$service" in
                 strapi) expected_ref="${{ env.SERVER_IMAGE }}:${{ github.sha }}" ;;
@@ -93,6 +94,12 @@ jobs:
               docker pull -q "$expected_ref" > /dev/null
               expected_id=$(docker image inspect "$expected_ref" --format '{{.Id}}')
               running_id=$(docker inspect "$(docker compose ps -q "$service")" --format '{{.Image}}')
+
+              if [ "$running_id" != "$expected_id" ]; then
+                echo "$service: stale container on $running_id, forcing recreate"
+                docker compose up -d --force-recreate "$service"
+                running_id=$(docker inspect "$(docker compose ps -q "$service")" --format '{{.Image}}')
+              fi
 
               echo "$service: running=$running_id expected=$expected_id ($expected_ref)"
 
