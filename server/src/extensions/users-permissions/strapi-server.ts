@@ -56,12 +56,17 @@ function isRateLimited(ctx: any, key: string, limit: number, windowMs: number): 
 
 // -------------------------------------------------------
 
+// Kept in sync with the client (client/src/data/auth-actions.ts), which matches on this
+// message to offer the "resend confirmation email" link.
+const EMAIL_NOT_CONFIRMED_ERROR = "Email is registered but not confirmed";
+
 export default (plugin: any) => {
   const originalCallback = plugin.controllers.auth.callback;
   const originalRegister = plugin.controllers.auth.register;
   const originalForgotPassword = plugin.controllers.auth.forgotPassword;
   const originalEmailConfirmation = plugin.controllers.auth.emailConfirmation;
   const originalResetPassword = plugin.controllers.auth.resetPassword;
+  const originalSendEmailConfirmation = plugin.controllers.auth.sendEmailConfirmation;
 
   // Login — 10 attempts / 15 minutes / IP
   plugin.controllers.auth.callback = async (ctx: any) => {
@@ -74,7 +79,29 @@ export default (plugin: any) => {
   plugin.controllers.auth.register = async (ctx: any) => {
     const ip = getClientIp(ctx);
     if (isRateLimited(ctx, `register:${ip}`, 5, 60 * 60 * 1000)) return;
+
+    // The core controller answers "Email or Username are already taken" for every
+    // duplicate. We answer with a distinct message when the existing account is still
+    // waiting for its email confirmation, so the client can offer to resend that email.
+    const email = ctx.request.body?.email;
+    if (typeof email === "string" && email.trim()) {
+      const existingUser = await strapi.db.query("plugin::users-permissions.user").findOne({
+        where: { email: email.trim().toLowerCase() },
+      });
+
+      if (existingUser && !existingUser.confirmed && !existingUser.blocked) {
+        return ctx.badRequest(EMAIL_NOT_CONFIRMED_ERROR);
+      }
+    }
+
     await originalRegister(ctx);
+  };
+
+  // Resend confirmation email — 3 attempts / hour / IP
+  plugin.controllers.auth.sendEmailConfirmation = async (ctx: any) => {
+    const ip = getClientIp(ctx);
+    if (isRateLimited(ctx, `send-email-confirmation:${ip}`, 3, 60 * 60 * 1000)) return;
+    await originalSendEmailConfirmation(ctx);
   };
 
   // Forgot password — 5 attempts / hour / IP

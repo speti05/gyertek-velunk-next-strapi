@@ -113,6 +113,12 @@ export const MESSAGES = {
   passwordNeedsSpecial: "A jelszónak tartalmaznia kell legalább egy speciális karaktert.",
   registrationEmailSent:
     "Regisztráció sikeres! Kérjük, erősítsd meg az email címedet a kiküldött levélben lévő linkre kattintva.",
+  emailNotConfirmed:
+    "Ez az email cím már regisztrálva van, de még nincs megerősítve. Kérjük, erősítsd meg az email címedet a kiküldött levélben lévő linkre kattintva.",
+  confirmationEmailResent:
+    "Elküldtük az új megerősítő emailt. Kérjük, nézd meg a postafiókodat (a spam mappát is).",
+  confirmationEmailResendFailed:
+    "Nem sikerült elküldeni a megerősítő emailt. Kérjük, próbáld újra később.",
   confirmEmailSuccess: "Az email cím sikeresen megerősítve! Most már bejelentkezhetsz.",
   confirmEmailFailed: "Az email cím megerősítése sikertelen. A link érvénytelen vagy lejárt.",
   confirmEmailInvalidLink: "Érvénytelen megerősítési link.",
@@ -152,6 +158,8 @@ export const AUTH_CONFIRM_PASSWORD_LABEL = "Jelszó megerősítése";
 export const AUTH_BACK_TO_LOGIN = "← Vissza a bejelentkezéshez";
 export const AUTH_HAS_ACCOUNT_HINT = "Már van fiókod?";
 export const AUTH_CONFIRM_EMAIL_TITLE = "Email megerősítés";
+export const AUTH_RESEND_CONFIRMATION_LINK = "ide kattintva új megerősítő emailt kapsz";
+export const AUTH_RESEND_CONFIRMATION_PREFIX = " Ha nem kaptad meg a levelet, ";
 
 export const PASSWORD_RULES = [
   {

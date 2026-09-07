@@ -11,6 +11,7 @@ import {
   resetPasswordService,
   updateUserProfileService,
   getUserProfileService,
+  resendEmailConfirmationService,
 } from "./auth-service";
 import { isDev } from "@clientRoot/env";
 import { MESSAGES, AUTH_FORGOT_PASSWORD_SUCCESS } from "@/utils/texts";
@@ -72,7 +73,12 @@ export async function authAction(prevState: any, formData: FormData) {
   const recaptchaToken = formData.get("recaptchaToken") as string | null;
   const isHuman = await verifyRecaptcha(recaptchaToken);
   if (!isHuman) {
-    return { ...prevState, zodErrors: null, errorMessage: MESSAGES.recaptchaFailed };
+    return {
+      ...prevState,
+      zodErrors: null,
+      errorMessage: MESSAGES.recaptchaFailed,
+      unconfirmedEmail: null,
+    };
   }
 
   const mode = formData.get("mode") as "login" | "register";
@@ -110,23 +116,37 @@ export async function authAction(prevState: any, formData: FormData) {
         ...prevState,
         zodErrors: validatedFields.error.flatten().fieldErrors,
         errorMessage: null,
+        unconfirmedEmail: null,
       };
     }
 
     const data = await registerService(validatedFields.data.email, validatedFields.data.password);
 
     if (!data) {
-      return { ...prevState, zodErrors: null, errorMessage: MESSAGES.tryAgain };
-    }
-
-    if (data.error) {
-      const isDuplicate =
-        data.error.message.toLowerCase().includes("already taken") ||
-        data.error.message.toLowerCase().includes("already exists");
       return {
         ...prevState,
         zodErrors: null,
-        errorMessage: isDuplicate ? MESSAGES.emailAlreadyTaken : MESSAGES.registrationFailed,
+        errorMessage: MESSAGES.tryAgain,
+        unconfirmedEmail: null,
+      };
+    }
+
+    if (data.error) {
+      const message = data.error.message?.toLowerCase() ?? "";
+      // Strapi is extended to answer with this when the account exists but is unconfirmed.
+      const isUnconfirmed = message.includes("not confirmed");
+      const isDuplicate =
+        message.includes("already taken") || message.includes("already exists");
+
+      let errorMessage = MESSAGES.registrationFailed;
+      if (isUnconfirmed) errorMessage = MESSAGES.emailNotConfirmed;
+      else if (isDuplicate) errorMessage = MESSAGES.emailAlreadyTaken;
+
+      return {
+        ...prevState,
+        zodErrors: null,
+        errorMessage,
+        unconfirmedEmail: isUnconfirmed ? validatedFields.data.email : null,
       };
     }
 
@@ -135,6 +155,7 @@ export async function authAction(prevState: any, formData: FormData) {
         ...prevState,
         zodErrors: null,
         errorMessage: null,
+        unconfirmedEmail: null,
         successMessage: MESSAGES.registrationEmailSent,
       };
     }
@@ -153,6 +174,45 @@ export async function logoutAction() {
   cookieStore.delete("jwt");
   cookieStore.delete("user_email");
   redirect("/login");
+}
+
+const resendEmailConfirmationSchema = z.object({
+  email: z.string().email({ message: MESSAGES.emailInvalid }),
+});
+
+export async function resendEmailConfirmationAction(prevState: any, formData: FormData) {
+  const recaptchaToken = formData.get("recaptchaToken") as string | null;
+  const isHuman = await verifyRecaptcha(recaptchaToken);
+  if (!isHuman) {
+    return { ...prevState, errorMessage: MESSAGES.recaptchaFailed, successMessage: null };
+  }
+
+  const email = formData.get("email") as string;
+  const validated = resendEmailConfirmationSchema.safeParse({ email });
+
+  if (!validated.success) {
+    return {
+      ...prevState,
+      errorMessage: MESSAGES.confirmationEmailResendFailed,
+      successMessage: null,
+    };
+  }
+
+  const result = await resendEmailConfirmationService(validated.data.email);
+
+  if (!result?.ok) {
+    return {
+      ...prevState,
+      errorMessage: MESSAGES.confirmationEmailResendFailed,
+      successMessage: null,
+    };
+  }
+
+  return {
+    ...prevState,
+    errorMessage: null,
+    successMessage: MESSAGES.confirmationEmailResent,
+  };
 }
 
 const forgotPasswordSchema = z.object({

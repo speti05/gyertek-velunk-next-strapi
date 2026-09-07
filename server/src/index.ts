@@ -74,6 +74,20 @@ export default {
       await grantPermission(strapi, id, "api::event.event.find");
     }
 
+    // Public role: allow requesting a new confirmation email (used by the register form
+    // when the address is already registered but not confirmed yet)
+    const publicRole = await strapi.db.query("plugin::users-permissions.role").findOne({
+      where: { type: "public" },
+    });
+
+    if (publicRole) {
+      await grantPermission(
+        strapi,
+        publicRole.id,
+        "plugin::users-permissions.auth.sendEmailConfirmation"
+      );
+    }
+
     // Newsletter: send on first publish
     const handleNewsletterPublish = async (result: any) => {
       if (!result.publishedAt || result.sentAt) return;

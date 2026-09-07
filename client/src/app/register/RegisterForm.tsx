@@ -1,8 +1,8 @@
 "use client";
 
-import { useActionState, useRef, useState } from "react";
+import { useActionState, useRef, useState, useTransition } from "react";
 import { useFormStatus } from "react-dom";
-import { authAction } from "@/data/auth-actions";
+import { authAction, resendEmailConfirmationAction } from "@/data/auth-actions";
 import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
@@ -25,6 +25,8 @@ import {
   AUTH_PRIVACY_LINK_LABEL,
   AUTH_TERMS_ACCEPT_SUFFIX,
   AUTH_TERMS_REQUIRED_ERROR,
+  AUTH_RESEND_CONFIRMATION_PREFIX,
+  AUTH_RESEND_CONFIRMATION_LINK,
 } from "@/utils/texts";
 import CustomIcon from "@/components/custom-ui-components/custom-icon/custom-icon";
 import {
@@ -32,9 +34,17 @@ import {
   MAX_PASSWORD,
 } from "@/components/custom-ui-components/custom-text-input/input-length-limits";
 import { CustomCheckbox } from "@/components/custom-ui-components/custom-checkbox/custom-checkbox";
+import { useRecaptcha, isRecaptchaConfigured } from "@/components/recaptcha-provider";
+import { useCookieConsent } from "@/context/cookie-consent-context";
 
 const INITIAL_STATE = {
   zodErrors: null,
+  errorMessage: null,
+  successMessage: null,
+  unconfirmedEmail: null as string | null,
+};
+
+const RESEND_INITIAL_STATE = {
   errorMessage: null,
   successMessage: null,
 };
@@ -74,11 +84,42 @@ function SubmitBtn() {
 
 function RegisterFormInner() {
   const [formState, formAction] = useActionState(authAction, INITIAL_STATE);
+  const [resendState, resendAction, resendPending] = useActionState(
+    resendEmailConfirmationAction,
+    RESEND_INITIAL_STATE
+  );
   const [password, setPassword] = useState("");
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [termsError, setTermsError] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const baseAction = useRecaptchaSubmit(formRef, formAction, "auth");
+  const { executeRecaptcha } = useRecaptcha();
+  const { openPreferences } = useCookieConsent();
+  const [, startTransition] = useTransition();
+
+  // Shown when the email is already registered but the account is still unconfirmed.
+  const showResendLink = !!formState?.unconfirmedEmail && !resendState?.successMessage;
+
+  async function handleResendConfirmation(e: React.MouseEvent<HTMLAnchorElement>) {
+    e.preventDefault();
+    if (!formState?.unconfirmedEmail || resendPending) return;
+
+    if (!executeRecaptcha && isRecaptchaConfigured) {
+      openPreferences();
+      return;
+    }
+
+    const resendFormData = new FormData();
+    resendFormData.append("email", formState.unconfirmedEmail);
+
+    if (executeRecaptcha) {
+      resendFormData.append("recaptchaToken", await executeRecaptcha("auth"));
+    }
+
+    startTransition(() => {
+      resendAction(resendFormData);
+    });
+  }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     if (!termsAccepted) {
@@ -135,7 +176,27 @@ function RegisterFormInner() {
           error={formState?.zodErrors?.passwordConfirmation?.[0]}
           slotProps={{ htmlInput: { maxLength: MAX_PASSWORD } }}
         />
-        <CustomAlertMessage errorMessage={formState?.errorMessage} />
+        <CustomAlertMessage
+          errorMessage={
+            formState?.errorMessage ? (
+              <>
+                {formState.errorMessage}
+                {showResendLink && (
+                  <>
+                    {AUTH_RESEND_CONFIRMATION_PREFIX}
+                    <CustomLink href="#" color="inherit" onClick={handleResendConfirmation}>
+                      {resendPending ? LOADING_LABEL : AUTH_RESEND_CONFIRMATION_LINK}
+                    </CustomLink>
+                  </>
+                )}
+              </>
+            ) : null
+          }
+        />
+        <CustomAlertMessage
+          errorMessage={resendState?.errorMessage}
+          successMessage={resendState?.successMessage}
+        />
         <CustomCheckbox
           checked={termsAccepted}
           onChange={(e) => {

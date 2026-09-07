@@ -95,6 +95,24 @@ export async function confirmEmailService(
   }
 }
 
+export async function resendEmailConfirmationService(
+  email: string
+): Promise<{ ok: boolean } | null> {
+  const url = new URL("/api/auth/send-email-confirmation", BASE_URL);
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+    return { ok: response.ok };
+  } catch (error) {
+    console.error("Resend Email Confirmation Service Error:", error);
+    return null;
+  }
+}
+
 export async function resetPasswordService(
   code: string,
   password: string,
