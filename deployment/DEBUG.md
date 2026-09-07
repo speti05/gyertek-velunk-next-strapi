@@ -29,3 +29,9 @@ Force recreate of a container (careful!):
 ```bash
 docker compose up -d --force-recreate client
 ```
+
+Check the deployment date of the image:
+
+```bash
+docker inspect --format '{{.Created}}' ghcr.io/speti05/gyertek-velunk-server:latest
+```

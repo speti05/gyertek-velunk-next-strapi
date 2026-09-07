@@ -33,7 +33,9 @@ jobs:
         with:
           context: ./server
           push: true
-          tags: ${{ env.SERVER_IMAGE }}:latest
+          tags: |
+            ${{ env.SERVER_IMAGE }}:latest
+            ${{ env.SERVER_IMAGE }}:${{ github.sha }}
           cache-from: type=gha,scope=server
           cache-to: type=gha,mode=max,scope=server
 
@@ -42,7 +44,9 @@ jobs:
         with:
           context: ./client
           push: true
-          tags: ${{ env.CLIENT_IMAGE }}:latest
+          tags: |
+            ${{ env.CLIENT_IMAGE }}:latest
+            ${{ env.CLIENT_IMAGE }}:${{ github.sha }}
           cache-from: type=gha,scope=client
           cache-to: type=gha,mode=max,scope=client
           build-args: |
@@ -69,7 +73,33 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
+            set -e
             cd /opt/gyertek-velunk
+
+            echo "Deploying commit ${{ github.sha }}"
+
             docker compose pull
             docker compose up -d
+
+            # The compose file tracks :latest, so verify that the containers really run the
+            # images built from THIS commit. Catches a stale :latest (e.g. a re-run of an
+            # older workflow run) instead of silently deploying old code.
+            for service in strapi client; do
+              case "$service" in
+                strapi) expected_ref="${{ env.SERVER_IMAGE }}:${{ github.sha }}" ;;
+                client) expected_ref="${{ env.CLIENT_IMAGE }}:${{ github.sha }}" ;;
+              esac
+
+              docker pull -q "$expected_ref" > /dev/null
+              expected_id=$(docker image inspect "$expected_ref" --format '{{.Id}}')
+              running_id=$(docker inspect "$(docker compose ps -q "$service")" --format '{{.Image}}')
+
+              echo "$service: running=$running_id expected=$expected_id ($expected_ref)"
+
+              if [ "$running_id" != "$expected_id" ]; then
+                echo "::error::$service is not running the image built from ${{ github.sha }}"
+                exit 1
+              fi
+            done
+
             docker image prune -f
