@@ -53,6 +53,19 @@ The prod Strapi container's env (`env_file`). Template: `server/.env.production.
 Contains the APP_KEYS/JWT secrets, SMTP, Postgres connection, etc.
 The `PREVIEW_SECRET` and Postgres values MUST match the ones in the root `.env`.
 
+Two URLs in this file must be the **public** origins, not the internal Docker
+hostnames — Strapi puts them into e-mails and redirects, which run in the
+visitor's browser:
+
+| Value | Set it to | Used by |
+| ----- | --------- | ------- |
+| `STRAPI_URL` | `https://admin.gyertekvelunk.eu` | `server.url` in `config/server.ts` — the e-mail confirmation link — and the newsletter unsubscribe links |
+| `CLIENT_URL` | `https://gyertekvelunk.eu` | the post-confirmation redirect (`src/index.ts`), the admin Preview origin (`config/admin.ts`), and the CSP `frame-src` (`config/middlewares.ts`) |
+
+If `STRAPI_URL` is missing, Strapi falls back to `host` + `port` and mails out
+`http://0.0.0.0:1337/...` confirmation links. If `CLIENT_URL` is missing, the
+redirect after a successful confirmation goes to `http://localhost:3000`.
+
 ## Not needed for production
 
 - `client/.env.local` — only for local `yarn dev`.
