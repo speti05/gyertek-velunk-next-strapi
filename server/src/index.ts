@@ -2,6 +2,7 @@ import path from "path";
 import type { Core } from "@strapi/strapi";
 import { sendNewsletterBroadcast } from "./lib/email/newsletter";
 import { getTransporter } from "./lib/email/mailer";
+import { applyAuthOverrides } from "./lib/auth/auth-overrides";
 
 async function grantPermission(strapi: Core.Strapi, roleId: number, action: string) {
   const existing = await strapi.db.query("plugin::users-permissions.permission").findOne({
@@ -20,7 +21,11 @@ async function grantPermission(strapi: Core.Strapi, roleId: number, action: stri
 }
 
 export default {
-  register() {},
+  // Route handlers are bound during bootstrap(), so the auth controller has to be
+  // patched here, in register().
+  register({ strapi }: { strapi: Core.Strapi }) {
+    applyAuthOverrides(strapi);
+  },
 
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     getTransporter().catch((err) => console.error("Mailer init failed:", err));
