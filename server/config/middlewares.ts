@@ -1,7 +1,10 @@
 // Config files receive Strapi's env helper as a parameter - that is why this exports a
 // function instead of a plain array. It must not be imported from "process": that is the
+
+import { getClientUrl } from "../src/lib/config/client-url";
+
 // process.env object, not a callable helper.
-export default ({ env }) => [
+export default ( () => [
   'strapi::logger',
   'strapi::errors',
   {
@@ -10,7 +13,7 @@ export default ({ env }) => [
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-          'frame-src': ["'self'", env('CLIENT_URL')],
+          'frame-src': ["'self'", getClientUrl()],
         },
       },
     },
