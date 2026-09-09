@@ -13,7 +13,7 @@ export default () => [
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-          "frame-src": ["'self'", getClientUrl()],
+          "frame-src": [getClientUrl()],
         },
       },
     },

@@ -30,8 +30,25 @@ Force recreate of a container (careful!):
 docker compose up -d --force-recreate client
 ```
 
-Check the deployment date of the image:
+Which commit is running on the VPS?
+
+```bash
+cd /opt/gyertek-velunk
+
+for service in strapi client; do
+  printf '%s: ' "$service"
+  docker inspect --format '{{index .Config.Labels "org.opencontainers.image.revision"}}' "$(docker compose ps -q "$service")"
+done
+```
+
+The deploy workflow stamps the commit SHA into every image it builds; an empty line means
+the container still runs an image built before that.
+
+Check the build date of the image:
 
 ```bash
 docker inspect --format '{{.Created}}' ghcr.io/speti05/gyertek-velunk-server:latest
 ```
+
+Not a freshness indicator: a fully cached rebuild reproduces the same image config with the
+original timestamp. Use the revision label above instead.
