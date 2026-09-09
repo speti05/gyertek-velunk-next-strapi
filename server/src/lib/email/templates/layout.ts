@@ -5,6 +5,7 @@ export enum SystemEmailSubject {
   EventSignupAdmin = "Új túrajelentkezés",
   NewsletterSignup = "Hírlevél feliratkozás",
   ContactRequestAdmin = "Új visszahívás / megkeresés",
+  ContactRequest = "Kapcsolatfelvételi kérés",
 }
 
 export const emailHeader = (subject: SystemEmailSubject | string) => `

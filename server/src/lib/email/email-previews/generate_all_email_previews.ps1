@@ -38,6 +38,11 @@ Run-Preview `
     (Join-Path $outDir "contact-request")
 
 Run-Preview `
+    "Visszahívás / megkeresés - felhasználói email (2 variáns)" `
+    (Join-Path $scriptDir "contact-request-user-preview.ts") `
+    (Join-Path $outDir "contact-request")
+
+Run-Preview `
     "Túrajelentkezés - felhasználói email" `
     (Join-Path $scriptDir "event-signup-user-preview.ts") `
     (Join-Path $outDir "event-signup-user.html")
