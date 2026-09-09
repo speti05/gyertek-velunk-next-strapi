@@ -30,6 +30,18 @@ Force recreate of a container (careful!):
 docker compose up -d --force-recreate client
 ```
 
+Which variables are set in `server/.env.production`?
+
+```bash
+cd /opt/gyertek-velunk
+
+grep -oE '^[A-Z_][A-Z0-9_]*' server/.env.production   # names only, keeps secrets off screen
+docker compose exec strapi printenv CLIENT_URL STRAPI_URL   # what the container actually got
+```
+
+The second line matters: editing `.env.production` only reaches the container after
+`docker compose up -d --force-recreate strapi`, a plain restart keeps the old environment.
+
 Which commit is running on the VPS?
 
 ```bash
