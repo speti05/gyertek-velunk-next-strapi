@@ -3,6 +3,7 @@ import { getTransporter } from "./mailer";
 import { emailWrapper, SystemEmailSubject } from "./templates/layout";
 import { adminContactRequestEmailContent } from "./templates/contact-request";
 import { getSiteSettings } from "./get-site-settings";
+import { getClientUrl } from "../config/client-url";
 
 const headerAttachment = {
   filename: "email-fejlec-600.jpg",
@@ -18,7 +19,7 @@ export const sendContactRequestEmail = async (data: {
 }) => {
   const t = await getTransporter();
   const { name, phone, email, preferredContact } = data;
-  const siteUrl = process.env.SITE_URL;
+  const siteUrl = getClientUrl();
   const { organizationName } = await getSiteSettings();
 
   console.info(`Sending contact request email for ${name}, preferred: ${preferredContact}`);

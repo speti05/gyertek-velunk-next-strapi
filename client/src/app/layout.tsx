@@ -10,6 +10,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { cookies } from "next/headers";
 import { getGlobalSettings } from "@/data/loaders";
 import { SITE_TITLE, SITE_DESCRIPTION } from "@/utils/texts";
+import { getSiteURL } from "@/utils/get-site-url";
 
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -34,6 +35,7 @@ const sourceSans3 = Source_Sans_3({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(getSiteURL()),
   title: SITE_TITLE,
   description: SITE_DESCRIPTION,
 };

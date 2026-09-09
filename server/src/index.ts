@@ -3,6 +3,7 @@ import type { Core } from "@strapi/strapi";
 import { sendNewsletterBroadcast } from "./lib/email/newsletter";
 import { getTransporter } from "./lib/email/mailer";
 import { applyAuthOverrides } from "./lib/auth/auth-overrides";
+import { getClientUrl, throwErrorIfClientUrlMissing } from "./lib/config/client-url";
 
 async function grantPermission(strapi: Core.Strapi, roleId: number, action: string) {
   const existing = await strapi.db.query("plugin::users-permissions.permission").findOne({
@@ -45,7 +46,8 @@ export default {
       return _originalSend(options);
     };
 
-    const clientUrl = process.env.CLIENT_URL ?? "http://localhost:3000";
+    throwErrorIfClientUrlMissing(strapi);
+    const clientUrl = getClientUrl();
 
     const pluginStore = strapi.store({
       environment: "",

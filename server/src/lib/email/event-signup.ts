@@ -4,6 +4,7 @@ import { emailWrapper, SystemEmailSubject } from "./templates/layout";
 import { userEmailContent, adminEmailContent } from "./templates/event-signup";
 import { getSiteSettings } from "./get-site-settings";
 import { getTravelContractAttachment } from "./travel-contract-attachment";
+import { getClientUrl } from "../config/client-url";
 
 const headerAttachment = {
   filename: "email-fejlec-600.jpg",
@@ -62,7 +63,7 @@ export const sendSignupEmails = async (signupData: {
     documentType, documentNumber, documentIssueDate, documentExpiryDate,
     allergies, fbLink, companions, notes, eventPrice,
   } = signupData;
-  const siteUrl = process.env.SITE_URL;
+  const siteUrl = getClientUrl();
   const settings = await getSiteSettings();
   const { organizationName, contactEmail, bankAccountNumber, bankBeneficiaryName, defaultCurrency } = settings;
 

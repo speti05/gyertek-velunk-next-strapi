@@ -3,6 +3,7 @@ import { getTransporter } from "./mailer";
 import { emailWrapper, SystemEmailSubject } from "./templates/layout";
 import { userEmailContent, adminEmailContent } from "./templates/newsletter-signup";
 import { getSiteSettings } from "./get-site-settings";
+import { getClientUrl } from "../config/client-url";
 
 const headerAttachment = {
   filename: "email-fejlec-600.jpg",
@@ -12,7 +13,7 @@ const headerAttachment = {
 
 export const sendNewsletterSignupEmails = async (subscriberEmail: string) => {
   const t = await getTransporter();
-  const siteUrl = process.env.SITE_URL;
+  const siteUrl = getClientUrl();
   const { organizationName } = await getSiteSettings();
 
   console.info(`Sending newsletter signup emails for ${subscriberEmail}`);

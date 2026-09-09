@@ -92,6 +92,11 @@ changed a `NEXT_PUBLIC_*` value, that's baked into the client image at
 and trigger a normal redeploy (section 1) instead of editing anything on the
 VPS.
 
+Two values now fail loudly instead of falling back to `localhost`: the client
+build breaks without the `NEXT_PUBLIC_SITE_URL` variable, and Strapi refuses to
+boot without `CLIENT_URL` in `server/.env.production`. Set both before
+redeploying.
+
 ## 4. Strapi content-type / schema changes
 
 - **Additive** (new field, new content-type, new component): no extra steps,

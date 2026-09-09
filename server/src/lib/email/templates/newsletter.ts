@@ -1,3 +1,4 @@
+import { getClientUrl } from "../../config/client-url";
 export const newsletterEmailWrapper = (
   subject: string,
   content: string,
@@ -5,7 +6,7 @@ export const newsletterEmailWrapper = (
   organizationName?: string
 ) => {
   const year = new Date().getFullYear();
-  const siteUrl = process.env.SITE_URL;
+  const siteUrl = getClientUrl();
   return `<!DOCTYPE html>
 <html lang="hu">
 <head>

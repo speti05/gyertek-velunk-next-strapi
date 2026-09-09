@@ -68,7 +68,7 @@ Next.js fetches content from Strapi's REST API. The client uses `qs` for query s
 
 ### Environment Files
 - `server/.env` — Strapi secrets (APP_KEYS, JWT secrets, DB config, SMTP). Copy from `server/.env.example`.
-- `client/.env.local` — Strapi API URL. Copy from `client/.env.local.example`.
+- `client/.env.local` — Strapi API URL and the site's own public URL (`NEXT_PUBLIC_SITE_URL`). Copy from `client/.env.local.example`.
 - Root `.env` — reCAPTCHA secret key (used by server-side Next.js routes).
 
 The `copy-env.mts` utility at the root automates copying `.env.example` → `.env` during `yarn setup`.

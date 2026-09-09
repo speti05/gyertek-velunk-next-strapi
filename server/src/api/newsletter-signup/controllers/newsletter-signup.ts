@@ -4,6 +4,7 @@
 
 import { factories } from "@strapi/strapi";
 import { verifyUnsubscribeToken } from "../../newsletter/services/unsubscribe-token";
+import { getClientUrl } from "../../../lib/config/client-url";
 
 const UID = "api::newsletter-signup.newsletter-signup" as const;
 
@@ -108,7 +109,7 @@ export default factories.createCoreController(UID, ({ strapi }) => ({
 
 function unsubscribePage(title: string, message: string, success: boolean): string {
   const color = success ? "#377F76" : "#c0392b";
-  const siteUrl = process.env.SITE_URL ?? "#";
+  const siteUrl = getClientUrl();
   return `<!DOCTYPE html>
 <html lang="hu">
 <head>

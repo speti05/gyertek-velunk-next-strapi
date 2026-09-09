@@ -156,7 +156,7 @@ for the full breakdown of what goes where and why. Summary:
 | Location                                                                                                  | Purpose                                                                                               |
 | --------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Repo → **Settings** (not your account settings) → Secrets and variables → **Actions** → **Secrets** tab   | `VPS_HOST`, `VPS_USER`, `VPS_SSH_KEY` (the private key from step 3), `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` |
-| Repo → **Settings** (not your account settings) → Secrets and variables → **Actions** → **Variables** tab | `NEXT_PUBLIC_GA_MEASUREMENT_ID`                                                                       |
+| Repo → **Settings** (not your account settings) → Secrets and variables → **Actions** → **Variables** tab | `NEXT_PUBLIC_GA_MEASUREMENT_ID`, `NEXT_PUBLIC_STRAPI_URL`, `NEXT_PUBLIC_SITE_URL`                     |
 
 Assuming `.env` and `server/.env.production` are already filled in on your
 local machine, copy them to the VPS (the `server/` folder doesn't exist

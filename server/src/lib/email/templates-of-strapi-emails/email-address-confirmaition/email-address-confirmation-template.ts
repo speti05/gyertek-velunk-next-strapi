@@ -1,7 +1,8 @@
 import { writeFileSync } from "fs";
 import { emailHeader, emailFooter, SystemEmailSubject } from "../../templates/layout";
+import { getClientUrl } from "../../../config/client-url";
 
-const SITE_URL = process.env.SITE_URL || "https://gyertekvelunk.eu";
+const SITE_URL = getClientUrl();
 
 const content = `
   <tr>

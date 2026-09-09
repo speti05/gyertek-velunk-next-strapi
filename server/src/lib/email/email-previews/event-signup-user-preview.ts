@@ -1,9 +1,10 @@
 import { writeFileSync } from "fs";
 import { emailWrapper, SystemEmailSubject } from "../templates/layout";
 import { userEmailContent } from "../templates/event-signup";
+import { getClientUrl } from "../../config/client-url";
 
 const html = emailWrapper(
-  "https://gyertekvelunk.eu",
+  getClientUrl(),
   userEmailContent(
     "János",
     "Kovács",

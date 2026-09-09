@@ -1,10 +1,11 @@
 import { writeFileSync, mkdirSync } from "fs";
 import { emailWrapper, SystemEmailSubject } from "../templates/layout";
 import { adminContactRequestEmailContent } from "../templates/contact-request";
+import { getClientUrl } from "../../config/client-url";
 
 // Variant A: phone + email both provided
 const htmlBoth = emailWrapper(
-  "https://gyertekvelunk.eu",
+  getClientUrl(),
   adminContactRequestEmailContent("Kovács János", "+36 30 123 4567", "kovacs.janos@example.com", "phone"),
   SystemEmailSubject.ContactRequestAdmin,
   "Gyertek Velünk"
@@ -12,7 +13,7 @@ const htmlBoth = emailWrapper(
 
 // Variant B: email only
 const htmlEmailOnly = emailWrapper(
-  "https://gyertekvelunk.eu",
+  getClientUrl(),
   adminContactRequestEmailContent("Nagy Éva", null, "nagy.eva@example.com", "email"),
   SystemEmailSubject.ContactRequestAdmin,
   "Gyertek Velünk"
@@ -20,7 +21,7 @@ const htmlEmailOnly = emailWrapper(
 
 // Variant C: phone only
 const htmlPhoneOnly = emailWrapper(
-  "https://gyertekvelunk.eu",
+  getClientUrl(),
   adminContactRequestEmailContent("Kiss Péter", "+36 70 987 6543", null, "phone"),
   SystemEmailSubject.ContactRequestAdmin,
   "Gyertek Velünk"

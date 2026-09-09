@@ -2,10 +2,11 @@ import { writeFileSync } from "fs";
 import { mkdirSync } from "fs";
 import { emailWrapper, SystemEmailSubject } from "../templates/layout";
 import { adminEmailContent } from "../templates/event-signup";
+import { getClientUrl } from "../../config/client-url";
 
 // Variant A: full data with 1 companion, invoice requested
 const htmlFull = emailWrapper(
-  "https://gyertekvelunk.eu",
+  getClientUrl(),
   adminEmailContent({
     firstName: "János",
     lastName: "Kovács",
@@ -53,7 +54,7 @@ const htmlFull = emailWrapper(
 
 // Variant B: minimal data, no companion, no invoice
 const htmlMinimal = emailWrapper(
-  "https://gyertekvelunk.eu",
+  getClientUrl(),
   adminEmailContent({
     firstName: "Éva",
     lastName: "Nagy",

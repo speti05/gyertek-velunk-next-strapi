@@ -24,6 +24,7 @@ value in the correct location by hand.
 | `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` | Secrets | build-time, referenced as `secrets.` |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Variables | build-time, referenced as `vars.` |
 | `NEXT_PUBLIC_STRAPI_URL` | Variables | build-time, referenced as `vars.` — set it to `https://admin.gyertekvelunk.eu` |
+| `NEXT_PUBLIC_SITE_URL` | Variables | build-time, referenced as `vars.` — set it to `https://gyertekvelunk.eu` |
 
 `NEXT_PUBLIC_STRAPI_URL` is the **public** Strapi origin. It is used for media
 URLs and for the CSP `frame-ancestors` header, so it must be a host the browser
@@ -43,6 +44,13 @@ container is not enough.
 
 In local development, these values are read from `client/.env.local` (see `.env.local.example`).
 
+`NEXT_PUBLIC_SITE_URL` is the public URL of the site itself (`https://gyertekvelunk.eu`),
+used for absolute URLs — the metadata base in `client/src/app/layout.tsx`, canonical and
+Open Graph links. `client/src/utils/get-site-url.ts` **throws** when it is missing rather
+than falling back, so leaving it unset fails the client build on the runner instead of
+baking `localhost:3000` into every page's metadata. The Strapi side calls the same value
+`CLIENT_URL` (section 3).
+
 ## 2. VPS: `/opt/gyertek-velunk/.env` (the root `.env`)
 
 Used for the `${...}` substitution in `docker-compose.yml`. Template: `.env.example`.
@@ -60,11 +68,15 @@ visitor's browser:
 | Value | Set it to | Used by |
 | ----- | --------- | ------- |
 | `STRAPI_URL` | `https://admin.gyertekvelunk.eu` | `server.url` in `config/server.ts` — the e-mail confirmation link — and the newsletter unsubscribe links |
-| `CLIENT_URL` | `https://gyertekvelunk.eu` | the post-confirmation redirect (`src/index.ts`), the admin Preview origin (`config/admin.ts`), and the CSP `frame-src` (`config/middlewares.ts`) |
+| `CLIENT_URL` | `https://gyertekvelunk.eu` | the post-confirmation and password-reset redirects (`src/index.ts`), the links and footers of outgoing e-mails (`src/lib/config/client-url.ts`), the admin Preview origin (`config/admin.ts`), and the CSP `frame-src` (`config/middlewares.ts`) |
 
 If `STRAPI_URL` is missing, Strapi falls back to `host` + `port` and mails out
-`http://0.0.0.0:1337/...` confirmation links. If `CLIENT_URL` is missing, the
-redirect after a successful confirmation goes to `http://localhost:3000`.
+`http://0.0.0.0:1337/...` confirmation links. `CLIENT_URL` is **mandatory**: Strapi
+throws on boot when it is unset (`throwErrorIfClientUrlMissing` in `src/index.ts`), so
+add it to `server/.env.production` *before* deploying, or the container will not start.
+
+`CLIENT_URL` replaced the former `SITE_URL`, which held the same value — if an older
+`.env.production` still has a `SITE_URL` line, delete it, nothing reads it any more.
 
 ## Not needed for production
 
