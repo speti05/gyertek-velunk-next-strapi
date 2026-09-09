@@ -1,4 +1,7 @@
-export default [
+// Config files receive Strapi's env helper as a parameter - that is why this exports a
+// function instead of a plain array. It must not be imported from "process": that is the
+// process.env object, not a callable helper.
+export default ({ env }) => [
   'strapi::logger',
   'strapi::errors',
   {
@@ -7,7 +10,7 @@ export default [
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-          'frame-src': ["'self'", process.env.CLIENT_URL || 'http://localhost:3000'],
+          'frame-src': ["'self'", env('CLIENT_URL')],
         },
       },
     },
