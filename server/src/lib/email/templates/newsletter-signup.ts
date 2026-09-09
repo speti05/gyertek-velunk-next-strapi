@@ -22,7 +22,7 @@ export const adminEmailContent = (subscriberEmail: string) => `
   <tr>
     <td bgcolor="#ffffff" style="padding:48px;">
 
-      <h2 style="font-family:'Luckiest Guy',cursive;color:#377F76;font-size:26px;margin:0 0 8px;letter-spacing:1px;font-weight:400;">Új hírlevél feliratkozás</h2>
+      <h2 style="font-family:'Source Sans 3',Arial,sans-serif;color:#377F76;font-size:26px;margin:0 0 8px;letter-spacing:1px;font-weight:400;">Új hírlevél feliratkozás</h2>
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0 0 32px;">Az alábbi email cím feliratkozott a hírlevélre.</p>
 
       <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-radius:8px;overflow:hidden;">

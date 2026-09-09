@@ -10,7 +10,7 @@ export const adminContactRequestEmailContent = (
   <tr>
     <td bgcolor="#ffffff" style="padding:48px;">
 
-      <h2 style="font-family:'Luckiest Guy',cursive;color:#377F76;font-size:26px;margin:0 0 8px;letter-spacing:1px;font-weight:400;">Új visszahívás / megkeresés érkezett</h2>
+      <h2 style="font-family:'Source Sans 3',Arial,sans-serif;color:#377F76;font-size:26px;margin:0 0 8px;letter-spacing:1px;font-weight:400;">Új visszahívás / megkeresés érkezett</h2>
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0 0 32px;">Az alábbi személy szeretné felvenni veletek a kapcsolatot.</p>
 
       <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-radius:8px;overflow:hidden;">
@@ -101,7 +101,7 @@ export const userContactRequestEmailContent = (
         </tr>
       </table>
 
-      <h2 style="font-family:'Luckiest Guy',cursive;color:#377F76;font-size:26px;margin:0 0 20px;text-align:center;letter-spacing:1px;font-weight:400;">Megkaptuk a megkeresésedet!</h2>
+      <h2 style="font-family:'Source Sans 3',Arial,sans-serif;color:#377F76;font-size:26px;margin:0 0 20px;text-align:center;letter-spacing:1px;font-weight:400;">Megkaptuk a megkeresésedet!</h2>
 
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#333333;font-size:16px;line-height:26px;margin:0 0 12px;">
         Kedves <strong>${name}</strong>,
