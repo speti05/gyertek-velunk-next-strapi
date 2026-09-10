@@ -44,6 +44,7 @@ interface BaseBlogProps {
   image: ImageProps;
   author: string;
   featured: boolean;
+  disabled: boolean;
   publishedAt: string;
   createdAt: string;
   updatedAt: string;

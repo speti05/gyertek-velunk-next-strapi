@@ -413,6 +413,7 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
     description: Schema.Attribute.Text;
+    disabled: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     image: Schema.Attribute.Media<"images">;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -452,6 +453,7 @@ export interface ApiBlogBlog extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
     description: Schema.Attribute.Text;
+    disabled: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     image: Schema.Attribute.Media<"images">;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<"oneToMany", "api::blog.blog"> &
@@ -566,6 +568,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
         },
         number
       >;
+    disabled: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     endDate: Schema.Attribute.Date;
     eventSignups: Schema.Attribute.Relation<"oneToMany", "api::event-signup.event-signup">;
     featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;

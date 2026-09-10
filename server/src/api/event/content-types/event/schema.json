@@ -34,6 +34,10 @@
       "type": "boolean",
       "default": false
     },
+    "disabled": {
+      "type": "boolean",
+      "default": false
+    },
     "price": {
       "type": "string"
     },

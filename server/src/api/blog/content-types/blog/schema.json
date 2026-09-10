@@ -24,6 +24,10 @@
     "author": {
       "type": "string"
     },
+    "disabled": {
+      "type": "boolean",
+      "default": false
+    },
     "image": {
       "type": "media",
       "multiple": false,

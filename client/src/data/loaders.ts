@@ -5,6 +5,12 @@ import { getUserProfileService } from "./auth-service";
 
 const BASE_URL = getStrapiURL();
 const DEFAULT_BLOG_PAGE_SIZE = 3;
+
+// Entries flagged as disabled in Strapi are hidden from the public site.
+// Older entries created before the flag existed have no value, so treat null as enabled.
+const notDisabledFilter = {
+  $or: [{ disabled: { $null: true } }, { disabled: { $eq: false } }],
+};
 const homePageQuery = qs.stringify({
   populate: {
     blocks: {
@@ -214,8 +220,11 @@ export async function getContent(
   url.search = qs.stringify({
     sort: ["createdAt:desc"],
     filters: {
-      $or: [{ title: { $containsi: query } }, { description: { $containsi: query } }],
-      ...(featured && { featured: { $eq: featured } }),
+      $and: [
+        { $or: [{ title: { $containsi: query } }, { description: { $containsi: query } }] },
+        notDisabledFilter,
+        ...(featured ? [{ featured: { $eq: featured } }] : []),
+      ],
     },
     pagination: {
       pageSize: pageSize,
@@ -316,9 +325,7 @@ export async function getContentBySlug(slug: string, path: string) {
   const url = new URL(path, BASE_URL);
   url.search = qs.stringify({
     filters: {
-      slug: {
-        $eq: slug,
-      },
+      $and: [{ slug: { $eq: slug } }, notDisabledFilter],
     },
     populate: {
       image: {
@@ -469,6 +476,7 @@ export async function getContentForCalendar(path: string, year: number) {
             $lte: endOfYear,
           },
         },
+        notDisabledFilter,
       ],
     },
     pagination: {
