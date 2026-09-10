@@ -86,6 +86,22 @@
     color: colors.$gy-v-dark-green;
   }
 
+  &__item--facebook &__item-title {
+    background-color: colors.$gy-v-facebook;
+  }
+
+  &__item--youtube &__item-title {
+    background-color: colors.$gy-v-youtube;
+  }
+
+  &__item--tiktok &__item-title {
+    background-color: colors.$gy-v-tiktok;
+  }
+
+  &__item--instagram &__item-title {
+    background: colors.$gy-v-instagram-gradient;
+  }
+
   &__item--youtube &__item-content,
   &__item--tiktok &__item-content {
     background-color: colors.$gy-v-white;
