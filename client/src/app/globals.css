@@ -1,11 +1,11 @@
-@tailwind utilities;
 @import "tailwindcss";
 /* Todo: necessary it doest too sttrong resets e.g.on header sizes
 @import "tailwindcss/preflight";
 */
 
 :root {
-  --background: #ffffff;
+  /* mirrors $gy-v-very-light-beige in sass/base/_colors.scss */
+  --background: #fefdfa;
   --foreground: #171717;
 }
 

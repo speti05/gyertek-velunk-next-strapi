@@ -88,7 +88,12 @@ const homePageQuery = {
           },
         },
         "blocks.searchable-card-list": {
-          populate: true,
+          populate: {
+            emptyReasonBackgroundImage: {
+              fields: ["url", "alternativeText"],
+            },
+            emptyReasonLinks: true,
+          },
         },
         "blocks.hero-with-text": {
           populate: {
@@ -172,7 +177,12 @@ const pageBySlugQuery = (slug: string, status?: "draft") =>
             },
           },
           "blocks.searchable-card-list": {
-            populate: true,
+            populate: {
+              emptyReasonBackgroundImage: {
+                fields: ["url", "alternativeText"],
+              },
+              emptyReasonLinks: true,
+            },
           },
           "blocks.hero-with-calendar": {
             populate: {

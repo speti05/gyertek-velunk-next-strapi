@@ -177,11 +177,16 @@ export interface BlocksSearchableCardList extends Struct.ComponentSchema {
     basePathForSubPages: Schema.Attribute.Enumeration<["turaink", "beszamolok", "blog"]>;
     contentCollectionType: Schema.Attribute.Enumeration<["events", "articles", "blogs"]> &
       Schema.Attribute.Required;
+    emptyReasonBackgroundImage: Schema.Attribute.Media<"images">;
+    emptyReasonLinks: Schema.Attribute.Component<"elements.link", true>;
+    emptyReasonText: Schema.Attribute.Text;
+    emptyReasonTitle: Schema.Attribute.String;
     featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     headline: Schema.Attribute.String & Schema.Attribute.Required;
     isMainContent: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     pageSize: Schema.Attribute.Integer & Schema.Attribute.Required & Schema.Attribute.DefaultTo<3>;
     searchPlaceHolder: Schema.Attribute.String;
+    showEmptyReason: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     showPagination: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     showSearch: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
   };

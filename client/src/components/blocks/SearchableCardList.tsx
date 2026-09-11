@@ -2,7 +2,9 @@ import { BlogCard } from "../BlogCard";
 import { BlogPostCard } from "../BlogPostCard";
 import { ContentList } from "../ContentList";
 import { EventCard } from "../EventCard";
+import { EmptyReasonOverlay } from "../EmptyReasonOverlay";
 import { SearchableCardListProps } from "@/types";
+import { EMPTY_REASON_DEFAULT_TITLE, EMPTY_REASON_DEFAULT_TEXT } from "@/utils/texts";
 
 export function SearchableCardList({
   searchPlaceHolder,
@@ -14,6 +16,11 @@ export function SearchableCardList({
   featured,
   showSearch,
   isMainContent = false,
+  showEmptyReason = false,
+  emptyReasonTitle,
+  emptyReasonText,
+  emptyReasonBackgroundImage,
+  emptyReasonLinks,
 }: SearchableCardListProps) {
   const componentToUse = (() => {
     switch (contentCollectionType) {
@@ -45,6 +52,16 @@ export function SearchableCardList({
       showSearch={showSearch}
       component={componentToUse}
       isMainContentOfTheScreen={isMainContent}
+      overlay={
+        showEmptyReason ? (
+          <EmptyReasonOverlay
+            title={emptyReasonTitle || EMPTY_REASON_DEFAULT_TITLE}
+            text={emptyReasonText || EMPTY_REASON_DEFAULT_TEXT}
+            backgroundImage={emptyReasonBackgroundImage}
+            links={emptyReasonLinks}
+          />
+        ) : null
+      }
     />
   );
 }

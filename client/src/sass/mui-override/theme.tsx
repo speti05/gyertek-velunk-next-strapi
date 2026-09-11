@@ -39,6 +39,9 @@ export const theme = createTheme({
     borderRadius: "1rem",
   },
   palette: {
+    background: {
+      default: colors.background.default,
+    },
     white: {
       main: colors.link.white.main,
       light: colors.link.white.main,

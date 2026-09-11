@@ -7,8 +7,10 @@ $gy-v-dark-brown: rgb(112, 99, 76);
 // other colors
 $gy-v-light-brown: rgb(241, 232, 217);
 $gy-v-light-beige: rgb(255, 251, 244);
+$gy-v-very-light-beige: rgb(254, 253, 250); // #FEFDFA - page base background
 $gy-v-dark-beige: rgb(228, 203, 161);
 $gy-v-white: rgb(255, 255, 255);
+$gy-v-overlay-dark: rgb(9, 26, 24);
 $gy-v-error: rgb(120, 2, 2);
 $gy-v-success: rgb(2, 120, 2);
 
@@ -18,4 +20,9 @@ $box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
 $gy-v-facebook: rgb(8, 102, 255);
 $gy-v-youtube: rgb(255, 0, 51);
 $gy-v-tiktok: rgb(0, 0, 0);
-$gy-v-instagram-gradient: linear-gradient(45deg, rgb(249, 206, 52) 0%, rgb(238, 42, 123) 50%, rgb(98, 40, 215) 100%);
+$gy-v-instagram-gradient: linear-gradient(
+  45deg,
+  rgb(249, 206, 52) 0%,
+  rgb(238, 42, 123) 50%,
+  rgb(98, 40, 215) 100%
+);

@@ -26,6 +26,11 @@ export const CONTENT_LIST_EMPTY_TITLE = "Nincs találat.";
 export const CONTENT_LIST_EMPTY_DESCRIPTION =
   "Egyelőre nincs ilyen típusú bejegyzés, ami a keresési feltételeknek megfelel.";
 
+// Empty reason overlay (SearchableCardList)
+export const EMPTY_REASON_DEFAULT_TITLE = "Ez a lista jelenleg még nem tartalmaz elemeket";
+export const EMPTY_REASON_DEFAULT_TEXT = "Hamarosan ...";
+export const EMPTY_REASON_CLOSE_LABEL = "Bezárás";
+
 // Picture gallery
 export const PICTURE_GALLERY_EMPTY_TITLE = "Nincsenek képek.";
 export const PICTURE_GALLERY_EMPTY_DESCRIPTION =

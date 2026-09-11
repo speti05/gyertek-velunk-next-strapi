@@ -1,0 +1,133 @@
+@use "../base/colors";
+@use "../base/mixins";
+
+// The list body is separated from the headline above and from the next block
+// below by a 6rem gap each (.content-list-headline / .content-items margins).
+// The overlay bleeds over both so no background strip shows through.
+$vertical-bleed: 6rem;
+
+.empty-reason-overlay {
+  // Covers the list body (search, cards, pagination) on a layer above it.
+  // The block headline stays visible, so it sits outside .content-items__body.
+  position: absolute;
+  top: -$vertical-bleed;
+  bottom: -$vertical-bleed;
+  // Full-bleed: the list body sits inside .container, the overlay spans the
+  // whole viewport width (same trick as .content-list-headline).
+  left: calc(50% - 50vw);
+  right: auto;
+  width: 100vw;
+  z-index: 10;
+  // One-row grid so the row can be animated from 1fr to 0fr, which folds the
+  // panel upwards and uncovers the list underneath.
+  display: grid;
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transition:
+    grid-template-rows 0.5s ease,
+    opacity 0.5s ease;
+
+  &--closing {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+
+  &__clip {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  &__panel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 8rem 3rem;
+    overflow: hidden;
+    // Default artwork; replaced by the uploaded image when there is one.
+    background-color: colors.$gy-v-overlay-dark;
+    background-image: url("/empty-list-overlay-bg.svg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: transform 0.5s ease;
+
+    @include mixins.respond(phone) {
+      padding: 7rem 2rem;
+    }
+
+    // Scrim keeping the text readable over the lighter parts of the artwork.
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background-color: rgba(0, 0, 0, 0.35);
+    }
+
+    &--with-image {
+      background-image: none;
+    }
+  }
+
+  &--closing &__panel {
+    transform: translateY(-100%);
+  }
+
+  &__image {
+    z-index: 0;
+    border-radius: 0;
+    object-fit: cover;
+  }
+
+  &__close {
+    // MUI's ButtonBase sets position: relative, so the class has to outweigh it.
+    &.MuiIconButton-root {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      z-index: 3;
+      color: colors.$gy-v-white;
+      background-color: rgba(0, 0, 0, 0.25);
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      & svg {
+        font-size: 2.8rem;
+      }
+    }
+  }
+
+  &__content {
+    position: relative;
+    z-index: 2;
+    max-width: 80rem;
+    text-align: center;
+    color: colors.$gy-v-white;
+  }
+
+  &__title {
+    margin-bottom: 2rem;
+    color: colors.$gy-v-white;
+    @include mixins.headline-text-outline;
+  }
+
+  &__text {
+    font-size: 2rem;
+    line-height: 3rem;
+    color: colors.$gy-v-white;
+    white-space: pre-line;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 4rem;
+  }
+}

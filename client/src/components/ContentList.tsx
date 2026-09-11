@@ -22,6 +22,7 @@ interface ContentListProps {
   showPagination?: boolean;
   contentCollectionType: ContentCollectionType;
   isMainContentOfTheScreen?: boolean;
+  overlay?: React.ReactNode;
 }
 
 async function loader<Type>(
@@ -50,6 +51,7 @@ export async function ContentList({
   showPagination,
   contentCollectionType,
   isMainContentOfTheScreen = false,
+  overlay,
 }: Readonly<ContentListProps>) {
   const pageParam = `${contentCollectionType}Page`;
   const path = `/api/${contentCollectionType}`;
@@ -69,25 +71,28 @@ export async function ContentList({
         isMain={isMainContentOfTheScreen}
         navigationId={navigationId}
       />
-      {!!showSearch && (
-        <SearchNoSSR
-          placeHolder={searchPlaceHolder}
-          contentCollectionType={contentCollectionType}
-        />
-      )}
-      <div className="content-items__container--card">
-        {data.length > 0 ? (
-          data.map((article) => (
-            <Component key={article.documentId} {...article} basePath={path} />
-          ))
-        ) : (
-          <EmptyContent
-            title={CONTENT_LIST_EMPTY_TITLE}
-            description={CONTENT_LIST_EMPTY_DESCRIPTION}
+      <div className="content-items__body">
+        {!!showSearch && (
+          <SearchNoSSR
+            placeHolder={searchPlaceHolder}
+            contentCollectionType={contentCollectionType}
           />
         )}
+        <div className="content-items__container--card">
+          {data.length > 0 ? (
+            data.map((article) => (
+              <Component key={article.documentId} {...article} basePath={path} />
+            ))
+          ) : (
+            <EmptyContent
+              title={CONTENT_LIST_EMPTY_TITLE}
+              description={CONTENT_LIST_EMPTY_DESCRIPTION}
+            />
+          )}
+        </div>
+        {showPagination && <PaginationComponent pageCount={pageCount} pageParam={pageParam} />}
+        {overlay}
       </div>
-      {showPagination && <PaginationComponent pageCount={pageCount} pageParam={pageParam} />}
     </section>
   );
 }

@@ -1,0 +1,2761 @@
+{
+  "exportedAt": "2026-09-11T15:04:38.848Z",
+  "source": "document-service",
+  "collections": {
+    "articles": {
+      "published": [
+        {
+          "id": 20,
+          "documentId": "nf0nlqgfre7ug5ixcavphs4o",
+          "title": "Beyond the Board: Life Skills You'll Learn at Surfing Summer Camps",
+          "description": "Improving your take-off phase in surfing is a fundamental step toward riding waves with more confidence and style.\n\nImproving your take-off phase is a gradual process, and it may take time to master. Be patient, stay committed to practice, and enjoy the journey of becoming a better surfer. With dedication and persistence, you'll see progress and have more enjoyable rides. Here is how:",
+          "slug": "beyond-the-board-life-skills-you-ll-learn-at-surfing-summer-camps",
+          "author": "Paul Brats",
+          "featured": true,
+          "createdAt": "2024-12-02T07:56:13.756Z",
+          "updatedAt": "2026-09-11T14:16:21.263Z",
+          "publishedAt": "2026-09-11T14:16:21.312Z",
+          "locale": null,
+          "disabled": true,
+          "image": {
+            "id": 11,
+            "documentId": "bwjgxrxrxug2zqf0clmdzffq",
+            "name": "many-surfboards.png",
+            "alternativeText": null,
+            "caption": null,
+            "width": 739,
+            "height": 473,
+            "formats": {
+              "thumbnail": {
+                "name": "thumbnail_many-surfboards.png",
+                "hash": "thumbnail_many_surfboards_d1f3bc08fd",
+                "ext": ".png",
+                "mime": "image/png",
+                "path": null,
+                "width": 244,
+                "height": 156,
+                "size": 101.55,
+                "sizeInBytes": 101550,
+                "url": "/uploads/thumbnail_many_surfboards_d1f3bc08fd.png"
+              },
+              "small": {
+                "name": "small_many-surfboards.png",
+                "hash": "small_many_surfboards_d1f3bc08fd",
+                "ext": ".png",
+                "mime": "image/png",
+                "path": null,
+                "width": 500,
+                "height": 320,
+                "size": 404.76,
+                "sizeInBytes": 404759,
+                "url": "/uploads/small_many_surfboards_d1f3bc08fd.png"
+              }
+            },
+            "hash": "many_surfboards_d1f3bc08fd",
+            "ext": ".png",
+            "mime": "image/png",
+            "size": 235.17,
+            "url": "/uploads/many_surfboards_d1f3bc08fd.png",
+            "previewUrl": null,
+            "provider": "local",
+            "provider_metadata": null,
+            "folderPath": "/2",
+            "createdAt": "2024-12-02T20:20:43.930Z",
+            "updatedAt": "2025-11-20T22:41:05.738Z",
+            "publishedAt": "2024-12-02T20:20:43.931Z",
+            "locale": null,
+            "focalPoint": null
+          },
+          "blocks": [
+            {
+              "__component": "blocks.heading",
+              "id": 152,
+              "heading": "Material",
+              "linkId": "introduction"
+            },
+            {
+              "__component": "blocks.paragraph-with-image",
+              "id": 79,
+              "content": "Surfboards are typically made from foam blanks, which serve as the core, and are then sheathed in a fiberglass shell. This core, traditionally made from polyurethane foam, provides buoyancy and shape to the board. In recent years, EPS (expanded polystyrene) foam has gained popularity due to its lighter weight and more eco-friendly properties. The fiberglass shell, on the other hand, gives the board its rigidity and durability. Resin, often either polyester or epoxy, is used to bond the fiberglass to the foam core, and it also provides a smooth, waterproof finish.\n\nSome modern surfboards incorporate additional materials like epoxy or carbon fiber. Epoxy is preferred by some manufacturers and surfers because of its stronger and more resilient nature compared to traditional polyester resin. Carbon fiber, known for its strength-to-weight ratio, can be added to specific areas of the board, like the tail or rails, to increase rigidity and responsiveness. Other innovations include the use of bamboo veneers for both aesthetic appeal and structural integrity, as well as recycled materials to make the production process more sustainable.\n",
+              "reversed": false,
+              "imageLandscape": true,
+              "image": {
+                "id": 8,
+                "documentId": "vf6iopqo05jurk6skmev8etr",
+                "name": "surfboard.png",
+                "alternativeText": null,
+                "caption": null,
+                "width": 739,
+                "height": 473,
+                "formats": {
+                  "thumbnail": {
+                    "name": "thumbnail_surfboard.png",
+                    "hash": "thumbnail_surfboard_786d650378",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 244,
+                    "height": 156,
+                    "size": 60.97,
+                    "sizeInBytes": 60969,
+                    "url": "/uploads/thumbnail_surfboard_786d650378.png"
+                  },
+                  "small": {
+                    "name": "small_surfboard.png",
+                    "hash": "small_surfboard_786d650378",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 500,
+                    "height": 320,
+                    "size": 223.59,
+                    "sizeInBytes": 223585,
+                    "url": "/uploads/small_surfboard_786d650378.png"
+                  }
+                },
+                "hash": "surfboard_786d650378",
+                "ext": ".png",
+                "mime": "image/png",
+                "size": 128.46,
+                "url": "/uploads/surfboard_786d650378.png",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "folderPath": "/2",
+                "createdAt": "2024-12-02T20:14:21.609Z",
+                "updatedAt": "2025-11-20T22:41:05.469Z",
+                "publishedAt": "2024-12-02T20:14:21.610Z",
+                "locale": null,
+                "focalPoint": null
+              }
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 153,
+              "heading": "Design Considerations",
+              "linkId": "design"
+            },
+            {
+              "__component": "blocks.paragraph",
+              "id": 64,
+              "content": "When crafting the perfect surfboard, numerous factors come into play, each contributing to the board's performance and suitability for specific conditions or surfers. These design aspects consider everything from the individual surfer's attributes to the nuances of wave conditions. Here are some critical design considerations every shaper keeps in mind when creating a board.\n\n- Surfer's Skill Level: The shaper considers the surfer's skill level, as well as their height, weight, and experience, to determine the board's dimensions. \n- Wave Conditions: The type of waves the surfer intends to ride plays a crucial role in shaping. Different boards are designed for small, mushy waves or big, powerful waves. \n- Board Length: The length of the board affects its speed and maneuverability. Longer boards are faster but less maneuverable, while shorter boards are more agile. \n- Rockers: The curvature from nose to tail (rockers) influences how a board performs. A flatter rocker is better for speed, while a more pronounced rocker helps with turning. \n- Rails: The rails, or edges of the board, affect stability and control. Sharp rails are more responsive, while rounder rails provide stability.\n- Volume: The volume of the board impacts buoyancy and paddling ease. More volume is helpful for beginners, while advanced surfers may prefer less."
+            },
+            {
+              "__component": "blocks.full-image",
+              "id": 27,
+              "image": {
+                "id": 9,
+                "documentId": "uzmoe07azs030t4ptg32nsmi",
+                "name": "catching-wave.png",
+                "alternativeText": null,
+                "caption": null,
+                "width": 898,
+                "height": 599,
+                "formats": {
+                  "thumbnail": {
+                    "name": "thumbnail_catching-wave.png",
+                    "hash": "thumbnail_catching_wave_a180ad0b5a",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 234,
+                    "height": 156,
+                    "size": 81.96,
+                    "sizeInBytes": 81963,
+                    "url": "/uploads/thumbnail_catching_wave_a180ad0b5a.png"
+                  },
+                  "small": {
+                    "name": "small_catching-wave.png",
+                    "hash": "small_catching_wave_a180ad0b5a",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 500,
+                    "height": 334,
+                    "size": 332.08,
+                    "sizeInBytes": 332080,
+                    "url": "/uploads/small_catching_wave_a180ad0b5a.png"
+                  },
+                  "medium": {
+                    "name": "medium_catching-wave.png",
+                    "hash": "medium_catching_wave_a180ad0b5a",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 750,
+                    "height": 500,
+                    "size": 698.99,
+                    "sizeInBytes": 698993,
+                    "url": "/uploads/medium_catching_wave_a180ad0b5a.png"
+                  }
+                },
+                "hash": "catching_wave_a180ad0b5a",
+                "ext": ".png",
+                "mime": "image/png",
+                "size": 257.23,
+                "url": "/uploads/catching_wave_a180ad0b5a.png",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "folderPath": "/2",
+                "createdAt": "2024-12-02T20:16:37.752Z",
+                "updatedAt": "2025-11-20T22:41:05.569Z",
+                "publishedAt": "2024-12-02T20:16:37.752Z",
+                "locale": null,
+                "focalPoint": null
+              }
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 154,
+              "heading": "Shaping Process",
+              "linkId": "process"
+            },
+            {
+              "__component": "blocks.paragraph-with-image",
+              "id": 80,
+              "content": "When crafting the perfect surfboard, numerous factors come into play, each contributing to the board's performance and suitability for specific conditions or surfers. These design aspects consider everything from the individual surfer's attributes to the nuances of wave conditions. Here are some critical design considerations every shaper keeps in mind when creating a board.\n\n- Outline: The shaper starts by drawing the board's outline on the blank. This shape determines the board's length and width. \n- Rocker and Rails: The shaper carves the desired rocker and rails into the blank using specialized tools. \n- Shaping the Nose and Tail: The nose and tail are shaped to match the desired design. Different tail shapes are carved accordingly. \n- Fiberglassing: After shaping, the board is wrapped in fiberglass cloth and coated with resin to provide strength and durability. \n- Fin Setup: The placement and type of fins are crucial for stability and maneuverability. The shaper installs the fin boxes and fins.",
+              "reversed": true,
+              "imageLandscape": false,
+              "image": {
+                "id": 10,
+                "documentId": "y3hhvkuskd67tsgmi66otnt3",
+                "name": "waxing.png",
+                "alternativeText": null,
+                "caption": null,
+                "width": 391,
+                "height": 603,
+                "formats": {
+                  "thumbnail": {
+                    "name": "thumbnail_waxing.png",
+                    "hash": "thumbnail_waxing_cdbd65dd3a",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 101,
+                    "height": 156,
+                    "size": 37.52,
+                    "sizeInBytes": 37515,
+                    "url": "/uploads/thumbnail_waxing_cdbd65dd3a.png"
+                  },
+                  "small": {
+                    "name": "small_waxing.png",
+                    "hash": "small_waxing_cdbd65dd3a",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 324,
+                    "height": 500,
+                    "size": 309.38,
+                    "sizeInBytes": 309380,
+                    "url": "/uploads/small_waxing_cdbd65dd3a.png"
+                  }
+                },
+                "hash": "waxing_cdbd65dd3a",
+                "ext": ".png",
+                "mime": "image/png",
+                "size": 114.49,
+                "url": "/uploads/waxing_cdbd65dd3a.png",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "folderPath": "/2",
+                "createdAt": "2024-12-02T20:18:30.147Z",
+                "updatedAt": "2025-11-20T22:41:05.645Z",
+                "publishedAt": "2024-12-02T20:18:30.147Z",
+                "locale": null,
+                "focalPoint": null
+              }
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 155,
+              "heading": "Customization & Artistic Touch",
+              "linkId": "customization"
+            },
+            {
+              "__component": "blocks.paragraph",
+              "id": 65,
+              "content": "Surfing, while being a thrilling sport, is deeply personal. Each surfer brings to the waves their unique style, preferences, and experiences. Recognizing this, many surfboards are custom-shaped to align with a surfer's specific desires. This art of tailoring demands an intricate collaboration between the shaper and the surfer. They work hand-in-hand, engaging in detailed discussions, to ensure that every element of the board is meticulously fine-tuned to enhance performance and maximize comfort. Beyond the functional aspects, there's an aesthetic side to surfboard crafting. Some shapers, infusing their artistic flair, adorn boards with unique artwork or designs. This not only makes the surfboard a piece of sports equipment but also a canvas that embodies individual expression, making it visually compelling both on and off the waves.\n\nWhen crafting the perfect surfboard, numerous factors come into play, each contributing to the board's performance and suitability for specific conditions or surfers. These design aspects consider everything from the individual surfer's attributes to the nuances of wave conditions. Here are some critical design considerations every shaper keeps in mind when creating a board:\n\nSurfer's Skill Level: The shaper considers the surfer's skill level, as well as their height, weight, and experience, to determine the board's dimensions. Wave Conditions: The type of waves the surfer intends to ride plays a crucial role in shaping. Different boards are designed for small, mushy waves or big, powerful waves. Board Length: The length of the board affects its speed and maneuverability. Longer boards are faster but less maneuverable, while shorter boards are more agile. Rockers: The curvature from nose to tail (rockers) influences how a board performs. A flatter rocker is better for speed, while a more pronounced rocker helps with turning. Rails: The rails, or edges of the board, affect stability and control. Sharp rails are more responsive, while rounder rails provide stability. Volume: The volume of the board impacts buoyancy and paddling ease. More volume is helpful for beginners, while advanced surfers may prefer less. Tail Shape: Different tail shapes (e.g., pintail, squash tail, swallowtail) offer various turning characteristics and control."
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 156,
+              "heading": "Testing & Refinement",
+              "linkId": "testing"
+            },
+            {
+              "__component": "blocks.paragraph-with-image",
+              "id": 81,
+              "content": "Surfboards are typically made from foam blanks, which serve as the core, and are then sheathed in a fiberglass shell. This core, traditionally made from polyurethane foam, provides buoyancy and shape to the board. In recent years, EPS (expanded polystyrene) foam has gained popularity due to its lighter weight and more eco-friendly properties. The fiberglass shell, on the other hand, gives the board its rigidity and durability. Resin, often either polyester or epoxy, is used to bond the fiberglass to the foam core, and it also provides a smooth, waterproof finish.\n\nSome modern surfboards incorporate additional materials like epoxy or carbon fiber. Epoxy is preferred by some manufacturers and surfers because of its stronger and more resilient nature compared to traditional polyester resin. Carbon fiber, known for its strength-to-weight ratio, can be added to specific areas of the board, like the tail or rails, to increase rigidity and responsiveness. Other innovations include the use of bamboo veneers for both aesthetic appeal and structural integrity, as well as recycled materials to make the production process more sustainable.",
+              "reversed": false,
+              "imageLandscape": true,
+              "image": {
+                "id": 11,
+                "documentId": "bwjgxrxrxug2zqf0clmdzffq",
+                "name": "many-surfboards.png",
+                "alternativeText": null,
+                "caption": null,
+                "width": 739,
+                "height": 473,
+                "formats": {
+                  "thumbnail": {
+                    "name": "thumbnail_many-surfboards.png",
+                    "hash": "thumbnail_many_surfboards_d1f3bc08fd",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 244,
+                    "height": 156,
+                    "size": 101.55,
+                    "sizeInBytes": 101550,
+                    "url": "/uploads/thumbnail_many_surfboards_d1f3bc08fd.png"
+                  },
+                  "small": {
+                    "name": "small_many-surfboards.png",
+                    "hash": "small_many_surfboards_d1f3bc08fd",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 500,
+                    "height": 320,
+                    "size": 404.76,
+                    "sizeInBytes": 404759,
+                    "url": "/uploads/small_many_surfboards_d1f3bc08fd.png"
+                  }
+                },
+                "hash": "many_surfboards_d1f3bc08fd",
+                "ext": ".png",
+                "mime": "image/png",
+                "size": 235.17,
+                "url": "/uploads/many_surfboards_d1f3bc08fd.png",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "folderPath": "/2",
+                "createdAt": "2024-12-02T20:20:43.930Z",
+                "updatedAt": "2025-11-20T22:41:05.738Z",
+                "publishedAt": "2024-12-02T20:20:43.931Z",
+                "locale": null,
+                "focalPoint": null
+              }
+            }
+          ]
+        },
+        {
+          "id": 21,
+          "documentId": "er41kb3w6lt9477ty5b7cs7h",
+          "title": "Catch Your First Wave: Beginner-Friendly Surfing Camps This Summer",
+          "description": "Improving your take-off phase in surfing is a fundamental step toward riding waves with more confidence and style.\n\nImproving your take-off phase is a gradual process, and it may take time to master. Be patient, stay committed to practice, and enjoy the journey of becoming a better surfer. With dedication and persistence, you'll see progress and have more enjoyable rides. Here is how:",
+          "slug": "catch-your-first-wave-beginner-friendly-surfing-camps-this-summer",
+          "author": "Paul Brats",
+          "featured": true,
+          "createdAt": "2024-12-02T07:56:13.756Z",
+          "updatedAt": "2026-09-11T14:16:33.978Z",
+          "publishedAt": "2026-09-11T14:16:34.016Z",
+          "locale": null,
+          "disabled": true,
+          "image": {
+            "id": 12,
+            "documentId": "le1gnsbovfzfqdxqldebnusw",
+            "name": "pexels-tatiana-danelli-13894715 1.png",
+            "alternativeText": null,
+            "caption": null,
+            "width": 999,
+            "height": 666,
+            "formats": {
+              "thumbnail": {
+                "name": "thumbnail_pexels-tatiana-danelli-13894715 1.png",
+                "hash": "thumbnail_pexels_tatiana_danelli_13894715_1_ac7a745871",
+                "ext": ".png",
+                "mime": "image/png",
+                "path": null,
+                "width": 234,
+                "height": 156,
+                "size": 60.82,
+                "sizeInBytes": 60821,
+                "url": "/uploads/thumbnail_pexels_tatiana_danelli_13894715_1_ac7a745871.png"
+              },
+              "small": {
+                "name": "small_pexels-tatiana-danelli-13894715 1.png",
+                "hash": "small_pexels_tatiana_danelli_13894715_1_ac7a745871",
+                "ext": ".png",
+                "mime": "image/png",
+                "path": null,
+                "width": 500,
+                "height": 333,
+                "size": 251.04,
+                "sizeInBytes": 251038,
+                "url": "/uploads/small_pexels_tatiana_danelli_13894715_1_ac7a745871.png"
+              },
+              "medium": {
+                "name": "medium_pexels-tatiana-danelli-13894715 1.png",
+                "hash": "medium_pexels_tatiana_danelli_13894715_1_ac7a745871",
+                "ext": ".png",
+                "mime": "image/png",
+                "path": null,
+                "width": 750,
+                "height": 500,
+                "size": 570.99,
+                "sizeInBytes": 570988,
+                "url": "/uploads/medium_pexels_tatiana_danelli_13894715_1_ac7a745871.png"
+              }
+            },
+            "hash": "pexels_tatiana_danelli_13894715_1_ac7a745871",
+            "ext": ".png",
+            "mime": "image/png",
+            "size": 230.81,
+            "url": "/uploads/pexels_tatiana_danelli_13894715_1_ac7a745871.png",
+            "previewUrl": null,
+            "provider": "local",
+            "provider_metadata": null,
+            "folderPath": "/2",
+            "createdAt": "2024-12-05T22:58:43.541Z",
+            "updatedAt": "2025-11-20T22:41:05.858Z",
+            "publishedAt": "2024-12-05T22:58:43.542Z",
+            "locale": null,
+            "focalPoint": null
+          },
+          "blocks": [
+            {
+              "__component": "blocks.heading",
+              "id": 157,
+              "heading": "Material",
+              "linkId": "introduction"
+            },
+            {
+              "__component": "blocks.paragraph-with-image",
+              "id": 82,
+              "content": "Surfboards are typically made from foam blanks, which serve as the core, and are then sheathed in a fiberglass shell. This core, traditionally made from polyurethane foam, provides buoyancy and shape to the board. In recent years, EPS (expanded polystyrene) foam has gained popularity due to its lighter weight and more eco-friendly properties. The fiberglass shell, on the other hand, gives the board its rigidity and durability. Resin, often either polyester or epoxy, is used to bond the fiberglass to the foam core, and it also provides a smooth, waterproof finish.\n\nSome modern surfboards incorporate additional materials like epoxy or carbon fiber. Epoxy is preferred by some manufacturers and surfers because of its stronger and more resilient nature compared to traditional polyester resin. Carbon fiber, known for its strength-to-weight ratio, can be added to specific areas of the board, like the tail or rails, to increase rigidity and responsiveness. Other innovations include the use of bamboo veneers for both aesthetic appeal and structural integrity, as well as recycled materials to make the production process more sustainable.\n",
+              "reversed": false,
+              "imageLandscape": true,
+              "image": {
+                "id": 8,
+                "documentId": "vf6iopqo05jurk6skmev8etr",
+                "name": "surfboard.png",
+                "alternativeText": null,
+                "caption": null,
+                "width": 739,
+                "height": 473,
+                "formats": {
+                  "thumbnail": {
+                    "name": "thumbnail_surfboard.png",
+                    "hash": "thumbnail_surfboard_786d650378",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 244,
+                    "height": 156,
+                    "size": 60.97,
+                    "sizeInBytes": 60969,
+                    "url": "/uploads/thumbnail_surfboard_786d650378.png"
+                  },
+                  "small": {
+                    "name": "small_surfboard.png",
+                    "hash": "small_surfboard_786d650378",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 500,
+                    "height": 320,
+                    "size": 223.59,
+                    "sizeInBytes": 223585,
+                    "url": "/uploads/small_surfboard_786d650378.png"
+                  }
+                },
+                "hash": "surfboard_786d650378",
+                "ext": ".png",
+                "mime": "image/png",
+                "size": 128.46,
+                "url": "/uploads/surfboard_786d650378.png",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "folderPath": "/2",
+                "createdAt": "2024-12-02T20:14:21.609Z",
+                "updatedAt": "2025-11-20T22:41:05.469Z",
+                "publishedAt": "2024-12-02T20:14:21.610Z",
+                "locale": null,
+                "focalPoint": null
+              }
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 158,
+              "heading": "Design Considerations",
+              "linkId": "design"
+            },
+            {
+              "__component": "blocks.paragraph",
+              "id": 66,
+              "content": "When crafting the perfect surfboard, numerous factors come into play, each contributing to the board's performance and suitability for specific conditions or surfers. These design aspects consider everything from the individual surfer's attributes to the nuances of wave conditions. Here are some critical design considerations every shaper keeps in mind when creating a board.\n\n- Surfer's Skill Level: The shaper considers the surfer's skill level, as well as their height, weight, and experience, to determine the board's dimensions. \n- Wave Conditions: The type of waves the surfer intends to ride plays a crucial role in shaping. Different boards are designed for small, mushy waves or big, powerful waves. \n- Board Length: The length of the board affects its speed and maneuverability. Longer boards are faster but less maneuverable, while shorter boards are more agile. \n- Rockers: The curvature from nose to tail (rockers) influences how a board performs. A flatter rocker is better for speed, while a more pronounced rocker helps with turning. \n- Rails: The rails, or edges of the board, affect stability and control. Sharp rails are more responsive, while rounder rails provide stability.\n- Volume: The volume of the board impacts buoyancy and paddling ease. More volume is helpful for beginners, while advanced surfers may prefer less."
+            },
+            {
+              "__component": "blocks.full-image",
+              "id": 28,
+              "image": {
+                "id": 9,
+                "documentId": "uzmoe07azs030t4ptg32nsmi",
+                "name": "catching-wave.png",
+                "alternativeText": null,
+                "caption": null,
+                "width": 898,
+                "height": 599,
+                "formats": {
+                  "thumbnail": {
+                    "name": "thumbnail_catching-wave.png",
+                    "hash": "thumbnail_catching_wave_a180ad0b5a",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 234,
+                    "height": 156,
+                    "size": 81.96,
+                    "sizeInBytes": 81963,
+                    "url": "/uploads/thumbnail_catching_wave_a180ad0b5a.png"
+                  },
+                  "small": {
+                    "name": "small_catching-wave.png",
+                    "hash": "small_catching_wave_a180ad0b5a",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 500,
+                    "height": 334,
+                    "size": 332.08,
+                    "sizeInBytes": 332080,
+                    "url": "/uploads/small_catching_wave_a180ad0b5a.png"
+                  },
+                  "medium": {
+                    "name": "medium_catching-wave.png",
+                    "hash": "medium_catching_wave_a180ad0b5a",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 750,
+                    "height": 500,
+                    "size": 698.99,
+                    "sizeInBytes": 698993,
+                    "url": "/uploads/medium_catching_wave_a180ad0b5a.png"
+                  }
+                },
+                "hash": "catching_wave_a180ad0b5a",
+                "ext": ".png",
+                "mime": "image/png",
+                "size": 257.23,
+                "url": "/uploads/catching_wave_a180ad0b5a.png",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "folderPath": "/2",
+                "createdAt": "2024-12-02T20:16:37.752Z",
+                "updatedAt": "2025-11-20T22:41:05.569Z",
+                "publishedAt": "2024-12-02T20:16:37.752Z",
+                "locale": null,
+                "focalPoint": null
+              }
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 159,
+              "heading": "Shaping Process",
+              "linkId": "process"
+            },
+            {
+              "__component": "blocks.paragraph-with-image",
+              "id": 83,
+              "content": "When crafting the perfect surfboard, numerous factors come into play, each contributing to the board's performance and suitability for specific conditions or surfers. These design aspects consider everything from the individual surfer's attributes to the nuances of wave conditions. Here are some critical design considerations every shaper keeps in mind when creating a board.\n\n- Outline: The shaper starts by drawing the board's outline on the blank. This shape determines the board's length and width. \n- Rocker and Rails: The shaper carves the desired rocker and rails into the blank using specialized tools. \n- Shaping the Nose and Tail: The nose and tail are shaped to match the desired design. Different tail shapes are carved accordingly. \n- Fiberglassing: After shaping, the board is wrapped in fiberglass cloth and coated with resin to provide strength and durability. \n- Fin Setup: The placement and type of fins are crucial for stability and maneuverability. The shaper installs the fin boxes and fins.",
+              "reversed": true,
+              "imageLandscape": false,
+              "image": {
+                "id": 10,
+                "documentId": "y3hhvkuskd67tsgmi66otnt3",
+                "name": "waxing.png",
+                "alternativeText": null,
+                "caption": null,
+                "width": 391,
+                "height": 603,
+                "formats": {
+                  "thumbnail": {
+                    "name": "thumbnail_waxing.png",
+                    "hash": "thumbnail_waxing_cdbd65dd3a",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 101,
+                    "height": 156,
+                    "size": 37.52,
+                    "sizeInBytes": 37515,
+                    "url": "/uploads/thumbnail_waxing_cdbd65dd3a.png"
+                  },
+                  "small": {
+                    "name": "small_waxing.png",
+                    "hash": "small_waxing_cdbd65dd3a",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 324,
+                    "height": 500,
+                    "size": 309.38,
+                    "sizeInBytes": 309380,
+                    "url": "/uploads/small_waxing_cdbd65dd3a.png"
+                  }
+                },
+                "hash": "waxing_cdbd65dd3a",
+                "ext": ".png",
+                "mime": "image/png",
+                "size": 114.49,
+                "url": "/uploads/waxing_cdbd65dd3a.png",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "folderPath": "/2",
+                "createdAt": "2024-12-02T20:18:30.147Z",
+                "updatedAt": "2025-11-20T22:41:05.645Z",
+                "publishedAt": "2024-12-02T20:18:30.147Z",
+                "locale": null,
+                "focalPoint": null
+              }
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 160,
+              "heading": "Customization & Artistic Touch",
+              "linkId": "customization"
+            },
+            {
+              "__component": "blocks.paragraph",
+              "id": 67,
+              "content": "Surfing, while being a thrilling sport, is deeply personal. Each surfer brings to the waves their unique style, preferences, and experiences. Recognizing this, many surfboards are custom-shaped to align with a surfer's specific desires. This art of tailoring demands an intricate collaboration between the shaper and the surfer. They work hand-in-hand, engaging in detailed discussions, to ensure that every element of the board is meticulously fine-tuned to enhance performance and maximize comfort. Beyond the functional aspects, there's an aesthetic side to surfboard crafting. Some shapers, infusing their artistic flair, adorn boards with unique artwork or designs. This not only makes the surfboard a piece of sports equipment but also a canvas that embodies individual expression, making it visually compelling both on and off the waves.\n\nWhen crafting the perfect surfboard, numerous factors come into play, each contributing to the board's performance and suitability for specific conditions or surfers. These design aspects consider everything from the individual surfer's attributes to the nuances of wave conditions. Here are some critical design considerations every shaper keeps in mind when creating a board:\n\nSurfer's Skill Level: The shaper considers the surfer's skill level, as well as their height, weight, and experience, to determine the board's dimensions. Wave Conditions: The type of waves the surfer intends to ride plays a crucial role in shaping. Different boards are designed for small, mushy waves or big, powerful waves. Board Length: The length of the board affects its speed and maneuverability. Longer boards are faster but less maneuverable, while shorter boards are more agile. Rockers: The curvature from nose to tail (rockers) influences how a board performs. A flatter rocker is better for speed, while a more pronounced rocker helps with turning. Rails: The rails, or edges of the board, affect stability and control. Sharp rails are more responsive, while rounder rails provide stability. Volume: The volume of the board impacts buoyancy and paddling ease. More volume is helpful for beginners, while advanced surfers may prefer less. Tail Shape: Different tail shapes (e.g., pintail, squash tail, swallowtail) offer various turning characteristics and control."
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 161,
+              "heading": "Testing & Refinement",
+              "linkId": "testing"
+            },
+            {
+              "__component": "blocks.paragraph-with-image",
+              "id": 84,
+              "content": "Surfboards are typically made from foam blanks, which serve as the core, and are then sheathed in a fiberglass shell. This core, traditionally made from polyurethane foam, provides buoyancy and shape to the board. In recent years, EPS (expanded polystyrene) foam has gained popularity due to its lighter weight and more eco-friendly properties. The fiberglass shell, on the other hand, gives the board its rigidity and durability. Resin, often either polyester or epoxy, is used to bond the fiberglass to the foam core, and it also provides a smooth, waterproof finish.\n\nSome modern surfboards incorporate additional materials like epoxy or carbon fiber. Epoxy is preferred by some manufacturers and surfers because of its stronger and more resilient nature compared to traditional polyester resin. Carbon fiber, known for its strength-to-weight ratio, can be added to specific areas of the board, like the tail or rails, to increase rigidity and responsiveness. Other innovations include the use of bamboo veneers for both aesthetic appeal and structural integrity, as well as recycled materials to make the production process more sustainable.",
+              "reversed": false,
+              "imageLandscape": true,
+              "image": {
+                "id": 11,
+                "documentId": "bwjgxrxrxug2zqf0clmdzffq",
+                "name": "many-surfboards.png",
+                "alternativeText": null,
+                "caption": null,
+                "width": 739,
+                "height": 473,
+                "formats": {
+                  "thumbnail": {
+                    "name": "thumbnail_many-surfboards.png",
+                    "hash": "thumbnail_many_surfboards_d1f3bc08fd",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 244,
+                    "height": 156,
+                    "size": 101.55,
+                    "sizeInBytes": 101550,
+                    "url": "/uploads/thumbnail_many_surfboards_d1f3bc08fd.png"
+                  },
+                  "small": {
+                    "name": "small_many-surfboards.png",
+                    "hash": "small_many_surfboards_d1f3bc08fd",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 500,
+                    "height": 320,
+                    "size": 404.76,
+                    "sizeInBytes": 404759,
+                    "url": "/uploads/small_many_surfboards_d1f3bc08fd.png"
+                  }
+                },
+                "hash": "many_surfboards_d1f3bc08fd",
+                "ext": ".png",
+                "mime": "image/png",
+                "size": 235.17,
+                "url": "/uploads/many_surfboards_d1f3bc08fd.png",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "folderPath": "/2",
+                "createdAt": "2024-12-02T20:20:43.930Z",
+                "updatedAt": "2025-11-20T22:41:05.738Z",
+                "publishedAt": "2024-12-02T20:20:43.931Z",
+                "locale": null,
+                "focalPoint": null
+              }
+            }
+          ]
+        },
+        {
+          "id": 19,
+          "documentId": "wl7bhhxfg6q23vzufnrtzwt9",
+          "title": "Madeira -te csudi",
+          "description": "Madeira egy szigetcsoport, ami négy főbb részből áll - két nagyobb, és két kisebb csoportból.\n",
+          "slug": "madeira-beszamolo",
+          "author": "Tibi",
+          "featured": true,
+          "createdAt": "2024-12-02T07:56:13.756Z",
+          "updatedAt": "2026-09-11T09:38:07.978Z",
+          "publishedAt": "2026-09-11T09:38:08.047Z",
+          "locale": null,
+          "disabled": true,
+          "image": {
+            "id": 26,
+            "documentId": "ga29x42vrj7bmdcet7wphpbm",
+            "name": "Madeira-Portugal-7.jpg",
+            "alternativeText": null,
+            "caption": null,
+            "width": 1000,
+            "height": 667,
+            "formats": {
+              "thumbnail": {
+                "name": "thumbnail_Madeira-Portugal-7.jpg",
+                "hash": "thumbnail_Madeira_Portugal_7_2f50e86760",
+                "ext": ".jpg",
+                "mime": "image/jpeg",
+                "path": null,
+                "width": 234,
+                "height": 156,
+                "size": 8.59,
+                "sizeInBytes": 8591,
+                "url": "/uploads/thumbnail_Madeira_Portugal_7_2f50e86760.jpg"
+              },
+              "small": {
+                "name": "small_Madeira-Portugal-7.jpg",
+                "hash": "small_Madeira_Portugal_7_2f50e86760",
+                "ext": ".jpg",
+                "mime": "image/jpeg",
+                "path": null,
+                "width": 500,
+                "height": 334,
+                "size": 33.74,
+                "sizeInBytes": 33742,
+                "url": "/uploads/small_Madeira_Portugal_7_2f50e86760.jpg"
+              },
+              "medium": {
+                "name": "medium_Madeira-Portugal-7.jpg",
+                "hash": "medium_Madeira_Portugal_7_2f50e86760",
+                "ext": ".jpg",
+                "mime": "image/jpeg",
+                "path": null,
+                "width": 750,
+                "height": 500,
+                "size": 71.41,
+                "sizeInBytes": 71409,
+                "url": "/uploads/medium_Madeira_Portugal_7_2f50e86760.jpg"
+              }
+            },
+            "hash": "Madeira_Portugal_7_2f50e86760",
+            "ext": ".jpg",
+            "mime": "image/jpeg",
+            "size": 121.42,
+            "url": "/uploads/Madeira_Portugal_7_2f50e86760.jpg",
+            "previewUrl": null,
+            "provider": "local",
+            "provider_metadata": null,
+            "folderPath": "/",
+            "createdAt": "2026-02-11T22:01:25.041Z",
+            "updatedAt": "2026-02-22T21:04:23.655Z",
+            "publishedAt": "2026-02-11T22:01:25.042Z",
+            "locale": null,
+            "focalPoint": null
+          },
+          "blocks": [
+            {
+              "__component": "blocks.heading",
+              "id": 145,
+              "heading": "Szigetcsoport",
+              "linkId": "szigetcsoport"
+            },
+            {
+              "__component": "blocks.paragraph-with-image",
+              "id": 76,
+              "content": "Az Atlanti-óceáni Madeira szigetcsoport Portugália része, de úgynevezett autonóm régióként. Madeira 1077 kilométerre fekszik a szárazföldi Portugáliától, délnyugati irányba. A szigetcsoport 548 kilométerrel északra fekszik a Kanári-szigetektől, kb. a marokkói Casablanca magasságában.\n801 négyzetkilométer nagyságú. (A legkisebb magyar megye, Komárom-Esztergom is majdnem háromszor nagyobb). Az ugyancsak Madeirának nevezett, 740 négyzetkilométer területű fősziget 55 kilométer hosszú és maximum 22 kilométer széles. A teljes partvonala 144 kilométer hosszú\n",
+              "reversed": false,
+              "imageLandscape": true,
+              "image": {
+                "id": 27,
+                "documentId": "vvi2h1ak077lk1mfnbn3pf8w",
+                "name": "viaggidafotografare-Portogallo-Madeira-Seixal_48.jpg",
+                "alternativeText": null,
+                "caption": null,
+                "width": 1024,
+                "height": 683,
+                "formats": {
+                  "thumbnail": {
+                    "name": "thumbnail_viaggidafotografare-Portogallo-Madeira-Seixal_48.jpg",
+                    "hash": "thumbnail_viaggidafotografare_Portogallo_Madeira_Seixal_48_90355afd28",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 234,
+                    "height": 156,
+                    "size": 10.75,
+                    "sizeInBytes": 10748,
+                    "url": "/uploads/thumbnail_viaggidafotografare_Portogallo_Madeira_Seixal_48_90355afd28.jpg"
+                  },
+                  "small": {
+                    "name": "small_viaggidafotografare-Portogallo-Madeira-Seixal_48.jpg",
+                    "hash": "small_viaggidafotografare_Portogallo_Madeira_Seixal_48_90355afd28",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 500,
+                    "height": 333,
+                    "size": 44.61,
+                    "sizeInBytes": 44611,
+                    "url": "/uploads/small_viaggidafotografare_Portogallo_Madeira_Seixal_48_90355afd28.jpg"
+                  },
+                  "medium": {
+                    "name": "medium_viaggidafotografare-Portogallo-Madeira-Seixal_48.jpg",
+                    "hash": "medium_viaggidafotografare_Portogallo_Madeira_Seixal_48_90355afd28",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 750,
+                    "height": 500,
+                    "size": 99.65,
+                    "sizeInBytes": 99646,
+                    "url": "/uploads/medium_viaggidafotografare_Portogallo_Madeira_Seixal_48_90355afd28.jpg"
+                  },
+                  "large": {
+                    "name": "large_viaggidafotografare-Portogallo-Madeira-Seixal_48.jpg",
+                    "hash": "large_viaggidafotografare_Portogallo_Madeira_Seixal_48_90355afd28",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 1000,
+                    "height": 667,
+                    "size": 174.72,
+                    "sizeInBytes": 174722,
+                    "url": "/uploads/large_viaggidafotografare_Portogallo_Madeira_Seixal_48_90355afd28.jpg"
+                  }
+                },
+                "hash": "viaggidafotografare_Portogallo_Madeira_Seixal_48_90355afd28",
+                "ext": ".jpg",
+                "mime": "image/jpeg",
+                "size": 188.58,
+                "url": "/uploads/viaggidafotografare_Portogallo_Madeira_Seixal_48_90355afd28.jpg",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "folderPath": "/",
+                "createdAt": "2026-02-11T22:01:25.229Z",
+                "updatedAt": "2026-02-11T22:03:12.440Z",
+                "publishedAt": "2026-02-11T22:01:25.230Z",
+                "locale": null,
+                "focalPoint": null
+              }
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 146,
+              "heading": "Várható élmények",
+              "linkId": "varhato-elmenyek"
+            },
+            {
+              "__component": "blocks.paragraph",
+              "id": 62,
+              "content": "Madeira a nyugalmas, konszolidált pihenés, a könnyed kirándulások, sétálgatások szigete. 7-8 napot tartalmasan el lehet tölteni a szigeten, ennél több időt csak akkor érdemes maradnunk, ha a fennmaradó napokon teljesen passzív pihenésre is vágyunk. Jó tudni, hogy a tengeri fürdőzés többnyire nem válik a Madeira-i utazásunk meghatározó élményévé.\n\nAz úti kritikus őszinte: vannak, akik picit csalódva térnek vissza Madeiráról. Ők jellemzően a kb. 35 éven alattiak, a szülőkkel utazó tizenévesek, akiknek Madeira nem elég lüktető, bulis, fiatalos hely. Tény és való, hogy Madeira külföldi látogatói között többségben vannak a középkorúak és a nyugdíjasok. Madeira azért a fiatalabbaknak is tetszhet - leginkább a kettesben utazó, romantikus nyaralást kedvelő pároknak.\n\nAkik pálmafás, fehér-homokos tengerparti beach nyaralást képzeltek el – nos, ők csalódni fognak. Bár a strandok tiszták és gondozottak, de sem a föveny, sem a tengervíz, sem a vízhőmérséklet nem ideális. Egyszerűen Madeira nem egy tengeri nyaralós célállomás, a fő élményt nem a tengeri fürdőzés fogja jelenti a nyaralásunk alatt. Nem olyan, mint Mallorca, Tenerife vagy valamelyik karibi sziget. Akik mégis hosszú, aranyhomokos tengerpartra vágynak, azoknak érdemes átkompozni (kb. 2 és fél óra) a közeli Porto Santo szigetre, ahol tényleg szép strandok vannak! Megfontolandó, hogy 1-2 éjszakát ott töltsünk.\n"
+            },
+            {
+              "__component": "blocks.full-image",
+              "id": 26,
+              "image": {
+                "id": 29,
+                "documentId": "efsf1dqp7fqaj0cm0fqdwfk4",
+                "name": "Jardim Monte Palace - Credito Greg Snel.jpg",
+                "alternativeText": null,
+                "caption": null,
+                "width": 1600,
+                "height": 1066,
+                "formats": {
+                  "thumbnail": {
+                    "name": "thumbnail_Jardim Monte Palace - Credito Greg Snel.jpg",
+                    "hash": "thumbnail_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 235,
+                    "height": 156,
+                    "size": 13.1,
+                    "sizeInBytes": 13100,
+                    "url": "/uploads/thumbnail_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434.jpg"
+                  },
+                  "small": {
+                    "name": "small_Jardim Monte Palace - Credito Greg Snel.jpg",
+                    "hash": "small_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 500,
+                    "height": 333,
+                    "size": 54.08,
+                    "sizeInBytes": 54084,
+                    "url": "/uploads/small_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434.jpg"
+                  },
+                  "medium": {
+                    "name": "medium_Jardim Monte Palace - Credito Greg Snel.jpg",
+                    "hash": "medium_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 750,
+                    "height": 500,
+                    "size": 120.85,
+                    "sizeInBytes": 120852,
+                    "url": "/uploads/medium_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434.jpg"
+                  },
+                  "large": {
+                    "name": "large_Jardim Monte Palace - Credito Greg Snel.jpg",
+                    "hash": "large_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 1000,
+                    "height": 666,
+                    "size": 209.73,
+                    "sizeInBytes": 209726,
+                    "url": "/uploads/large_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434.jpg"
+                  }
+                },
+                "hash": "Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434",
+                "ext": ".jpg",
+                "mime": "image/jpeg",
+                "size": 495.96,
+                "url": "/uploads/Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434.jpg",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "folderPath": "/",
+                "createdAt": "2026-02-11T22:01:25.295Z",
+                "updatedAt": "2026-02-22T21:02:20.960Z",
+                "publishedAt": "2026-02-11T22:01:25.295Z",
+                "locale": null,
+                "focalPoint": null
+              }
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 147,
+              "heading": "Hangulat",
+              "linkId": "hangulat"
+            },
+            {
+              "__component": "blocks.paragraph-with-image",
+              "id": 77,
+              "content": "A Madeira-i utazás legfontosabb hozadéka az, hogy egy különleges, nagyon egyedi hangulatú világa van a szigetnek. Ráadásul olyan hely, ahol csaknem garantált a jó közérzet. Ebben segít az, hogy a sziget nagyon rendezett, gusztusos, virágos és színvonalas, nagy választékú a vendéglátás. Kitűnő a közbiztonság, a helyiek roppant nyugis emberek.\n\nKortól függetlenül mindazoknak való Madeira, akik tudják értékelni az egyszerű, harmonikus természeti szépségeket. Különleges élményt jelent, hogy a természetvilága nagyon egyedi, s hogy a városi élet is rohanástól és stressztől mentes, már-már idilli. A legnagyobb város, Funchal központjában, a parkokban, testközelben vannak mangó-, papaja- és banánfák.\n\nA hölgyek és a kertkedvelők könnyen beleszeretnek a szigetbe. Tavasszal Funchal jacarandafái virágba borulnak és ettől az egész város csodaszép lila színbe öltözködik. Madeira jelképe az estrelica, avagy a papagájvirág, amely hatalmas bokrokon virít mindenütt, lényegében egész évben. Madeirát az Atlanti-óceán virágoskertjének is szokták nevezni. Madeira vonatkozásában különösen fontos a klimatikus viszonyok pontosítása. Tapasztalataink szerint ugyanis gyakran félreértések vannak abból, hogy mennyire meleg és nyaralós jellegében különböző-e például a Kanári-szigetektől.\n",
+              "reversed": true,
+              "imageLandscape": false,
+              "image": {
+                "id": 28,
+                "documentId": "axxvgh1lwpd2gtwmjnlhheuj",
+                "name": "banner-site-sustentabilidade-1.jpg",
+                "alternativeText": null,
+                "caption": null,
+                "width": 1920,
+                "height": 1080,
+                "formats": {
+                  "thumbnail": {
+                    "name": "thumbnail_banner-site-sustentabilidade-1.jpg",
+                    "hash": "thumbnail_banner_site_sustentabilidade_1_ba3de794f0",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 245,
+                    "height": 138,
+                    "size": 10.57,
+                    "sizeInBytes": 10571,
+                    "url": "/uploads/thumbnail_banner_site_sustentabilidade_1_ba3de794f0.jpg"
+                  },
+                  "small": {
+                    "name": "small_banner-site-sustentabilidade-1.jpg",
+                    "hash": "small_banner_site_sustentabilidade_1_ba3de794f0",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 500,
+                    "height": 281,
+                    "size": 41.99,
+                    "sizeInBytes": 41993,
+                    "url": "/uploads/small_banner_site_sustentabilidade_1_ba3de794f0.jpg"
+                  },
+                  "medium": {
+                    "name": "medium_banner-site-sustentabilidade-1.jpg",
+                    "hash": "medium_banner_site_sustentabilidade_1_ba3de794f0",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 750,
+                    "height": 422,
+                    "size": 94.44,
+                    "sizeInBytes": 94441,
+                    "url": "/uploads/medium_banner_site_sustentabilidade_1_ba3de794f0.jpg"
+                  },
+                  "large": {
+                    "name": "large_banner-site-sustentabilidade-1.jpg",
+                    "hash": "large_banner_site_sustentabilidade_1_ba3de794f0",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 1000,
+                    "height": 563,
+                    "size": 166.6,
+                    "sizeInBytes": 166604,
+                    "url": "/uploads/large_banner_site_sustentabilidade_1_ba3de794f0.jpg"
+                  }
+                },
+                "hash": "banner_site_sustentabilidade_1_ba3de794f0",
+                "ext": ".jpg",
+                "mime": "image/jpeg",
+                "size": 518.01,
+                "url": "/uploads/banner_site_sustentabilidade_1_ba3de794f0.jpg",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "folderPath": "/",
+                "createdAt": "2026-02-11T22:01:25.252Z",
+                "updatedAt": "2026-05-30T08:39:44.057Z",
+                "publishedAt": "2026-02-11T22:01:25.253Z",
+                "locale": null,
+                "focalPoint": null
+              }
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 148,
+              "heading": "Környék",
+              "linkId": "kornyek"
+            },
+            {
+              "__component": "blocks.paragraph",
+              "id": 63,
+              "content": "Madeira 400 kilométerrel van északabbra a Kanári-szigetek-i Tenerifétől, és ez a különbség lényegesen érződik a szubtropikus klímájában. Az év egyetlen hónapjában sincs nagy hőség és hideg sem. A leghidegebb hónap a február, de akkor sincs nappal 15-16 foknál hűvösebb. Viszont a legmelegebb két hónapban, augusztusban és szeptemberben sincs 23 foknál sokkal melegebb. Ritka az eső, a legnedvesebb évszak novembertől február végig tart. A tenger vize legfeljebb nyáron élvezhető mindenkinek (22-23 fok), míg télen csak az önsanyargatók, meg tán a németek, mennek be a tengerbe (16-17 fok). Bár Madeira nem nagy sziget, de a területén belül is vannak időjárási különbségek. Naná, hogy a déli szigetrésznek van kellemesebb klímája, hisz odatelepedett a turizmus. Napközben is szeszélyesen változhat az időjárás. A helyiek szeretik mondogatni, hogy náluk egy napon belül is át lehet élni négy időjárásszezont.\n\nA turisták nagy többsége Funchal körzetében lévő szállodát választ, és ez érthető is. A turisták számára fontos szolgáltatások, városi időtöltések itt összpontosulnak. A hotelek többsége Funchal városon kívül egy hosszú, parthoz közeli üdülőövezetben van. Itt helyiek nem laknak, csak nyaralók. A hotel zónából busszal, taxival, vagy gyalogosan lehet bejutni a városközpontba. A buszközlekedés nagyon kulturált. A taxizás három fő esetén már olcsóbbra jön ki, mint a buszozás. \nA hotelzóna városközponthoz közelebb eső szállodáiból kellemesen be lehet sétálni Funchal központjába. A belváros rendkívül csinos, gondozott, tiszta, jó állapotú. Az emberek kedvesek, nyugodtak, s tisztes jómódban élnek. Portugáliában a főváros után itt a legmagasabb az életszínvonal. A belváros telis-tele van éttermekkel, kávézókkal. Imádni való a hely! A látnivalókról, programlehetőségekről külön fejezetben adunk részletes információkat.\n"
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 149,
+              "heading": "Fárasztó, de megéri",
+              "linkId": "faraszto-de-megeri"
+            },
+            {
+              "__component": "blocks.paragraph-with-image",
+              "id": 78,
+              "content": "Mérete alapján a sziget lényeges elszórt látnivalóinak megnézése nem igazán fáradtságos feladat. Jellemzően 30 és 70 kilométer közöttiek összesen a megteendő távolságok az egynapos kirándulások folyamán. A szigeten az egymástól legtávolabb fekvő pont közötti távolság 160 kilométer. Jellemzően két vagy három külön csoportos buszos vagy egyénileg szervezett típuskirándulással fedezik fel a szigetet. A belső területek hegyes domborzata, a kacskaringós, keskeny utak miatt a távolságokhoz képest időigényes az utazás. Pedig az utak jó állapotban vannak.",
+              "reversed": false,
+              "imageLandscape": true,
+              "image": {
+                "id": 30,
+                "documentId": "vlaq5qa9mn9qkcwlg2c2mxer",
+                "name": "sea-1413681_1920-1.jpg",
+                "alternativeText": null,
+                "caption": null,
+                "width": 900,
+                "height": 598,
+                "formats": {
+                  "thumbnail": {
+                    "name": "thumbnail_sea-1413681_1920-1.jpg",
+                    "hash": "thumbnail_sea_1413681_1920_1_8a2f407394",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 235,
+                    "height": 156,
+                    "size": 8.06,
+                    "sizeInBytes": 8058,
+                    "url": "/uploads/thumbnail_sea_1413681_1920_1_8a2f407394.jpg"
+                  },
+                  "small": {
+                    "name": "small_sea-1413681_1920-1.jpg",
+                    "hash": "small_sea_1413681_1920_1_8a2f407394",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 500,
+                    "height": 332,
+                    "size": 31.43,
+                    "sizeInBytes": 31434,
+                    "url": "/uploads/small_sea_1413681_1920_1_8a2f407394.jpg"
+                  },
+                  "medium": {
+                    "name": "medium_sea-1413681_1920-1.jpg",
+                    "hash": "medium_sea_1413681_1920_1_8a2f407394",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 750,
+                    "height": 498,
+                    "size": 64.28,
+                    "sizeInBytes": 64280,
+                    "url": "/uploads/medium_sea_1413681_1920_1_8a2f407394.jpg"
+                  }
+                },
+                "hash": "sea_1413681_1920_1_8a2f407394",
+                "ext": ".jpg",
+                "mime": "image/jpeg",
+                "size": 69.97,
+                "url": "/uploads/sea_1413681_1920_1_8a2f407394.jpg",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "folderPath": "/",
+                "createdAt": "2026-02-11T22:13:21.254Z",
+                "updatedAt": "2026-09-10T22:30:25.513Z",
+                "publishedAt": "2026-02-11T22:13:21.254Z",
+                "locale": null,
+                "focalPoint": null
+              }
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 150,
+              "heading": "Videó",
+              "linkId": "video"
+            },
+            {
+              "__component": "blocks.youtube-video",
+              "id": 15,
+              "title": "Madeira",
+              "videoUrl": "https://www.youtube.com/watch?v=33jWGnOwIX4",
+              "description": "Tekintsétek meg a videónkat Madeiráról.",
+              "aspectRatio": "16:9",
+              "startTime": null,
+              "privacyMode": true
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 151,
+              "heading": "Képgaléria",
+              "linkId": "kepgaleria"
+            },
+            {
+              "__component": "blocks.picture-gallery",
+              "id": 14,
+              "title": "Csudaszép Madeirai képek",
+              "description": "Nézd milyen szép hely ez a Madeira.",
+              "aspectRatio": "16:9",
+              "autoplay": true,
+              "slideIntervalMs": 5000,
+              "images": [
+                {
+                  "id": 29,
+                  "documentId": "efsf1dqp7fqaj0cm0fqdwfk4",
+                  "name": "Jardim Monte Palace - Credito Greg Snel.jpg",
+                  "alternativeText": null,
+                  "caption": null,
+                  "width": 1600,
+                  "height": 1066,
+                  "formats": {
+                    "thumbnail": {
+                      "name": "thumbnail_Jardim Monte Palace - Credito Greg Snel.jpg",
+                      "hash": "thumbnail_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 235,
+                      "height": 156,
+                      "size": 13.1,
+                      "sizeInBytes": 13100,
+                      "url": "/uploads/thumbnail_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434.jpg"
+                    },
+                    "small": {
+                      "name": "small_Jardim Monte Palace - Credito Greg Snel.jpg",
+                      "hash": "small_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 500,
+                      "height": 333,
+                      "size": 54.08,
+                      "sizeInBytes": 54084,
+                      "url": "/uploads/small_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434.jpg"
+                    },
+                    "medium": {
+                      "name": "medium_Jardim Monte Palace - Credito Greg Snel.jpg",
+                      "hash": "medium_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 750,
+                      "height": 500,
+                      "size": 120.85,
+                      "sizeInBytes": 120852,
+                      "url": "/uploads/medium_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434.jpg"
+                    },
+                    "large": {
+                      "name": "large_Jardim Monte Palace - Credito Greg Snel.jpg",
+                      "hash": "large_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 1000,
+                      "height": 666,
+                      "size": 209.73,
+                      "sizeInBytes": 209726,
+                      "url": "/uploads/large_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434.jpg"
+                    }
+                  },
+                  "hash": "Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "size": 495.96,
+                  "url": "/uploads/Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434.jpg",
+                  "previewUrl": null,
+                  "provider": "local",
+                  "provider_metadata": null,
+                  "folderPath": "/",
+                  "createdAt": "2026-02-11T22:01:25.295Z",
+                  "updatedAt": "2026-02-22T21:02:20.960Z",
+                  "publishedAt": "2026-02-11T22:01:25.295Z",
+                  "locale": null,
+                  "focalPoint": null
+                },
+                {
+                  "id": 30,
+                  "documentId": "vlaq5qa9mn9qkcwlg2c2mxer",
+                  "name": "sea-1413681_1920-1.jpg",
+                  "alternativeText": null,
+                  "caption": null,
+                  "width": 900,
+                  "height": 598,
+                  "formats": {
+                    "thumbnail": {
+                      "name": "thumbnail_sea-1413681_1920-1.jpg",
+                      "hash": "thumbnail_sea_1413681_1920_1_8a2f407394",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 235,
+                      "height": 156,
+                      "size": 8.06,
+                      "sizeInBytes": 8058,
+                      "url": "/uploads/thumbnail_sea_1413681_1920_1_8a2f407394.jpg"
+                    },
+                    "small": {
+                      "name": "small_sea-1413681_1920-1.jpg",
+                      "hash": "small_sea_1413681_1920_1_8a2f407394",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 500,
+                      "height": 332,
+                      "size": 31.43,
+                      "sizeInBytes": 31434,
+                      "url": "/uploads/small_sea_1413681_1920_1_8a2f407394.jpg"
+                    },
+                    "medium": {
+                      "name": "medium_sea-1413681_1920-1.jpg",
+                      "hash": "medium_sea_1413681_1920_1_8a2f407394",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 750,
+                      "height": 498,
+                      "size": 64.28,
+                      "sizeInBytes": 64280,
+                      "url": "/uploads/medium_sea_1413681_1920_1_8a2f407394.jpg"
+                    }
+                  },
+                  "hash": "sea_1413681_1920_1_8a2f407394",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "size": 69.97,
+                  "url": "/uploads/sea_1413681_1920_1_8a2f407394.jpg",
+                  "previewUrl": null,
+                  "provider": "local",
+                  "provider_metadata": null,
+                  "folderPath": "/",
+                  "createdAt": "2026-02-11T22:13:21.254Z",
+                  "updatedAt": "2026-09-10T22:30:25.513Z",
+                  "publishedAt": "2026-02-11T22:13:21.254Z",
+                  "locale": null,
+                  "focalPoint": null
+                },
+                {
+                  "id": 28,
+                  "documentId": "axxvgh1lwpd2gtwmjnlhheuj",
+                  "name": "banner-site-sustentabilidade-1.jpg",
+                  "alternativeText": null,
+                  "caption": null,
+                  "width": 1920,
+                  "height": 1080,
+                  "formats": {
+                    "thumbnail": {
+                      "name": "thumbnail_banner-site-sustentabilidade-1.jpg",
+                      "hash": "thumbnail_banner_site_sustentabilidade_1_ba3de794f0",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 245,
+                      "height": 138,
+                      "size": 10.57,
+                      "sizeInBytes": 10571,
+                      "url": "/uploads/thumbnail_banner_site_sustentabilidade_1_ba3de794f0.jpg"
+                    },
+                    "small": {
+                      "name": "small_banner-site-sustentabilidade-1.jpg",
+                      "hash": "small_banner_site_sustentabilidade_1_ba3de794f0",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 500,
+                      "height": 281,
+                      "size": 41.99,
+                      "sizeInBytes": 41993,
+                      "url": "/uploads/small_banner_site_sustentabilidade_1_ba3de794f0.jpg"
+                    },
+                    "medium": {
+                      "name": "medium_banner-site-sustentabilidade-1.jpg",
+                      "hash": "medium_banner_site_sustentabilidade_1_ba3de794f0",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 750,
+                      "height": 422,
+                      "size": 94.44,
+                      "sizeInBytes": 94441,
+                      "url": "/uploads/medium_banner_site_sustentabilidade_1_ba3de794f0.jpg"
+                    },
+                    "large": {
+                      "name": "large_banner-site-sustentabilidade-1.jpg",
+                      "hash": "large_banner_site_sustentabilidade_1_ba3de794f0",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 1000,
+                      "height": 563,
+                      "size": 166.6,
+                      "sizeInBytes": 166604,
+                      "url": "/uploads/large_banner_site_sustentabilidade_1_ba3de794f0.jpg"
+                    }
+                  },
+                  "hash": "banner_site_sustentabilidade_1_ba3de794f0",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "size": 518.01,
+                  "url": "/uploads/banner_site_sustentabilidade_1_ba3de794f0.jpg",
+                  "previewUrl": null,
+                  "provider": "local",
+                  "provider_metadata": null,
+                  "folderPath": "/",
+                  "createdAt": "2026-02-11T22:01:25.252Z",
+                  "updatedAt": "2026-05-30T08:39:44.057Z",
+                  "publishedAt": "2026-02-11T22:01:25.253Z",
+                  "locale": null,
+                  "focalPoint": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 15,
+          "documentId": "vmwjmhebdithblsjrm6xqyo7",
+          "title": "Surf, Sun, and Fun: Why Surfing Summer Camps Are Perfect for All Ages",
+          "description": "Improving your take-off phase in surfing is a fundamental step toward riding waves with more confidence and style.\n\nImproving your take-off phase is a gradual process, and it may take time to master. Be patient, stay committed to practice, and enjoy the journey of becoming a better surfer. With dedication and persistence, you'll see progress and have more enjoyable rides. Here is how:",
+          "slug": "surf-sun-and-fun-why-surfing-summer-camps-are-perfect-for-all-ages",
+          "author": "Paul Brats",
+          "featured": true,
+          "createdAt": "2024-12-02T07:56:13.756Z",
+          "updatedAt": "2026-09-10T22:48:26.059Z",
+          "publishedAt": "2026-09-10T22:48:26.109Z",
+          "locale": null,
+          "disabled": true,
+          "image": {
+            "id": 17,
+            "documentId": "o3u1i9rqqm3budqa63386p97",
+            "name": "pexels-vladimir-kudinov-67386 1.png",
+            "alternativeText": null,
+            "caption": null,
+            "width": 999,
+            "height": 668,
+            "formats": {
+              "thumbnail": {
+                "name": "thumbnail_pexels-vladimir-kudinov-67386 1.png",
+                "hash": "thumbnail_pexels_vladimir_kudinov_67386_1_8773be8e23",
+                "ext": ".png",
+                "mime": "image/png",
+                "path": null,
+                "width": 233,
+                "height": 156,
+                "size": 103.67,
+                "sizeInBytes": 103669,
+                "url": "/uploads/thumbnail_pexels_vladimir_kudinov_67386_1_8773be8e23.png"
+              },
+              "small": {
+                "name": "small_pexels-vladimir-kudinov-67386 1.png",
+                "hash": "small_pexels_vladimir_kudinov_67386_1_8773be8e23",
+                "ext": ".png",
+                "mime": "image/png",
+                "path": null,
+                "width": 500,
+                "height": 334,
+                "size": 449.07,
+                "sizeInBytes": 449074,
+                "url": "/uploads/small_pexels_vladimir_kudinov_67386_1_8773be8e23.png"
+              },
+              "medium": {
+                "name": "medium_pexels-vladimir-kudinov-67386 1.png",
+                "hash": "medium_pexels_vladimir_kudinov_67386_1_8773be8e23",
+                "ext": ".png",
+                "mime": "image/png",
+                "path": null,
+                "width": 750,
+                "height": 502,
+                "size": 1002.04,
+                "sizeInBytes": 1002038,
+                "url": "/uploads/medium_pexels_vladimir_kudinov_67386_1_8773be8e23.png"
+              }
+            },
+            "hash": "pexels_vladimir_kudinov_67386_1_8773be8e23",
+            "ext": ".png",
+            "mime": "image/png",
+            "size": 392.01,
+            "url": "/uploads/pexels_vladimir_kudinov_67386_1_8773be8e23.png",
+            "previewUrl": null,
+            "provider": "local",
+            "provider_metadata": null,
+            "folderPath": "/2",
+            "createdAt": "2024-12-05T22:58:44.329Z",
+            "updatedAt": "2025-11-20T22:41:06.649Z",
+            "publishedAt": "2024-12-05T22:58:44.329Z",
+            "locale": null,
+            "focalPoint": null
+          },
+          "blocks": [
+            {
+              "__component": "blocks.heading",
+              "id": 109,
+              "heading": "Material",
+              "linkId": "introduction"
+            },
+            {
+              "__component": "blocks.paragraph-with-image",
+              "id": 58,
+              "content": "Surfboards are typically made from foam blanks, which serve as the core, and are then sheathed in a fiberglass shell. This core, traditionally made from polyurethane foam, provides buoyancy and shape to the board. In recent years, EPS (expanded polystyrene) foam has gained popularity due to its lighter weight and more eco-friendly properties. The fiberglass shell, on the other hand, gives the board its rigidity and durability. Resin, often either polyester or epoxy, is used to bond the fiberglass to the foam core, and it also provides a smooth, waterproof finish.\n\nSome modern surfboards incorporate additional materials like epoxy or carbon fiber. Epoxy is preferred by some manufacturers and surfers because of its stronger and more resilient nature compared to traditional polyester resin. Carbon fiber, known for its strength-to-weight ratio, can be added to specific areas of the board, like the tail or rails, to increase rigidity and responsiveness. Other innovations include the use of bamboo veneers for both aesthetic appeal and structural integrity, as well as recycled materials to make the production process more sustainable.\n",
+              "reversed": false,
+              "imageLandscape": true,
+              "image": {
+                "id": 8,
+                "documentId": "vf6iopqo05jurk6skmev8etr",
+                "name": "surfboard.png",
+                "alternativeText": null,
+                "caption": null,
+                "width": 739,
+                "height": 473,
+                "formats": {
+                  "thumbnail": {
+                    "name": "thumbnail_surfboard.png",
+                    "hash": "thumbnail_surfboard_786d650378",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 244,
+                    "height": 156,
+                    "size": 60.97,
+                    "sizeInBytes": 60969,
+                    "url": "/uploads/thumbnail_surfboard_786d650378.png"
+                  },
+                  "small": {
+                    "name": "small_surfboard.png",
+                    "hash": "small_surfboard_786d650378",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 500,
+                    "height": 320,
+                    "size": 223.59,
+                    "sizeInBytes": 223585,
+                    "url": "/uploads/small_surfboard_786d650378.png"
+                  }
+                },
+                "hash": "surfboard_786d650378",
+                "ext": ".png",
+                "mime": "image/png",
+                "size": 128.46,
+                "url": "/uploads/surfboard_786d650378.png",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "folderPath": "/2",
+                "createdAt": "2024-12-02T20:14:21.609Z",
+                "updatedAt": "2025-11-20T22:41:05.469Z",
+                "publishedAt": "2024-12-02T20:14:21.610Z",
+                "locale": null,
+                "focalPoint": null
+              }
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 110,
+              "heading": "Design Considerations",
+              "linkId": "design"
+            },
+            {
+              "__component": "blocks.paragraph",
+              "id": 50,
+              "content": "When crafting the perfect surfboard, numerous factors come into play, each contributing to the board's performance and suitability for specific conditions or surfers. These design aspects consider everything from the individual surfer's attributes to the nuances of wave conditions. Here are some critical design considerations every shaper keeps in mind when creating a board.\n\n- Surfer's Skill Level: The shaper considers the surfer's skill level, as well as their height, weight, and experience, to determine the board's dimensions. \n- Wave Conditions: The type of waves the surfer intends to ride plays a crucial role in shaping. Different boards are designed for small, mushy waves or big, powerful waves. \n- Board Length: The length of the board affects its speed and maneuverability. Longer boards are faster but less maneuverable, while shorter boards are more agile. \n- Rockers: The curvature from nose to tail (rockers) influences how a board performs. A flatter rocker is better for speed, while a more pronounced rocker helps with turning. \n- Rails: The rails, or edges of the board, affect stability and control. Sharp rails are more responsive, while rounder rails provide stability.\n- Volume: The volume of the board impacts buoyancy and paddling ease. More volume is helpful for beginners, while advanced surfers may prefer less."
+            },
+            {
+              "__component": "blocks.full-image",
+              "id": 20,
+              "image": {
+                "id": 9,
+                "documentId": "uzmoe07azs030t4ptg32nsmi",
+                "name": "catching-wave.png",
+                "alternativeText": null,
+                "caption": null,
+                "width": 898,
+                "height": 599,
+                "formats": {
+                  "thumbnail": {
+                    "name": "thumbnail_catching-wave.png",
+                    "hash": "thumbnail_catching_wave_a180ad0b5a",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 234,
+                    "height": 156,
+                    "size": 81.96,
+                    "sizeInBytes": 81963,
+                    "url": "/uploads/thumbnail_catching_wave_a180ad0b5a.png"
+                  },
+                  "small": {
+                    "name": "small_catching-wave.png",
+                    "hash": "small_catching_wave_a180ad0b5a",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 500,
+                    "height": 334,
+                    "size": 332.08,
+                    "sizeInBytes": 332080,
+                    "url": "/uploads/small_catching_wave_a180ad0b5a.png"
+                  },
+                  "medium": {
+                    "name": "medium_catching-wave.png",
+                    "hash": "medium_catching_wave_a180ad0b5a",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 750,
+                    "height": 500,
+                    "size": 698.99,
+                    "sizeInBytes": 698993,
+                    "url": "/uploads/medium_catching_wave_a180ad0b5a.png"
+                  }
+                },
+                "hash": "catching_wave_a180ad0b5a",
+                "ext": ".png",
+                "mime": "image/png",
+                "size": 257.23,
+                "url": "/uploads/catching_wave_a180ad0b5a.png",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "folderPath": "/2",
+                "createdAt": "2024-12-02T20:16:37.752Z",
+                "updatedAt": "2025-11-20T22:41:05.569Z",
+                "publishedAt": "2024-12-02T20:16:37.752Z",
+                "locale": null,
+                "focalPoint": null
+              }
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 111,
+              "heading": "Shaping Process",
+              "linkId": "process"
+            },
+            {
+              "__component": "blocks.paragraph-with-image",
+              "id": 59,
+              "content": "When crafting the perfect surfboard, numerous factors come into play, each contributing to the board's performance and suitability for specific conditions or surfers. These design aspects consider everything from the individual surfer's attributes to the nuances of wave conditions. Here are some critical design considerations every shaper keeps in mind when creating a board.\n\n- Outline: The shaper starts by drawing the board's outline on the blank. This shape determines the board's length and width. \n- Rocker and Rails: The shaper carves the desired rocker and rails into the blank using specialized tools. \n- Shaping the Nose and Tail: The nose and tail are shaped to match the desired design. Different tail shapes are carved accordingly. \n- Fiberglassing: After shaping, the board is wrapped in fiberglass cloth and coated with resin to provide strength and durability. \n- Fin Setup: The placement and type of fins are crucial for stability and maneuverability. The shaper installs the fin boxes and fins.",
+              "reversed": true,
+              "imageLandscape": false,
+              "image": {
+                "id": 10,
+                "documentId": "y3hhvkuskd67tsgmi66otnt3",
+                "name": "waxing.png",
+                "alternativeText": null,
+                "caption": null,
+                "width": 391,
+                "height": 603,
+                "formats": {
+                  "thumbnail": {
+                    "name": "thumbnail_waxing.png",
+                    "hash": "thumbnail_waxing_cdbd65dd3a",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 101,
+                    "height": 156,
+                    "size": 37.52,
+                    "sizeInBytes": 37515,
+                    "url": "/uploads/thumbnail_waxing_cdbd65dd3a.png"
+                  },
+                  "small": {
+                    "name": "small_waxing.png",
+                    "hash": "small_waxing_cdbd65dd3a",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 324,
+                    "height": 500,
+                    "size": 309.38,
+                    "sizeInBytes": 309380,
+                    "url": "/uploads/small_waxing_cdbd65dd3a.png"
+                  }
+                },
+                "hash": "waxing_cdbd65dd3a",
+                "ext": ".png",
+                "mime": "image/png",
+                "size": 114.49,
+                "url": "/uploads/waxing_cdbd65dd3a.png",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "folderPath": "/2",
+                "createdAt": "2024-12-02T20:18:30.147Z",
+                "updatedAt": "2025-11-20T22:41:05.645Z",
+                "publishedAt": "2024-12-02T20:18:30.147Z",
+                "locale": null,
+                "focalPoint": null
+              }
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 112,
+              "heading": "Customization & Artistic Touch",
+              "linkId": "customization"
+            },
+            {
+              "__component": "blocks.paragraph",
+              "id": 51,
+              "content": "Surfing, while being a thrilling sport, is deeply personal. Each surfer brings to the waves their unique style, preferences, and experiences. Recognizing this, many surfboards are custom-shaped to align with a surfer's specific desires. This art of tailoring demands an intricate collaboration between the shaper and the surfer. They work hand-in-hand, engaging in detailed discussions, to ensure that every element of the board is meticulously fine-tuned to enhance performance and maximize comfort. Beyond the functional aspects, there's an aesthetic side to surfboard crafting. Some shapers, infusing their artistic flair, adorn boards with unique artwork or designs. This not only makes the surfboard a piece of sports equipment but also a canvas that embodies individual expression, making it visually compelling both on and off the waves.\n\nWhen crafting the perfect surfboard, numerous factors come into play, each contributing to the board's performance and suitability for specific conditions or surfers. These design aspects consider everything from the individual surfer's attributes to the nuances of wave conditions. Here are some critical design considerations every shaper keeps in mind when creating a board:\n\nSurfer's Skill Level: The shaper considers the surfer's skill level, as well as their height, weight, and experience, to determine the board's dimensions. Wave Conditions: The type of waves the surfer intends to ride plays a crucial role in shaping. Different boards are designed for small, mushy waves or big, powerful waves. Board Length: The length of the board affects its speed and maneuverability. Longer boards are faster but less maneuverable, while shorter boards are more agile. Rockers: The curvature from nose to tail (rockers) influences how a board performs. A flatter rocker is better for speed, while a more pronounced rocker helps with turning. Rails: The rails, or edges of the board, affect stability and control. Sharp rails are more responsive, while rounder rails provide stability. Volume: The volume of the board impacts buoyancy and paddling ease. More volume is helpful for beginners, while advanced surfers may prefer less. Tail Shape: Different tail shapes (e.g., pintail, squash tail, swallowtail) offer various turning characteristics and control."
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 113,
+              "heading": "Testing & Refinement",
+              "linkId": "testing"
+            },
+            {
+              "__component": "blocks.paragraph-with-image",
+              "id": 60,
+              "content": "Surfboards are typically made from foam blanks, which serve as the core, and are then sheathed in a fiberglass shell. This core, traditionally made from polyurethane foam, provides buoyancy and shape to the board. In recent years, EPS (expanded polystyrene) foam has gained popularity due to its lighter weight and more eco-friendly properties. The fiberglass shell, on the other hand, gives the board its rigidity and durability. Resin, often either polyester or epoxy, is used to bond the fiberglass to the foam core, and it also provides a smooth, waterproof finish.\n\nSome modern surfboards incorporate additional materials like epoxy or carbon fiber. Epoxy is preferred by some manufacturers and surfers because of its stronger and more resilient nature compared to traditional polyester resin. Carbon fiber, known for its strength-to-weight ratio, can be added to specific areas of the board, like the tail or rails, to increase rigidity and responsiveness. Other innovations include the use of bamboo veneers for both aesthetic appeal and structural integrity, as well as recycled materials to make the production process more sustainable.",
+              "reversed": false,
+              "imageLandscape": true,
+              "image": {
+                "id": 11,
+                "documentId": "bwjgxrxrxug2zqf0clmdzffq",
+                "name": "many-surfboards.png",
+                "alternativeText": null,
+                "caption": null,
+                "width": 739,
+                "height": 473,
+                "formats": {
+                  "thumbnail": {
+                    "name": "thumbnail_many-surfboards.png",
+                    "hash": "thumbnail_many_surfboards_d1f3bc08fd",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 244,
+                    "height": 156,
+                    "size": 101.55,
+                    "sizeInBytes": 101550,
+                    "url": "/uploads/thumbnail_many_surfboards_d1f3bc08fd.png"
+                  },
+                  "small": {
+                    "name": "small_many-surfboards.png",
+                    "hash": "small_many_surfboards_d1f3bc08fd",
+                    "ext": ".png",
+                    "mime": "image/png",
+                    "path": null,
+                    "width": 500,
+                    "height": 320,
+                    "size": 404.76,
+                    "sizeInBytes": 404759,
+                    "url": "/uploads/small_many_surfboards_d1f3bc08fd.png"
+                  }
+                },
+                "hash": "many_surfboards_d1f3bc08fd",
+                "ext": ".png",
+                "mime": "image/png",
+                "size": 235.17,
+                "url": "/uploads/many_surfboards_d1f3bc08fd.png",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "folderPath": "/2",
+                "createdAt": "2024-12-02T20:20:43.930Z",
+                "updatedAt": "2025-11-20T22:41:05.738Z",
+                "publishedAt": "2024-12-02T20:20:43.931Z",
+                "locale": null,
+                "focalPoint": null
+              }
+            }
+          ]
+        }
+      ],
+      "draftOnly": []
+    },
+    "blogs": {
+      "published": [
+        {
+          "id": 9,
+          "documentId": "vz056vtef59dv6z6vxk3lcgu",
+          "title": "Teendők túra előtt",
+          "description": "Hasznos infók mielőtt velünk tartanál",
+          "slug": "teendok-tura-elott",
+          "author": "Tibi",
+          "createdAt": "2026-07-05T11:42:37.360Z",
+          "updatedAt": "2026-09-11T14:16:56.418Z",
+          "publishedAt": "2026-09-11T14:16:56.461Z",
+          "locale": null,
+          "disabled": true,
+          "image": {
+            "id": 21,
+            "documentId": "vyo1p7z2y0g679pjejooadtq",
+            "name": "skok-vizeses.jpg",
+            "alternativeText": "Fasza kis vízesés képe",
+            "caption": "Fasza kis vízesés",
+            "width": 3072,
+            "height": 2304,
+            "formats": {
+              "thumbnail": {
+                "name": "thumbnail_skok-vizeses.jpg",
+                "hash": "thumbnail_skok_vizeses_0a30367b04",
+                "ext": ".jpg",
+                "mime": "image/jpeg",
+                "path": null,
+                "width": 208,
+                "height": 156,
+                "size": 12.28,
+                "sizeInBytes": 12276,
+                "url": "/uploads/thumbnail_skok_vizeses_0a30367b04.jpg"
+              },
+              "small": {
+                "name": "small_skok-vizeses.jpg",
+                "hash": "small_skok_vizeses_0a30367b04",
+                "ext": ".jpg",
+                "mime": "image/jpeg",
+                "path": null,
+                "width": 500,
+                "height": 375,
+                "size": 66.13,
+                "sizeInBytes": 66126,
+                "url": "/uploads/small_skok_vizeses_0a30367b04.jpg"
+              },
+              "medium": {
+                "name": "medium_skok-vizeses.jpg",
+                "hash": "medium_skok_vizeses_0a30367b04",
+                "ext": ".jpg",
+                "mime": "image/jpeg",
+                "path": null,
+                "width": 750,
+                "height": 563,
+                "size": 150.03,
+                "sizeInBytes": 150034,
+                "url": "/uploads/medium_skok_vizeses_0a30367b04.jpg"
+              },
+              "large": {
+                "name": "large_skok-vizeses.jpg",
+                "hash": "large_skok_vizeses_0a30367b04",
+                "ext": ".jpg",
+                "mime": "image/jpeg",
+                "path": null,
+                "width": 1000,
+                "height": 750,
+                "size": 260.38,
+                "sizeInBytes": 260376,
+                "url": "/uploads/large_skok_vizeses_0a30367b04.jpg"
+              }
+            },
+            "hash": "skok_vizeses_0a30367b04",
+            "ext": ".jpg",
+            "mime": "image/jpeg",
+            "size": 1964.18,
+            "url": "/uploads/skok_vizeses_0a30367b04.jpg",
+            "previewUrl": null,
+            "provider": "local",
+            "provider_metadata": null,
+            "folderPath": "/",
+            "createdAt": "2025-11-27T22:26:29.380Z",
+            "updatedAt": "2026-07-05T11:24:55.680Z",
+            "publishedAt": "2025-11-27T22:26:29.382Z",
+            "locale": null,
+            "focalPoint": null
+          },
+          "blocks": [
+            {
+              "__component": "blocks.heading",
+              "id": 162,
+              "heading": "Mire készülj, mielőtt elindulsz túrázni?",
+              "linkId": "mire-keszulj"
+            },
+            {
+              "__component": "blocks.paragraph-with-image",
+              "id": 85,
+              "content": "Egy sikeres és biztonságos túra nem a hegy lábánál kezdődik, hanem jóval korábban, az otthoni felkészülés során. Néhány alapvető lépés betartásával elkerülhetők a kellemetlen meglepetések, és a túra valóban feltöltő élmény lehet.",
+              "reversed": false,
+              "imageLandscape": true,
+              "image": {
+                "id": 32,
+                "documentId": "ainh5g31dlwlifapgca882gf",
+                "name": "tervezes.jpg",
+                "alternativeText": null,
+                "caption": null,
+                "width": 1000,
+                "height": 667,
+                "formats": {
+                  "thumbnail": {
+                    "name": "thumbnail_tervezes.jpg",
+                    "hash": "thumbnail_tervezes_bf493a3580",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 234,
+                    "height": 156,
+                    "size": 12.7,
+                    "sizeInBytes": 12704,
+                    "url": "/uploads/thumbnail_tervezes_bf493a3580.jpg"
+                  },
+                  "small": {
+                    "name": "small_tervezes.jpg",
+                    "hash": "small_tervezes_bf493a3580",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 500,
+                    "height": 334,
+                    "size": 52.5,
+                    "sizeInBytes": 52503,
+                    "url": "/uploads/small_tervezes_bf493a3580.jpg"
+                  },
+                  "medium": {
+                    "name": "medium_tervezes.jpg",
+                    "hash": "medium_tervezes_bf493a3580",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 750,
+                    "height": 500,
+                    "size": 110.51,
+                    "sizeInBytes": 110510,
+                    "url": "/uploads/medium_tervezes_bf493a3580.jpg"
+                  }
+                },
+                "hash": "tervezes_bf493a3580",
+                "ext": ".jpg",
+                "mime": "image/jpeg",
+                "size": 189.53,
+                "url": "/uploads/tervezes_bf493a3580.jpg",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "folderPath": "/",
+                "createdAt": "2026-07-05T11:28:19.805Z",
+                "updatedAt": "2026-07-05T11:28:45.338Z",
+                "publishedAt": "2026-07-05T11:28:19.807Z",
+                "locale": null,
+                "focalPoint": null
+              }
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 163,
+              "heading": "Tervezés és útvonalismeret",
+              "linkId": "utvonalismeret"
+            },
+            {
+              "__component": "blocks.paragraph-with-image",
+              "id": 86,
+              "content": "Mindig nézd át előre a tervezett útvonalat: a hosszát, a szintemelkedést, a nehézségi fokát és a becsült időtartamot. Érdemes térképet vagy túraappot használni, és tájékozódni az aktuális útviszonyokról, esetleges lezárásokról. Ne feledkezz meg az időjárás-előrejelzés ellenőrzéséről sem – a hegyekben ez gyorsan változhat.",
+              "reversed": true,
+              "imageLandscape": true,
+              "image": {
+                "id": 33,
+                "documentId": "eymi9n9y7dy7zx0c6r64n41v",
+                "name": "utvonal.jpg",
+                "alternativeText": null,
+                "caption": null,
+                "width": 649,
+                "height": 473,
+                "formats": {
+                  "thumbnail": {
+                    "name": "thumbnail_utvonal.jpg",
+                    "hash": "thumbnail_utvonal_d62b8672b7",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 214,
+                    "height": 156,
+                    "size": 4.22,
+                    "sizeInBytes": 4225,
+                    "url": "/uploads/thumbnail_utvonal_d62b8672b7.jpg"
+                  },
+                  "small": {
+                    "name": "small_utvonal.jpg",
+                    "hash": "small_utvonal_d62b8672b7",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 500,
+                    "height": 364,
+                    "size": 15.56,
+                    "sizeInBytes": 15559,
+                    "url": "/uploads/small_utvonal_d62b8672b7.jpg"
+                  }
+                },
+                "hash": "utvonal_d62b8672b7",
+                "ext": ".jpg",
+                "mime": "image/jpeg",
+                "size": 19.94,
+                "url": "/uploads/utvonal_d62b8672b7.jpg",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "folderPath": "/",
+                "createdAt": "2026-07-05T11:35:13.810Z",
+                "updatedAt": "2026-07-05T11:35:23.857Z",
+                "publishedAt": "2026-07-05T11:35:13.810Z",
+                "locale": null,
+                "focalPoint": null
+              }
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 164,
+              "heading": "Felszerelés",
+              "linkId": "felszereles"
+            },
+            {
+              "__component": "blocks.paragraph-with-image",
+              "id": 87,
+              "content": "A megfelelő cipő az egyik legfontosabb tényező: kényelmes, betört, jó tartást adó túracipőre van szükség. Öltözz réteges rendszerben, hogy alkalmazkodni tudj a hőmérséklet-változásokhoz, és mindig legyen nálad esőkabát, még akkor is, ha a prognózis szép időt jelez. A hátizsákba kerüljön elegendő víz, energiadús étel, elsősegélynyújtó készlet, fejlámpa, valamint egy feltöltött telefon.",
+              "reversed": false,
+              "imageLandscape": true,
+              "image": {
+                "id": 34,
+                "documentId": "px5e4hksblshmwb97ikk2jc5",
+                "name": "hatizsak.jpg",
+                "alternativeText": null,
+                "caption": null,
+                "width": 364,
+                "height": 549,
+                "formats": {
+                  "thumbnail": {
+                    "name": "thumbnail_hatizsak.jpg",
+                    "hash": "thumbnail_hatizsak_6ac27fb6d2",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 104,
+                    "height": 156,
+                    "size": 7.37,
+                    "sizeInBytes": 7371,
+                    "url": "/uploads/thumbnail_hatizsak_6ac27fb6d2.jpg"
+                  },
+                  "small": {
+                    "name": "small_hatizsak.jpg",
+                    "hash": "small_hatizsak_6ac27fb6d2",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 332,
+                    "height": 500,
+                    "size": 58.1,
+                    "sizeInBytes": 58097,
+                    "url": "/uploads/small_hatizsak_6ac27fb6d2.jpg"
+                  }
+                },
+                "hash": "hatizsak_6ac27fb6d2",
+                "ext": ".jpg",
+                "mime": "image/jpeg",
+                "size": 64.8,
+                "url": "/uploads/hatizsak_6ac27fb6d2.jpg",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "folderPath": "/",
+                "createdAt": "2026-07-05T11:37:48.558Z",
+                "updatedAt": "2026-07-05T11:37:48.558Z",
+                "publishedAt": "2026-07-05T11:37:48.558Z",
+                "locale": null,
+                "focalPoint": null
+              }
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 165,
+              "heading": "Fizikai és mentális felkészülés",
+              "linkId": "fizikai-es-mentalis-felkeszules"
+            },
+            {
+              "__component": "blocks.paragraph",
+              "id": 68,
+              "content": "Ha hosszabb vagy nehezebb túrára indulsz, hasznos néhány héttel előtte edzeni – gyaloglással, lépcsőzéssel vagy állóképességi mozgással. Ismerd fel a saját határaidat, és válassz olyan útvonalat, amely összhangban van a fizikai állapotoddal."
+            },
+            {
+              "__component": "blocks.heading",
+              "id": 166,
+              "heading": "Csomaglista ellenőrzése",
+              "linkId": "csomaglista-ellenorzese"
+            },
+            {
+              "__component": "blocks.paragraph",
+              "id": 69,
+              "content": "Indulás előtt mindig nézd át a csomagod: van-e elég víz, étel, megfelelő ruházat, térkép és elsősegélycsomag. Egy jól összeállított csomaglista sok bosszúságtól kímélhet meg.\n\nA körültekintő felkészülés nem von el semmit a túra szabadságából – éppen ellenkezőleg, megalapozza, hogy nyugodtan, biztonságban élvezhesd a természet adta pillanatokat."
+            },
+            {
+              "__component": "blocks.full-image",
+              "id": 29,
+              "image": {
+                "id": 35,
+                "documentId": "yqhody82v4di97xpl1fl9q7f",
+                "name": "csomaglista.jpg",
+                "alternativeText": null,
+                "caption": null,
+                "width": 640,
+                "height": 480,
+                "formats": {
+                  "thumbnail": {
+                    "name": "thumbnail_csomaglista.jpg",
+                    "hash": "thumbnail_csomaglista_977e3fdf50",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 208,
+                    "height": 156,
+                    "size": 9.19,
+                    "sizeInBytes": 9189,
+                    "url": "/uploads/thumbnail_csomaglista_977e3fdf50.jpg"
+                  },
+                  "small": {
+                    "name": "small_csomaglista.jpg",
+                    "hash": "small_csomaglista_977e3fdf50",
+                    "ext": ".jpg",
+                    "mime": "image/jpeg",
+                    "path": null,
+                    "width": 500,
+                    "height": 375,
+                    "size": 38.59,
+                    "sizeInBytes": 38588,
+                    "url": "/uploads/small_csomaglista_977e3fdf50.jpg"
+                  }
+                },
+                "hash": "csomaglista_977e3fdf50",
+                "ext": ".jpg",
+                "mime": "image/jpeg",
+                "size": 49.33,
+                "url": "/uploads/csomaglista_977e3fdf50.jpg",
+                "previewUrl": null,
+                "provider": "local",
+                "provider_metadata": null,
+                "folderPath": "/",
+                "createdAt": "2026-07-05T11:42:14.616Z",
+                "updatedAt": "2026-07-05T11:42:14.616Z",
+                "publishedAt": "2026-07-05T11:42:14.617Z",
+                "locale": null,
+                "focalPoint": null
+              }
+            },
+            {
+              "__component": "blocks.youtube-video",
+              "id": 17,
+              "title": "Madeira",
+              "videoUrl": "https://www.youtube.com/watch?v=33jWGnOwIX4",
+              "description": "Itt megtekinthetitek a videónkat Madeiráról.",
+              "aspectRatio": "16:9",
+              "startTime": null,
+              "privacyMode": true
+            },
+            {
+              "__component": "blocks.picture-gallery",
+              "id": 16,
+              "title": "Képgaléria",
+              "description": "Pár fontos kép,amit figyelembe vehetsz a pakolásnál",
+              "aspectRatio": "4:3",
+              "autoplay": true,
+              "slideIntervalMs": 5000,
+              "images": [
+                {
+                  "id": 35,
+                  "documentId": "yqhody82v4di97xpl1fl9q7f",
+                  "name": "csomaglista.jpg",
+                  "alternativeText": null,
+                  "caption": null,
+                  "width": 640,
+                  "height": 480,
+                  "formats": {
+                    "thumbnail": {
+                      "name": "thumbnail_csomaglista.jpg",
+                      "hash": "thumbnail_csomaglista_977e3fdf50",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 208,
+                      "height": 156,
+                      "size": 9.19,
+                      "sizeInBytes": 9189,
+                      "url": "/uploads/thumbnail_csomaglista_977e3fdf50.jpg"
+                    },
+                    "small": {
+                      "name": "small_csomaglista.jpg",
+                      "hash": "small_csomaglista_977e3fdf50",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 500,
+                      "height": 375,
+                      "size": 38.59,
+                      "sizeInBytes": 38588,
+                      "url": "/uploads/small_csomaglista_977e3fdf50.jpg"
+                    }
+                  },
+                  "hash": "csomaglista_977e3fdf50",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "size": 49.33,
+                  "url": "/uploads/csomaglista_977e3fdf50.jpg",
+                  "previewUrl": null,
+                  "provider": "local",
+                  "provider_metadata": null,
+                  "folderPath": "/",
+                  "createdAt": "2026-07-05T11:42:14.616Z",
+                  "updatedAt": "2026-07-05T11:42:14.616Z",
+                  "publishedAt": "2026-07-05T11:42:14.617Z",
+                  "locale": null,
+                  "focalPoint": null
+                },
+                {
+                  "id": 34,
+                  "documentId": "px5e4hksblshmwb97ikk2jc5",
+                  "name": "hatizsak.jpg",
+                  "alternativeText": null,
+                  "caption": null,
+                  "width": 364,
+                  "height": 549,
+                  "formats": {
+                    "thumbnail": {
+                      "name": "thumbnail_hatizsak.jpg",
+                      "hash": "thumbnail_hatizsak_6ac27fb6d2",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 104,
+                      "height": 156,
+                      "size": 7.37,
+                      "sizeInBytes": 7371,
+                      "url": "/uploads/thumbnail_hatizsak_6ac27fb6d2.jpg"
+                    },
+                    "small": {
+                      "name": "small_hatizsak.jpg",
+                      "hash": "small_hatizsak_6ac27fb6d2",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 332,
+                      "height": 500,
+                      "size": 58.1,
+                      "sizeInBytes": 58097,
+                      "url": "/uploads/small_hatizsak_6ac27fb6d2.jpg"
+                    }
+                  },
+                  "hash": "hatizsak_6ac27fb6d2",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "size": 64.8,
+                  "url": "/uploads/hatizsak_6ac27fb6d2.jpg",
+                  "previewUrl": null,
+                  "provider": "local",
+                  "provider_metadata": null,
+                  "folderPath": "/",
+                  "createdAt": "2026-07-05T11:37:48.558Z",
+                  "updatedAt": "2026-07-05T11:37:48.558Z",
+                  "publishedAt": "2026-07-05T11:37:48.558Z",
+                  "locale": null,
+                  "focalPoint": null
+                },
+                {
+                  "id": 33,
+                  "documentId": "eymi9n9y7dy7zx0c6r64n41v",
+                  "name": "utvonal.jpg",
+                  "alternativeText": null,
+                  "caption": null,
+                  "width": 649,
+                  "height": 473,
+                  "formats": {
+                    "thumbnail": {
+                      "name": "thumbnail_utvonal.jpg",
+                      "hash": "thumbnail_utvonal_d62b8672b7",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 214,
+                      "height": 156,
+                      "size": 4.22,
+                      "sizeInBytes": 4225,
+                      "url": "/uploads/thumbnail_utvonal_d62b8672b7.jpg"
+                    },
+                    "small": {
+                      "name": "small_utvonal.jpg",
+                      "hash": "small_utvonal_d62b8672b7",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 500,
+                      "height": 364,
+                      "size": 15.56,
+                      "sizeInBytes": 15559,
+                      "url": "/uploads/small_utvonal_d62b8672b7.jpg"
+                    }
+                  },
+                  "hash": "utvonal_d62b8672b7",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "size": 19.94,
+                  "url": "/uploads/utvonal_d62b8672b7.jpg",
+                  "previewUrl": null,
+                  "provider": "local",
+                  "provider_metadata": null,
+                  "folderPath": "/",
+                  "createdAt": "2026-07-05T11:35:13.810Z",
+                  "updatedAt": "2026-07-05T11:35:23.857Z",
+                  "publishedAt": "2026-07-05T11:35:13.810Z",
+                  "locale": null,
+                  "focalPoint": null
+                },
+                {
+                  "id": 32,
+                  "documentId": "ainh5g31dlwlifapgca882gf",
+                  "name": "tervezes.jpg",
+                  "alternativeText": null,
+                  "caption": null,
+                  "width": 1000,
+                  "height": 667,
+                  "formats": {
+                    "thumbnail": {
+                      "name": "thumbnail_tervezes.jpg",
+                      "hash": "thumbnail_tervezes_bf493a3580",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 234,
+                      "height": 156,
+                      "size": 12.7,
+                      "sizeInBytes": 12704,
+                      "url": "/uploads/thumbnail_tervezes_bf493a3580.jpg"
+                    },
+                    "small": {
+                      "name": "small_tervezes.jpg",
+                      "hash": "small_tervezes_bf493a3580",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 500,
+                      "height": 334,
+                      "size": 52.5,
+                      "sizeInBytes": 52503,
+                      "url": "/uploads/small_tervezes_bf493a3580.jpg"
+                    },
+                    "medium": {
+                      "name": "medium_tervezes.jpg",
+                      "hash": "medium_tervezes_bf493a3580",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 750,
+                      "height": 500,
+                      "size": 110.51,
+                      "sizeInBytes": 110510,
+                      "url": "/uploads/medium_tervezes_bf493a3580.jpg"
+                    }
+                  },
+                  "hash": "tervezes_bf493a3580",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "size": 189.53,
+                  "url": "/uploads/tervezes_bf493a3580.jpg",
+                  "previewUrl": null,
+                  "provider": "local",
+                  "provider_metadata": null,
+                  "folderPath": "/",
+                  "createdAt": "2026-07-05T11:28:19.805Z",
+                  "updatedAt": "2026-07-05T11:28:45.338Z",
+                  "publishedAt": "2026-07-05T11:28:19.807Z",
+                  "locale": null,
+                  "focalPoint": null
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "draftOnly": []
+    },
+    "events": {
+      "published": [
+        {
+          "id": 31,
+          "documentId": "etasflpghuvi2zzm4kuws4hy",
+          "title": "Járda szigeteki túra",
+          "description": "Csóró vagy mint a templom egere? ne csüggedj! Erre neked is lesz pénzed!",
+          "slug": "jarda-szigeteki-tura",
+          "featured": true,
+          "price": "100",
+          "startDate": "2026-08-11",
+          "createdAt": "2026-07-25T08:43:25.659Z",
+          "updatedAt": "2026-09-11T14:22:12.848Z",
+          "publishedAt": "2026-09-11T14:22:12.871Z",
+          "locale": null,
+          "endDate": "2026-08-21",
+          "difficulty": 1,
+          "registrationDeadline": "2026-08-10",
+          "disabled": true,
+          "image": {
+            "id": 36,
+            "documentId": "gzd6sc07rcv9ncjowanyomsr",
+            "name": "jarda_sziget.jpg",
+            "alternativeText": null,
+            "caption": null,
+            "width": 596,
+            "height": 335,
+            "formats": {
+              "thumbnail": {
+                "name": "thumbnail_jarda_sziget.jpg",
+                "hash": "thumbnail_jarda_sziget_dea498d23d",
+                "ext": ".jpg",
+                "mime": "image/jpeg",
+                "path": null,
+                "width": 245,
+                "height": 138,
+                "size": 10.88,
+                "sizeInBytes": 10882,
+                "url": "/uploads/thumbnail_jarda_sziget_dea498d23d.jpg"
+              },
+              "small": {
+                "name": "small_jarda_sziget.jpg",
+                "hash": "small_jarda_sziget_dea498d23d",
+                "ext": ".jpg",
+                "mime": "image/jpeg",
+                "path": null,
+                "width": 500,
+                "height": 281,
+                "size": 36.65,
+                "sizeInBytes": 36654,
+                "url": "/uploads/small_jarda_sziget_dea498d23d.jpg"
+              }
+            },
+            "hash": "jarda_sziget_dea498d23d",
+            "ext": ".jpg",
+            "mime": "image/jpeg",
+            "size": 46.18,
+            "url": "/uploads/jarda_sziget_dea498d23d.jpg",
+            "previewUrl": null,
+            "provider": "local",
+            "provider_metadata": null,
+            "folderPath": "/",
+            "createdAt": "2026-07-25T08:41:27.642Z",
+            "updatedAt": "2026-07-25T08:41:35.324Z",
+            "publishedAt": "2026-07-25T08:41:27.643Z",
+            "locale": null,
+            "focalPoint": null
+          },
+          "blocks": []
+        },
+        {
+          "id": 29,
+          "documentId": "visxj9tx6vpwahq6pap4wwi0",
+          "title": "Teszt túra zsírúj",
+          "description": "teszttesztteszttesztteszttesztteszt tesztteszttesztteszt teszttesztteszttesztteszttesztteszt vteszt",
+          "slug": "teszt-tura-uj",
+          "featured": false,
+          "price": "90000",
+          "startDate": "2026-05-06",
+          "createdAt": "2026-05-05T21:24:54.839Z",
+          "updatedAt": "2026-09-11T13:24:32.821Z",
+          "publishedAt": "2026-09-11T13:24:32.852Z",
+          "locale": "en",
+          "endDate": "2026-05-06",
+          "difficulty": 7,
+          "registrationDeadline": "2026-05-06",
+          "disabled": true,
+          "image": {
+            "id": 22,
+            "documentId": "tuhnqswliv1be66fgnfl25cn",
+            "name": "csendelet-a-soca-menten.jpg",
+            "alternativeText": "Gyertek Velünk túrázni!",
+            "caption": null,
+            "width": 3072,
+            "height": 2304,
+            "formats": {
+              "thumbnail": {
+                "name": "thumbnail_csendelet-a-soca-menten.jpg",
+                "hash": "thumbnail_csendelet_a_soca_menten_75d9efc8d8",
+                "ext": ".jpg",
+                "mime": "image/jpeg",
+                "path": null,
+                "width": 208,
+                "height": 156,
+                "size": 10.85,
+                "sizeInBytes": 10845,
+                "url": "/uploads/thumbnail_csendelet_a_soca_menten_75d9efc8d8.jpg"
+              },
+              "small": {
+                "name": "small_csendelet-a-soca-menten.jpg",
+                "hash": "small_csendelet_a_soca_menten_75d9efc8d8",
+                "ext": ".jpg",
+                "mime": "image/jpeg",
+                "path": null,
+                "width": 500,
+                "height": 375,
+                "size": 55.95,
+                "sizeInBytes": 55953,
+                "url": "/uploads/small_csendelet_a_soca_menten_75d9efc8d8.jpg"
+              },
+              "medium": {
+                "name": "medium_csendelet-a-soca-menten.jpg",
+                "hash": "medium_csendelet_a_soca_menten_75d9efc8d8",
+                "ext": ".jpg",
+                "mime": "image/jpeg",
+                "path": null,
+                "width": 750,
+                "height": 563,
+                "size": 121.73,
+                "sizeInBytes": 121728,
+                "url": "/uploads/medium_csendelet_a_soca_menten_75d9efc8d8.jpg"
+              },
+              "large": {
+                "name": "large_csendelet-a-soca-menten.jpg",
+                "hash": "large_csendelet_a_soca_menten_75d9efc8d8",
+                "ext": ".jpg",
+                "mime": "image/jpeg",
+                "path": null,
+                "width": 1000,
+                "height": 750,
+                "size": 204.99,
+                "sizeInBytes": 204985,
+                "url": "/uploads/large_csendelet_a_soca_menten_75d9efc8d8.jpg"
+              }
+            },
+            "hash": "csendelet_a_soca_menten_75d9efc8d8",
+            "ext": ".jpg",
+            "mime": "image/jpeg",
+            "size": 1530.45,
+            "url": "/uploads/csendelet_a_soca_menten_75d9efc8d8.jpg",
+            "previewUrl": null,
+            "provider": "local",
+            "provider_metadata": null,
+            "folderPath": "/",
+            "createdAt": "2025-11-27T23:28:29.065Z",
+            "updatedAt": "2026-05-05T21:24:31.296Z",
+            "publishedAt": "2025-11-27T23:28:29.065Z",
+            "locale": null,
+            "focalPoint": null
+          },
+          "blocks": [
+            {
+              "__component": "blocks.picture-gallery",
+              "id": 15,
+              "title": "Teszt képek",
+              "description": "íme oér teszt kép ehhez a csodálatos teszt túrához.",
+              "aspectRatio": "16:9",
+              "autoplay": true,
+              "slideIntervalMs": 3000,
+              "images": [
+                {
+                  "id": 30,
+                  "documentId": "vlaq5qa9mn9qkcwlg2c2mxer",
+                  "name": "sea-1413681_1920-1.jpg",
+                  "alternativeText": null,
+                  "caption": null,
+                  "width": 900,
+                  "height": 598,
+                  "formats": {
+                    "thumbnail": {
+                      "name": "thumbnail_sea-1413681_1920-1.jpg",
+                      "hash": "thumbnail_sea_1413681_1920_1_8a2f407394",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 235,
+                      "height": 156,
+                      "size": 8.06,
+                      "sizeInBytes": 8058,
+                      "url": "/uploads/thumbnail_sea_1413681_1920_1_8a2f407394.jpg"
+                    },
+                    "small": {
+                      "name": "small_sea-1413681_1920-1.jpg",
+                      "hash": "small_sea_1413681_1920_1_8a2f407394",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 500,
+                      "height": 332,
+                      "size": 31.43,
+                      "sizeInBytes": 31434,
+                      "url": "/uploads/small_sea_1413681_1920_1_8a2f407394.jpg"
+                    },
+                    "medium": {
+                      "name": "medium_sea-1413681_1920-1.jpg",
+                      "hash": "medium_sea_1413681_1920_1_8a2f407394",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 750,
+                      "height": 498,
+                      "size": 64.28,
+                      "sizeInBytes": 64280,
+                      "url": "/uploads/medium_sea_1413681_1920_1_8a2f407394.jpg"
+                    }
+                  },
+                  "hash": "sea_1413681_1920_1_8a2f407394",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "size": 69.97,
+                  "url": "/uploads/sea_1413681_1920_1_8a2f407394.jpg",
+                  "previewUrl": null,
+                  "provider": "local",
+                  "provider_metadata": null,
+                  "folderPath": "/",
+                  "createdAt": "2026-02-11T22:13:21.254Z",
+                  "updatedAt": "2026-09-10T22:30:25.513Z",
+                  "publishedAt": "2026-02-11T22:13:21.254Z",
+                  "locale": null,
+                  "focalPoint": null
+                },
+                {
+                  "id": 29,
+                  "documentId": "efsf1dqp7fqaj0cm0fqdwfk4",
+                  "name": "Jardim Monte Palace - Credito Greg Snel.jpg",
+                  "alternativeText": null,
+                  "caption": null,
+                  "width": 1600,
+                  "height": 1066,
+                  "formats": {
+                    "thumbnail": {
+                      "name": "thumbnail_Jardim Monte Palace - Credito Greg Snel.jpg",
+                      "hash": "thumbnail_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 235,
+                      "height": 156,
+                      "size": 13.1,
+                      "sizeInBytes": 13100,
+                      "url": "/uploads/thumbnail_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434.jpg"
+                    },
+                    "small": {
+                      "name": "small_Jardim Monte Palace - Credito Greg Snel.jpg",
+                      "hash": "small_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 500,
+                      "height": 333,
+                      "size": 54.08,
+                      "sizeInBytes": 54084,
+                      "url": "/uploads/small_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434.jpg"
+                    },
+                    "medium": {
+                      "name": "medium_Jardim Monte Palace - Credito Greg Snel.jpg",
+                      "hash": "medium_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 750,
+                      "height": 500,
+                      "size": 120.85,
+                      "sizeInBytes": 120852,
+                      "url": "/uploads/medium_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434.jpg"
+                    },
+                    "large": {
+                      "name": "large_Jardim Monte Palace - Credito Greg Snel.jpg",
+                      "hash": "large_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 1000,
+                      "height": 666,
+                      "size": 209.73,
+                      "sizeInBytes": 209726,
+                      "url": "/uploads/large_Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434.jpg"
+                    }
+                  },
+                  "hash": "Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "size": 495.96,
+                  "url": "/uploads/Jardim_Monte_Palace_Credito_Greg_Snel_a4e16ca434.jpg",
+                  "previewUrl": null,
+                  "provider": "local",
+                  "provider_metadata": null,
+                  "folderPath": "/",
+                  "createdAt": "2026-02-11T22:01:25.295Z",
+                  "updatedAt": "2026-02-22T21:02:20.960Z",
+                  "publishedAt": "2026-02-11T22:01:25.295Z",
+                  "locale": null,
+                  "focalPoint": null
+                },
+                {
+                  "id": 26,
+                  "documentId": "ga29x42vrj7bmdcet7wphpbm",
+                  "name": "Madeira-Portugal-7.jpg",
+                  "alternativeText": null,
+                  "caption": null,
+                  "width": 1000,
+                  "height": 667,
+                  "formats": {
+                    "thumbnail": {
+                      "name": "thumbnail_Madeira-Portugal-7.jpg",
+                      "hash": "thumbnail_Madeira_Portugal_7_2f50e86760",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 234,
+                      "height": 156,
+                      "size": 8.59,
+                      "sizeInBytes": 8591,
+                      "url": "/uploads/thumbnail_Madeira_Portugal_7_2f50e86760.jpg"
+                    },
+                    "small": {
+                      "name": "small_Madeira-Portugal-7.jpg",
+                      "hash": "small_Madeira_Portugal_7_2f50e86760",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 500,
+                      "height": 334,
+                      "size": 33.74,
+                      "sizeInBytes": 33742,
+                      "url": "/uploads/small_Madeira_Portugal_7_2f50e86760.jpg"
+                    },
+                    "medium": {
+                      "name": "medium_Madeira-Portugal-7.jpg",
+                      "hash": "medium_Madeira_Portugal_7_2f50e86760",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 750,
+                      "height": 500,
+                      "size": 71.41,
+                      "sizeInBytes": 71409,
+                      "url": "/uploads/medium_Madeira_Portugal_7_2f50e86760.jpg"
+                    }
+                  },
+                  "hash": "Madeira_Portugal_7_2f50e86760",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "size": 121.42,
+                  "url": "/uploads/Madeira_Portugal_7_2f50e86760.jpg",
+                  "previewUrl": null,
+                  "provider": "local",
+                  "provider_metadata": null,
+                  "folderPath": "/",
+                  "createdAt": "2026-02-11T22:01:25.041Z",
+                  "updatedAt": "2026-02-22T21:04:23.655Z",
+                  "publishedAt": "2026-02-11T22:01:25.042Z",
+                  "locale": null,
+                  "focalPoint": null
+                },
+                {
+                  "id": 27,
+                  "documentId": "vvi2h1ak077lk1mfnbn3pf8w",
+                  "name": "viaggidafotografare-Portogallo-Madeira-Seixal_48.jpg",
+                  "alternativeText": null,
+                  "caption": null,
+                  "width": 1024,
+                  "height": 683,
+                  "formats": {
+                    "thumbnail": {
+                      "name": "thumbnail_viaggidafotografare-Portogallo-Madeira-Seixal_48.jpg",
+                      "hash": "thumbnail_viaggidafotografare_Portogallo_Madeira_Seixal_48_90355afd28",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 234,
+                      "height": 156,
+                      "size": 10.75,
+                      "sizeInBytes": 10748,
+                      "url": "/uploads/thumbnail_viaggidafotografare_Portogallo_Madeira_Seixal_48_90355afd28.jpg"
+                    },
+                    "small": {
+                      "name": "small_viaggidafotografare-Portogallo-Madeira-Seixal_48.jpg",
+                      "hash": "small_viaggidafotografare_Portogallo_Madeira_Seixal_48_90355afd28",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 500,
+                      "height": 333,
+                      "size": 44.61,
+                      "sizeInBytes": 44611,
+                      "url": "/uploads/small_viaggidafotografare_Portogallo_Madeira_Seixal_48_90355afd28.jpg"
+                    },
+                    "medium": {
+                      "name": "medium_viaggidafotografare-Portogallo-Madeira-Seixal_48.jpg",
+                      "hash": "medium_viaggidafotografare_Portogallo_Madeira_Seixal_48_90355afd28",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 750,
+                      "height": 500,
+                      "size": 99.65,
+                      "sizeInBytes": 99646,
+                      "url": "/uploads/medium_viaggidafotografare_Portogallo_Madeira_Seixal_48_90355afd28.jpg"
+                    },
+                    "large": {
+                      "name": "large_viaggidafotografare-Portogallo-Madeira-Seixal_48.jpg",
+                      "hash": "large_viaggidafotografare_Portogallo_Madeira_Seixal_48_90355afd28",
+                      "ext": ".jpg",
+                      "mime": "image/jpeg",
+                      "path": null,
+                      "width": 1000,
+                      "height": 667,
+                      "size": 174.72,
+                      "sizeInBytes": 174722,
+                      "url": "/uploads/large_viaggidafotografare_Portogallo_Madeira_Seixal_48_90355afd28.jpg"
+                    }
+                  },
+                  "hash": "viaggidafotografare_Portogallo_Madeira_Seixal_48_90355afd28",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "size": 188.58,
+                  "url": "/uploads/viaggidafotografare_Portogallo_Madeira_Seixal_48_90355afd28.jpg",
+                  "previewUrl": null,
+                  "provider": "local",
+                  "provider_metadata": null,
+                  "folderPath": "/",
+                  "createdAt": "2026-02-11T22:01:25.229Z",
+                  "updatedAt": "2026-02-11T22:03:12.440Z",
+                  "publishedAt": "2026-02-11T22:01:25.230Z",
+                  "locale": null,
+                  "focalPoint": null
+                }
+              ]
+            },
+            {
+              "__component": "blocks.youtube-video",
+              "id": 16,
+              "title": "Teszt videjó",
+              "videoUrl": "https://www.youtube.com/watch?v=33jWGnOwIX4",
+              "description": "Olyan szép hogy leesik az állad. Ide ha nem jössz, meg is érdemled.",
+              "aspectRatio": "16:9",
+              "startTime": null,
+              "privacyMode": true
+            }
+          ]
+        }
+      ],
+      "draftOnly": []
+    }
+  }
+}

@@ -4,11 +4,15 @@ const baseColors = {
   darkGreen: "rgb(55 , 127, 118)", // gy-v-dark-green
   darkBrown: "rgb(112 , 99, 76)", // gy-v-dark-brown
   lightBrown: "rgb(241, 232, 217)", // gy-v-light-brown
+  veryLightBeige: "rgb(254, 253, 250)", // gy-v-very-light-beige, page base background
   gray: "rgb(156, 163, 175)", // gy-v-gray
   red: " rgb(255, 0, 0)", // red for errors, required fields
 };
 
 export const colors = {
+  background: {
+    default: baseColors.veryLightBeige,
+  },
   button: {
     primary: {
       main: baseColors.darkGreen,

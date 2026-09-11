@@ -182,6 +182,11 @@ export interface SearchableCardListProps extends Base<"blocks.searchable-card-li
   featured: boolean;
   contentCollectionType: ContentCollectionType;
   isMainContent?: boolean;
+  showEmptyReason?: boolean;
+  emptyReasonTitle?: string | null;
+  emptyReasonText?: string | null;
+  emptyReasonBackgroundImage?: ImageProps | null;
+  emptyReasonLinks?: LinkProps[];
 }
 
 export interface HeroWithCalendarProps extends Base<"blocks.hero-with-calendar"> {

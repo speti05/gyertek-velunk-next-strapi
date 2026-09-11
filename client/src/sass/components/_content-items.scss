@@ -3,6 +3,12 @@
 .content-items {
   margin-bottom: 6rem;
 
+  // Positioning context for the empty-reason overlay, which covers the list
+  // body but leaves the headline above it visible.
+  &__body {
+    position: relative;
+  }
+
   &__container {
     display: grid;
 

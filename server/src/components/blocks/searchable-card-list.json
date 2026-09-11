@@ -51,6 +51,28 @@
     "isMainContent": {
       "type": "boolean",
       "default": false
+    },
+    "showEmptyReason": {
+      "type": "boolean",
+      "default": false
+    },
+    "emptyReasonTitle": {
+      "type": "string"
+    },
+    "emptyReasonText": {
+      "type": "text"
+    },
+    "emptyReasonBackgroundImage": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "emptyReasonLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.link"
     }
   }
 }
