@@ -1,4 +1,5 @@
 @use "../base/colors";
+@use "../base/mixins";
 
 .auth-page {
   flex: 1;
@@ -233,6 +234,11 @@
     align-items: center;
     gap: 1.2rem;
     width: 100%;
+
+    @include mixins.respond(phone) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 
   &__signup-details {
@@ -278,10 +284,16 @@
     flex-wrap: wrap;
   }
 
+  // Long labels and values wrap onto several lines instead of overflowing the card
+  &__signup-detail-label,
+  &__signup-detail-value {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
   &__signup-detail-label {
     font-weight: 600;
     color: colors.$gy-v-dark-brown;
-    flex-shrink: 0;
   }
 
   &__signup-detail-value {

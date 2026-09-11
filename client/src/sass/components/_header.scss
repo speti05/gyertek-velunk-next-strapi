@@ -1,4 +1,5 @@
 @use "../base/colors";
+@use "../base/mixins";
 
 $font-color: colors.$gy-v-white;
 $font-color-hovered: colors.$gy-v-light-brown;
@@ -108,19 +109,19 @@ li {
   }
 }
 
-@media (max-width: 1500px) {
+@include mixins.respond(desktop-narrow) {
   .navbar {
     font-size: 2.2rem;
   }
 }
 
-@media (max-width: 1400px) {
+@include mixins.respond(laptop) {
   .navbar {
     font-size: 2rem;
   }
 }
 
-@media (max-width: 1250px) {
+@include mixins.respond(nav-collapse) {
   .bar {
     display: block;
     background-color: $font-color;

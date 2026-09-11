@@ -1,3 +1,6 @@
+@use "../../base/mixins";
+@use "../../base/variables";
+
 .article-overview {
   display: flex;
   justify-content: space-between;
@@ -11,12 +14,22 @@
   &__headline {
     margin-bottom: 2.4rem;
     color: #333;
+    padding: 0 variables.$content-side-padding;
+
+    @include mixins.respond(phone) {
+      padding: 0 variables.$content-side-padding-phone;
+    }
   }
 
   &__description {
     font-size: 2.4rem;
     line-height: 1.5;
     color: #666;
+    padding: 0 variables.$content-side-padding;
+
+    @include mixins.respond(phone) {
+      padding: 0 variables.$content-side-padding-phone;
+    }
   }
 
   &__contents {
@@ -38,11 +51,31 @@
         display: block;
         padding: 1rem;
         border-radius: 0.8rem;
-        transition: transform 0.2s ease, color 0.2s ease;
+        transition:
+          transform 0.2s ease,
+          color 0.2s ease;
 
         &:hover {
           transform: translateX(5px);
         }
+      }
+    }
+  }
+}
+
+@include mixins.respond(phone) {
+  .article-overview {
+    flex-direction: column;
+  }
+
+  .article-overview__info,
+  .article-overview__contents {
+    width: 100%;
+
+    &.no-list-style {
+      li > a {
+        display: block !important;
+        text-align: center;
       }
     }
   }

@@ -1,13 +1,14 @@
 @use "../base/mixins";
+@use "../base/variables";
 
 .general-padding {
-  padding: 6rem 4.8rem 12rem;
+  padding: 6rem variables.$content-side-padding 12rem;
 }
 
 .onlyText {
-  padding: 0 4.8rem 10rem;
+  padding: 0 variables.$content-side-padding 10rem;
 
   @include mixins.respond(phone) {
-    padding: 0 3rem 10rem;
+    padding: 0 variables.$content-side-padding-phone 10rem;
   }
 }

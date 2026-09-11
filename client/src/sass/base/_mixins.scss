@@ -1,16 +1,20 @@
 // MEDIA QUERY MANAGER
 /*
-0 - 900px:     Phone
-900 - 1200px:  Tablet landscape
-1200 - 1800px: Desktop
-1800px+:       Big desktop
+Every breakpoint used in the codebase lives here - never hard-code a @media
+width in a component, always go through respond().
 
-$breakpoint argument choices:
-- phone
-- tab-land
-- big-desktop
+$breakpoint argument choices (all max-width unless noted):
+- phone-small     600px   small phones
+- tablet          768px   portrait tablets / large phones
+- phone           900px   phone layout switch (the main mobile breakpoint)
+- tab-land       1200px   landscape tablets
+- nav-collapse   1250px   navbar turns into the hamburger menu
+- laptop         1400px
+- desktop-narrow 1500px
+- big-desktop    1800px   min-width, not max-width
 
-1em = 16px
+Media query em is always relative to the browser default (16px), independent
+of the html font-size, so 1em = 16px here.
 */
 @mixin respond($breakpoint) {
   @if $breakpoint == phone {
@@ -27,6 +31,31 @@ $breakpoint argument choices:
     @media (min-width: 112.5em) {
       @content;
     } // 1800px
+  }
+  @if $breakpoint == phone-small {
+    @media (max-width: 37.5em) {
+      @content;
+    } // 600px
+  }
+  @if $breakpoint == tablet {
+    @media (max-width: 48em) {
+      @content;
+    } // 768px
+  }
+  @if $breakpoint == nav-collapse {
+    @media (max-width: 78.125em) {
+      @content;
+    } // 1250px
+  }
+  @if $breakpoint == laptop {
+    @media (max-width: 87.5em) {
+      @content;
+    } // 1400px
+  }
+  @if $breakpoint == desktop-narrow {
+    @media (max-width: 93.75em) {
+      @content;
+    } // 1500px
   }
 }
 

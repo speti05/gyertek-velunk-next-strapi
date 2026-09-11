@@ -38,10 +38,14 @@ function BlogOverview({ headline, description, tableOfContent }: Readonly<BlogOv
         <p className="article-overview__description">{description}</p>
       </div>
       {tableOfContent && (
-        <ul className="article-overview__contents">
+        <ul className="article-overview__contents no-list-style">
           {tableOfContent.map((item, index) => (
             <li key={index}>
-              <CustomLink href={`#${item.linkId}`} className="article-overview__link" color="primary">
+              <CustomLink
+                href={`#${item.linkId}`}
+                className="article-overview__link"
+                color="primary"
+              >
                 {index + 1}. {item.heading}
               </CustomLink>
             </li>
@@ -72,11 +76,7 @@ export default async function SingleBlogPostRoute({ params, searchParams }: Page
       />
 
       <div className="container">
-        <BlogOverview
-          headline={title}
-          description={description}
-          tableOfContent={tableOfContent}
-        />
+        <BlogOverview headline={title} description={description} tableOfContent={tableOfContent} />
         <BlockRenderer blocks={blocks} />
         <ContentList
           headline={BLOG_LABEL}

@@ -1,4 +1,5 @@
 @use "../../base/colors";
+@use "../../base/mixins";
 
 .signup-form {
   display: flex;
@@ -135,7 +136,7 @@
 
 }
 
-@media (max-width: 768px) {
+@include mixins.respond(tablet) {
   .signup-form {
     padding: 4rem;
   }

@@ -93,7 +93,7 @@
           gap: 4rem;
         }
 
-        @media (max-width: 600px) {
+        @include mixins.respond(phone-small) {
           .hero__welcome-text {
             margin: 0;
 

@@ -1,4 +1,5 @@
 @use "../base/colors";
+@use "../base/mixins";
 
 $size: 1.5rem;
 $width: 4rem;
@@ -49,7 +50,7 @@ $width: 4rem;
     height: var(--social-bar-height);
     flex-flow: row-reverse;
 
-    @media (max-width: 600px) {
+    @include mixins.respond(phone-small) {
       padding-right: 1.5rem;
       justify-content: flex-end;
 

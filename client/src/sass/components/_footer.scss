@@ -1,4 +1,5 @@
 @use "../base/colors";
+@use "../base/mixins";
 
 $logo-size: 10rem;
 $font-color: colors.$gy-v-white;
@@ -81,7 +82,7 @@ $font-color-hovered: colors.$gy-v-light-brown;
     text-align: center;
   }
 
-  @media (max-width: 768px) {
+  @include mixins.respond(tablet) {
     padding: 6rem 2rem 4rem;
 
     &__links,
