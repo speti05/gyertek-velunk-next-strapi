@@ -43,6 +43,36 @@
         "NODE_ENV": "development",
         "DATABASE_FILENAME": ".tmp/no_content/data.db"
       }
+    },
+    {
+      "name": "Export template content (local -> exports/content-export.json)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["run", "export:content"],
+      "cwd": "${workspaceFolder}/server",
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "name": "Import content (DRY RUN)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/scripts/import-content.mjs",
+      "args": ["--target", "${input:importTarget}"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "name": "Import content (APPLY - writes to the target!)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/scripts/import-content.mjs",
+      "args": ["--target", "${input:importTarget}", "--apply"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"]
     }
   ],
   "compounds": [
@@ -53,6 +83,15 @@
       "env": {
         "NODE_ENV": "development"
       }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "importTarget",
+      "type": "pickString",
+      "description": "Target Strapi for the content import",
+      "options": ["http://localhost:1337", "https://admin.gyertekvelunk.eu"],
+      "default": "http://localhost:1337"
     }
   ]
 }

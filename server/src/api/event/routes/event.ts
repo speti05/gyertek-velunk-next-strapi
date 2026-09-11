@@ -4,4 +4,14 @@
 
 import { factories } from "@strapi/strapi";
 
-export default factories.createCoreRouter("api::event.event");
+const hideDisabled = {
+  name: "global::hide-disabled-content",
+  config: { uid: "api::event.event" },
+};
+
+export default factories.createCoreRouter("api::event.event", {
+  config: {
+    find: { middlewares: [hideDisabled] },
+    findOne: { middlewares: [hideDisabled] },
+  },
+});

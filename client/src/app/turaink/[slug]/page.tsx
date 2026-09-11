@@ -5,6 +5,7 @@ import { ContentList } from "@/components/ContentList";
 import { getContentBySlug } from "@/data/loaders";
 import { notFound } from "next/navigation";
 import { EventSignupForm } from "@/components/EventsSignupForm";
+import { BlockRenderer } from "@/components/BlockRenderer";
 import { EventCard } from "@/components/EventCard";
 import { cookies } from "next/headers";
 import { getUserProfileService } from "@/data/auth-service";
@@ -44,7 +45,7 @@ export default async function SingleEventRoute({ params, searchParams }: ParamsP
         <ContentListHeadline headline={TOUR_SIGNUP_HEADLINE} isMain={true} />
         <div className="event-page">
           <EventSignupForm
-            blocks={blocks}
+            blocksContent={<BlockRenderer blocks={blocks} />}
             eventId={event.documentId}
             eventTitle={event.title}
             description={event.description}

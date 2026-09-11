@@ -19,5 +19,8 @@ export async function GET(request: Request) {
     draft.enable();
   }
 
-  redirect(url || "/");
+  // Only same-site paths - "//host" and "https://host" would turn this into an open redirect.
+  const target = url && url.startsWith("/") && !url.startsWith("//") ? url : "/";
+
+  redirect(target);
 }

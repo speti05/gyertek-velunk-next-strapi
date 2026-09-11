@@ -26,6 +26,8 @@ export interface UserProfile {
   zip: string | null;
   street: string | null;
   houseNumber: string | null;
+  /** Added to /api/users/me by the users-permissions extension. */
+  role?: { id: number; name: string; type: string } | null;
 }
 
 export async function registerService(

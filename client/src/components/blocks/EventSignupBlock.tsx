@@ -2,6 +2,7 @@ import { getContentBySlug } from "@/data/loaders";
 import { EventProps } from "@/types";
 import { notFound } from "next/navigation";
 import { EventSignupFormNoSSR } from "@/components/EventSignupFormNoSSR";
+import { BlockRenderer } from "@/components/BlockRenderer";
 import { EventSignupBlockProps } from "@/types";
 
 async function loader(slug: string) {
@@ -19,7 +20,7 @@ export const EventSignupBlock = async ({ eventId, stayInTouchEventId }: EventSig
     <div className="container">
       <div className="event-signup-block" id="eventSignup">
         <EventSignupFormNoSSR
-          blocks={blocks}
+          blocksContent={<BlockRenderer blocks={blocks} />}
           eventId={eventId}
           stayInTouchEventId={stayInTouchEventId}
         />

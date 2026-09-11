@@ -7,6 +7,7 @@
     "build": "strapi build",
     "deploy": "strapi deploy",
     "develop": "strapi develop",
+    "export:content": "node scripts/export-template-content-for-testing.mjs",
     "start": "strapi start",
     "strapi": "strapi"
   },

@@ -1,6 +1,6 @@
 "use client";
 
-import { EventSignupEntry } from "@/data/loaders";
+import type { EventSignupEntry } from "@/data/loaders";
 import CustomAccordion from "@/components/custom-ui-components/custom-accordion/custom-accordion";
 import {
   PROFILE_SIGNUP_DETAILS_SHOW,

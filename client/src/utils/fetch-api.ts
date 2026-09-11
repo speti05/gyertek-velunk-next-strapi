@@ -8,10 +8,11 @@ interface FetchAPIOptions {
   authToken?: string;
   body?: Record<string, unknown>;
   next?: NextFetchRequestConfig;
+  cache?: RequestCache;
 }
 
 export async function fetchAPI(url: string, options: FetchAPIOptions) {
-  const { method, authToken, body, next } = options;
+  const { method, authToken, body, next, cache } = options;
 
   const headers: RequestInit & { next?: NextFetchRequestConfig } = {
     method,
@@ -21,6 +22,7 @@ export async function fetchAPI(url: string, options: FetchAPIOptions) {
     },
     ...(body && { body: JSON.stringify(body) }),
     ...(next && { next }),
+    ...(cache && { cache }),
   };
 
   try {

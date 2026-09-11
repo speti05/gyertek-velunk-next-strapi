@@ -36,7 +36,11 @@ export default ({ env }) => ({
     config: {
       allowedOrigins: env('CLIENT_URL'),
       async handler(uid: string, { documentId, locale, status }: { documentId: string; locale?: string; status: string }) {
-        const document = await strapi.documents(uid as Parameters<typeof strapi.documents>[0]).findOne({ documentId });
+        // Resolve the slug from the same version that is being previewed, so entries
+        // that have never been published still produce a preview URL.
+        const document = await strapi
+          .documents(uid as Parameters<typeof strapi.documents>[0])
+          .findOne({ documentId, status: status as 'draft' | 'published' });
         const pathname = getPreviewPathname(uid, { locale, document });
 
         if (!pathname) return null;

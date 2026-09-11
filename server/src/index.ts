@@ -4,6 +4,12 @@ import { sendNewsletterBroadcast } from "./lib/email/newsletter";
 import { getTransporter } from "./lib/email/mailer";
 import { applyAuthOverrides } from "./lib/auth/auth-overrides";
 import { getClientUrl, throwErrorIfClientUrlMissing } from "./lib/config/client-url";
+import {
+  TEST_USER_ROLE_DESCRIPTION,
+  TEST_USER_ROLE_NAME,
+  TEST_USER_ROLE_PERMISSIONS,
+  TEST_USER_ROLE_TYPE,
+} from "./lib/auth/test-user-role";
 
 async function grantPermission(strapi: Core.Strapi, roleId: number, action: string) {
   const existing = await strapi.db.query("plugin::users-permissions.permission").findOne({
@@ -79,6 +85,28 @@ export default {
       await grantPermission(strapi, id, "api::event-signup.event-signup.create");
       await grantPermission(strapi, id, "api::event-signup.event-signup.find");
       await grantPermission(strapi, id, "api::event.event.find");
+    }
+
+    // TestUser role: same access as Authenticated, plus the reads that the
+    // hide-disabled-content middleware lets through for disabled entries. Provisioned
+    // here so the role does not have to be assembled by hand in the admin panel.
+    let testUserRole = await strapi.db.query("plugin::users-permissions.role").findOne({
+      where: { type: TEST_USER_ROLE_TYPE },
+    });
+
+    if (!testUserRole) {
+      testUserRole = await strapi.db.query("plugin::users-permissions.role").create({
+        data: {
+          name: TEST_USER_ROLE_NAME,
+          description: TEST_USER_ROLE_DESCRIPTION,
+          type: TEST_USER_ROLE_TYPE,
+        },
+      });
+      console.info(`Created the "${TEST_USER_ROLE_NAME}" role`);
+    }
+
+    for (const action of TEST_USER_ROLE_PERMISSIONS) {
+      await grantPermission(strapi, testUserRole.id, action);
     }
 
     // Public role: allow requesting a new confirmation email (used by the register form

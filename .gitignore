@@ -1,2 +1,5 @@
 node_modules
 .env
+
+# Dry-run payload dumps from scripts/import-content.mjs --out
+exports/payloads/

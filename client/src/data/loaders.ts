@@ -2,16 +2,49 @@ import qs from "qs";
 import { fetchAPI } from "@/utils/fetch-api";
 import { getStrapiURL } from "@/utils/get-strapi-url";
 import { getUserProfileService } from "./auth-service";
+import { getPreviewContext, previewFetchOptions, type PreviewContext } from "@/utils/preview-mode";
+import { getViewerContext, viewerFetchOptions, type ViewerContext } from "@/data/viewer";
 
 const BASE_URL = getStrapiURL();
 const DEFAULT_BLOG_PAGE_SIZE = 3;
 
 // Entries flagged as disabled in Strapi are hidden from the public site.
 // Older entries created before the flag existed have no value, so treat null as enabled.
+// Strapi enforces this too (see the hide-disabled-content middleware); the filter is
+// dropped here only for viewers that are allowed to see disabled entries anyway.
 const notDisabledFilter = {
   $or: [{ disabled: { $null: true } }, { disabled: { $eq: false } }],
 };
-const homePageQuery = qs.stringify({
+
+/**
+ * A test user's request is authenticated, so Strapi applies the Authenticated role's
+ * permissions instead of Public's. If that role is missing read access to the content
+ * type, the request is rejected and the visitor would see an empty page. Fall back to a
+ * public read in that case - the API still hides disabled entries, so nothing leaks.
+ */
+async function fetchContent(url: string, preview: PreviewContext, viewer: ViewerContext) {
+  const publicOptions = { method: "GET" as const, ...previewFetchOptions(preview) };
+  const result = await fetchAPI(url, { ...publicOptions, ...viewerFetchOptions(viewer) });
+
+  const status = (result as { status?: number } | null)?.status;
+  if (viewer.isTestUser && (status === 401 || status === 403)) {
+    console.warn(
+      `[loaders] Strapi rejected the test user's token on ${new URL(url).pathname} (${status}). ` +
+        "Grant the Authenticated role find/findOne on this content type, otherwise disabled " +
+        "entries stay hidden. Falling back to a public read."
+    );
+    return fetchAPI(url, publicOptions);
+  }
+
+  return result;
+}
+
+const canSeeDisabled = (preview: { isDraft: boolean }, viewer: { isTestUser: boolean }) =>
+  preview.isDraft || viewer.isTestUser;
+
+const disabledFilters = (preview: { isDraft: boolean }, viewer: { isTestUser: boolean }) =>
+  canSeeDisabled(preview, viewer) ? [] : [notDisabledFilter];
+const homePageQuery = {
   populate: {
     blocks: {
       on: {
@@ -77,18 +110,20 @@ const homePageQuery = qs.stringify({
       },
     },
   },
-});
+};
 
 export async function getHomePage() {
+  const preview = await getPreviewContext();
   const path = "/api/home-page";
   const url = new URL(path, BASE_URL);
-  url.search = homePageQuery;
+  url.search = qs.stringify({ ...homePageQuery, status: preview.status });
 
-  return await fetchAPI(url.href, { method: "GET" });
+  return await fetchAPI(url.href, { method: "GET", ...previewFetchOptions(preview) });
 }
 
-const pageBySlugQuery = (slug: string) =>
+const pageBySlugQuery = (slug: string, status?: "draft") =>
   qs.stringify({
+    status,
     filters: {
       slug: {
         $eq: slug,
@@ -164,13 +199,14 @@ const pageBySlugQuery = (slug: string) =>
   });
 
 export async function getPageBySlug(slug: string) {
+  const preview = await getPreviewContext();
   const path = "/api/pages";
   const url = new URL(path, BASE_URL);
-  url.search = pageBySlugQuery(slug);
-  return await fetchAPI(url.href, { method: "GET" });
+  url.search = pageBySlugQuery(slug, preview.status);
+  return await fetchAPI(url.href, { method: "GET", ...previewFetchOptions(preview) });
 }
 
-const globalSettingQuery = qs.stringify({
+const globalSettingQuery = {
   populate: {
     header: {
       populate: {
@@ -199,13 +235,14 @@ const globalSettingQuery = qs.stringify({
       },
     },
   },
-});
+};
 
 export async function getGlobalSettings() {
+  const preview = await getPreviewContext();
   const path = "/api/global";
   const url = new URL(path, BASE_URL);
-  url.search = globalSettingQuery;
-  return fetchAPI(url.href, { method: "GET" });
+  url.search = qs.stringify({ ...globalSettingQuery, status: preview.status });
+  return fetchAPI(url.href, { method: "GET", ...previewFetchOptions(preview) });
 }
 
 export async function getContent(
@@ -215,14 +252,16 @@ export async function getContent(
   page?: string,
   pageSize: number = DEFAULT_BLOG_PAGE_SIZE
 ) {
+  const [preview, viewer] = await Promise.all([getPreviewContext(), getViewerContext()]);
   const url = new URL(path, BASE_URL);
 
   url.search = qs.stringify({
+    status: preview.status,
     sort: ["createdAt:desc"],
     filters: {
       $and: [
         { $or: [{ title: { $containsi: query } }, { description: { $containsi: query } }] },
-        notDisabledFilter,
+        ...disabledFilters(preview, viewer),
         ...(featured ? [{ featured: { $eq: featured } }] : []),
       ],
     },
@@ -237,7 +276,7 @@ export async function getContent(
     },
   });
 
-  return fetchAPI(url.href, { method: "GET" });
+  return fetchContent(url.href, preview, viewer);
 }
 
 const blogPopulate = {
@@ -322,10 +361,12 @@ const blogPopulate = {
 };
 
 export async function getContentBySlug(slug: string, path: string) {
+  const [preview, viewer] = await Promise.all([getPreviewContext(), getViewerContext()]);
   const url = new URL(path, BASE_URL);
   url.search = qs.stringify({
+    status: preview.status,
     filters: {
-      $and: [{ slug: { $eq: slug } }, notDisabledFilter],
+      $and: [{ slug: { $eq: slug } }, ...disabledFilters(preview, viewer)],
     },
     populate: {
       image: {
@@ -335,7 +376,7 @@ export async function getContentBySlug(slug: string, path: string) {
     },
   });
 
-  return fetchAPI(url.href, { method: "GET" });
+  return fetchContent(url.href, preview, viewer);
 }
 
 export interface CompanionData {
@@ -458,11 +499,13 @@ export async function getUserEventSignupsLoader(jwt: string): Promise<EventSignu
 }
 
 export async function getContentForCalendar(path: string, year: number) {
+  const [preview, viewer] = await Promise.all([getPreviewContext(), getViewerContext()]);
   const url = new URL(path, BASE_URL);
   const startOfYear = new Date(year, 0, 1).toISOString();
   const endOfYear = new Date(year, 11, 31).toISOString();
 
   url.search = qs.stringify({
+    status: preview.status,
     sort: ["startDate:asc"],
     filters: {
       $and: [
@@ -476,7 +519,7 @@ export async function getContentForCalendar(path: string, year: number) {
             $lte: endOfYear,
           },
         },
-        notDisabledFilter,
+        ...disabledFilters(preview, viewer),
       ],
     },
     pagination: {
@@ -490,5 +533,5 @@ export async function getContentForCalendar(path: string, year: number) {
     },
   });
 
-  return fetchAPI(url.href, { method: "GET" });
+  return fetchContent(url.href, preview, viewer);
 }

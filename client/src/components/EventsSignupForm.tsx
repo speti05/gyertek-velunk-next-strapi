@@ -1,9 +1,7 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useState, type ReactNode } from "react";
 import Image from "next/image";
-import { BlockRenderer } from "@/components/BlockRenderer";
-import { Block } from "@/types";
 import { formatDate } from "@/utils/format-date";
 import { StrapiImage } from "@/components/StrapiImage";
 import { eventsSubscribeAction } from "@/data/actions";
@@ -41,7 +39,8 @@ const INITIAL_STATE = {
 
 type EventSignupFormProps = {
   stayInTouchEventId?: string;
-  blocks: Block[];
+  /** Blocks rendered by the server parent - this component must stay client-only. */
+  blocksContent?: ReactNode;
   eventId: string;
   eventTitle?: string;
   description?: string;
@@ -60,7 +59,7 @@ type EventSignupFormProps = {
 
 function EventSignupFormInner({
   stayInTouchEventId,
-  blocks,
+  blocksContent,
   eventId,
   eventTitle = "",
   description,
@@ -220,7 +219,7 @@ function EventSignupFormInner({
         <CustomAlertMessage errorMessage={errorMessage} successMessage={successMessage} />
       </div>
 
-      <BlockRenderer blocks={blocks} />
+      {blocksContent}
 
       {userProfile && hasCompleteProfile && !alreadySignedUp && !isDeadlinePassed && (
         <TourSignupDialog
