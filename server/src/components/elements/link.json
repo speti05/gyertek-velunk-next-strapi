@@ -9,7 +9,8 @@
       "type": "string"
     },
     "href": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "isExternal": {
       "type": "boolean",

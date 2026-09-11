@@ -262,7 +262,7 @@ export interface ElementsLink extends Struct.ComponentSchema {
   };
   attributes: {
     buttonColor: Schema.Attribute.Enumeration<["primary", "secondary"]>;
-    href: Schema.Attribute.String;
+    href: Schema.Attribute.String & Schema.Attribute.Required;
     isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     text: Schema.Attribute.String;
   };

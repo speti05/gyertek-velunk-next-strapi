@@ -26,6 +26,8 @@ export function EmptyReasonOverlay({
   const [isClosing, setIsClosing] = useState(false);
   const [isClosed, setIsClosed] = useState(false);
 
+  const linkButtons = links?.filter((link) => link.href && link.text) ?? [];
+
   if (isClosed) return null;
 
   return (
@@ -62,9 +64,9 @@ export function EmptyReasonOverlay({
           <div className="empty-reason-overlay__content">
             <h3 className="empty-reason-overlay__title">{title}</h3>
             <p className="empty-reason-overlay__text">{text}</p>
-            {!!links?.length && (
+            {linkButtons.length > 0 && (
               <div className="empty-reason-overlay__buttons">
-                {links.map((link) => (
+                {linkButtons.map((link) => (
                   <CustomLink
                     key={link.id}
                     href={link.href}

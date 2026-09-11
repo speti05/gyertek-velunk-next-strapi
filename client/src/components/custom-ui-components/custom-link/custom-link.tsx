@@ -20,17 +20,42 @@ const CustomLink: React.FC<CustomLinkProps> = ({
   color = "inherit",
   underline = "always",
   isHoverScaled = false,
+  href,
+  target,
+  rel,
   sx,
   ...props
 }) => {
+  const resolvedSx = isHoverScaled ? { ...HOVER_SCALE_SX, ...(sx as object) } : sx;
+
+  // Strapi lets an editor save a link with an empty href. next/link throws on a
+  // null href ("Cannot destructure property 'auth' of 'urlObj'"), which takes the
+  // whole page down, so render the label without navigation instead.
+  if (!href) {
+    return (
+      <MuiLink
+        component="span"
+        color={color}
+        style={{ display: "inline-block" }}
+        underline="none"
+        suppressHydrationWarning
+        sx={resolvedSx}
+        {...props}
+      />
+    );
+  }
+
   return (
     <MuiLink
       component={NextLink}
+      href={href}
+      target={target}
+      rel={rel}
       color={color}
       style={{ display: "inline-block" }}
       underline={underline}
       suppressHydrationWarning
-      sx={isHoverScaled ? { ...HOVER_SCALE_SX, ...(sx as object) } : sx}
+      sx={resolvedSx}
       {...props}
     />
   );
