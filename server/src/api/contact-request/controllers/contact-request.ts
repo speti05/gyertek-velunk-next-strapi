@@ -4,6 +4,7 @@
 
 import { factories } from "@strapi/strapi";
 import { sendContactRequestEmails } from "../../../lib/email/contact-request";
+import { CONTACT_REQUEST_DUPLICATE_ERROR } from "../../../utils/texts";
 
 // How long the same phone number / email address is blocked from sending
 // another request. Without a window a visitor could never reach us twice.
@@ -24,9 +25,7 @@ export default factories.createCoreController("api::contact-request.contact-requ
         .findOne({ where: { [contactField]: contactValue, createdAt: { $gte: since } } });
 
       if (existing) {
-        return ctx.conflict(
-          `Ezzel a kapcsolati adattal ${DUPLICATE_WINDOW_HOURS} órán belül már érkezett megkeresés.`
-        );
+        return ctx.conflict(CONTACT_REQUEST_DUPLICATE_ERROR(DUPLICATE_WINDOW_HOURS));
       }
     }
 

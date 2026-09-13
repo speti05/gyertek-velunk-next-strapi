@@ -1,3 +1,5 @@
+import { EMAIL_DEFAULT_FROM_NAME } from "../src/utils/texts";
+
 export default () => {
   const config = {
     email: {
@@ -13,7 +15,7 @@ export default () => {
           },
         },
         settings: {
-          defaultFrom: `"Gyertek velünk" <${process.env.SMTP_USER}>`,
+          defaultFrom: `"${EMAIL_DEFAULT_FROM_NAME}" <${process.env.SMTP_USER}>`,
           defaultReplyTo: process.env.SMTP_USER,
         },
       },

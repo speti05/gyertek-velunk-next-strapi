@@ -1,13 +1,19 @@
 import path from "path";
 import { getTransporter } from "./mailer";
 import { sendMailWithRetry } from "./send-with-retry";
-import { emailWrapper, SystemEmailSubject } from "./templates/layout";
+import { emailWrapper } from "./templates/layout";
 import {
   adminContactRequestEmailContent,
   userContactRequestEmailContent,
 } from "./templates/contact-request";
 import { getSiteSettings } from "./get-site-settings";
 import { getClientUrl } from "../config/client-url";
+import {
+  CONTACT_REQUEST_ADMIN_MAIL_SUBJECT,
+  CONTACT_REQUEST_FROM_NAME,
+  CONTACT_REQUEST_USER_MAIL_SUBJECT,
+  SystemEmailSubject,
+} from "../../utils/texts";
 
 const headerAttachment = {
   filename: "email-fejlec-600.jpg",
@@ -42,9 +48,9 @@ export const sendContactRequestEmails = async (data: {
     await sendMailWithRetry(
       t,
       {
-        from: `"${organizationName} Kapcsolatfelvétel" <${process.env.SMTP_USER}>`,
+        from: `"${CONTACT_REQUEST_FROM_NAME(organizationName)}" <${process.env.SMTP_USER}>`,
         to: process.env.ADMIN_EMAIL,
-        subject: "Új visszahívás / megkeresés",
+        subject: CONTACT_REQUEST_ADMIN_MAIL_SUBJECT,
         html: emailWrapper(
           siteUrl,
           adminContactRequestEmailContent(name, phone, email, preferredContact),
@@ -69,7 +75,7 @@ export const sendContactRequestEmails = async (data: {
         {
           from: `"${organizationName}" <${process.env.SMTP_USER}>`,
           to: email,
-          subject: "Megkaptuk a megkeresésedet",
+          subject: CONTACT_REQUEST_USER_MAIL_SUBJECT,
           html: emailWrapper(
             siteUrl,
             userContactRequestEmailContent(

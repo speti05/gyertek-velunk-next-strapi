@@ -1,3 +1,56 @@
+import {
+  CURRENCY_FALLBACK,
+  EMAIL_GREETING,
+  EMAIL_SIGNATURE_CLOSING,
+  EMAIL_SIGNATURE_TEAM,
+  EVENT_SIGNUP_ADMIN_INTRO,
+  EVENT_SIGNUP_ADMIN_TITLE,
+  EVENT_SIGNUP_COMPANION_SECTION_TITLE,
+  EVENT_SIGNUP_CONTRACT_NAME_ACCUSATIVE,
+  EVENT_SIGNUP_NEXT_STEPS,
+  EVENT_SIGNUP_NEXT_STEPS_TITLE,
+  EVENT_SIGNUP_SECTION_APPLICANT,
+  EVENT_SIGNUP_SECTION_INVOICING,
+  EVENT_SIGNUP_SECTION_NOTES,
+  EVENT_SIGNUP_SECTION_TOUR,
+  EVENT_SIGNUP_SECTION_TRAVEL_DATA,
+  EVENT_SIGNUP_SELECTED_TOUR_LABEL,
+  EVENT_SIGNUP_USER_ATTACHMENT_NOTE,
+  EVENT_SIGNUP_USER_BADGE,
+  EVENT_SIGNUP_USER_GLAD,
+  EVENT_SIGNUP_USER_INTRO,
+  EVENT_SIGNUP_USER_PAYMENT_INTRO,
+  EVENT_SIGNUP_USER_QUESTIONS,
+  EVENT_SIGNUP_USER_SEE_YOU,
+  EVENT_SIGNUP_USER_TITLE,
+  LABEL_ALLERGIES,
+  LABEL_BILLING_ADDRESS,
+  LABEL_BILLING_COUNTRY,
+  LABEL_BIRTH_COUNTRY,
+  LABEL_BIRTH_DATE,
+  LABEL_BIRTH_PLACE,
+  LABEL_COMPANY_NAME,
+  LABEL_DOCUMENT_EXPIRY_DATE,
+  LABEL_DOCUMENT_ISSUE_DATE,
+  LABEL_DOCUMENT_NUMBER,
+  LABEL_DOCUMENT_TYPE,
+  LABEL_EMAIL,
+  LABEL_FACEBOOK_PROFILE,
+  LABEL_NAME,
+  LABEL_NO,
+  LABEL_NOTES,
+  LABEL_PHONE,
+  LABEL_TAX_NUMBER,
+  LABEL_TOUR_NAME,
+  LABEL_WANTS_INVOICE,
+  LABEL_YES,
+  TRANSFER_ACCOUNT_NUMBER_LABEL,
+  TRANSFER_AMOUNT_LABEL,
+  TRANSFER_BENEFICIARY_LABEL,
+  TRANSFER_REFERENCE_LABEL,
+  TRANSFER_SECTION_TITLE,
+} from "../../../utils/texts";
+
 export const userEmailContent = (
   firstName: string,
   lastName: string,
@@ -14,7 +67,8 @@ export const userEmailContent = (
   const travelers = totalTravelers ?? 1;
   const totalPrice = numericPrice * travelers;
   const totalPriceFormatted =
-    totalPrice > 0 ? `${totalPrice.toLocaleString("hu-HU")} ${currency ?? "Pénzegység"}` : null;
+    totalPrice > 0 ? `${totalPrice.toLocaleString("hu-HU")} ${currency ?? CURRENCY_FALLBACK}` : null;
+  const contactEmailLink = `<a href="mailto:${contactEmail}" style="color:#377F76;text-decoration:none;">${contactEmail}</a>`;
   return `
   <tr>
     <td bgcolor="#ffffff" style="padding:48px 48px 40px;">
@@ -25,7 +79,7 @@ export const userEmailContent = (
             <table cellpadding="0" cellspacing="0" border="0">
               <tr>
                 <td bgcolor="#B0DFD8" style="border-radius:50px;padding:8px 24px;">
-                  <span style="font-family:'Source Sans 3',Arial,sans-serif;color:#377F76;font-weight:600;font-size:13px;letter-spacing:1px;text-transform:uppercase;">&#10003; Sikeres jelentkezés</span>
+                  <span style="font-family:'Source Sans 3',Arial,sans-serif;color:#377F76;font-weight:600;font-size:13px;letter-spacing:1px;text-transform:uppercase;">&#10003; ${EVENT_SIGNUP_USER_BADGE}</span>
                 </td>
               </tr>
             </table>
@@ -33,54 +87,54 @@ export const userEmailContent = (
         </tr>
       </table>
 
-      <h2 style="font-family:'Source Sans 3',Arial,sans-serif;color:#377F76;font-size:26px;margin:0 0 20px;text-align:center;letter-spacing:1px;font-weight:400;">Megkaptuk a jelentkezésedet!</h2>
+      <h2 style="font-family:'Source Sans 3',Arial,sans-serif;color:#377F76;font-size:26px;margin:0 0 20px;text-align:center;letter-spacing:1px;font-weight:400;">${EVENT_SIGNUP_USER_TITLE}</h2>
 
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#333333;font-size:16px;line-height:26px;margin:0 0 12px;">
-        Kedves <strong>${lastName} ${firstName}</strong>,
+        ${EMAIL_GREETING(`<strong>${lastName} ${firstName}</strong>`)}
       </p>
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0 0 32px;">
-        Köszönjük a jelentkezésedet! Örömmel értesítünk, hogy regisztrációdat sikeresen fogadtuk.
+        ${EVENT_SIGNUP_USER_INTRO}
       </p>
 
       <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-radius:8px;overflow:hidden;border-left:4px solid #4FB6A9;">
         <tr>
           <td bgcolor="#F1E8D9" style="padding:20px 24px;">
-            <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin:0 0 6px;">Kiválasztott túra</p>
+            <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin:0 0 6px;">${EVENT_SIGNUP_SELECTED_TOUR_LABEL}</p>
             <p style="font-family:'Luckiest Guy',cursive;color:#377F76;font-size:22px;margin:0;letter-spacing:1px;font-weight:400;">${eventName}</p>
           </td>
         </tr>
       </table>
 
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:32px 0 16px;">
-        Örülünk, hogy velünk tartasz.
+        ${EVENT_SIGNUP_USER_GLAD}
       </p>
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0 0 20px;">
-        A jelentkezésedet megkaptuk, a foglalásod az előleg beérkezése után válik véglegessé. Ajelentkezési részleteket megtalálod a profilodban.Az utaláshoz szükséges adatokat lent találod:
+        ${EVENT_SIGNUP_USER_PAYMENT_INTRO}
       </p>
 
       <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-radius:8px;overflow:hidden;border-left:4px solid #4FB6A9;margin-bottom:28px;">
         <tr>
           <td bgcolor="#F1E8D9" style="padding:20px 24px;">
-            <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin:0 0 10px;">Utalási adatok</p>
+            <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin:0 0 10px;">${TRANSFER_SECTION_TITLE}</p>
             <table cellpadding="0" cellspacing="0" border="0" width="100%">
               ${
                 totalPriceFormatted
                   ? `<tr>
-                <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:14px;font-weight:600;padding:3px 12px 3px 0;white-space:nowrap;">Fizetendő összeg:</td>
+                <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:14px;font-weight:600;padding:3px 12px 3px 0;white-space:nowrap;">${TRANSFER_AMOUNT_LABEL}</td>
                 <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#333333;font-size:14px;font-weight:700;padding:3px 0;">${totalPriceFormatted}</td>
               </tr>`
                   : ""
               }
               <tr>
-                <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:14px;font-weight:600;padding:3px 12px 3px 0;white-space:nowrap;">Kedvezményezett:</td>
+                <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:14px;font-weight:600;padding:3px 12px 3px 0;white-space:nowrap;">${TRANSFER_BENEFICIARY_LABEL}</td>
                 <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#333333;font-size:14px;padding:3px 0;">${bankBeneficiaryName}</td>
               </tr>
               <tr>
-                <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:14px;font-weight:600;padding:3px 12px 3px 0;white-space:nowrap;">Bankszámlaszám:</td>
+                <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:14px;font-weight:600;padding:3px 12px 3px 0;white-space:nowrap;">${TRANSFER_ACCOUNT_NUMBER_LABEL}</td>
                 <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#333333;font-size:14px;padding:3px 0;">${bankAccountNumber}</td>
               </tr>
               <tr>
-                <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:14px;font-weight:600;padding:3px 12px 3px 0;white-space:nowrap;">Közlemény:</td>
+                <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:14px;font-weight:600;padding:3px 12px 3px 0;white-space:nowrap;">${TRANSFER_REFERENCE_LABEL}</td>
                 <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#333333;font-size:14px;padding:3px 0;">${eventName} + ${lastName} ${firstName}</td>
               </tr>
             </table>
@@ -89,48 +143,30 @@ export const userEmailContent = (
       </table>
 
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0 0 16px;">
-        A következő időszakban ezeken fogunk együtt végigmenni:
+        ${EVENT_SIGNUP_NEXT_STEPS_TITLE}
       </p>
       <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:28px;">
-        <tr>
+        ${EVENT_SIGNUP_NEXT_STEPS.map(
+          (step) => `<tr>
           <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:15px;line-height:24px;padding:6px 0 6px 8px;vertical-align:top;">
-            <span style="color:#377F76;font-weight:700;margin-right:8px;">•</span>Az utalásod beérkezése után telefonon is felvesszük veled a kapcsolatot, ahol megbeszéljük a további kommunikáció részleteit. Facebookon is felvesszük egymást, illetve bekerülsz a közös Messenger csoportba is.
+            <span style="color:#377F76;font-weight:700;margin-right:8px;">•</span>${step}
           </td>
-        </tr>
-        <tr>
-          <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:15px;line-height:24px;padding:6px 0 6px 8px;vertical-align:top;">
-            <span style="color:#377F76;font-weight:700;margin-right:8px;">•</span>Ezt követően elküldjük neked a túra részletesebb leírását és a szükséges felszereléslistát. Ez még nem a végleges tájékoztató, a célja inkább az, hogy időben képbe kerülj a túrával kapcsolatban és nyugodtan fel tudj készülni.
-          </td>
-        </tr>
-        <tr>
-          <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:15px;line-height:24px;padding:6px 0 6px 8px;vertical-align:top;">
-            <span style="color:#377F76;font-weight:700;margin-right:8px;">•</span>Az egyik legfontosabb lépés a repülőjegy lefoglalása. Ezt alapvetően minden résztvevő önállóan intézi, azonban igény esetén felár ellenében természetesen segítünk a foglalásban is.
-          </td>
-        </tr>
-        <tr>
-          <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:15px;line-height:24px;padding:6px 0 6px 8px;vertical-align:top;">
-            <span style="color:#377F76;font-weight:700;margin-right:8px;">•</span>Utasbiztosítás megkötése kötelező, melynek meglétét indulás előtt ellenőrizzük. Amennyiben szeretnéd, felár ellenében ebben is tudunk segíteni.
-          </td>
-        </tr>
-        <tr>
-          <td style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:15px;line-height:24px;padding:6px 0 6px 8px;vertical-align:top;">
-            <span style="color:#377F76;font-weight:700;margin-right:8px;">•</span>Körülbelül egy hónappal az indulás előtt megküldjük a végleges tájékoztatót, a pontos menetrendet és minden fontos indulási információt.
-          </td>
-        </tr>
+        </tr>`
+        ).join("")}
       </table>
 
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0 0 20px;">
-        Ha bármi kérdésed van, nyugodtan írj nekünk az <a href="mailto:${contactEmail}" style="color:#377F76;text-decoration:none;">${contactEmail}</a> email címre.
+        ${EVENT_SIGNUP_USER_QUESTIONS(contactEmailLink)}
       </p>
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0 0 20px;">
-        Csatolmányban megtalálod az <strong>utazási szerződést</strong>.
+        ${EVENT_SIGNUP_USER_ATTACHMENT_NOTE(`<strong>${EVENT_SIGNUP_CONTRACT_NAME_ACCUSATIVE}</strong>`)}
       </p>
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0 0 8px;">
-        Hamarosan találkozunk! ⛰️
+        ${EVENT_SIGNUP_USER_SEE_YOU}
       </p>
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0;">
-        Üdvözlettel,<br>
-        <strong>A ${organizationName} csapata</strong>
+        ${EMAIL_SIGNATURE_CLOSING}<br>
+        <strong>${EMAIL_SIGNATURE_TEAM(organizationName)}</strong>
       </p>
 
     </td>
@@ -251,27 +287,27 @@ export const adminEmailContent = ({
   const companionsSections = (companions ?? [])
     .map((c, idx) => {
       const companionRows = [
-        row("Név", `${c.lastName} ${c.firstName}`, "#F1E8D9"),
-        row("Telefonszám", c.phone, "#ffffff"),
-        row("Születési ország", c.birthCountry, "#F1E8D9"),
-        row("Születési hely", c.birthPlace, "#ffffff"),
-        row("Születési dátum", c.birthDate, "#F1E8D9"),
-        row("Okmány típusa", c.documentType, "#ffffff"),
-        row("Okmány száma", c.documentNumber, "#F1E8D9"),
-        row("Kiállítás dátuma", c.documentIssueDate, "#ffffff"),
-        row("Lejárat dátuma", c.documentExpiryDate, "#F1E8D9"),
-        row("Allergiák / egészségügyi info", c.allergies || undefined, "#ffffff"),
-        row("Facebook profil", c.fbLink ? fbLinkHtml(c.fbLink) : undefined, "#F1E8D9"),
+        row(LABEL_NAME, `${c.lastName} ${c.firstName}`, "#F1E8D9"),
+        row(LABEL_PHONE, c.phone, "#ffffff"),
+        row(LABEL_BIRTH_COUNTRY, c.birthCountry, "#F1E8D9"),
+        row(LABEL_BIRTH_PLACE, c.birthPlace, "#ffffff"),
+        row(LABEL_BIRTH_DATE, c.birthDate, "#F1E8D9"),
+        row(LABEL_DOCUMENT_TYPE, c.documentType, "#ffffff"),
+        row(LABEL_DOCUMENT_NUMBER, c.documentNumber, "#F1E8D9"),
+        row(LABEL_DOCUMENT_ISSUE_DATE, c.documentIssueDate, "#ffffff"),
+        row(LABEL_DOCUMENT_EXPIRY_DATE, c.documentExpiryDate, "#F1E8D9"),
+        row(LABEL_ALLERGIES, c.allergies || undefined, "#ffffff"),
+        row(LABEL_FACEBOOK_PROFILE, c.fbLink ? fbLinkHtml(c.fbLink) : undefined, "#F1E8D9"),
       ].join("");
-      return section(`${idx + 1}. kísérő adatai`, companionRows);
+      return section(EVENT_SIGNUP_COMPANION_SECTION_TITLE(idx + 1), companionRows);
     })
     .join("");
 
   const turaSection = section(
-    "Túra",
+    EVENT_SIGNUP_SECTION_TOUR,
     [
       row(
-        "Túra neve",
+        LABEL_TOUR_NAME,
         `<strong style="font-family:'Luckiest Guy',cursive;color:#377F76;font-size:18px;letter-spacing:1px;font-weight:400;">${eventName}</strong>`,
         "#F1E8D9"
       ),
@@ -279,56 +315,58 @@ export const adminEmailContent = ({
   );
 
   const jelentkezoSection = section(
-    "Jelentkező adatai",
+    EVENT_SIGNUP_SECTION_APPLICANT,
     [
-      row("Név", `${lastName} ${firstName}`, "#F1E8D9"),
+      row(LABEL_NAME, `${lastName} ${firstName}`, "#F1E8D9"),
       row(
-        "Email",
+        LABEL_EMAIL,
         `<a href="mailto:${userEmail}" style="color:#377F76;text-decoration:none;">${userEmail}</a>`,
         "#ffffff"
       ),
-      row("Telefonszám", telephone, "#F1E8D9"),
-      row("Számlázási cím (ország)", billingCountry, "#ffffff"),
-      row("Számlázási cím", billingAddress || undefined, "#F1E8D9"),
+      row(LABEL_PHONE, telephone, "#F1E8D9"),
+      row(LABEL_BILLING_COUNTRY, billingCountry, "#ffffff"),
+      row(LABEL_BILLING_ADDRESS, billingAddress || undefined, "#F1E8D9"),
     ].join("")
   );
 
   const szamlazasSection = section(
-    "Számlázás",
+    EVENT_SIGNUP_SECTION_INVOICING,
     [
-      row("Kér számlát", wantInvoice ? "Igen" : "Nem", "#F1E8D9"),
+      row(LABEL_WANTS_INVOICE, wantInvoice ? LABEL_YES : LABEL_NO, "#F1E8D9"),
       ...(wantInvoice
         ? [
-            row("Cégnév", companyName, "#ffffff"),
-            row("Adószám", formatTaxNumber(taxNumber), "#F1E8D9"),
+            row(LABEL_COMPANY_NAME, companyName, "#ffffff"),
+            row(LABEL_TAX_NUMBER, formatTaxNumber(taxNumber), "#F1E8D9"),
           ]
         : []),
     ].join("")
   );
 
   const utazasiSection = section(
-    "Utazási adatok",
+    EVENT_SIGNUP_SECTION_TRAVEL_DATA,
     [
-      row("Születési ország", birthCountry, "#F1E8D9"),
-      row("Születési hely", birthPlace, "#ffffff"),
-      row("Születési dátum", birthDate, "#F1E8D9"),
-      row("Okmány típusa", documentType, "#ffffff"),
-      row("Okmány száma", documentNumber, "#F1E8D9"),
-      row("Kiállítás dátuma", documentIssueDate, "#ffffff"),
-      row("Lejárat dátuma", documentExpiryDate, "#F1E8D9"),
-      row("Allergiák / egészségügyi info", allergies || undefined, "#ffffff"),
-      row("Facebook profil", fbLink ? fbLinkHtml(fbLink) : undefined, "#F1E8D9"),
+      row(LABEL_BIRTH_COUNTRY, birthCountry, "#F1E8D9"),
+      row(LABEL_BIRTH_PLACE, birthPlace, "#ffffff"),
+      row(LABEL_BIRTH_DATE, birthDate, "#F1E8D9"),
+      row(LABEL_DOCUMENT_TYPE, documentType, "#ffffff"),
+      row(LABEL_DOCUMENT_NUMBER, documentNumber, "#F1E8D9"),
+      row(LABEL_DOCUMENT_ISSUE_DATE, documentIssueDate, "#ffffff"),
+      row(LABEL_DOCUMENT_EXPIRY_DATE, documentExpiryDate, "#F1E8D9"),
+      row(LABEL_ALLERGIES, allergies || undefined, "#ffffff"),
+      row(LABEL_FACEBOOK_PROFILE, fbLink ? fbLinkHtml(fbLink) : undefined, "#F1E8D9"),
     ].join("")
   );
 
-  const megjegyzesSection = notes ? section("Megjegyzés", row("Megjegyzés", notes, "#F1E8D9")) : "";
+  const megjegyzesSection = notes
+    ? section(EVENT_SIGNUP_SECTION_NOTES, row(LABEL_NOTES, notes, "#F1E8D9"))
+    : "";
 
   return `
   <tr>
     <td bgcolor="#ffffff" style="padding:48px;">
 
-      <h2 style="font-family:'Source Sans 3',Arial,sans-serif;color:#377F76;font-size:26px;margin:0 0 8px;letter-spacing:1px;font-weight:400;">Új túrajelentkezés érkezett</h2>
-      <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0 0 24px;">Az alábbi személy regisztrált az egyik túrátokra.</p>
+      <h2 style="font-family:'Source Sans 3',Arial,sans-serif;color:#377F76;font-size:26px;margin:0 0 8px;letter-spacing:1px;font-weight:400;">${EVENT_SIGNUP_ADMIN_TITLE}</h2>
+      <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0 0 24px;">${EVENT_SIGNUP_ADMIN_INTRO}</p>
 
       ${turaSection}
 

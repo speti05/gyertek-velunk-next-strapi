@@ -1,9 +1,14 @@
 import path from "path";
 import { getTransporter } from "./mailer";
-import { emailWrapper, SystemEmailSubject } from "./templates/layout";
+import { emailWrapper } from "./templates/layout";
 import { userEmailContent, adminEmailContent } from "./templates/newsletter-signup";
 import { getSiteSettings } from "./get-site-settings";
 import { getClientUrl } from "../config/client-url";
+import {
+  NEWSLETTER_SIGNUP_ADMIN_MAIL_SUBJECT,
+  NEWSLETTER_SIGNUP_USER_MAIL_SUBJECT,
+  SystemEmailSubject,
+} from "../../utils/texts";
 
 const headerAttachment = {
   filename: "email-fejlec-600.jpg",
@@ -21,7 +26,7 @@ export const sendNewsletterSignupEmails = async (subscriberEmail: string) => {
   await t.sendMail({
     from: `"${organizationName}" <${process.env.SMTP_USER}>`,
     to: subscriberEmail,
-    subject: "Sikeres hírlevél feliratkozás",
+    subject: NEWSLETTER_SIGNUP_USER_MAIL_SUBJECT,
     html: emailWrapper(siteUrl, userEmailContent(subscriberEmail), SystemEmailSubject.NewsletterSignup, organizationName),
     attachments: [headerAttachment],
   });
@@ -29,7 +34,7 @@ export const sendNewsletterSignupEmails = async (subscriberEmail: string) => {
   await t.sendMail({
     from: `"${organizationName}" <${process.env.SMTP_USER}>`,
     to: process.env.ADMIN_EMAIL,
-    subject: "Új hírlevél feliratkozás",
+    subject: NEWSLETTER_SIGNUP_ADMIN_MAIL_SUBJECT,
     html: emailWrapper(siteUrl, adminEmailContent(subscriberEmail), SystemEmailSubject.NewsletterSignup, organizationName),
     attachments: [headerAttachment],
   });

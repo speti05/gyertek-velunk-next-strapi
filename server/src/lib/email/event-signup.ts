@@ -1,10 +1,16 @@
 import path from "path";
 import { getTransporter } from "./mailer";
-import { emailWrapper, SystemEmailSubject } from "./templates/layout";
+import { emailWrapper } from "./templates/layout";
 import { userEmailContent, adminEmailContent } from "./templates/event-signup";
 import { getSiteSettings } from "./get-site-settings";
 import { getTravelContractAttachment } from "./travel-contract-attachment";
 import { getClientUrl } from "../config/client-url";
+import {
+  EVENT_SIGNUP_ADMIN_MAIL_SUBJECT,
+  EVENT_SIGNUP_FROM_NAME,
+  EVENT_SIGNUP_USER_MAIL_SUBJECT,
+  SystemEmailSubject,
+} from "../../utils/texts";
 
 const headerAttachment = {
   filename: "email-fejlec-600.jpg",
@@ -79,7 +85,7 @@ export const sendSignupEmails = async (signupData: {
   await t.sendMail({
     from: `"${organizationName}" <${process.env.SMTP_USER}>`,
     to: userEmail,
-    subject: `Sikeres túrajelentkezés – ${eventName}`,
+    subject: EVENT_SIGNUP_USER_MAIL_SUBJECT(eventName),
     html: emailWrapper(
       siteUrl,
       userEmailContent(firstName, lastName, eventName, eventPrice, 1 + (companions?.length ?? 0), defaultCurrency, bankAccountNumber, bankBeneficiaryName, contactEmail, organizationName),
@@ -92,9 +98,9 @@ export const sendSignupEmails = async (signupData: {
   });
 
   await t.sendMail({
-    from: `"${organizationName} Túrajelentkezés" <${process.env.SMTP_USER}>`,
+    from: `"${EVENT_SIGNUP_FROM_NAME(organizationName)}" <${process.env.SMTP_USER}>`,
     to: process.env.ADMIN_EMAIL,
-    subject: `Túrajelentkezés: ${eventName}`,
+    subject: EVENT_SIGNUP_ADMIN_MAIL_SUBJECT(eventName),
     html: emailWrapper(
       siteUrl,
       adminEmailContent({

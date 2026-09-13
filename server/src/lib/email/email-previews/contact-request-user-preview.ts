@@ -1,5 +1,6 @@
 import { writeFileSync, mkdirSync } from "fs";
-import { emailWrapper, SystemEmailSubject } from "../templates/layout";
+import { emailWrapper } from "../templates/layout";
+import { SystemEmailSubject } from "../../../utils/texts";
 import { userContactRequestEmailContent } from "../templates/contact-request";
 import { getClientUrl } from "../../config/client-url";
 

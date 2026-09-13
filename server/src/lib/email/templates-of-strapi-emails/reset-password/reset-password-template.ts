@@ -1,6 +1,14 @@
 import { writeFileSync } from "fs";
-import { emailHeader, emailFooter, SystemEmailSubject } from "../../templates/layout";
+import { emailHeader, emailFooter } from "../../templates/layout";
 import { getClientUrl } from "../../../config/client-url";
+import {
+  EMAIL_FALLBACK_LINK_LABEL,
+  EMAIL_GREETING,
+  RESET_PASSWORD_BUTTON_LABEL,
+  RESET_PASSWORD_DISCLAIMER,
+  RESET_PASSWORD_INTRO,
+  SystemEmailSubject,
+} from "../../../../utils/texts";
 
 const SITE_URL = getClientUrl();
 
@@ -8,11 +16,10 @@ const content = `
   <tr>
     <td bgcolor="#ffffff" style="padding:48px 48px 40px;">
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#333333;font-size:16px;line-height:26px;margin:0 0 12px;">
-        Kedves <strong><%= USER.username %></strong>,
+        ${EMAIL_GREETING("<strong><%= USER.username %></strong>")}
       </p>
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0 0 32px;">
-        Új jelszót igényeltél az oldalunkon. Az alábbi gombra kattintva megadhatod az új
-        használni kívánt jelszavadat. De ezt most már el ne hagyd&nbsp;:)
+        ${RESET_PASSWORD_INTRO}
       </p>
 
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
@@ -20,7 +27,7 @@ const content = `
           <td align="center" style="padding-bottom:32px;">
             <a href="<%= URL %>?code=<%= TOKEN %>"
                style="display:inline-block;font-family:'Source Sans 3',Arial,sans-serif;font-size:16px;font-weight:600;color:#ffffff;background-color:#377F76;text-decoration:none;padding:14px 36px;border-radius:8px;letter-spacing:0.5px;">
-              Jelszó visszaállítása
+              ${RESET_PASSWORD_BUTTON_LABEL}
             </a>
           </td>
         </tr>
@@ -31,7 +38,7 @@ const content = `
         <tr>
           <td bgcolor="#F1E8D9" style="padding:16px 20px;">
             <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 6px;">
-              Ha a gomb nem működik, másold be ezt a linket:
+              ${EMAIL_FALLBACK_LINK_LABEL}
             </p>
             <a href="<%= URL %>?code=<%= TOKEN %>"
                style="font-family:'Source Sans 3',Arial,sans-serif;color:#377F76;font-size:13px;word-break:break-all;text-decoration:none;">
@@ -42,7 +49,7 @@ const content = `
       </table>
 
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#888888;font-size:14px;line-height:22px;margin:32px 0 0;">
-        Ha nem te kérted a jelszó visszaállítását, kérjük jelezd felénk mielőbb!
+        ${RESET_PASSWORD_DISCLAIMER}
       </p>
     </td>
   </tr>

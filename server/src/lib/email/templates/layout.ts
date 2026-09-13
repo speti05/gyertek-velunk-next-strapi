@@ -1,19 +1,15 @@
-export enum SystemEmailSubject {
-  EmailConfirmation = "Email cím megerősítése",
-  ForgotPassword = "Elfelejtett jelszó",
-  EventSignup = "Túrajelentkezés megerősítése",
-  EventSignupAdmin = "Új túrajelentkezés",
-  NewsletterSignup = "Hírlevél feliratkozás",
-  ContactRequestAdmin = "Új visszahívás / megkeresés",
-  ContactRequest = "Kapcsolatfelvételi kérés",
-}
+import {
+  EMAIL_FOOTER_RIGHTS,
+  EMAIL_HEADER_LOGO_ALT,
+  SystemEmailSubject,
+} from "../../../utils/texts";
 
 export const emailHeader = (subject: SystemEmailSubject | string) => `
   <tr>
     <td style="padding:0;line-height:0;font-size:0;">
       <img src="cid:email-fejlec" width="600"
            style="display:block;width:100%;height:auto;border:0;"
-           alt="Gyertek velünk" />
+           alt="${EMAIL_HEADER_LOGO_ALT}" />
     </td>
   </tr>
   <tr>
@@ -27,7 +23,7 @@ export const emailFooter = (siteUrl: string | undefined, year: number, organizat
   <tr>
     <td bgcolor="#70634C" style="padding:28px 40px;text-align:center;">
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#F1E8D9;font-size:14px;margin:0 0 6px;line-height:1.6;">
-        &copy; ${year} ${organizationName} &mdash; Minden jog fenntartva.
+        &copy; ${year} ${organizationName} &mdash; ${EMAIL_FOOTER_RIGHTS}
       </p>
       ${siteUrl ? `<a href="${siteUrl}" style="font-family:'Source Sans 3',Arial,sans-serif;color:#B0DFD8;font-size:14px;text-decoration:none;">${siteUrl}</a>` : ""}
     </td>

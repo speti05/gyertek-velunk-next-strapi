@@ -1,5 +1,6 @@
 import MarkdownIt from "markdown-it";
 import HTMLtoDOCX from "html-to-docx";
+import { TRAVEL_CONTRACT_DOCUMENT_TITLE } from "../../utils/texts";
 
 const TRAVEL_CONTRACT_SLUG = "utazasi-szerzodes";
 
@@ -36,7 +37,7 @@ export const getTravelContractAttachment = async (): Promise<{
 
   const html = md.render(markdown);
   const result = await HTMLtoDOCX(html, undefined, {
-    title: "Utazási szerződés",
+    title: TRAVEL_CONTRACT_DOCUMENT_TITLE,
   });
   const content = Buffer.isBuffer(result) ? result : Buffer.from(result as ArrayBuffer);
 
