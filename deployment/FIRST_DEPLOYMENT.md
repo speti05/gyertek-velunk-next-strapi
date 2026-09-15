@@ -627,6 +627,11 @@ loss. Periodically copy them off-server, e.g. via a VPS cron job:
       max-size: "10m"
       max-file: "3"
   ```
+- **Disk space**: `df -h /` for the totals, `docker system df` for Docker's
+  share. To see what fills it, `ncdu` is the easiest way to browse files —
+  `sudo apt install -y ncdu`, then `sudo ncdu /` and navigate with the arrow keys.
+  The deploy keeps only the current and the previous image version; see
+  `DEBUG.md` for clearing a backlog of older ones.
 - **OS security updates**: `sudo apt install -y unattended-upgrades`
 - **Uptime monitoring** (optional): an external service (e.g. UptimeRobot)
   watching `https://gyertekvelunk.eu` and `https://admin.gyertekvelunk.eu/admin`.

@@ -1,4 +1,13 @@
 node_modules
 .tmp
 dist
+.strapi
+.strapi-updater.json
+
+# Secrets never belong in an image layer, not even in the discarded builder stage.
 .env
+.env.*
+
+# Uploads live in a Docker volume; only the mount point needs to exist.
+public/uploads/*
+!public/uploads/.gitkeep

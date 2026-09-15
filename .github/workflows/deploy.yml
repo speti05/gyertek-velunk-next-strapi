@@ -114,4 +114,31 @@ jobs:
               fi
             done
 
+            # Every deploy leaves a :<sha>-tagged image behind, and `docker image prune`
+            # never touches tagged images, so they used to pile up until the disk filled.
+            # Keep the image this deploy installed plus the one it replaced, so a single
+            # rollback is still a local `docker compose up -d` away, and drop the rest.
+            current_sha="${{ github.sha }}"
+            deployed_sha=$(cat .deployed-sha 2>/dev/null || true)
+            rollback_sha=$(cat .rollback-sha 2>/dev/null || true)
+
+            # On a re-run of the same commit the rollback target must not shift to itself.
+            if [ "$deployed_sha" != "$current_sha" ]; then
+              rollback_sha="$deployed_sha"
+            fi
+
+            for image in "${{ env.SERVER_IMAGE }}" "${{ env.CLIENT_IMAGE }}"; do
+              for ref in $(docker image ls "$image" --format '{{.Repository}}:{{.Tag}}'); do
+                tag="${ref##*:}"
+                if [ "$tag" = latest ] || [ "$tag" = "$current_sha" ] || [ "$tag" = "$rollback_sha" ]; then
+                  continue
+                fi
+                echo "removing superseded image $ref"
+                docker image rm "$ref" > /dev/null 2>&1 || true
+              done
+            done
+
+            echo "$current_sha" > .deployed-sha
+            echo "$rollback_sha" > .rollback-sha
+
             docker image prune -f

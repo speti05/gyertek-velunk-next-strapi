@@ -64,3 +64,70 @@ docker inspect --format '{{.Created}}' ghcr.io/speti05/gyertek-velunk-server:lat
 
 Not a freshness indicator: a fully cached rebuild reproduces the same image config with the
 original timestamp. Use the revision label above instead.
+
+# Testing an image locally
+
+Build and run the production images on your own machine before deploying, so a broken
+Dockerfile fails here instead of on the VPS:
+
+```bash
+yarn docker:local:strapi   # Strapi only
+yarn docker:local          # the whole stack
+```
+
+Both wrap `docker compose up --build` on `docker-compose.local.yml`. Strapi comes up on
+`http://localhost:1337`, the client on `http://localhost:3000`.
+
+The scripts pass `client/.env.local` to compose as an env file on purpose: Next.js inlines
+`NEXT_PUBLIC_*` into the bundle at build time, so those values have to reach the client
+image as build args. Without them the site still renders server-side, but browser-side
+Strapi calls and reCAPTCHA break on empty URLs and keys. Run `yarn setup` first if
+`client/.env.local` does not exist yet.
+
+Worth knowing: the local compose file mounts a fresh `strapi-data` volume over `.tmp` and
+uses SQLite, so the database starts empty — `/admin` will ask you to register an admin
+user. That is the empty volume, not a broken image. What this actually verifies is that
+the container starts at all (`dist/` is present) and that the admin panel loads
+(`dist/build/` is present).
+
+Compare the size against what runs on the VPS:
+
+```bash
+docker image ls gyertek-velunk-next-strapi-strapi
+```
+
+# Disk space
+
+```bash
+df -h /                 # how much is used/free
+docker system df        # how much of it Docker holds (images, volumes, build cache)
+```
+
+To find what actually fills the disk, `ncdu` is by far the easiest way to browse
+files — it shows every directory sorted by size and you navigate with the arrow keys:
+
+```bash
+sudo apt install -y ncdu
+sudo ncdu /
+```
+
+## Cleaning up old Docker images
+
+Old images are the usual reason the VPS fills up. The deploy keeps only the current and
+the previous version, so run this only to clear a backlog:
+
+```bash
+docker system df        # the RECLAIMABLE column is what you get back
+docker image prune -af  # -a matters: every old image carries a :<commit-sha> tag
+df -h /
+```
+
+Images of running containers are never touched, and anything deleted can be pulled again
+from GHCR. Per-image sizes in `docker image ls` are misleading — shared layers are counted
+once per image.
+
+**Never run** `docker system prune -a --volumes` — `--volumes` deletes the Postgres
+database and the Strapi uploads.
+
+If the disk is still full, the space is not in images: check `/var/lib/docker/volumes`,
+`/var/log` and `/opt/gyertek-velunk/backups` with `ncdu`.
