@@ -1,30 +1,35 @@
 import { writeFileSync, mkdirSync } from "fs";
 import { emailWrapper } from "../templates/layout";
-import { SystemEmailSubject } from "../../../utils/texts";
+import { getStrapiTexts } from "../../../i18n/get-strapi-texts";
 import { adminContactRequestEmailContent } from "../templates/contact-request";
 import { getClientUrl } from "../../config/client-url";
+
+const texts = getStrapiTexts();
 
 // Variant A: phone + email both provided
 const htmlBoth = emailWrapper(
   getClientUrl(),
-  adminContactRequestEmailContent("Kovács János", "+36 30 123 4567", "kovacs.janos@example.com", "phone"),
-  SystemEmailSubject.ContactRequestAdmin,
+  adminContactRequestEmailContent(texts, "Kovács János", "+36 30 123 4567", "kovacs.janos@example.com", "phone"),
+  texts.SYSTEM_EMAIL_SUBJECT.contactRequestAdmin,
+  texts,
   "Gyertek Velünk"
 );
 
 // Variant B: email only
 const htmlEmailOnly = emailWrapper(
   getClientUrl(),
-  adminContactRequestEmailContent("Nagy Éva", null, "nagy.eva@example.com", "email"),
-  SystemEmailSubject.ContactRequestAdmin,
+  adminContactRequestEmailContent(texts, "Nagy Éva", null, "nagy.eva@example.com", "email"),
+  texts.SYSTEM_EMAIL_SUBJECT.contactRequestAdmin,
+  texts,
   "Gyertek Velünk"
 );
 
 // Variant C: phone only
 const htmlPhoneOnly = emailWrapper(
   getClientUrl(),
-  adminContactRequestEmailContent("Kiss Péter", "+36 70 987 6543", null, "phone"),
-  SystemEmailSubject.ContactRequestAdmin,
+  adminContactRequestEmailContent(texts, "Kiss Péter", "+36 70 987 6543", null, "phone"),
+  texts.SYSTEM_EMAIL_SUBJECT.contactRequestAdmin,
+  texts,
   "Gyertek Velünk"
 );
 

@@ -1,4 +1,4 @@
-import { EMAIL_DEFAULT_FROM_NAME } from "../src/utils/texts";
+import { EMAIL_DEFAULT_FROM_NAME } from "../src/i18n/texts-strapi";
 
 export default () => {
   const config = {

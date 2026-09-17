@@ -1,6 +1,9 @@
 import { writeFileSync } from "fs";
 import { newsletterEmailWrapper } from "../templates/newsletter";
 import { getClientUrl } from "../../config/client-url";
+import { getStrapiTexts } from "../../../i18n/get-strapi-texts";
+
+const texts = getStrapiTexts();
 
 const PREVIEW_SUBJECT = "Minta hírlevél cím";
 const PREVIEW_UNSUBSCRIBE_URL = `${getClientUrl()}/leiratkozas?token=PREVIEW`;
@@ -23,7 +26,7 @@ const PREVIEW_CONTENT = `
   </p>
 `;
 
-const html = newsletterEmailWrapper(PREVIEW_SUBJECT, PREVIEW_CONTENT, PREVIEW_UNSUBSCRIBE_URL);
+const html = newsletterEmailWrapper(texts, PREVIEW_SUBJECT, PREVIEW_CONTENT, PREVIEW_UNSUBSCRIBE_URL);
 
 const outputPath = process.argv[2];
 if (!outputPath) {

@@ -1,5 +1,7 @@
 "use client";
 
+import { useTexts } from "@/context/locale-context";
+
 import { useState } from "react";
 
 import { StrapiImage } from "@/components/StrapiImage";
@@ -8,7 +10,6 @@ import CustomIcon from "@/components/custom-ui-components/custom-icon/custom-ico
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import { ImageProps, LinkProps } from "@/types";
-import { EMPTY_REASON_CLOSE_LABEL } from "@/utils/texts";
 
 interface EmptyReasonOverlayProps {
   title: string;
@@ -23,6 +24,7 @@ export function EmptyReasonOverlay({
   backgroundImage,
   links,
 }: Readonly<EmptyReasonOverlayProps>) {
+  const { EMPTY_REASON_CLOSE_LABEL } = useTexts();
   const [isClosing, setIsClosing] = useState(false);
   const [isClosed, setIsClosed] = useState(false);
 

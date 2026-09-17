@@ -2,6 +2,7 @@
 import { FC } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
+import { useTexts } from "@/context/locale-context";
 
 // Props interface for the main pagination component
 interface PaginationProps {
@@ -39,7 +40,7 @@ const PaginationArrow: FC<PaginationArrowProps> = ({ direction, href, isDisabled
 };
 
 export function PaginationComponent({ pageCount, pageParam = "page" }: Readonly<PaginationProps>) {
-  const PAGE_LABEL = "Oldal";
+  const { PAGINATION_PAGE_LABEL, PAGINATION_NAV_ARIA } = useTexts();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   // Use the custom pageParam instead of hardcoded "page"
@@ -52,7 +53,7 @@ export function PaginationComponent({ pageCount, pageParam = "page" }: Readonly<
   };
 
   return (
-    <nav role="navigation" aria-label="Pagination" className="pagination-nav">
+    <nav role="navigation" aria-label={PAGINATION_NAV_ARIA} className="pagination-nav">
       <ul className="pagination-list no-list-style">
         {/* Left arrow - disabled if on first page */}
         <li>
@@ -65,7 +66,7 @@ export function PaginationComponent({ pageCount, pageParam = "page" }: Readonly<
         {/* Current page indicator */}
         <li>
           <span className="page-number">
-            {PAGE_LABEL} {currentPage}
+            {PAGINATION_PAGE_LABEL} {currentPage}
           </span>
         </li>
         {/* Right arrow - disabled if on last page */}

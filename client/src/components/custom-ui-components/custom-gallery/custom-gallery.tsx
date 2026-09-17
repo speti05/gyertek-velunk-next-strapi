@@ -1,5 +1,7 @@
 "use client";
 
+import { useTexts } from "@/context/locale-context";
+
 import React, { useCallback, useEffect, useState } from "react";
 import { StrapiImage } from "@/components/StrapiImage";
 import { ImageProps } from "@/types";
@@ -9,13 +11,6 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import PauseIcon from "@mui/icons-material/Pause";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import {
-  GALLERY_PREV_IMAGE_ARIA,
-  GALLERY_NEXT_IMAGE_ARIA,
-  GALLERY_DOT_IMAGE_ARIA,
-  GALLERY_PAUSE_ARIA,
-  GALLERY_PLAY_ARIA,
-} from "@/utils/texts";
 
 const SLIDE_INTERVAL_MS = 5000;
 
@@ -30,6 +25,7 @@ const CustomGallery: React.FC<CustomGalleryProps> = ({
   autoplay = true,
   slideIntervalMs = SLIDE_INTERVAL_MS,
 }) => {
+  const { GALLERY_PREV_IMAGE_ARIA, GALLERY_NEXT_IMAGE_ARIA, GALLERY_DOT_IMAGE_ARIA, GALLERY_PAUSE_ARIA, GALLERY_PLAY_ARIA } = useTexts();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const count = images?.length ?? 0;

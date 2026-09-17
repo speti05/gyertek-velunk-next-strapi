@@ -3,39 +3,7 @@
 import { useEffect, useState } from "react";
 import * as CookieConsent from "vanilla-cookieconsent";
 import { useCookieConsent } from "@/context/cookie-consent-context";
-import {
-  COOKIE_BANNER_TITLE,
-  COOKIE_BANNER_DESCRIPTION,
-  COOKIE_BANNER_ACCEPT_ALL,
-  COOKIE_BANNER_SETTINGS,
-  COOKIE_PREFS_TITLE,
-  COOKIE_PREFS_ACCEPT_ALL,
-  COOKIE_PREFS_REJECT_ALL,
-  COOKIE_PREFS_SAVE,
-  COOKIE_NECESSARY_TITLE,
-  COOKIE_NECESSARY_DESCRIPTION,
-  COOKIE_FUNCTIONAL_TITLE,
-  COOKIE_FUNCTIONAL_DESCRIPTION,
-  COOKIE_ANALYTICS_TITLE,
-  COOKIE_ANALYTICS_DESCRIPTION,
-  COOKIE_TABLE_NAME,
-  COOKIE_TABLE_DOMAIN,
-  COOKIE_TABLE_EXPIRATION,
-  COOKIE_TABLE_DESCRIPTION,
-  COOKIE_JWT_DESC,
-  COOKIE_EMAIL_DESC,
-  COOKIE_CC_DESC,
-  COOKIE_RECAPTCHA_DESC,
-  COOKIE_GA_DESC,
-  COOKIE_GA_SESSION_DESC,
-  COOKIE_DOMAIN_SITE,
-  COOKIE_DOMAIN_GOOGLE,
-  COOKIE_EXPIRY_7_DAYS,
-  COOKIE_EXPIRY_6_MONTHS,
-  COOKIE_EXPIRY_1_YEAR,
-  COOKIE_EXPIRY_2_YEARS,
-  COOKIE_PREFS_CLOSE,
-} from "@/utils/texts";
+import { useTexts } from "@/context/locale-context";
 
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 import { CustomDialog } from "@/components/custom-ui-components/custom-dialog/custom-dialog";
@@ -46,54 +14,12 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import CustomIcon from "@/components/custom-ui-components/custom-icon/custom-icon";
 
-const NECESSARY_COOKIES = [
-  {
-    name: "jwt",
-    domain: COOKIE_DOMAIN_SITE,
-    expiration: COOKIE_EXPIRY_7_DAYS,
-    description: COOKIE_JWT_DESC,
-  },
-  {
-    name: "user_email",
-    domain: COOKIE_DOMAIN_SITE,
-    expiration: COOKIE_EXPIRY_7_DAYS,
-    description: COOKIE_EMAIL_DESC,
-  },
-  {
-    name: "cc_cookie",
-    domain: COOKIE_DOMAIN_SITE,
-    expiration: COOKIE_EXPIRY_1_YEAR,
-    description: COOKIE_CC_DESC,
-  },
-];
-
-const RECAPTCHA_COOKIES = [
-  {
-    name: "_GRECAPTCHA",
-    domain: COOKIE_DOMAIN_GOOGLE,
-    expiration: COOKIE_EXPIRY_6_MONTHS,
-    description: COOKIE_RECAPTCHA_DESC,
-  },
-];
-
-const ANALYTICS_COOKIES = [
-  {
-    name: "_ga",
-    domain: COOKIE_DOMAIN_GOOGLE,
-    expiration: COOKIE_EXPIRY_2_YEARS,
-    description: COOKIE_GA_DESC,
-  },
-  {
-    name: "_ga_*",
-    domain: COOKIE_DOMAIN_GOOGLE,
-    expiration: COOKIE_EXPIRY_2_YEARS,
-    description: COOKIE_GA_SESSION_DESC,
-  },
-];
-
 type CookieRow = { name: string; domain: string; expiration: string; description: string };
 
 function CookieTable({ rows }: { rows: CookieRow[] }) {
+  const { COOKIE_TABLE_NAME, COOKIE_TABLE_DOMAIN, COOKIE_TABLE_EXPIRATION, COOKIE_TABLE_DESCRIPTION } =
+    useTexts();
+
   return (
     <Box sx={{ overflowX: "auto", mt: 1.5 }}>
       <table className="cookie-table">
@@ -121,6 +47,53 @@ function CookieTable({ rows }: { rows: CookieRow[] }) {
 }
 
 export function CookieConsentBanner() {
+  const { COOKIE_BANNER_TITLE, COOKIE_BANNER_DESCRIPTION, COOKIE_BANNER_ACCEPT_ALL, COOKIE_BANNER_SETTINGS, COOKIE_PREFS_TITLE, COOKIE_PREFS_ACCEPT_ALL, COOKIE_PREFS_REJECT_ALL, COOKIE_PREFS_SAVE, COOKIE_NECESSARY_TITLE, COOKIE_NECESSARY_DESCRIPTION, COOKIE_FUNCTIONAL_TITLE, COOKIE_FUNCTIONAL_DESCRIPTION, COOKIE_ANALYTICS_TITLE, COOKIE_ANALYTICS_DESCRIPTION, COOKIE_TABLE_NAME, COOKIE_TABLE_DOMAIN, COOKIE_TABLE_EXPIRATION, COOKIE_TABLE_DESCRIPTION, COOKIE_JWT_DESC, COOKIE_EMAIL_DESC, COOKIE_CC_DESC, COOKIE_RECAPTCHA_DESC, COOKIE_GA_DESC, COOKIE_GA_SESSION_DESC, COOKIE_DOMAIN_SITE, COOKIE_DOMAIN_GOOGLE, COOKIE_EXPIRY_7_DAYS, COOKIE_EXPIRY_6_MONTHS, COOKIE_EXPIRY_1_YEAR, COOKIE_EXPIRY_2_YEARS, COOKIE_PREFS_CLOSE } = useTexts();
+
+  const NECESSARY_COOKIES = [
+    {
+      name: "jwt",
+      domain: COOKIE_DOMAIN_SITE,
+      expiration: COOKIE_EXPIRY_7_DAYS,
+      description: COOKIE_JWT_DESC,
+    },
+    {
+      name: "user_email",
+      domain: COOKIE_DOMAIN_SITE,
+      expiration: COOKIE_EXPIRY_7_DAYS,
+      description: COOKIE_EMAIL_DESC,
+    },
+    {
+      name: "cc_cookie",
+      domain: COOKIE_DOMAIN_SITE,
+      expiration: COOKIE_EXPIRY_1_YEAR,
+      description: COOKIE_CC_DESC,
+    },
+  ];
+
+  const RECAPTCHA_COOKIES = [
+    {
+      name: "_GRECAPTCHA",
+      domain: COOKIE_DOMAIN_GOOGLE,
+      expiration: COOKIE_EXPIRY_6_MONTHS,
+      description: COOKIE_RECAPTCHA_DESC,
+    },
+  ];
+
+  const ANALYTICS_COOKIES = [
+    {
+      name: "_ga",
+      domain: COOKIE_DOMAIN_GOOGLE,
+      expiration: COOKIE_EXPIRY_2_YEARS,
+      description: COOKIE_GA_DESC,
+    },
+    {
+      name: "_ga_*",
+      domain: COOKIE_DOMAIN_GOOGLE,
+      expiration: COOKIE_EXPIRY_2_YEARS,
+      description: COOKIE_GA_SESSION_DESC,
+    },
+  ];
+
   const {
     hasResponded,
     recaptchaConsented,

@@ -143,7 +143,7 @@ p {
   }
 }
 
-ul:not(.no-list-style) {
+ul:not(.no-list-style, .MuiMenu-list) {
   list-style: none;
   padding-left: 2rem;
 

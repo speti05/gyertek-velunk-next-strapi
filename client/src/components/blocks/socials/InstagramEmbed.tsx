@@ -1,6 +1,7 @@
 "use client";
 
-import { FOOTER_INSTAGRAM_ARIA, SOCIALS_EMBED_LOAD_ERROR, SOCIALS_INSTAGRAM_LABEL } from "@/utils/texts";
+import { useTexts } from "@/context/locale-context";
+
 import { SocialBoxTitle } from "@/components/blocks/socials/SocialBoxTitle";
 import { SocialEmbedLoader } from "@/components/blocks/socials/SocialEmbedLoader";
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
@@ -16,6 +17,7 @@ function getInstagramUsername(url: string): string | null {
 }
 
 export function InstagramEmbed({ url }: Readonly<{ url: string }>) {
+  const { FOOTER_INSTAGRAM_ARIA, SOCIALS_EMBED_LOAD_ERROR, SOCIALS_INSTAGRAM_LABEL } = useTexts();
   const username = getInstagramUsername(url);
   const { hasFailed, markLoaded } = useSocialEmbedTimeout();
 

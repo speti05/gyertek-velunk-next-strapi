@@ -1,5 +1,7 @@
 "use client";
 
+import { useLocale, useLocalizedPath, useTexts } from "@/context/locale-context";
+
 import { useActionState, useEffect, useState, type ReactNode } from "react";
 import Image from "next/image";
 import { formatDate } from "@/utils/format-date";
@@ -8,27 +10,12 @@ import { eventsSubscribeAction } from "@/data/actions";
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
 import { useRecaptchaAction } from "@/hooks/use-recaptcha-action";
 import { UserProfile } from "@/data/auth-service";
-import {
-  FORM_LABELS,
-  SIGNUP_BUTTON_LABEL,
-  SIGNUP_LOGIN_REQUIRED,
-  SIGNUP_LOGIN_LINK,
-  SIGNUP_PROFILE_INCOMPLETE,
-  SIGNUP_PROFILE_LINK,
-  SIGNUP_ALREADY_SIGNED_UP,
-  SIGNUP_DEADLINE_PASSED_WARNING,
-  SIGNUP_SUCCESS_TITLE,
-  SIGNUP_SUCCESS_CONTENT,
-  SIGNUP_SUCCESS_EMAIL_INFO,
-  SIGNUP_SUCCESS_PROFILE_INFO,
-  SIGNUP_SUCCESS_OK_LABEL,
-  CURRENCY,
-} from "@/utils/texts";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 import { CustomDialog } from "@/components/custom-ui-components/custom-dialog/custom-dialog";
 import { TourSignupDialog, SignupFormData } from "@/components/TourSignupDialog";
 import { TourDifficultyBadge } from "@/components/TourDifficultyBadge";
+import { Route } from "@/i18n/config";
 
 const INITIAL_STATE = {
   zodErrors: null,
@@ -38,7 +25,6 @@ const INITIAL_STATE = {
 };
 
 type EventSignupFormProps = {
-  stayInTouchEventId?: string;
   /** Blocks rendered by the server parent - this component must stay client-only. */
   blocksContent?: ReactNode;
   eventId: string;
@@ -58,7 +44,6 @@ type EventSignupFormProps = {
 };
 
 function EventSignupFormInner({
-  stayInTouchEventId,
   blocksContent,
   eventId,
   eventTitle = "",
@@ -72,6 +57,9 @@ function EventSignupFormInner({
   userProfile = null,
   alreadySignedUp = false,
 }: EventSignupFormProps) {
+  const { CURRENCY, FORM_LABELS, LOGO_ALT_FALLBACK, SIGNUP_ALREADY_SIGNED_UP, SIGNUP_BUTTON_LABEL, SIGNUP_DEADLINE_PASSED_WARNING, SIGNUP_LOGIN_LINK, SIGNUP_LOGIN_REQUIRED, SIGNUP_PROFILE_INCOMPLETE, SIGNUP_PROFILE_LINK, SIGNUP_SUCCESS_CONTENT, SIGNUP_SUCCESS_EMAIL_INFO, SIGNUP_SUCCESS_OK_LABEL, SIGNUP_SUCCESS_PROFILE_INFO, SIGNUP_SUCCESS_TITLE } = useTexts();
+  const localizePath = useLocalizedPath();
+  const locale = useLocale();
   const [formState, formAction] = useActionState(eventsSubscribeAction, INITIAL_STATE);
   const dispatch = useRecaptchaAction(formAction, "event_signup");
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -86,7 +74,7 @@ function EventSignupFormInner({
 
   async function handleSignupComplete(data: SignupFormData) {
     const formData = new FormData();
-    formData.set("eventId", eventId ?? stayInTouchEventId ?? "");
+    formData.set("eventId", eventId ?? "");
     formData.set("signupData", JSON.stringify(data));
     await dispatch(formData);
   }
@@ -137,7 +125,7 @@ function EventSignupFormInner({
             infoMessage={
               <>
                 {SIGNUP_LOGIN_REQUIRED}{" "}
-                <CustomLink href="/login" color="primary">
+                <CustomLink href={localizePath(Route.Login)} color="primary">
                   {SIGNUP_LOGIN_LINK}
                 </CustomLink>
                 .
@@ -151,7 +139,7 @@ function EventSignupFormInner({
             infoMessage={
               <>
                 {SIGNUP_PROFILE_INCOMPLETE}{" "}
-                <CustomLink href="/profile" color="primary">
+                <CustomLink href={localizePath(Route.Profile)} color="primary">
                   {SIGNUP_PROFILE_LINK}
                 </CustomLink>
                 .
@@ -177,19 +165,19 @@ function EventSignupFormInner({
           {startDate && (
             <div className="signup-form__details-row">
               <dt>{FORM_LABELS.startDate}</dt>
-              <dd>{formatDate(startDate)}</dd>
+              <dd>{formatDate(startDate, locale)}</dd>
             </div>
           )}
           {endDate && (
             <div className="signup-form__details-row">
               <dt>{FORM_LABELS.endDate}</dt>
-              <dd>{formatDate(endDate)}</dd>
+              <dd>{formatDate(endDate, locale)}</dd>
             </div>
           )}
           {registrationDeadline && (
             <div className="signup-form__details-row">
               <dt>{FORM_LABELS.registrationDeadline}</dt>
-              <dd>{formatDate(registrationDeadline)}</dd>
+              <dd>{formatDate(registrationDeadline, locale)}</dd>
             </div>
           )}
           {price && (
@@ -251,7 +239,7 @@ function EventSignupFormInner({
       >
         <p style={{ textAlign: "center", marginBottom: "16px" }}>{SIGNUP_SUCCESS_CONTENT}</p>
         <div style={{ display: "flex", justifyContent: "center", marginBottom: "16px" }}>
-          <Image src="/GYERTEK V_kor.png" alt="Gyertek Velünk" width={120} height={120} />
+          <Image src="/GYERTEK V_kor.png" alt={LOGO_ALT_FALLBACK} width={120} height={120} />
         </div>
         <CustomAlertMessage infoMessage={SIGNUP_SUCCESS_EMAIL_INFO} />
         <CustomAlertMessage infoMessage={SIGNUP_SUCCESS_PROFILE_INFO} />

@@ -1,9 +1,10 @@
 "use client";
+
+import { useTexts } from "@/context/locale-context";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
 import { ContentCollectionType } from "@/types";
-import { SEARCH_PLACEHOLDER } from "@/utils/texts";
 
 interface SearchProps {
   placeHolder?: string;
@@ -11,6 +12,7 @@ interface SearchProps {
 }
 
 export function Search({ placeHolder, contentCollectionType }: Readonly<SearchProps>) {
+  const { SEARCH_PLACEHOLDER } = useTexts();
   // Get access to URL search parameters, routing, and current pathname
   const searchParams = useSearchParams();
   const { replace } = useRouter();

@@ -1,12 +1,8 @@
 import { getClientUrl } from "../../config/client-url";
-import {
-  EMAIL_FOOTER_RIGHTS,
-  NEWSLETTER_HEADER_LOGO_ALT,
-  NEWSLETTER_UNSUBSCRIBE_LINK_LABEL,
-  NEWSLETTER_UNSUBSCRIBE_QUESTION,
-} from "../../../utils/texts";
+import type { StrapiTexts } from "../../../i18n/get-strapi-texts";
 
 export const newsletterEmailWrapper = (
+  t: StrapiTexts,
   subject: string,
   content: string,
   unsubscribeUrl: string,
@@ -30,7 +26,7 @@ export const newsletterEmailWrapper = (
             <td style="padding:0;line-height:0;font-size:0;">
               <img src="cid:hirlevel-fejlec" width="1100"
                    style="display:block;width:100%;height:auto;border:0;"
-                   alt="${NEWSLETTER_HEADER_LOGO_ALT}" />
+                   alt="${t.NEWSLETTER_HEADER_LOGO_ALT}" />
             </td>
           </tr>
           <tr>
@@ -46,12 +42,12 @@ export const newsletterEmailWrapper = (
           <tr>
             <td bgcolor="#70634C" style="padding:28px 40px;text-align:center;">
               <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#F1E8D9;font-size:14px;margin:0 0 6px;line-height:1.6;">
-                &copy; ${year} ${organizationName} &mdash; ${EMAIL_FOOTER_RIGHTS}
+                &copy; ${year} ${organizationName} &mdash; ${t.EMAIL_FOOTER_RIGHTS}
               </p>
               ${siteUrl ? `<a href="${siteUrl}" style="font-family:'Source Sans 3',Arial,sans-serif;color:#B0DFD8;font-size:14px;text-decoration:none;">${siteUrl}</a>` : ""}
               <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#c9bba8;font-size:12px;margin:16px 0 0;line-height:1.6;">
-                ${NEWSLETTER_UNSUBSCRIBE_QUESTION}
-                <a href="${unsubscribeUrl}" style="color:#c9bba8;text-decoration:underline;">${NEWSLETTER_UNSUBSCRIBE_LINK_LABEL}</a>
+                ${t.NEWSLETTER_UNSUBSCRIBE_QUESTION}
+                <a href="${unsubscribeUrl}" style="color:#c9bba8;text-decoration:underline;">${t.NEWSLETTER_UNSUBSCRIBE_LINK_LABEL}</a>
               </p>
             </td>
           </tr>

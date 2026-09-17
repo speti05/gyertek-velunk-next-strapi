@@ -1,25 +1,22 @@
 import { writeFileSync } from "fs";
-import { emailHeader, emailFooter } from "../../templates/layout";
+import { emailHeader, emailFooter, bilingualDivider } from "../../templates/layout";
 import { getClientUrl } from "../../../config/client-url";
-import {
-  EMAIL_FALLBACK_LINK_LABEL,
-  EMAIL_GREETING,
-  RESET_PASSWORD_BUTTON_LABEL,
-  RESET_PASSWORD_DISCLAIMER,
-  RESET_PASSWORD_INTRO,
-  SystemEmailSubject,
-} from "../../../../utils/texts";
+import { getStrapiTexts } from "../../../../i18n/get-strapi-texts";
+import { SYSTEM_EMAIL_SUBJECT_BILINGUAL } from "../../../../i18n/texts-strapi";
 
 const SITE_URL = getClientUrl();
 
-const content = `
+const HU = getStrapiTexts("hu");
+const EN = getStrapiTexts("en");
+
+const content = (t: ReturnType<typeof getStrapiTexts>, lang: string) => `
   <tr>
-    <td bgcolor="#ffffff" style="padding:48px 48px 40px;">
+    <td bgcolor="#ffffff" lang="${lang}" style="padding:48px 48px 40px;">
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#333333;font-size:16px;line-height:26px;margin:0 0 12px;">
-        ${EMAIL_GREETING("<strong><%= USER.username %></strong>")}
+        ${t.EMAIL_GREETING("<strong><%= USER.username %></strong>")}
       </p>
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#555555;font-size:16px;line-height:26px;margin:0 0 32px;">
-        ${RESET_PASSWORD_INTRO}
+        ${t.RESET_PASSWORD_INTRO}
       </p>
 
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
@@ -27,7 +24,7 @@ const content = `
           <td align="center" style="padding-bottom:32px;">
             <a href="<%= URL %>?code=<%= TOKEN %>"
                style="display:inline-block;font-family:'Source Sans 3',Arial,sans-serif;font-size:16px;font-weight:600;color:#ffffff;background-color:#377F76;text-decoration:none;padding:14px 36px;border-radius:8px;letter-spacing:0.5px;">
-              ${RESET_PASSWORD_BUTTON_LABEL}
+              ${t.RESET_PASSWORD_BUTTON_LABEL}
             </a>
           </td>
         </tr>
@@ -38,7 +35,7 @@ const content = `
         <tr>
           <td bgcolor="#F1E8D9" style="padding:16px 20px;">
             <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 6px;">
-              ${EMAIL_FALLBACK_LINK_LABEL}
+              ${t.EMAIL_FALLBACK_LINK_LABEL}
             </p>
             <a href="<%= URL %>?code=<%= TOKEN %>"
                style="font-family:'Source Sans 3',Arial,sans-serif;color:#377F76;font-size:13px;word-break:break-all;text-decoration:none;">
@@ -49,7 +46,7 @@ const content = `
       </table>
 
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#888888;font-size:14px;line-height:22px;margin:32px 0 0;">
-        ${RESET_PASSWORD_DISCLAIMER}
+        ${t.RESET_PASSWORD_DISCLAIMER}
       </p>
     </td>
   </tr>
@@ -71,9 +68,11 @@ const html = `<!DOCTYPE html>
     <tr>
       <td align="center" style="padding:30px 20px;">
         <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.12);">
-          ${emailHeader(SystemEmailSubject.ForgotPassword)}
-          ${content}
-          ${emailFooter(SITE_URL, year)}
+          ${emailHeader(SYSTEM_EMAIL_SUBJECT_BILINGUAL.forgotPassword, HU)}
+          ${content(HU, "hu")}
+          ${bilingualDivider()}
+          ${content(EN, "en")}
+          ${emailFooter(SITE_URL, year, HU)}
         </table>
       </td>
     </tr>

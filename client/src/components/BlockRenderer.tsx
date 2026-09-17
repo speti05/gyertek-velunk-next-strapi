@@ -10,18 +10,12 @@ import { Paragraph } from "@/components/blocks/Paragraph";
 import { FullImage } from "@/components/blocks/FullImage";
 import { TextContentBlock } from "@/components/blocks/OnlyTextContent";
 import { SearchableCardList } from "@/components/blocks/SearchableCardList";
-import { EventSignupBlock } from "@/components/blocks/EventSignupBlock";
 import { HeroWithTextBlock } from "@/components//blocks/HeroWithText";
 import { ContactRequestBlock } from "@/components/blocks/ContactRequestBlock";
 import { YoutubeVideo } from "@/components/blocks/YoutubeVideo";
 import { PictureGallery } from "@/components/blocks/PictureGallery";
 import { Socials } from "@/components/blocks/Socials";
-function blockRenderer(
-  block: Block,
-  index: number,
-  searchParams: CustomSearchParams,
-  stayInTouchEventId?: string
-) {
+function blockRenderer(block: Block, index: number, searchParams: CustomSearchParams) {
   switch (block.__component) {
     case "blocks.hero-section":
       return <HeroSection {...block} key={index} />;
@@ -55,15 +49,6 @@ function blockRenderer(
       return <PictureGallery {...block} key={index} />;
     case "blocks.socials":
       return <Socials {...block} key={index} />;
-    case "blocks.event-signup-form":
-      return (
-        <EventSignupBlock
-          {...block}
-          eventId={null}
-          key={index}
-          stayInTouchEventId={stayInTouchEventId}
-        />
-      );
     default:
       return null;
   }
@@ -72,13 +57,9 @@ function blockRenderer(
 export function BlockRenderer({
   blocks,
   searchParams,
-  stayInTouchEventId,
 }: {
   blocks: Block[];
   searchParams?: CustomSearchParams;
-  stayInTouchEventId?: string;
 }) {
-  return blocks.map((block, index) =>
-    blockRenderer(block, index, searchParams, stayInTouchEventId)
-  );
+  return blocks.map((block, index) => blockRenderer(block, index, searchParams));
 }

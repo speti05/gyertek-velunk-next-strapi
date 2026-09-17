@@ -1,20 +1,13 @@
 "use client";
 
+import { useTexts } from "@/context/locale-context";
+
 import { useEffect } from "react";
 import * as CookieConsent from "vanilla-cookieconsent";
 import { useCookieConsent } from "@/context/cookie-consent-context";
-import {
-  COOKIE_BANNER_ACCEPT_ALL,
-  COOKIE_BANNER_DECLINE,
-  COOKIE_BANNER_SETTINGS,
-  COOKIE_PREFS_TITLE,
-  COOKIE_PREFS_ACCEPT_ALL,
-  COOKIE_PREFS_REJECT_ALL,
-  COOKIE_PREFS_SAVE,
-  COOKIE_PREFS_CLOSE,
-} from "@/utils/texts";
 
 export function CookieConsentInit() {
+  const { COOKIE_BANNER_ACCEPT_ALL, COOKIE_BANNER_DECLINE, COOKIE_BANNER_SETTINGS, COOKIE_PREFS_TITLE, COOKIE_PREFS_ACCEPT_ALL, COOKIE_PREFS_REJECT_ALL, COOKIE_PREFS_SAVE, COOKIE_PREFS_CLOSE } = useTexts();
   const { setConsent } = useCookieConsent();
 
   useEffect(() => {

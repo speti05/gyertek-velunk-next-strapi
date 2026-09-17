@@ -1,0 +1,22 @@
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { localizedPath } from "@/data/locale";
+import { AuthForm } from "@/app/[locale]/profile/AuthForm";
+import { Route } from "@/i18n/config";
+
+export default async function LoginPage() {
+  const cookieStore = await cookies();
+  const jwt = cookieStore.get("jwt")?.value ?? null;
+
+  if (jwt) {
+    redirect(await localizedPath(Route.Profile));
+  }
+
+  return (
+    <main className="auth-page">
+      <div className="auth-page__card">
+        <AuthForm />
+      </div>
+    </main>
+  );
+}

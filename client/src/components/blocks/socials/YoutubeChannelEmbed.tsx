@@ -1,4 +1,5 @@
-import { FOOTER_YOUTUBE_ARIA, SOCIALS_YOUTUBE_LABEL } from "@/utils/texts";
+import { getTexts } from "@/i18n/texts";
+import { getRequestLocale } from "@/data/locale";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import CustomIcon from "@/components/custom-ui-components/custom-icon/custom-icon";
 import { SocialBoxTitle } from "@/components/blocks/socials/SocialBoxTitle";
@@ -90,7 +91,8 @@ async function fetchLatestVideos(playlistId: string, apiKey: string): Promise<Yo
   }
 }
 
-function YoutubeChannelLinkFallback({ url }: Readonly<{ url: string }>) {
+async function YoutubeChannelLinkFallback({ url }: Readonly<{ url: string }>) {
+  const { FOOTER_YOUTUBE_ARIA, SOCIALS_YOUTUBE_LABEL } = getTexts(await getRequestLocale());
   return (
     <div className="socials-block__item socials-block__item--youtube socials-block__item--link">
       <SocialBoxTitle url={url} iconName="youtube" label={SOCIALS_YOUTUBE_LABEL} />
@@ -110,6 +112,7 @@ function YoutubeChannelLinkFallback({ url }: Readonly<{ url: string }>) {
 }
 
 export async function YoutubeChannelEmbed({ url }: Readonly<{ url: string }>) {
+  const { SOCIALS_YOUTUBE_LABEL } = getTexts(await getRequestLocale());
   const apiKey = process.env.YOUTUBE_API_KEY;
   if (!apiKey) return <YoutubeChannelLinkFallback url={url} />;
 

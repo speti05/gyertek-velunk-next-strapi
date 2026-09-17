@@ -1,7 +1,8 @@
 "use client";
+
+import { useTexts } from "@/context/locale-context";
 import { useFormStatus } from "react-dom";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
-import { LOADING_LABEL } from "@/utils/texts";
 
 interface SubmitButtonProps {
   text: string;
@@ -10,6 +11,7 @@ interface SubmitButtonProps {
 }
 
 export function SubmitButton({ text, className, disabled }: Readonly<SubmitButtonProps>) {
+  const { LOADING_LABEL } = useTexts();
   const status = useFormStatus();
   return (
     <CustomButton

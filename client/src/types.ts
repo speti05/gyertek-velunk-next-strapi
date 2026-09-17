@@ -61,13 +61,7 @@ export interface EventProps extends BaseBlogProps {
   startDate: string;
   endDate: string;
   registrationDeadline: string;
-  stayInTouchEventId?: string;
   difficulty?: number;
-}
-
-export interface EventSignupBlockProps extends Base<"blocks.event-signup-form"> {
-  eventId: string;
-  stayInTouchEventId?: string;
 }
 
 type ComponentType =
@@ -83,7 +77,6 @@ type ComponentType =
   | "blocks.text-content-block"
   | "blocks.hero-with-text"
   | "blocks.hero-with-calendar"
-  | "blocks.event-signup-form"
   | "blocks.contact-request-form"
   | "blocks.youtube-video"
   | "blocks.picture-gallery"
@@ -120,7 +113,6 @@ export type Block =
   | HeroWithCalendarProps
   | HeroWithTextProps
   | HeroWithCalendarProps
-  | EventSignupBlockProps
   | ContactRequestBlockProps
   | YoutubeVideoProps
   | PictureGalleryProps

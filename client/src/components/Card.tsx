@@ -1,9 +1,11 @@
+import { getTexts } from "@/i18n/texts";
+import { getRequestLocale } from "@/data/locale";
+import { toPublicPath, Route } from "@/i18n/config";
 import { ImageProps } from "@/types";
 
 import CustomLink from "./custom-ui-components/custom-link/custom-link";
 import { StrapiImage } from "./StrapiImage";
 import { formatDate } from "@/utils/format-date";
-import { CARD_PERSON, CURRENCY } from "@/utils/texts";
 import { TourDifficultyBadge } from "./TourDifficultyBadge";
 
 export interface CardProps {
@@ -15,11 +17,11 @@ export interface CardProps {
   price?: number;
   startDate?: string;
   createdAt: string;
-  basePath: string;
+  basePath: Route;
   difficulty?: number;
 }
 
-export function Card({
+export async function Card({
   title,
   description,
   slug,
@@ -30,9 +32,11 @@ export function Card({
   basePath,
   difficulty,
 }: Readonly<CardProps>) {
+  const locale = await getRequestLocale();
+  const { CARD_PERSON, CURRENCY } = getTexts(locale);
   return (
     <CustomLink
-      href={`/${basePath}/${slug}`}
+      href={toPublicPath(`${basePath}/${slug}`, locale)}
       className="content-items__card"
       color="inherit"
       underline="none"
@@ -58,7 +62,7 @@ export function Card({
               <span> / {CARD_PERSON} </span>
             </p>
           )}
-          {(startDate ?? createdAt) && <p>{formatDate(startDate ?? createdAt)}</p>}
+          {(startDate ?? createdAt) && <p>{formatDate(startDate ?? createdAt, locale)}</p>}
         </div>
         <hr className="content-items__card-divider" />
         <p>{description.slice(0, 144)}...</p>

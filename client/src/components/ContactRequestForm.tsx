@@ -7,20 +7,7 @@ import CustomTextInput from "@/components/custom-ui-components/custom-text-input
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
 import CustomRadioGroup from "@/components/custom-ui-components/custom-radio/custom-radio";
 import { useRecaptchaSubmit } from "@/hooks/use-recaptcha-submit";
-import {
-  CONTACT_REQUEST_TITLE,
-  CONTACT_REQUEST_SUBTITLE_PREFIX,
-  CONTACT_REQUEST_SUBTITLE_LINK,
-  CONTACT_REQUEST_SUBTITLE_SUFFIX,
-  CONTACT_REQUEST_NAME_LABEL,
-  CONTACT_REQUEST_PHONE_LABEL,
-  CONTACT_REQUEST_EMAIL_LABEL,
-  CONTACT_REQUEST_PREFERRED_LABEL,
-  CONTACT_REQUEST_PHONE_OPTION,
-  CONTACT_REQUEST_EMAIL_OPTION,
-  CONTACT_REQUEST_SUBMIT_LABEL,
-  CONTACT_REQUEST_NEW_REQUEST_LABEL,
-} from "@/utils/texts";
+import { useTexts } from "@/context/locale-context";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import { MAX_NAME, MAX_PHONE, MAX_EMAIL } from "@/components/custom-ui-components/custom-text-input/input-length-limits";
 import { LinkProps } from "@/types";
@@ -39,12 +26,13 @@ const INITIAL_STATE = {
   successMessage: null,
 };
 
-const CONTACT_OPTIONS = [
-  { value: "phone", label: CONTACT_REQUEST_PHONE_OPTION },
-  { value: "email", label: CONTACT_REQUEST_EMAIL_OPTION },
-];
-
 export function ContactRequestForm({ title, subtitlePrefix, subtitleSuffix, link }: ContactRequestFormProps = {}) {
+  const { CONTACT_REQUEST_TITLE, CONTACT_REQUEST_SUBTITLE_PREFIX, CONTACT_REQUEST_SUBTITLE_LINK, CONTACT_REQUEST_SUBTITLE_SUFFIX, CONTACT_REQUEST_NAME_LABEL, CONTACT_REQUEST_PHONE_LABEL, CONTACT_REQUEST_EMAIL_LABEL, CONTACT_REQUEST_PREFERRED_LABEL, CONTACT_REQUEST_PHONE_OPTION, CONTACT_REQUEST_EMAIL_OPTION, CONTACT_REQUEST_SUBMIT_LABEL, CONTACT_REQUEST_NEW_REQUEST_LABEL } = useTexts();
+
+  const CONTACT_OPTIONS = [
+    { value: "phone", label: CONTACT_REQUEST_PHONE_OPTION },
+    { value: "email", label: CONTACT_REQUEST_EMAIL_OPTION },
+  ];
   const [formState, formAction] = useActionState(contactRequestAction, INITIAL_STATE);
   const formRef = useRef<HTMLFormElement>(null);
   const handleSubmit = useRecaptchaSubmit(formRef, formAction, "contact_request");

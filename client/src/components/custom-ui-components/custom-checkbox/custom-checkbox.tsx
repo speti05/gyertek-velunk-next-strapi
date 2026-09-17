@@ -1,12 +1,13 @@
 "use client";
 
+import { useTexts } from "@/context/locale-context";
+
 import React from "react";
 import Checkbox, { CheckboxProps } from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormHelperText from "@mui/material/FormHelperText";
 import { MandatoryIndicator } from "../mandatory-indicator/mandatory-indicator";
-import { MANDATORY_CHECKBOX_TOOLTIP } from "@/utils/texts";
 
 type CustomCheckboxProps = CheckboxProps & {
   label?: React.ReactNode;
@@ -23,6 +24,7 @@ export const CustomCheckbox: React.FC<CustomCheckboxProps> = ({
   slotProps,
   ...props
 }) => {
+  const { MANDATORY_CHECKBOX_TOOLTIP } = useTexts();
   return (
     <FormControl error={error}>
       <FormControlLabel

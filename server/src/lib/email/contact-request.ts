@@ -8,12 +8,7 @@ import {
 } from "./templates/contact-request";
 import { getSiteSettings } from "./get-site-settings";
 import { getClientUrl } from "../config/client-url";
-import {
-  CONTACT_REQUEST_ADMIN_MAIL_SUBJECT,
-  CONTACT_REQUEST_FROM_NAME,
-  CONTACT_REQUEST_USER_MAIL_SUBJECT,
-  SystemEmailSubject,
-} from "../../utils/texts";
+import { getStrapiTexts, type Locale } from "../../i18n/get-strapi-texts";
 
 const headerAttachment = {
   filename: "email-fejlec-600.jpg",
@@ -29,13 +24,17 @@ const headerAttachment = {
  * If any of them failed after its retries, the collected errors are rethrown
  * so the caller can log and alert.
  */
-export const sendContactRequestEmails = async (data: {
-  name: string;
-  phone: string | null;
-  email: string | null;
-  preferredContact: string;
-}) => {
-  const t = await getTransporter();
+export const sendContactRequestEmails = async (
+  data: {
+    name: string;
+    phone: string | null;
+    email: string | null;
+    preferredContact: string;
+  },
+  locale: Locale
+) => {
+  const texts = getStrapiTexts(locale);
+  const transporter = await getTransporter();
   const { name, phone, email, preferredContact } = data;
   const siteUrl = getClientUrl();
   const { organizationName } = await getSiteSettings();
@@ -46,15 +45,16 @@ export const sendContactRequestEmails = async (data: {
 
   try {
     await sendMailWithRetry(
-      t,
+      transporter,
       {
-        from: `"${CONTACT_REQUEST_FROM_NAME(organizationName)}" <${process.env.SMTP_USER}>`,
+        from: `"${texts.CONTACT_REQUEST_FROM_NAME(organizationName)}" <${process.env.SMTP_USER}>`,
         to: process.env.ADMIN_EMAIL,
-        subject: CONTACT_REQUEST_ADMIN_MAIL_SUBJECT,
+        subject: texts.CONTACT_REQUEST_ADMIN_MAIL_SUBJECT,
         html: emailWrapper(
           siteUrl,
-          adminContactRequestEmailContent(name, phone, email, preferredContact),
-          SystemEmailSubject.ContactRequestAdmin,
+          adminContactRequestEmailContent(texts, name, phone, email, preferredContact),
+          texts.SYSTEM_EMAIL_SUBJECT.contactRequestAdmin,
+          texts,
           organizationName
         ),
         attachments: [headerAttachment],
@@ -71,20 +71,22 @@ export const sendContactRequestEmails = async (data: {
   if (email) {
     try {
       await sendMailWithRetry(
-        t,
+        transporter,
         {
           from: `"${organizationName}" <${process.env.SMTP_USER}>`,
           to: email,
-          subject: CONTACT_REQUEST_USER_MAIL_SUBJECT,
+          subject: texts.CONTACT_REQUEST_USER_MAIL_SUBJECT,
           html: emailWrapper(
             siteUrl,
             userContactRequestEmailContent(
+              texts,
               name,
               preferredContact,
               preferredContact === "phone" ? (phone ?? email) : email,
               organizationName
             ),
-            SystemEmailSubject.ContactRequest,
+            texts.SYSTEM_EMAIL_SUBJECT.contactRequest,
+            texts,
             organizationName
           ),
           attachments: [headerAttachment],

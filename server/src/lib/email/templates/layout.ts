@@ -1,15 +1,11 @@
-import {
-  EMAIL_FOOTER_RIGHTS,
-  EMAIL_HEADER_LOGO_ALT,
-  SystemEmailSubject,
-} from "../../../utils/texts";
+import type { StrapiTexts } from "../../../i18n/get-strapi-texts";
 
-export const emailHeader = (subject: SystemEmailSubject | string) => `
+export const emailHeader = (subject: string, t: StrapiTexts) => `
   <tr>
     <td style="padding:0;line-height:0;font-size:0;">
       <img src="cid:email-fejlec" width="600"
            style="display:block;width:100%;height:auto;border:0;"
-           alt="${EMAIL_HEADER_LOGO_ALT}" />
+           alt="${t.EMAIL_HEADER_LOGO_ALT}" />
     </td>
   </tr>
   <tr>
@@ -19,11 +15,16 @@ export const emailHeader = (subject: SystemEmailSubject | string) => `
   </tr>
 `;
 
-export const emailFooter = (siteUrl: string | undefined, year: number, organizationName?: string) => `
+export const emailFooter = (
+  siteUrl: string | undefined,
+  year: number,
+  t: StrapiTexts,
+  organizationName?: string
+) => `
   <tr>
     <td bgcolor="#70634C" style="padding:28px 40px;text-align:center;">
       <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#F1E8D9;font-size:14px;margin:0 0 6px;line-height:1.6;">
-        &copy; ${year} ${organizationName} &mdash; ${EMAIL_FOOTER_RIGHTS}
+        &copy; ${year} ${organizationName} &mdash; ${t.EMAIL_FOOTER_RIGHTS}
       </p>
       ${siteUrl ? `<a href="${siteUrl}" style="font-family:'Source Sans 3',Arial,sans-serif;color:#B0DFD8;font-size:14px;text-decoration:none;">${siteUrl}</a>` : ""}
     </td>
@@ -33,7 +34,8 @@ export const emailFooter = (siteUrl: string | undefined, year: number, organizat
 export const emailWrapper = (
   siteUrl: string | undefined,
   content: string,
-  subject: SystemEmailSubject | string,
+  subject: string,
+  t: StrapiTexts,
   organizationName?: string
 ) => {
   const year = new Date().getFullYear();
@@ -51,9 +53,9 @@ export const emailWrapper = (
     <tr>
       <td align="center" style="padding:30px 20px;">
         <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.12);">
-          ${emailHeader(subject)}
+          ${emailHeader(subject, t)}
           ${content}
-          ${emailFooter(siteUrl, year, organizationName)}
+          ${emailFooter(siteUrl, year, t, organizationName)}
         </table>
       </td>
     </tr>
@@ -61,3 +63,19 @@ export const emailWrapper = (
 </body>
 </html>`;
 };
+
+/**
+ * Separates the Hungarian and English halves of a bilingual system e-mail. Rendered as a
+ * table row so it sits between two content rows of the same outer table.
+ */
+export const bilingualDivider = () => `
+  <tr>
+    <td bgcolor="#ffffff" style="padding:0 48px;">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td style="border-top:1px solid #E4CBA1;line-height:0;font-size:0;">&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+`;

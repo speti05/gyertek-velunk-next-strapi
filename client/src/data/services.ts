@@ -1,4 +1,16 @@
+import { getRequestLocale } from "@/data/locale";
+
 const BASE_URL = process.env.STRAPI_API_URL ?? "http://localhost:1337";
+
+/**
+ * Tells Strapi which language the visitor is on, so the confirmation e-mails and API
+ * error messages it produces come back in that language. Strapi reads it in
+ * readRequestLocale() (server/src/i18n/get-strapi-texts.ts) and falls back to Hungarian
+ * when the header is absent.
+ */
+async function localeHeader(): Promise<Record<string, string>> {
+  return { "x-locale": await getRequestLocale() };
+}
 
 export async function subscribeService(email: string) {
   const url = new URL("/api/newsletter-signups", BASE_URL);
@@ -8,6 +20,7 @@ export async function subscribeService(email: string) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        ...(await localeHeader()),
       },
       body: JSON.stringify({
         data: {
@@ -79,6 +92,7 @@ export async function contactRequestService(data: ContactRequestProps) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        ...(await localeHeader()),
       },
       body: JSON.stringify({ data }),
     });
@@ -98,6 +112,7 @@ export async function eventsSubscribeService(jwt: string, data: EventsSubscribeP
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${jwt}`,
+        ...(await localeHeader()),
       },
       body: JSON.stringify({ data: { ...data } }),
     });

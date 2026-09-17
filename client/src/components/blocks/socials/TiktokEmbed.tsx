@@ -1,7 +1,8 @@
 "use client";
 
+import { useTexts } from "@/context/locale-context";
+
 import { useEffect, useRef } from "react";
-import { FOOTER_TIKTOK_ARIA, SOCIALS_EMBED_LOAD_ERROR, SOCIALS_TIKTOK_LABEL } from "@/utils/texts";
 import { SocialBoxTitle } from "@/components/blocks/socials/SocialBoxTitle";
 import { SocialEmbedLoader } from "@/components/blocks/socials/SocialEmbedLoader";
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
@@ -50,6 +51,7 @@ function loadTiktokEmbedScript(): Promise<void> {
 }
 
 export function TiktokEmbed({ url }: Readonly<{ url: string }>) {
+  const { FOOTER_TIKTOK_ARIA, SOCIALS_EMBED_LOAD_ERROR, SOCIALS_TIKTOK_LABEL } = useTexts();
   const username = getTiktokUsername(url);
   const containerRef = useRef<HTMLDivElement>(null);
   const { isLoaded, hasFailed, markLoaded } = useSocialEmbedTimeout();

@@ -7,11 +7,7 @@ import { ArrowRightCircle } from "@deemlol/next-icons";
 import { CalendarEvent } from "./CalendarTypes";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 import { CustomSelect } from "@/components/custom-ui-components/custom-select/custom-select";
-import { CALENDAR_DAYS_OF_WEEK, CALENDAR_MONTH_NAMES, CALENDAR_TODAY_LABEL } from "@/utils/texts";
-
-const daysOfWeek = CALENDAR_DAYS_OF_WEEK;
-const monthNames = CALENDAR_MONTH_NAMES;
-const todayText = CALENDAR_TODAY_LABEL;
+import { useTexts } from "@/context/locale-context";
 
 interface ContinuousCalendarProps {
   clickHandler: (calendarEvent: CalendarEvent | undefined) => void;
@@ -26,6 +22,12 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
   calendarEvents: initialCalendarEvents,
   theme,
 }) => {
+  const {
+    CALENDAR_DAYS_OF_WEEK: daysOfWeek,
+    CALENDAR_MONTH_NAMES: monthNames,
+    CALENDAR_TODAY_LABEL: todayText,
+  } = useTexts();
+
   const today = new Date();
   const dayRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [year, setYear] = useState<number>(new Date().getFullYear());

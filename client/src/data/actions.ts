@@ -3,16 +3,22 @@ import { z } from "zod";
 import { cookies } from "next/headers";
 import { subscribeService, eventsSubscribeService, contactRequestService } from "./services";
 import { getUserProfileService } from "./auth-service";
-import { MESSAGES } from "@/utils/texts";
+import { getTexts, type Texts } from "@/i18n/texts";
+import { getRequestLocale } from "@/data/locale";
 import { isDev } from "@clientRoot/env";
+import { DEFAULT_COUNTRY } from "@/utils/european-countries";
 
-const subscribeSchema = z.object({
+/** The validation messages of the active locale, handed to each schema factory. */
+type Messages = Texts["MESSAGES"];
+
+const subscribeSchema = (MESSAGES: Messages) => z.object({
   email: z.string().email({
     message: MESSAGES.emailInvalid,
   }),
 });
 
 export async function subscribeAction(prevState: any, formData: FormData) {
+  const { MESSAGES } = getTexts(await getRequestLocale());
   const recaptchaToken = formData.get("recaptchaToken") as string | null;
   const isHuman = await verifyRecaptcha(recaptchaToken);
   if (!isHuman) {
@@ -26,7 +32,7 @@ export async function subscribeAction(prevState: any, formData: FormData) {
 
   const email = formData.get("email");
 
-  const validatedFields = subscribeSchema.safeParse({
+  const validatedFields = subscribeSchema(MESSAGES).safeParse({
     email: email,
   });
 
@@ -89,7 +95,7 @@ async function verifyRecaptcha(token: string | null): Promise<boolean> {
   }
 }
 
-const contactRequestSchema = z
+const contactRequestSchema = (MESSAGES: Messages) => z
   .object({
     name: z.string().min(1, { message: MESSAGES.invalidName }),
     preferredContact: z.enum(["phone", "email"]),
@@ -122,6 +128,7 @@ const contactRequestSchema = z
   });
 
 export async function contactRequestAction(prevState: any, formData: FormData) {
+  const { MESSAGES } = getTexts(await getRequestLocale());
   const recaptchaToken = formData.get("recaptchaToken") as string | null;
   const isHuman = await verifyRecaptcha(recaptchaToken);
   if (!isHuman) {
@@ -133,7 +140,7 @@ export async function contactRequestAction(prevState: any, formData: FormData) {
     };
   }
 
-  const validatedFields = contactRequestSchema.safeParse({
+  const validatedFields = contactRequestSchema(MESSAGES).safeParse({
     name: formData.get("name"),
     preferredContact: formData.get("preferredContact"),
     phone: formData.get("phone") ?? undefined,
@@ -189,6 +196,7 @@ export async function contactRequestAction(prevState: any, formData: FormData) {
 }
 
 export async function eventsSubscribeAction(prevState: any, formData: FormData) {
+  const { MESSAGES } = getTexts(await getRequestLocale());
   const recaptchaToken = formData.get("recaptchaToken") as string | null;
   const isHuman = await verifyRecaptcha(recaptchaToken);
   if (!isHuman) {
@@ -284,7 +292,7 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
     wantInvoice: signupData.wantInvoice ?? false,
     companyName: signupData.companyName ?? "",
     taxNumber: signupData.taxNumber ?? "",
-    birthCountry: signupData.birthCountry ?? "Magyarország",
+    birthCountry: signupData.birthCountry ?? DEFAULT_COUNTRY,
     birthPlace: signupData.birthPlace ?? "",
     birthDate: signupData.birthDate ?? "",
     documentType: signupData.documentType ?? "",

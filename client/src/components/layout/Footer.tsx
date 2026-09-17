@@ -1,5 +1,7 @@
+import { getTexts } from "@/i18n/texts";
+import { getRequestLocale } from "@/data/locale";
+import { toPublicPath, Route } from "@/i18n/config";
 import type { LinkProps, LogoProps, SocialLinksProps } from "@/types";
-import { LOGO_ALT_FALLBACK } from "@/utils/texts";
 import CustomLink from "../custom-ui-components/custom-link/custom-link";
 import { StrapiImage } from "../StrapiImage";
 import CustomTooltip from "../custom-ui-components/custom-tooltip/custom-tooltip";
@@ -14,7 +16,10 @@ interface FooterProps {
   } & SocialLinksProps;
 }
 
-export function Footer({ data }: FooterProps) {
+export async function Footer({ data }: FooterProps) {
+  const locale = await getRequestLocale();
+  const { LOGO_ALT_FALLBACK } = getTexts(locale);
+  const localizePath = (href: string) => toPublicPath(href, locale);
   if (!data) return null;
 
   const { logo, navigation, policies, copy } = data;
@@ -23,7 +28,12 @@ export function Footer({ data }: FooterProps) {
     <footer className="footer">
       <span className="footer__logo-wrapper">
         <CustomTooltip title={logo.image.alternativeText || LOGO_ALT_FALLBACK} placement="top">
-          <CustomLink href="/" className="navbar__logo-link" color="white" underline="none">
+          <CustomLink
+            href={localizePath(Route.Home)}
+            className="navbar__logo-link"
+            color="white"
+            underline="none"
+          >
             <StrapiImage
               src={logo.image.url}
               alt={logo.image.alternativeText || LOGO_ALT_FALLBACK}
@@ -40,7 +50,7 @@ export function Footer({ data }: FooterProps) {
           {navigation.map((item) => (
             <li key={item.id}>
               <CustomLink
-                href={item.href}
+                href={localizePath(item.href)}
                 target={item.isExternal ? "_blank" : "_self"}
                 color="white"
                 underline="none"
@@ -56,7 +66,7 @@ export function Footer({ data }: FooterProps) {
           {policies.map((item) => (
             <li key={item.id}>
               <CustomLink
-                href={item.href}
+                href={localizePath(item.href)}
                 target={item.isExternal ? "_blank" : "_self"}
                 className="copy"
                 color="white"

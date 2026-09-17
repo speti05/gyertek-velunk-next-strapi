@@ -1,8 +1,9 @@
 "use client";
 
+import { useTexts } from "@/context/locale-context";
+
 import { useCallback, useState } from "react";
 import Image from "next/image";
-import { SOCIALS_EMBED_LOAD_ERROR } from "@/utils/texts";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
 import { SocialEmbedLoader } from "@/components/blocks/socials/SocialEmbedLoader";
@@ -15,6 +16,7 @@ export interface YoutubeVideoItem {
 }
 
 export function YoutubeVideoGrid({ videos }: Readonly<{ videos: YoutubeVideoItem[] }>) {
+  const { SOCIALS_EMBED_LOAD_ERROR } = useTexts();
   const { hasFailed, markLoaded } = useSocialEmbedTimeout();
   const [loadedCount, setLoadedCount] = useState(0);
   const allLoaded = loadedCount >= videos.length;

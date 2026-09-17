@@ -1,18 +1,17 @@
+import { getTexts } from "@/i18n/texts";
+import { getRequestLocale } from "@/data/locale";
 import { HeroWithTextProps } from "@/types";
 import { HeroTextAndButtons } from "../HeroTextAndButtons";
 import CustomGallery from "@/components/custom-ui-components/custom-gallery/custom-gallery";
 import { EmptyContent } from "@/components/EmptyContent";
-import {
-  HERO_WITH_TEXT_EMPTY_TITLE,
-  HERO_WITH_TEXT_EMPTY_DESCRIPTION,
-} from "@/utils/texts";
 
-export function HeroWithTextBlock({
+export async function HeroWithTextBlock({
   headline,
   images,
   link,
   welcomeText,
 }: Readonly<HeroWithTextProps>) {
+  const { HERO_WITH_TEXT_EMPTY_TITLE, HERO_WITH_TEXT_EMPTY_DESCRIPTION } = getTexts(await getRequestLocale());
   return (
     <section className="hero hero__with-text">
       {images?.length ? (

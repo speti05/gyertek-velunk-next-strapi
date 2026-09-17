@@ -1,19 +1,16 @@
 "use client";
 import type { LinkProps, LogoProps, SocialLinksProps } from "@/types";
-import {
-  AUTH_LOGIN_LABEL,
-  AUTH_LOGOUT_LABEL,
-  AUTH_PROFILE_NAV_LABEL,
-  LOGO_ALT_FALLBACK,
-} from "@/utils/texts";
+import { useLocalizedPath, useTexts } from "@/context/locale-context";
 import { logoutAction } from "@/data/auth-actions";
 import { useAuth } from "@/context/auth-context";
 import CustomIcon from "../custom-ui-components/custom-icon/custom-icon";
 import CustomTooltip from "../custom-ui-components/custom-tooltip/custom-tooltip";
 import CustomLink from "../custom-ui-components/custom-link/custom-link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StrapiImage } from "../StrapiImage";
 import { SocialLinks } from "./SocialLinks";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { Route } from "@/i18n/config";
 
 interface HeaderProps {
   data: {
@@ -22,11 +19,30 @@ interface HeaderProps {
     cta: LinkProps;
   };
   socialLinks?: SocialLinksProps;
+  /** `showLanguageSwitcher` on the Strapi global settings - the site-wide switch for
+   *  whether visitors are offered a language at all. */
+  showLanguageSwitcher?: boolean;
 }
 
-export function Header({ data, socialLinks }: HeaderProps) {
+export function Header({ data, socialLinks, showLanguageSwitcher = false }: HeaderProps) {
   const [isActive, setIsActive] = useState(false);
   const { isLoggedIn, userEmail } = useAuth();
+  const { AUTH_LOGIN_LABEL, AUTH_LOGOUT_LABEL, AUTH_PROFILE_NAV_LABEL, LOGO_ALT_FALLBACK } =
+    useTexts();
+  const localizePath = useLocalizedPath();
+
+  // Lock page scroll while the mobile menu overlay is open. The class goes on
+  // both <html> and <body> because <html> is the scrolling element here.
+  useEffect(() => {
+    const { documentElement, body } = document;
+    documentElement.classList.toggle("nav-menu-open", isActive);
+    body.classList.toggle("nav-menu-open", isActive);
+    return () => {
+      documentElement.classList.remove("nav-menu-open");
+      body.classList.remove("nav-menu-open");
+    };
+  }, [isActive]);
+
   if (!data) return null;
 
   const { logo, navigation } = data;
@@ -41,7 +57,7 @@ export function Header({ data, socialLinks }: HeaderProps) {
             {navigation.map((item) => (
               <li key={item.id}>
                 <CustomLink
-                  href={item.href}
+                  href={localizePath(item.href)}
                   target={item.isExternal ? "_blank" : "_self"}
                   color="white"
                   underline="none"
@@ -53,12 +69,17 @@ export function Header({ data, socialLinks }: HeaderProps) {
                 </CustomLink>
               </li>
             ))}
+            {showLanguageSwitcher && (
+              <li className="navbar__language">
+                <LanguageSwitcher onNavigate={() => setIsActive(false)} />
+              </li>
+            )}
             {isLoggedIn ? (
               <li className="navbar__auth-group">
                 <CustomTooltip title={AUTH_PROFILE_NAV_LABEL} placement="bottom">
                   <span>
                     <CustomLink
-                      href="/profile"
+                      href={localizePath(Route.Profile)}
                       className="navbar__auth-link"
                       onClick={() => setIsActive(false)}
                       color="white"
@@ -87,7 +108,7 @@ export function Header({ data, socialLinks }: HeaderProps) {
                 <CustomTooltip title={AUTH_LOGIN_LABEL} placement="bottom">
                   <span>
                     <CustomLink
-                      href="/login"
+                      href={localizePath(Route.Login)}
                       className="navbar__auth-link"
                       onClick={() => setIsActive(false)}
                       color="white"
@@ -112,7 +133,7 @@ export function Header({ data, socialLinks }: HeaderProps) {
         </nav>
         <CustomTooltip title={logo.image.alternativeText || LOGO_ALT_FALLBACK} placement="top">
           <span className="header__logo_wrapper">
-            <CustomLink href="/" className="navbar__logo-link" color="white" underline="none">
+            <CustomLink href={localizePath(Route.Home)} className="navbar__logo-link" color="white" underline="none">
               <StrapiImage
                 src={logo.image.url}
                 alt={logo.image.alternativeText || LOGO_ALT_FALLBACK}

@@ -1,12 +1,13 @@
+import { getTexts } from "@/i18n/texts";
+import { getRequestLocale } from "@/data/locale";
 import { BlogCard } from "../BlogCard";
 import { BlogPostCard } from "../BlogPostCard";
 import { ContentList } from "../ContentList";
 import { EventCard } from "../EventCard";
 import { EmptyReasonOverlay } from "../EmptyReasonOverlay";
 import { SearchableCardListProps } from "@/types";
-import { EMPTY_REASON_DEFAULT_TITLE, EMPTY_REASON_DEFAULT_TEXT } from "@/utils/texts";
 
-export function SearchableCardList({
+export async function SearchableCardList({
   searchPlaceHolder,
   contentCollectionType,
   headline,
@@ -22,6 +23,7 @@ export function SearchableCardList({
   emptyReasonBackgroundImage,
   emptyReasonLinks,
 }: SearchableCardListProps) {
+  const { EMPTY_REASON_DEFAULT_TITLE, EMPTY_REASON_DEFAULT_TEXT } = getTexts(await getRequestLocale());
   const componentToUse = (() => {
     switch (contentCollectionType) {
       // túrák

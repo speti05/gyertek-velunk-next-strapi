@@ -1,14 +1,16 @@
 import { writeFileSync } from "fs";
 import { mkdirSync } from "fs";
 import { emailWrapper } from "../templates/layout";
-import { SystemEmailSubject } from "../../../utils/texts";
+import { getStrapiTexts } from "../../../i18n/get-strapi-texts";
 import { adminEmailContent } from "../templates/event-signup";
 import { getClientUrl } from "../../config/client-url";
+
+const texts = getStrapiTexts();
 
 // Variant A: full data with 1 companion, invoice requested
 const htmlFull = emailWrapper(
   getClientUrl(),
-  adminEmailContent({
+  adminEmailContent(texts, {
     firstName: "János",
     lastName: "Kovács",
     userEmail: "kovacs.janos@example.com",
@@ -49,14 +51,15 @@ const htmlFull = emailWrapper(
     ],
     notes: "Kérem, hogy a szállást lehetőleg kettős szobában foglalják!",
   }),
-  SystemEmailSubject.EventSignupAdmin,
+  texts.SYSTEM_EMAIL_SUBJECT.eventSignupAdmin,
+  texts,
   "Gyertek Velünk"
 );
 
 // Variant B: minimal data, no companion, no invoice
 const htmlMinimal = emailWrapper(
   getClientUrl(),
-  adminEmailContent({
+  adminEmailContent(texts, {
     firstName: "Éva",
     lastName: "Nagy",
     userEmail: "nagy.eva@example.com",
@@ -64,7 +67,8 @@ const htmlMinimal = emailWrapper(
     telephone: "+36 20 555 6789",
     wantInvoice: false,
   }),
-  SystemEmailSubject.EventSignupAdmin,
+  texts.SYSTEM_EMAIL_SUBJECT.eventSignupAdmin,
+  texts,
   "Gyertek Velünk"
 );
 

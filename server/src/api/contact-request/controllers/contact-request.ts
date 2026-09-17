@@ -4,7 +4,7 @@
 
 import { factories } from "@strapi/strapi";
 import { sendContactRequestEmails } from "../../../lib/email/contact-request";
-import { CONTACT_REQUEST_DUPLICATE_ERROR } from "../../../utils/texts";
+import { getStrapiTexts, readRequestLocale } from "../../../i18n/get-strapi-texts";
 
 // How long the same phone number / email address is blocked from sending
 // another request. Without a window a visitor could never reach us twice.
@@ -12,6 +12,8 @@ const DUPLICATE_WINDOW_HOURS = 24;
 
 export default factories.createCoreController("api::contact-request.contact-request", ({ strapi }) => ({
   async create(ctx) {
+    const locale = readRequestLocale(ctx);
+    const texts = getStrapiTexts(locale);
     const { phone, email, preferredContact } = (ctx.request.body as any)?.data ?? {};
 
     const contactField = preferredContact === "phone" ? "phone" : "email";
@@ -25,7 +27,7 @@ export default factories.createCoreController("api::contact-request.contact-requ
         .findOne({ where: { [contactField]: contactValue, createdAt: { $gte: since } } });
 
       if (existing) {
-        return ctx.conflict(CONTACT_REQUEST_DUPLICATE_ERROR(DUPLICATE_WINDOW_HOURS));
+        return ctx.conflict(texts.CONTACT_REQUEST_DUPLICATE_ERROR(DUPLICATE_WINDOW_HOURS));
       }
     }
 
@@ -34,12 +36,15 @@ export default factories.createCoreController("api::contact-request.contact-requ
     const { name, phone: savedPhone, email: savedEmail, preferredContact: savedPreferred } = response.data;
 
     // Deliberately not awaited: a mail problem must not fail the saved request.
-    sendContactRequestEmails({
-      name,
-      phone: savedPhone ?? null,
-      email: savedEmail ?? null,
-      preferredContact: savedPreferred,
-    }).catch((err) => {
+    sendContactRequestEmails(
+      {
+        name,
+        phone: savedPhone ?? null,
+        email: savedEmail ?? null,
+        preferredContact: savedPreferred,
+      },
+      locale
+    ).catch((err) => {
       strapi.log.error(
         `Contact request email sending failed for "${name}" (${savedPreferred}: ${
           savedPhone ?? savedEmail ?? "n/a"

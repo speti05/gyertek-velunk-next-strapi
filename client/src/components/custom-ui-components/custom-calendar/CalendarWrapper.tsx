@@ -3,6 +3,7 @@
 import { ContinuousCalendar } from "@/components/custom-ui-components/custom-calendar/ContinuousCalendar";
 import { CalendarEvent } from "./CalendarTypes";
 import { useRouter } from "next/navigation";
+import { useLocalizedPath } from "@/context/locale-context";
 
 interface CalendarWrapperProps {
   theme: "turquoise" | "brown";
@@ -16,10 +17,11 @@ export const CalendarWrapper: React.FC<CalendarWrapperProps> = ({
   onYearChange,
 }) => {
   const router = useRouter();
+  const localizePath = useLocalizedPath();
 
   const clickHandler = (calendarEvent: CalendarEvent | undefined) => {
     if (calendarEvent) {
-      router.push(calendarEvent.link);
+      router.push(localizePath(calendarEvent.link));
     } else {
       console.error("No calendar event data available for clickHandler.");
     }

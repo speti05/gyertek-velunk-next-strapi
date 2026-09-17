@@ -1,10 +1,8 @@
+import { getTexts } from "@/i18n/texts";
+import { getRequestLocale } from "@/data/locale";
 import { PictureGalleryProps } from "@/types";
 import CustomGallery from "@/components/custom-ui-components/custom-gallery/custom-gallery";
 import { EmptyContent } from "@/components/EmptyContent";
-import {
-  PICTURE_GALLERY_EMPTY_TITLE,
-  PICTURE_GALLERY_EMPTY_DESCRIPTION,
-} from "@/utils/texts";
 
 const ASPECT_RATIO_MODIFIER: Record<NonNullable<PictureGalleryProps["aspectRatio"]>, string> = {
   "16:9": "widescreen",
@@ -12,7 +10,7 @@ const ASPECT_RATIO_MODIFIER: Record<NonNullable<PictureGalleryProps["aspectRatio
   "1:1": "square",
 };
 
-export function PictureGallery({
+export async function PictureGallery({
   title,
   description,
   images,
@@ -20,6 +18,7 @@ export function PictureGallery({
   autoplay = true,
   slideIntervalMs,
 }: Readonly<PictureGalleryProps>) {
+  const { PICTURE_GALLERY_EMPTY_TITLE, PICTURE_GALLERY_EMPTY_DESCRIPTION } = getTexts(await getRequestLocale());
   return (
     <div
       className={`article-picture-gallery article-picture-gallery--${ASPECT_RATIO_MODIFIER[aspectRatio]}`}

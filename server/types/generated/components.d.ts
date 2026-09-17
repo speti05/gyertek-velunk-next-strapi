@@ -13,17 +13,6 @@ export interface BlocksContactRequestForm extends Struct.ComponentSchema {
   };
 }
 
-export interface BlocksEventSignupForm extends Struct.ComponentSchema {
-  collectionName: "components_blocks_event_signup_forms";
-  info: {
-    displayName: "Event signup form";
-    icon: "attachment";
-  };
-  attributes: {
-    name: Schema.Attribute.String;
-  };
-}
-
 export interface BlocksFeaturedArticle extends Struct.ComponentSchema {
   collectionName: "components_blocks_featured_articles";
   info: {
@@ -313,7 +302,6 @@ declare module "@strapi/strapi" {
   export module Public {
     export interface ComponentSchemas {
       "blocks.contact-request-form": BlocksContactRequestForm;
-      "blocks.event-signup-form": BlocksEventSignupForm;
       "blocks.featured-article": BlocksFeaturedArticle;
       "blocks.full-image": BlocksFullImage;
       "blocks.heading": BlocksHeading;

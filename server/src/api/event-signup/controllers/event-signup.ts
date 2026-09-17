@@ -5,6 +5,7 @@
 // src/api/event-signup/controllers/event-signup.ts
 import { factories } from "@strapi/strapi";
 import { sendSignupEmails } from "../../../lib/email/event-signup";
+import { readRequestLocale } from "../../../i18n/get-strapi-texts";
 
 export default factories.createCoreController("api::event-signup.event-signup", ({ strapi }) => ({
   async find(ctx) {
@@ -29,6 +30,7 @@ export default factories.createCoreController("api::event-signup.event-signup", 
   },
 
   async create(ctx) {
+    const locale = readRequestLocale(ctx);
     // Populate the event relation to include event details in the response
     ctx.query = { ...ctx.query, populate: ["event"] };
     // Let Strapi handle the DB save as normal
@@ -54,7 +56,7 @@ export default factories.createCoreController("api::event-signup.event-signup", 
       birthCountry, birthPlace, birthDate,
       documentType, documentNumber, documentIssueDate, documentExpiryDate,
       allergies, fbLink, companions, notes,
-    }).catch((err) =>
+    }, locale).catch((err) =>
       console.error("Email sending failed:", err)
     );
 

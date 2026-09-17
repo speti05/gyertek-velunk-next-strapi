@@ -1,7 +1,8 @@
 "use client";
 
+import { useTexts } from "@/context/locale-context";
+
 import { useEffect, useRef } from "react";
-import { SOCIALS_EMBED_LOAD_ERROR, SOCIALS_FACEBOOK_LABEL } from "@/utils/texts";
 import { SocialBoxTitle } from "@/components/blocks/socials/SocialBoxTitle";
 import { SocialEmbedLoader } from "@/components/blocks/socials/SocialEmbedLoader";
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
@@ -20,6 +21,7 @@ const FACEBOOK_SDK_SCRIPT_SRC = "https://connect.facebook.net/hu_HU/sdk.js#xfbml
 const FACEBOOK_ROOT_ID = "fb-root";
 
 export function FacebookEmbed({ url }: Readonly<{ url: string }>) {
+  const { SOCIALS_EMBED_LOAD_ERROR, SOCIALS_FACEBOOK_LABEL } = useTexts();
   const containerRef = useRef<HTMLDivElement>(null);
   const { hasFailed, markLoaded } = useSocialEmbedTimeout();
 

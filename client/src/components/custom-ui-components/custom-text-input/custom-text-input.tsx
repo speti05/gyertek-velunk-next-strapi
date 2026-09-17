@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { AUTH_HIDE_PASSWORD_LABEL, AUTH_SHOW_PASSWORD_LABEL } from "@/utils/texts";
+import { useTexts } from "@/context/locale-context";
 import { FormControl, TextField, TextFieldProps, InputAdornment, IconButton } from "@mui/material";
 import CustomIcon from "../custom-icon/custom-icon";
 import style from "./custom-text-input.module.scss";
@@ -12,6 +12,7 @@ type CustomTextInputInputProps = Omit<TextFieldProps, "error"> & {
 
 const CustomTextInput = React.forwardRef<HTMLInputElement, CustomTextInputInputProps>(
   ({ error, type, slotProps, ...props }, ref) => {
+    const { AUTH_HIDE_PASSWORD_LABEL, AUTH_SHOW_PASSWORD_LABEL } = useTexts();
     const isPassword = type === "password";
     const [showPassword, setShowPassword] = useState(false);
 

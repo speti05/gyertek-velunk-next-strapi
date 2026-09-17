@@ -1,7 +1,10 @@
+"use client";
+
+import { useLocalizedPath, useTexts } from "@/context/locale-context";
 import Image from "next/image";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
-import { GO_HOME_LABEL, TRY_AGAIN_LABEL } from "@/utils/texts";
+import { Route } from "@/i18n/config";
 
 interface ErrorPageProps {
   title: string;
@@ -10,6 +13,8 @@ interface ErrorPageProps {
 }
 
 export function ErrorPage({ title, description, onRetry }: Readonly<ErrorPageProps>) {
+  const { GO_HOME_LABEL, TRY_AGAIN_LABEL } = useTexts();
+  const localizePath = useLocalizedPath();
   return (
     <div className="error-page">
       <div className="error-page__card">
@@ -23,7 +28,7 @@ export function ErrorPage({ title, description, onRetry }: Readonly<ErrorPagePro
               </CustomButton>
             )}
             <CustomButton variant="contained" color={onRetry ? "secondary" : "primary"}>
-              <CustomLink href="/" color="inherit" underline="none">
+              <CustomLink href={localizePath(Route.Home)} color="inherit" underline="none">
                 {GO_HOME_LABEL}
               </CustomLink>
             </CustomButton>

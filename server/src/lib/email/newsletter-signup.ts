@@ -4,11 +4,7 @@ import { emailWrapper } from "./templates/layout";
 import { userEmailContent, adminEmailContent } from "./templates/newsletter-signup";
 import { getSiteSettings } from "./get-site-settings";
 import { getClientUrl } from "../config/client-url";
-import {
-  NEWSLETTER_SIGNUP_ADMIN_MAIL_SUBJECT,
-  NEWSLETTER_SIGNUP_USER_MAIL_SUBJECT,
-  SystemEmailSubject,
-} from "../../utils/texts";
+import { getStrapiTexts, type Locale } from "../../i18n/get-strapi-texts";
 
 const headerAttachment = {
   filename: "email-fejlec-600.jpg",
@@ -16,26 +12,27 @@ const headerAttachment = {
   cid: "email-fejlec",
 };
 
-export const sendNewsletterSignupEmails = async (subscriberEmail: string) => {
-  const t = await getTransporter();
+export const sendNewsletterSignupEmails = async (subscriberEmail: string, locale: Locale) => {
+  const texts = getStrapiTexts(locale);
+  const transporter = await getTransporter();
   const siteUrl = getClientUrl();
   const { organizationName } = await getSiteSettings();
 
   console.info(`Sending newsletter signup emails for ${subscriberEmail}`);
 
-  await t.sendMail({
+  await transporter.sendMail({
     from: `"${organizationName}" <${process.env.SMTP_USER}>`,
     to: subscriberEmail,
-    subject: NEWSLETTER_SIGNUP_USER_MAIL_SUBJECT,
-    html: emailWrapper(siteUrl, userEmailContent(subscriberEmail), SystemEmailSubject.NewsletterSignup, organizationName),
+    subject: texts.NEWSLETTER_SIGNUP_USER_MAIL_SUBJECT,
+    html: emailWrapper(siteUrl, userEmailContent(texts, subscriberEmail), texts.SYSTEM_EMAIL_SUBJECT.newsletterSignup, texts, organizationName),
     attachments: [headerAttachment],
   });
 
-  await t.sendMail({
+  await transporter.sendMail({
     from: `"${organizationName}" <${process.env.SMTP_USER}>`,
     to: process.env.ADMIN_EMAIL,
-    subject: NEWSLETTER_SIGNUP_ADMIN_MAIL_SUBJECT,
-    html: emailWrapper(siteUrl, adminEmailContent(subscriberEmail), SystemEmailSubject.NewsletterSignup, organizationName),
+    subject: texts.NEWSLETTER_SIGNUP_ADMIN_MAIL_SUBJECT,
+    html: emailWrapper(siteUrl, adminEmailContent(texts, subscriberEmail), texts.SYSTEM_EMAIL_SUBJECT.newsletterSignup, texts, organizationName),
     attachments: [headerAttachment],
   });
 

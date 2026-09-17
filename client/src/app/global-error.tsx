@@ -1,5 +1,7 @@
 "use client";
 
+import { useTexts } from "@/context/locale-context";
+
 import { Luckiest_Guy, Source_Sans_3 } from "next/font/google";
 // @ts-ignore-next-line
 import "../sass/main.scss";
@@ -9,7 +11,6 @@ import Image from "next/image";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import { ErrorPage } from "@/components/ErrorPage";
 import { MuiThemeProvider } from "@/components/providers/theme-provider/theme-provider";
-import { ERROR_LABEL, SERVER_SIDE_ERROR_LABEL, SITE_TITLE } from "@/utils/texts";
 import { useEffect } from "react";
 
 const luckiestGuy = Luckiest_Guy({
@@ -29,6 +30,7 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const { ERROR_LABEL, SERVER_SIDE_ERROR_LABEL, SITE_TITLE } = useTexts();
   useEffect(() => {
     console.error(error);
   }, [error]);

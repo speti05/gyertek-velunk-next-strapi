@@ -1,19 +1,23 @@
 import { writeFileSync, mkdirSync } from "fs";
 import { emailWrapper } from "../templates/layout";
-import { SystemEmailSubject } from "../../../utils/texts";
+import { getStrapiTexts } from "../../../i18n/get-strapi-texts";
 import { userContactRequestEmailContent } from "../templates/contact-request";
 import { getClientUrl } from "../../config/client-url";
+
+const texts = getStrapiTexts();
 
 // Variant A: the requester asked to be contacted by email
 const htmlEmailPreferred = emailWrapper(
   getClientUrl(),
   userContactRequestEmailContent(
+  texts,
     "Nagy Éva",
     "email",
     "nagy.eva@example.com",
     "Gyertek Velünk"
   ),
-  SystemEmailSubject.ContactRequest,
+  texts.SYSTEM_EMAIL_SUBJECT.contactRequest,
+  texts,
   "Gyertek Velünk"
 );
 
@@ -21,12 +25,14 @@ const htmlEmailPreferred = emailWrapper(
 const htmlPhonePreferred = emailWrapper(
   getClientUrl(),
   userContactRequestEmailContent(
+  texts,
     "Kovács János",
     "phone",
     "+36 30 123 4567",
     "Gyertek Velünk"
   ),
-  SystemEmailSubject.ContactRequest,
+  texts.SYSTEM_EMAIL_SUBJECT.contactRequest,
+  texts,
   "Gyertek Velünk"
 );
 

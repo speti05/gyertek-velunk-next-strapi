@@ -1,3 +1,5 @@
+import { getTexts } from "@/i18n/texts";
+import { getRequestLocale } from "@/data/locale";
 import { ArticleProps, ContentCollectionType, CustomSearchParams, EventProps } from "@/types";
 import { getContent } from "@/data/loaders";
 
@@ -6,7 +8,6 @@ import { SearchNoSSR } from "@/components/SearchNoSSR";
 import { removeAccents } from "@/utils/text-utils";
 import { ContentListHeadline } from "@/components/ContentListHeadline";
 import { EmptyContent } from "@/components/EmptyContent";
-import { CONTENT_LIST_EMPTY_TITLE, CONTENT_LIST_EMPTY_DESCRIPTION } from "@/utils/texts";
 
 interface ContentListProps {
   headline: string;
@@ -14,7 +15,8 @@ interface ContentListProps {
   query?: string;
   pageSize?: number;
   featured?: boolean;
-  component: React.ComponentType<ArticleProps & { basePath: string }>;
+  /** The card decides its own base path - see EventCard, BlogCard, BlogPostCard. */
+  component: React.ComponentType<ArticleProps>;
   headlineAlignment?: "center" | "right" | "left";
   showSearch?: boolean;
   searchPlaceHolder?: string;
@@ -53,6 +55,7 @@ export async function ContentList({
   isMainContentOfTheScreen = false,
   overlay,
 }: Readonly<ContentListProps>) {
+  const { CONTENT_LIST_EMPTY_TITLE, CONTENT_LIST_EMPTY_DESCRIPTION } = getTexts(await getRequestLocale());
   const pageParam = `${contentCollectionType}Page`;
   const path = `/api/${contentCollectionType}`;
   const queryParam = `${contentCollectionType}Query`;
@@ -81,7 +84,7 @@ export async function ContentList({
         <div className="content-items__container--card">
           {data.length > 0 ? (
             data.map((article) => (
-              <Component key={article.documentId} {...article} basePath={path} />
+              <Component key={article.documentId} {...article} />
             ))
           ) : (
             <EmptyContent

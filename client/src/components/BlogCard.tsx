@@ -1,2 +1,3 @@
 import { Card, type CardProps } from "@/components/Card";
-export const BlogCard = (props: Readonly<CardProps>) => <Card {...props} basePath="beszamolok" />;
+import { Route } from "@/i18n/config";
+export const BlogCard = (props: Readonly<Omit<CardProps, "basePath">>) => <Card {...props} basePath={Route.Reports} />;

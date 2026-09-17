@@ -1,27 +1,19 @@
+"use client";
+
 import type { TooltipProps } from "@mui/material/Tooltip";
 import type { SocialLinksProps as SocialLinksData } from "@/types";
-import {
-  FOOTER_FACEBOOK_ARIA,
-  FOOTER_INSTAGRAM_ARIA,
-  FOOTER_TIKTOK_ARIA,
-  FOOTER_YOUTUBE_ARIA,
-} from "@/utils/texts";
+import { useTexts } from "@/context/locale-context";
 import CustomLink from "../custom-ui-components/custom-link/custom-link";
 import CustomIcon, { type IconName } from "../custom-ui-components/custom-icon/custom-icon";
 import CustomTooltip from "../custom-ui-components/custom-tooltip/custom-tooltip";
 
 const ICON_SIZE = "2x" as const;
 
-const SOCIAL_LINKS: {
+type SocialLinkEntry = {
   key: "facebook" | "instagram" | "tiktok" | "youtube";
   ariaLabel: string;
   iconName: IconName;
-}[] = [
-  { key: "facebook", ariaLabel: FOOTER_FACEBOOK_ARIA, iconName: "facebook" },
-  { key: "instagram", ariaLabel: FOOTER_INSTAGRAM_ARIA, iconName: "instagram" },
-  { key: "tiktok", ariaLabel: FOOTER_TIKTOK_ARIA, iconName: "tiktok" },
-  { key: "youtube", ariaLabel: FOOTER_YOUTUBE_ARIA, iconName: "youtube" },
-];
+};
 
 interface SocialLinksProps {
   socialLinks?: SocialLinksData;
@@ -36,6 +28,16 @@ export function SocialLinks({
   variant,
   tooltipPlacement,
 }: SocialLinksProps) {
+  const { FOOTER_FACEBOOK_ARIA, FOOTER_INSTAGRAM_ARIA, FOOTER_TIKTOK_ARIA, FOOTER_YOUTUBE_ARIA } =
+    useTexts();
+
+  const SOCIAL_LINKS: SocialLinkEntry[] = [
+    { key: "facebook", ariaLabel: FOOTER_FACEBOOK_ARIA, iconName: "facebook" },
+    { key: "instagram", ariaLabel: FOOTER_INSTAGRAM_ARIA, iconName: "instagram" },
+    { key: "tiktok", ariaLabel: FOOTER_TIKTOK_ARIA, iconName: "tiktok" },
+    { key: "youtube", ariaLabel: FOOTER_YOUTUBE_ARIA, iconName: "youtube" },
+  ];
+
   const urlMap = {
     facebook: socialLinks?.facebookUrl,
     instagram: socialLinks?.instagramUrl,

@@ -1,5 +1,8 @@
 "use server";
 
+import { getTexts, type Texts } from "@/i18n/texts";
+import { getRequestLocale, localizedPath } from "@/data/locale";
+
 import { z } from "zod";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -14,9 +17,13 @@ import {
   resendEmailConfirmationService,
 } from "./auth-service";
 import { isDev } from "@clientRoot/env";
-import { MESSAGES, AUTH_FORGOT_PASSWORD_SUCCESS } from "@/utils/texts";
+import { Route } from "@/i18n/config";
 
 const STRAPI_URL = process.env.STRAPI_API_URL ?? "http://localhost:1337";
+
+/** The validation messages of the active locale, handed to each schema factory. */
+type Messages = Texts["MESSAGES"];
+
 
 async function verifyRecaptcha(token: string | null): Promise<boolean> {
   const secret = process.env.RECAPTCHA_SECRET_KEY;
@@ -34,12 +41,12 @@ async function verifyRecaptcha(token: string | null): Promise<boolean> {
   }
 }
 
-const authSchema = z.object({
+const authSchema = (MESSAGES: Messages) => z.object({
   email: z.string().email({ message: MESSAGES.emailInvalid }),
   password: z.string().min(6, { message: MESSAGES.invalidPassword }),
 });
 
-const registerSchema = z
+const registerSchema = (MESSAGES: Messages) => z
   .object({
     email: z.string().email({ message: MESSAGES.emailInvalid }),
     password: z
@@ -70,6 +77,7 @@ async function setAuthCookies(jwt: string, email: string) {
 }
 
 export async function authAction(prevState: any, formData: FormData) {
+  const { MESSAGES } = getTexts(await getRequestLocale());
   const recaptchaToken = formData.get("recaptchaToken") as string | null;
   const isHuman = await verifyRecaptcha(recaptchaToken);
   if (!isHuman) {
@@ -86,7 +94,7 @@ export async function authAction(prevState: any, formData: FormData) {
   const password = formData.get("password") as string;
 
   if (mode === "login") {
-    const validatedFields = authSchema.safeParse({ email, password });
+    const validatedFields = authSchema(MESSAGES).safeParse({ email, password });
 
     if (!validatedFields.success) {
       return {
@@ -109,7 +117,7 @@ export async function authAction(prevState: any, formData: FormData) {
     await setAuthCookies(data.jwt!, data.user.email);
   } else if (mode === "register") {
     const passwordConfirmation = formData.get("passwordConfirmation") as string;
-    const validatedFields = registerSchema.safeParse({ email, password, passwordConfirmation });
+    const validatedFields = registerSchema(MESSAGES).safeParse({ email, password, passwordConfirmation });
 
     if (!validatedFields.success) {
       return {
@@ -166,21 +174,22 @@ export async function authAction(prevState: any, formData: FormData) {
     return { ...prevState, zodErrors: null, errorMessage: MESSAGES.invalidOperation };
   }
 
-  redirect("/profile");
+  redirect(await localizedPath(Route.Profile));
 }
 
 export async function logoutAction() {
   const cookieStore = await cookies();
   cookieStore.delete("jwt");
   cookieStore.delete("user_email");
-  redirect("/login");
+  redirect(await localizedPath(Route.Login));
 }
 
-const resendEmailConfirmationSchema = z.object({
+const resendEmailConfirmationSchema = (MESSAGES: Messages) => z.object({
   email: z.string().email({ message: MESSAGES.emailInvalid }),
 });
 
 export async function resendEmailConfirmationAction(prevState: any, formData: FormData) {
+  const { MESSAGES } = getTexts(await getRequestLocale());
   const recaptchaToken = formData.get("recaptchaToken") as string | null;
   const isHuman = await verifyRecaptcha(recaptchaToken);
   if (!isHuman) {
@@ -188,7 +197,7 @@ export async function resendEmailConfirmationAction(prevState: any, formData: Fo
   }
 
   const email = formData.get("email") as string;
-  const validated = resendEmailConfirmationSchema.safeParse({ email });
+  const validated = resendEmailConfirmationSchema(MESSAGES).safeParse({ email });
 
   if (!validated.success) {
     return {
@@ -215,11 +224,12 @@ export async function resendEmailConfirmationAction(prevState: any, formData: Fo
   };
 }
 
-const forgotPasswordSchema = z.object({
+const forgotPasswordSchema = (MESSAGES: Messages) => z.object({
   email: z.string().email({ message: MESSAGES.emailInvalid }),
 });
 
 export async function forgotPasswordAction(prevState: any, formData: FormData) {
+  const { MESSAGES, AUTH_FORGOT_PASSWORD_SUCCESS } = getTexts(await getRequestLocale());
   const recaptchaToken = formData.get("recaptchaToken") as string | null;
   const isHuman = await verifyRecaptcha(recaptchaToken);
   if (!isHuman) {
@@ -227,7 +237,7 @@ export async function forgotPasswordAction(prevState: any, formData: FormData) {
   }
 
   const email = formData.get("email") as string;
-  const validated = forgotPasswordSchema.safeParse({ email });
+  const validated = forgotPasswordSchema(MESSAGES).safeParse({ email });
 
   if (!validated.success) {
     return {
@@ -248,7 +258,7 @@ export async function forgotPasswordAction(prevState: any, formData: FormData) {
   };
 }
 
-const resetPasswordSchema = z
+const resetPasswordSchema = (MESSAGES: Messages) => z
   .object({
     password: z.string().min(6, { message: MESSAGES.invalidPassword }),
     passwordConfirmation: z.string(),
@@ -259,6 +269,7 @@ const resetPasswordSchema = z
   });
 
 export async function resetPasswordAction(prevState: any, formData: FormData) {
+  const { MESSAGES } = getTexts(await getRequestLocale());
   const recaptchaToken = formData.get("recaptchaToken") as string | null;
   const isHuman = await verifyRecaptcha(recaptchaToken);
   if (!isHuman) {
@@ -269,7 +280,7 @@ export async function resetPasswordAction(prevState: any, formData: FormData) {
   const password = formData.get("password") as string;
   const passwordConfirmation = formData.get("passwordConfirmation") as string;
 
-  const validated = resetPasswordSchema.safeParse({ password, passwordConfirmation });
+  const validated = resetPasswordSchema(MESSAGES).safeParse({ password, passwordConfirmation });
 
   if (!validated.success) {
     return {
@@ -289,12 +300,12 @@ export async function resetPasswordAction(prevState: any, formData: FormData) {
     return { ...prevState, zodErrors: null, errorMessage: MESSAGES.tryAgain };
   }
 
-  redirect("/login");
+  redirect(await localizedPath(Route.Login));
 }
 
 const phoneRegex = /^(\+36|06)\d{9}$/;
 
-const profileSchema = z.object({
+const profileSchema = (MESSAGES: Messages) => z.object({
   firstName: z.string().min(1, { message: MESSAGES.invalidFirstName }),
   lastName: z.string().min(1, { message: MESSAGES.invalidLastName }),
   phone: z
@@ -309,9 +320,10 @@ const profileSchema = z.object({
 });
 
 export async function updateProfileAction(prevState: any, formData: FormData) {
+  const { MESSAGES } = getTexts(await getRequestLocale());
   const cookieStore = await cookies();
   const jwt = cookieStore.get("jwt")?.value;
-  if (!jwt) redirect("/login");
+  if (!jwt) redirect(await localizedPath(Route.Login));
 
   const firstName = formData.get("firstName") as string;
   const lastName = formData.get("lastName") as string;
@@ -322,7 +334,7 @@ export async function updateProfileAction(prevState: any, formData: FormData) {
   const street = formData.get("street") as string;
   const houseNumber = formData.get("houseNumber") as string;
 
-  const validated = profileSchema.safeParse({ firstName, lastName, phone, country, city, zip, street, houseNumber });
+  const validated = profileSchema(MESSAGES).safeParse({ firstName, lastName, phone, country, city, zip, street, houseNumber });
 
   if (!validated.success) {
     return {
@@ -368,9 +380,10 @@ export async function updateProfileAction(prevState: any, formData: FormData) {
 }
 
 export async function toggleNewsletterSubscriptionAction(prevState: any, formData: FormData) {
+  const { MESSAGES } = getTexts(await getRequestLocale());
   const cookieStore = await cookies();
   const jwt = cookieStore.get("jwt")?.value;
-  if (!jwt) redirect("/login");
+  if (!jwt) redirect(await localizedPath(Route.Login));
 
   const subscribe = formData.get("subscribe") === "true";
   const method = subscribe ? "POST" : "DELETE";

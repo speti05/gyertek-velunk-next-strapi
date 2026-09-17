@@ -1,13 +1,16 @@
 import { writeFileSync } from "fs";
 import { emailWrapper } from "../templates/layout";
-import { SystemEmailSubject } from "../../../utils/texts";
+import { getStrapiTexts } from "../../../i18n/get-strapi-texts";
 import { adminEmailContent } from "../templates/newsletter-signup";
 import { getClientUrl } from "../../config/client-url";
 
+const texts = getStrapiTexts();
+
 const html = emailWrapper(
   getClientUrl(),
-  adminEmailContent("teszt.felhasznalo@example.com"),
-  SystemEmailSubject.NewsletterSignup,
+  adminEmailContent(texts, "teszt.felhasznalo@example.com"),
+  texts.SYSTEM_EMAIL_SUBJECT.newsletterSignup,
+  texts,
   "Gyertek Velünk"
 );
 

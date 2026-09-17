@@ -1,5 +1,16 @@
 "use client";
 
+import { useLocale, useLocalizedPath, useTexts } from "@/context/locale-context";
+// These four double as the value persisted on the signup (and compared against form
+// state), so they must stay language independent. Only their visible label, rendered
+// from useTexts() below, is translated.
+import {
+  SIGNUP_BIRTH_COUNTRY_OTHER as BIRTH_COUNTRY_OTHER,
+  SIGNUP_DOCUMENT_TYPE_PASSPORT as DOCUMENT_TYPE_PASSPORT_VALUE,
+  SIGNUP_DOCUMENT_TYPE_ID_CARD as DOCUMENT_TYPE_ID_CARD_VALUE,
+  SIGNUP_DOCUMENT_TYPE_STUDENT_CARD as DOCUMENT_TYPE_STUDENT_CARD_VALUE,
+} from "@/i18n/texts-client";
+
 import { useState } from "react";
 import Box from "@mui/material/Box";
 import CustomStepper from "@/components/custom-ui-components/custom-stepper/custom-stepper";
@@ -13,60 +24,7 @@ import { CustomCheckbox } from "@/components/custom-ui-components/custom-checkbo
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 import { UserProfile } from "@/data/auth-service";
 import { formatDate } from "@/utils/format-date";
-import { EUROPEAN_COUNTRIES, DEFAULT_COUNTRY } from "@/utils/european-countries";
-import {
-  FORM_LABELS,
-  CURRENCY,
-  SIGNUP_STEP_BILLING,
-  SIGNUP_STEP_TRAVEL,
-  SIGNUP_STEP_COMPANIONS,
-  SIGNUP_STEP_SUMMARY,
-  SIGNUP_NEXT_LABEL,
-  SIGNUP_BACK_LABEL,
-  SIGNUP_SUBMIT_LABEL,
-  SIGNUP_BILLING_INFO,
-  SIGNUP_BILLING_WANT_INVOICE,
-  SIGNUP_BILLING_COMPANY_NAME,
-  SIGNUP_BILLING_TAX_NUMBER,
-  SIGNUP_TRAVEL_BIRTH_COUNTRY,
-  SIGNUP_TRAVEL_BIRTH_PLACE,
-  SIGNUP_TRAVEL_BIRTH_DATE,
-  SIGNUP_TRAVEL_DOCUMENT_TYPE,
-  SIGNUP_TRAVEL_DOCUMENT_NUMBER,
-  SIGNUP_TRAVEL_DOCUMENT_ISSUE_DATE,
-  SIGNUP_TRAVEL_DOCUMENT_EXPIRY_DATE,
-  SIGNUP_TRAVEL_ALLERGIES,
-  SIGNUP_TRAVEL_FB_LINK,
-  SIGNUP_TRAVEL_FB_INFO,
-  SIGNUP_DOCUMENT_TYPE_PASSPORT,
-  SIGNUP_DOCUMENT_TYPE_ID_CARD,
-  SIGNUP_DOCUMENT_TYPE_STUDENT_CARD,
-  SIGNUP_COMPANION_ADD_BUTTON,
-  SIGNUP_COMPANION_INFO,
-  SIGNUP_COMPANION_MAX_INFO,
-  SIGNUP_COMPANION_TITLE,
-  SIGNUP_COMPANION_REMOVE,
-  SIGNUP_SUMMARY_TRAVELER_UNIT,
-  SIGNUP_SUMMARY_TRAVELERS,
-  SIGNUP_SUMMARY_TRAVELER_NAMES,
-  SIGNUP_SUMMARY_SCHEDULE,
-  SIGNUP_SUMMARY_TOTAL_PRICE,
-  SIGNUP_SUMMARY_NOTES,
-  SIGNUP_CONFIRM_AWAIT_EMAIL_LABEL,
-  SIGNUP_ASZF_BUTTON_LABEL,
-  SIGNUP_PRIVACY_BUTTON_LABEL,
-  SIGNUP_TOUR_INFO_IN_PROFILE,
-  SIGNUP_CLOSE_LABEL,
-  SIGNUP_DIALOG_TITLE_PREFIX,
-  SIGNUP_ABORT_CONFIRM_TITLE,
-  SIGNUP_ABORT_CONFIRM_CONTENT,
-  SIGNUP_ABORT_CONFIRM_CANCEL,
-  SIGNUP_ABORT_CONFIRM_PROCEED,
-  SIGNUP_VALIDATION,
-  SIGNUP_BIRTH_COUNTRY_OTHER,
-  SIGNUP_BILLING_ADDRESS_LABEL,
-  SIGNUP_TOUR_CONTRACT_LABEL,
-} from "@/utils/texts";
+import { getEuropeanCountries, DEFAULT_COUNTRY } from "@/utils/european-countries";
 import Typography from "@mui/material/Typography";
 import { colors } from "@/sass/mui-override/colors";
 import {
@@ -91,17 +49,6 @@ function formatTaxNumberDisplay(digits: string): string {
   return `${digits.slice(0, 8)}-${digits.slice(8, 9)}-${digits.slice(9, TAX_NUMBER_DIGITS)}`;
 }
 
-const BIRTH_COUNTRY_OTHER = SIGNUP_BIRTH_COUNTRY_OTHER;
-const BIRTH_COUNTRY_OPTIONS = [
-  { value: BIRTH_COUNTRY_OTHER, name: BIRTH_COUNTRY_OTHER },
-  ...EUROPEAN_COUNTRIES,
-];
-
-const DOCUMENT_TYPE_OPTIONS = [
-  { value: SIGNUP_DOCUMENT_TYPE_PASSPORT, name: SIGNUP_DOCUMENT_TYPE_PASSPORT },
-  { value: SIGNUP_DOCUMENT_TYPE_ID_CARD, name: SIGNUP_DOCUMENT_TYPE_ID_CARD },
-  { value: SIGNUP_DOCUMENT_TYPE_STUDENT_CARD, name: SIGNUP_DOCUMENT_TYPE_STUDENT_CARD },
-];
 
 const MAX_COMPANIONS = 5;
 
@@ -165,12 +112,6 @@ const emptyCompanion = (): CompanionData => ({
   fbLink: "",
 });
 
-const STEPS = [
-  SIGNUP_STEP_BILLING,
-  SIGNUP_STEP_TRAVEL,
-  SIGNUP_STEP_COMPANIONS,
-  SIGNUP_STEP_SUMMARY,
-];
 
 interface TourSignupDialogProps {
   open: boolean;
@@ -193,6 +134,28 @@ export function TourSignupDialog({
   endDate,
   price,
 }: TourSignupDialogProps) {
+  const { CURRENCY, FORM_LABELS, SIGNUP_ABORT_CONFIRM_CANCEL, SIGNUP_ABORT_CONFIRM_CONTENT, SIGNUP_ABORT_CONFIRM_PROCEED, SIGNUP_ABORT_CONFIRM_TITLE, SIGNUP_ASZF_BUTTON_LABEL, SIGNUP_BACK_LABEL, SIGNUP_BILLING_ADDRESS_LABEL, SIGNUP_BILLING_COMPANY_NAME, SIGNUP_BILLING_INFO, SIGNUP_BILLING_TAX_NUMBER, SIGNUP_BILLING_WANT_INVOICE, SIGNUP_BIRTH_COUNTRY_OTHER, SIGNUP_CLOSE_LABEL, SIGNUP_COMPANION_ADD_BUTTON, SIGNUP_COMPANION_INFO, SIGNUP_COMPANION_MAX_INFO, SIGNUP_COMPANION_REMOVE, SIGNUP_COMPANION_TITLE, SIGNUP_CONFIRM_AWAIT_EMAIL_LABEL, SIGNUP_DIALOG_TITLE_PREFIX, SIGNUP_DOCUMENT_TYPE_ID_CARD, SIGNUP_DOCUMENT_TYPE_PASSPORT, SIGNUP_DOCUMENT_TYPE_STUDENT_CARD, SIGNUP_NEXT_LABEL, SIGNUP_PRIVACY_BUTTON_LABEL, SIGNUP_STEP_BILLING, SIGNUP_STEP_COMPANIONS, SIGNUP_STEP_SUMMARY, SIGNUP_STEP_TRAVEL, SIGNUP_SUBMIT_LABEL, SIGNUP_SUMMARY_NOTES, SIGNUP_SUMMARY_SCHEDULE, SIGNUP_SUMMARY_TOTAL_PRICE, SIGNUP_SUMMARY_TRAVELERS, SIGNUP_SUMMARY_TRAVELER_NAMES, SIGNUP_SUMMARY_TRAVELER_UNIT, SIGNUP_TOUR_CONTRACT_LABEL, SIGNUP_TOUR_INFO_IN_PROFILE, SIGNUP_TRAVEL_ALLERGIES, SIGNUP_TRAVEL_BIRTH_COUNTRY, SIGNUP_TRAVEL_BIRTH_DATE, SIGNUP_TRAVEL_BIRTH_PLACE, SIGNUP_TRAVEL_DOCUMENT_EXPIRY_DATE, SIGNUP_TRAVEL_DOCUMENT_ISSUE_DATE, SIGNUP_TRAVEL_DOCUMENT_NUMBER, SIGNUP_TRAVEL_DOCUMENT_TYPE, SIGNUP_TRAVEL_FB_INFO, SIGNUP_TRAVEL_FB_LINK, SIGNUP_VALIDATION, TERMS_LINK, PRIVACY_LINK, TRAVEL_CONTRACT_LINK } = useTexts();
+  const localizePath = useLocalizedPath();
+  const locale = useLocale();
+  const countryOptions = getEuropeanCountries(locale);
+
+  const BIRTH_COUNTRY_OPTIONS = [
+    { value: BIRTH_COUNTRY_OTHER, name: SIGNUP_BIRTH_COUNTRY_OTHER },
+    ...countryOptions,
+  ];
+
+  const DOCUMENT_TYPE_OPTIONS = [
+    { value: DOCUMENT_TYPE_PASSPORT_VALUE, name: SIGNUP_DOCUMENT_TYPE_PASSPORT },
+    { value: DOCUMENT_TYPE_ID_CARD_VALUE, name: SIGNUP_DOCUMENT_TYPE_ID_CARD },
+    { value: DOCUMENT_TYPE_STUDENT_CARD_VALUE, name: SIGNUP_DOCUMENT_TYPE_STUDENT_CARD },
+  ];
+
+  const STEPS = [
+    SIGNUP_STEP_BILLING,
+    SIGNUP_STEP_TRAVEL,
+    SIGNUP_STEP_COMPANIONS,
+    SIGNUP_STEP_SUMMARY,
+  ];
   const [step, setStep] = useState(0);
   const [stepErrors, setStepErrors] = useState<Record<string, string>>({});
   const [abortConfirmOpen, setAbortConfirmOpen] = useState(false);
@@ -479,7 +442,7 @@ export function TourSignupDialog({
       <CustomDialog
         open={open}
         onClose={handleClose}
-        title={`${SIGNUP_DIALOG_TITLE_PREFIX}: ${eventTitle}${startDate ? ` - ${formatDate(startDate)}` : ""}`}
+        title={`${SIGNUP_DIALOG_TITLE_PREFIX}: ${eventTitle}${startDate ? ` - ${formatDate(startDate, locale)}` : ""}`}
         actions={dialogActions}
         contentDividers
         maxWidth="sm"
@@ -511,7 +474,7 @@ export function TourSignupDialog({
               label={FORM_LABELS.country}
               value={userProfile.country ?? ""}
               disabled
-              options={EUROPEAN_COUNTRIES}
+              options={countryOptions}
               error={!!stepErrors.billingCountry}
               helperText={stepErrors.billingCountry}
             />
@@ -896,8 +859,8 @@ export function TourSignupDialog({
                   <>
                     <span className="font-semibold">{SIGNUP_SUMMARY_SCHEDULE}:</span>
                     <span>
-                      {startDate ? formatDate(startDate) : ""}
-                      {endDate ? ` – ${formatDate(endDate)}` : ""}
+                      {startDate ? formatDate(startDate, locale) : ""}
+                      {endDate ? ` – ${formatDate(endDate, locale)}` : ""}
                     </span>
                   </>
                 )}
@@ -936,21 +899,21 @@ export function TourSignupDialog({
               <CustomButton
                 variant="outlined"
                 size="small"
-                onClick={() => window.open("/aszf", "_blank")}
+                onClick={() => window.open(localizePath(TERMS_LINK), "_blank")}
               >
                 {SIGNUP_ASZF_BUTTON_LABEL}
               </CustomButton>
               <CustomButton
                 variant="outlined"
                 size="small"
-                onClick={() => window.open("/adatvedelem", "_blank")}
+                onClick={() => window.open(localizePath(PRIVACY_LINK), "_blank")}
               >
                 {SIGNUP_PRIVACY_BUTTON_LABEL}
               </CustomButton>
               <CustomButton
                 variant="outlined"
                 size="small"
-                onClick={() => window.open("/utazasi-szerzodes", "_blank")}
+                onClick={() => window.open(localizePath(TRAVEL_CONTRACT_LINK), "_blank")}
               >
                 {SIGNUP_TOUR_CONTRACT_LABEL}
               </CustomButton>

@@ -4,6 +4,8 @@ import { getStrapiURL } from "@/utils/get-strapi-url";
 import { getUserProfileService } from "./auth-service";
 import { getPreviewContext, previewFetchOptions, type PreviewContext } from "@/utils/preview-mode";
 import { getViewerContext, viewerFetchOptions, type ViewerContext } from "@/data/viewer";
+import { getRequestLocale } from "@/data/locale";
+import type { Locale } from "@/i18n/config";
 
 const BASE_URL = getStrapiURL();
 const DEFAULT_BLOG_PAGE_SIZE = 3;
@@ -103,9 +105,6 @@ const homePageQuery = {
             link: true,
           },
         },
-        "blocks.event-signup-form": {
-          populate: true,
-        },
         "blocks.text-content-block": {
           populate: true,
         },
@@ -118,17 +117,18 @@ const homePageQuery = {
 };
 
 export async function getHomePage() {
-  const preview = await getPreviewContext();
+  const [preview, locale] = await Promise.all([getPreviewContext(), getRequestLocale()]);
   const path = "/api/home-page";
   const url = new URL(path, BASE_URL);
-  url.search = qs.stringify({ ...homePageQuery, status: preview.status });
+  url.search = qs.stringify({ ...homePageQuery, locale, status: preview.status });
 
   return await fetchAPI(url.href, { method: "GET", ...previewFetchOptions(preview) });
 }
 
-const pageBySlugQuery = (slug: string, status?: "draft") =>
+const pageBySlugQuery = (slug: string, locale: Locale, status?: "draft") =>
   qs.stringify({
     status,
+    locale,
     filters: {
       slug: {
         $eq: slug,
@@ -191,9 +191,6 @@ const pageBySlugQuery = (slug: string, status?: "draft") =>
               },
             },
           },
-          "blocks.event-signup-form": {
-            populate: true,
-          },
           "blocks.text-content-block": {
             populate: true,
           },
@@ -209,10 +206,10 @@ const pageBySlugQuery = (slug: string, status?: "draft") =>
   });
 
 export async function getPageBySlug(slug: string) {
-  const preview = await getPreviewContext();
+  const [preview, locale] = await Promise.all([getPreviewContext(), getRequestLocale()]);
   const path = "/api/pages";
   const url = new URL(path, BASE_URL);
-  url.search = pageBySlugQuery(slug, preview.status);
+  url.search = pageBySlugQuery(slug, locale, preview.status);
   return await fetchAPI(url.href, { method: "GET", ...previewFetchOptions(preview) });
 }
 
@@ -248,10 +245,10 @@ const globalSettingQuery = {
 };
 
 export async function getGlobalSettings() {
-  const preview = await getPreviewContext();
+  const [preview, locale] = await Promise.all([getPreviewContext(), getRequestLocale()]);
   const path = "/api/global";
   const url = new URL(path, BASE_URL);
-  url.search = qs.stringify({ ...globalSettingQuery, status: preview.status });
+  url.search = qs.stringify({ ...globalSettingQuery, locale, status: preview.status });
   return fetchAPI(url.href, { method: "GET", ...previewFetchOptions(preview) });
 }
 
@@ -262,10 +259,15 @@ export async function getContent(
   page?: string,
   pageSize: number = DEFAULT_BLOG_PAGE_SIZE
 ) {
-  const [preview, viewer] = await Promise.all([getPreviewContext(), getViewerContext()]);
+  const [preview, viewer, locale] = await Promise.all([
+    getPreviewContext(),
+    getViewerContext(),
+    getRequestLocale(),
+  ]);
   const url = new URL(path, BASE_URL);
 
   url.search = qs.stringify({
+    locale,
     status: preview.status,
     sort: ["createdAt:desc"],
     filters: {
@@ -371,9 +373,14 @@ const blogPopulate = {
 };
 
 export async function getContentBySlug(slug: string, path: string) {
-  const [preview, viewer] = await Promise.all([getPreviewContext(), getViewerContext()]);
+  const [preview, viewer, locale] = await Promise.all([
+    getPreviewContext(),
+    getViewerContext(),
+    getRequestLocale(),
+  ]);
   const url = new URL(path, BASE_URL);
   url.search = qs.stringify({
+    locale,
     status: preview.status,
     filters: {
       $and: [{ slug: { $eq: slug } }, ...disabledFilters(preview, viewer)],
@@ -509,12 +516,17 @@ export async function getUserEventSignupsLoader(jwt: string): Promise<EventSignu
 }
 
 export async function getContentForCalendar(path: string, year: number) {
-  const [preview, viewer] = await Promise.all([getPreviewContext(), getViewerContext()]);
+  const [preview, viewer, locale] = await Promise.all([
+    getPreviewContext(),
+    getViewerContext(),
+    getRequestLocale(),
+  ]);
   const url = new URL(path, BASE_URL);
   const startOfYear = new Date(year, 0, 1).toISOString();
   const endOfYear = new Date(year, 11, 31).toISOString();
 
   url.search = qs.stringify({
+    locale,
     status: preview.status,
     sort: ["startDate:asc"],
     filters: {

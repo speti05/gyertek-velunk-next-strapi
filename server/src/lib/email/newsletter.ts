@@ -4,6 +4,7 @@ import { newsletterEmailWrapper } from "./templates/newsletter";
 import { blocksToHtml } from "../../api/newsletter/services/blocks-to-html";
 import { buildUnsubscribeUrl } from "../../api/newsletter/services/unsubscribe-token";
 import { getSiteSettings } from "./get-site-settings";
+import { getStrapiTexts } from "../../i18n/get-strapi-texts";
 
 const headerAttachment = {
   filename: "hirlevel-fejlec-1100.jpg",
@@ -16,7 +17,10 @@ export const sendNewsletterBroadcast = async (
   body: unknown,
   recipients: string[]
 ): Promise<number> => {
-  const t = await getTransporter();
+  const transporter = await getTransporter();
+  // A newsletter signup stores only an e-mail address, so the recipient's language is
+  // unknown here. The broadcast goes out in the default locale.
+  const texts = getStrapiTexts();
   const bodyHtml = blocksToHtml(body);
   const { organizationName } = await getSiteSettings();
   let sentCount = 0;
@@ -25,11 +29,11 @@ export const sendNewsletterBroadcast = async (
 
   for (const recipient of recipients) {
     try {
-      await t.sendMail({
+      await transporter.sendMail({
         from: `"${organizationName}" <${process.env.SMTP_USER}>`,
         to: recipient,
         subject,
-        html: newsletterEmailWrapper(subject, bodyHtml, buildUnsubscribeUrl(recipient), organizationName),
+        html: newsletterEmailWrapper(texts, subject, bodyHtml, buildUnsubscribeUrl(recipient), organizationName),
         attachments: [headerAttachment],
       });
       sentCount++;

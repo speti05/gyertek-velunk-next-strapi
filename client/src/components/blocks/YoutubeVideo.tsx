@@ -1,5 +1,6 @@
+import { getTexts } from "@/i18n/texts";
+import { getRequestLocale } from "@/data/locale";
 import { YoutubeVideoProps } from "@/types";
-import { YOUTUBE_VIDEO_FALLBACK_TITLE } from "@/utils/texts";
 
 function getYoutubeVideoId(url: string): string | null {
   let parsed: URL;
@@ -22,7 +23,7 @@ function getYoutubeVideoId(url: string): string | null {
   return parsed.searchParams.get("v");
 }
 
-export function YoutubeVideo({
+export async function YoutubeVideo({
   title,
   videoUrl,
   description,
@@ -30,6 +31,7 @@ export function YoutubeVideo({
   startTime,
   privacyMode = true,
 }: Readonly<YoutubeVideoProps>) {
+  const { YOUTUBE_VIDEO_FALLBACK_TITLE } = getTexts(await getRequestLocale());
   const videoId = getYoutubeVideoId(videoUrl);
   if (!videoId) return null;
 

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { DIALOG_CONFIRM_LABEL, DIALOG_CANCEL_LABEL } from "@/utils/texts";
+import { useTexts } from "@/context/locale-context";
 import Dialog, { DialogProps } from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -36,12 +36,17 @@ export const CustomDialog: React.FC<CustomDialogProps> = ({
   contentDividers,
   actions,
   onConfirm,
-  confirmLabel = DIALOG_CONFIRM_LABEL,
-  cancelLabel = DIALOG_CANCEL_LABEL,
+  confirmLabel,
+  cancelLabel,
   confirmDisabled = false,
   closeOnBackdropClick = false,
   ...props
 }) => {
+  // A default parameter cannot call a hook, so the fallback is resolved in the body.
+  const { DIALOG_CONFIRM_LABEL, DIALOG_CANCEL_LABEL } = useTexts();
+  const resolvedConfirmLabel = confirmLabel ?? DIALOG_CONFIRM_LABEL;
+  const resolvedCancelLabel = cancelLabel ?? DIALOG_CANCEL_LABEL;
+
   return (
     <Dialog
       open={open}
@@ -68,7 +73,7 @@ export const CustomDialog: React.FC<CustomDialogProps> = ({
         {actions ?? (
           <>
             <Button onClick={onClose} color="inherit" sx={{ flex: "1" }}>
-              {cancelLabel}
+              {resolvedCancelLabel}
             </Button>
             {onConfirm && (
               <Button
@@ -78,7 +83,7 @@ export const CustomDialog: React.FC<CustomDialogProps> = ({
                 color="primary"
                 disabled={confirmDisabled}
               >
-                {confirmLabel}
+                {resolvedConfirmLabel}
               </Button>
             )}
           </>

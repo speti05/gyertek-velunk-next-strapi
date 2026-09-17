@@ -5,12 +5,7 @@ import { userEmailContent, adminEmailContent } from "./templates/event-signup";
 import { getSiteSettings } from "./get-site-settings";
 import { getTravelContractAttachment } from "./travel-contract-attachment";
 import { getClientUrl } from "../config/client-url";
-import {
-  EVENT_SIGNUP_ADMIN_MAIL_SUBJECT,
-  EVENT_SIGNUP_FROM_NAME,
-  EVENT_SIGNUP_USER_MAIL_SUBJECT,
-  SystemEmailSubject,
-} from "../../utils/texts";
+import { getStrapiTexts, type Locale } from "../../i18n/get-strapi-texts";
 
 const headerAttachment = {
   filename: "email-fejlec-600.jpg",
@@ -33,7 +28,8 @@ interface CompanionData {
   fbLink: string;
 }
 
-export const sendSignupEmails = async (signupData: {
+export const sendSignupEmails = async (
+  signupData: {
   userEmail: string;
   firstName: string;
   lastName: string;
@@ -59,8 +55,11 @@ export const sendSignupEmails = async (signupData: {
   companions?: CompanionData[];
   notes?: string;
   eventPrice?: string;
-}) => {
-  const t = await getTransporter();
+  },
+  locale: Locale
+) => {
+  const texts = getStrapiTexts(locale);
+  const transporter = await getTransporter();
   const {
     userEmail, firstName, lastName, eventName, telephone,
     billingCountry, billingCity, billingZip, billingStreet, billingHouseNumber,
@@ -77,19 +76,20 @@ export const sendSignupEmails = async (signupData: {
     `Sending event signup emails for ${userEmail} (${firstName} ${lastName}) for event ${eventName}`
   );
 
-  const travelContractAttachment = await getTravelContractAttachment().catch((err) => {
+  const travelContractAttachment = await getTravelContractAttachment(locale).catch((err) => {
     console.error("Failed to build travel contract attachment:", err);
     return null;
   });
 
-  await t.sendMail({
+  await transporter.sendMail({
     from: `"${organizationName}" <${process.env.SMTP_USER}>`,
     to: userEmail,
-    subject: EVENT_SIGNUP_USER_MAIL_SUBJECT(eventName),
+    subject: texts.EVENT_SIGNUP_USER_MAIL_SUBJECT(eventName),
     html: emailWrapper(
       siteUrl,
-      userEmailContent(firstName, lastName, eventName, eventPrice, 1 + (companions?.length ?? 0), defaultCurrency, bankAccountNumber, bankBeneficiaryName, contactEmail, organizationName),
-      SystemEmailSubject.EventSignup,
+      userEmailContent(texts, firstName, lastName, eventName, eventPrice, 1 + (companions?.length ?? 0), defaultCurrency, bankAccountNumber, bankBeneficiaryName, contactEmail, organizationName),
+      texts.SYSTEM_EMAIL_SUBJECT.eventSignup,
+      texts,
       organizationName
     ),
     attachments: travelContractAttachment
@@ -97,13 +97,13 @@ export const sendSignupEmails = async (signupData: {
       : [headerAttachment],
   });
 
-  await t.sendMail({
-    from: `"${EVENT_SIGNUP_FROM_NAME(organizationName)}" <${process.env.SMTP_USER}>`,
+  await transporter.sendMail({
+    from: `"${texts.EVENT_SIGNUP_FROM_NAME(organizationName)}" <${process.env.SMTP_USER}>`,
     to: process.env.ADMIN_EMAIL,
-    subject: EVENT_SIGNUP_ADMIN_MAIL_SUBJECT(eventName),
+    subject: texts.EVENT_SIGNUP_ADMIN_MAIL_SUBJECT(eventName),
     html: emailWrapper(
       siteUrl,
-      adminEmailContent({
+      adminEmailContent(texts, {
         firstName, lastName, userEmail, eventName, telephone,
         billingCountry, billingCity, billingZip, billingStreet, billingHouseNumber,
         wantInvoice, companyName, taxNumber,
@@ -111,7 +111,8 @@ export const sendSignupEmails = async (signupData: {
         documentType, documentNumber, documentIssueDate, documentExpiryDate,
         allergies, fbLink, companions, notes,
       }),
-      SystemEmailSubject.EventSignupAdmin,
+      texts.SYSTEM_EMAIL_SUBJECT.eventSignupAdmin,
+      texts,
       organizationName
     ),
     attachments: [headerAttachment],

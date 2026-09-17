@@ -5,15 +5,7 @@
 import { factories } from "@strapi/strapi";
 import { verifyUnsubscribeToken } from "../../newsletter/services/unsubscribe-token";
 import { getClientUrl } from "../../../lib/config/client-url";
-import {
-  GO_HOME_LABEL,
-  SITE_NAME,
-  UNSUBSCRIBE_ERROR_TITLE,
-  UNSUBSCRIBE_INCOMPLETE_LINK,
-  UNSUBSCRIBE_INVALID_LINK,
-  UNSUBSCRIBE_SUCCESS_MESSAGE,
-  UNSUBSCRIBE_SUCCESS_TITLE,
-} from "../../../utils/texts";
+import { getStrapiTexts, type StrapiTexts } from "../../../i18n/get-strapi-texts";
 
 const UID = "api::newsletter-signup.newsletter-signup" as const;
 
@@ -89,16 +81,19 @@ export default factories.createCoreController(UID, ({ strapi }) => ({
   },
 
   async unsubscribe(ctx) {
+    // Reached by clicking a link in a newsletter, and a newsletter signup stores only an
+    // e-mail address - the reader's language is unknown, so this page is default-locale.
+    const texts = getStrapiTexts();
     const { email, token } = ctx.query as { email?: string; token?: string };
 
     const fail = (message: string) => {
       ctx.type = "html";
       ctx.status = 400;
-      ctx.body = unsubscribePage(UNSUBSCRIBE_ERROR_TITLE, message, false);
+      ctx.body = unsubscribePage(texts, texts.UNSUBSCRIBE_ERROR_TITLE, message, false);
     };
 
-    if (!email || !token) return fail(UNSUBSCRIBE_INCOMPLETE_LINK);
-    if (!verifyUnsubscribeToken(email, token)) return fail(UNSUBSCRIBE_INVALID_LINK);
+    if (!email || !token) return fail(texts.UNSUBSCRIBE_INCOMPLETE_LINK);
+    if (!verifyUnsubscribeToken(email, token)) return fail(texts.UNSUBSCRIBE_INVALID_LINK);
 
     const existing = await strapi.documents(UID).findFirst({
       filters: { email: email.toLowerCase() },
@@ -108,11 +103,16 @@ export default factories.createCoreController(UID, ({ strapi }) => ({
     }
 
     ctx.type = "html";
-    ctx.body = unsubscribePage(UNSUBSCRIBE_SUCCESS_TITLE, UNSUBSCRIBE_SUCCESS_MESSAGE, true);
+    ctx.body = unsubscribePage(texts, texts.UNSUBSCRIBE_SUCCESS_TITLE, texts.UNSUBSCRIBE_SUCCESS_MESSAGE, true);
   },
 }));
 
-function unsubscribePage(title: string, message: string, success: boolean): string {
+function unsubscribePage(
+  t: StrapiTexts,
+  title: string,
+  message: string,
+  success: boolean
+): string {
   const color = success ? "#377F76" : "#c0392b";
   const siteUrl = getClientUrl();
   return `<!DOCTYPE html>
@@ -126,15 +126,15 @@ function unsubscribePage(title: string, message: string, success: boolean): stri
 <body style="margin:0;padding:0;background:#F1E8D9;font-family:'Source Sans 3',Arial,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;">
   <div style="max-width:480px;margin:40px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.12);text-align:center;">
     <div style="background:${color};padding:32px 40px;">
-      <h1 style="font-family:'Luckiest Guy',cursive;color:#fff;margin:0;font-size:28px;letter-spacing:2px;font-weight:400;">${SITE_NAME}</h1>
+      <h1 style="font-family:'Luckiest Guy',cursive;color:#fff;margin:0;font-size:28px;letter-spacing:2px;font-weight:400;">${t.SITE_NAME}</h1>
     </div>
     <div style="padding:48px 40px;">
       <h2 style="font-family:'Luckiest Guy',cursive;color:${color};font-size:24px;margin:0 0 16px;font-weight:400;">${title}</h2>
       <p style="color:#555;font-size:16px;line-height:1.6;margin:0 0 32px;">${message}</p>
-      <a href="${siteUrl}" style="background:${color};color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:16px;font-weight:600;">${GO_HOME_LABEL}</a>
+      <a href="${siteUrl}" style="background:${color};color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:16px;font-weight:600;">${t.GO_HOME_LABEL}</a>
     </div>
     <div style="background:#70634C;padding:20px 40px;text-align:center;">
-      <p style="color:#F1E8D9;font-size:13px;margin:0;">&copy; ${new Date().getFullYear()} ${SITE_NAME}</p>
+      <p style="color:#F1E8D9;font-size:13px;margin:0;">&copy; ${new Date().getFullYear()} ${t.SITE_NAME}</p>
     </div>
   </div>
 </body>
