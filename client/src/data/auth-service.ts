@@ -135,7 +135,20 @@ export async function resetPasswordService(
   }
 }
 
-export async function getUserProfileService(jwt: string): Promise<UserProfile | null> {
+/**
+ * Why `/api/users/me` did not return a profile.
+ *
+ * `unauthorized` means Strapi itself rejected the token - expired, signed with a rotated
+ * secret, or belonging to a user that was deleted or blocked. It is the only outcome that
+ * justifies logging the visitor out; `error` (Strapi unreachable, 5xx) must not, or an
+ * outage would sign everyone out.
+ */
+export type UserProfileResult =
+  | { status: "ok"; profile: UserProfile }
+  | { status: "unauthorized" }
+  | { status: "error" };
+
+export async function getUserProfileResult(jwt: string): Promise<UserProfileResult> {
   const url = new URL("/api/users/me", BASE_URL);
 
   try {
@@ -147,12 +160,19 @@ export async function getUserProfileService(jwt: string): Promise<UserProfile | 
       },
       cache: "no-store",
     });
-    if (!response.ok) return null;
-    return await response.json();
+    if (response.status === 401 || response.status === 403) return { status: "unauthorized" };
+    if (!response.ok) return { status: "error" };
+    return { status: "ok", profile: await response.json() };
   } catch (error) {
     console.error("Get User Profile Service Error:", error);
-    return null;
+    return { status: "error" };
   }
+}
+
+/** The profile, or null for any reason it could not be read. */
+export async function getUserProfileService(jwt: string): Promise<UserProfile | null> {
+  const result = await getUserProfileResult(jwt);
+  return result.status === "ok" ? result.profile : null;
 }
 
 export async function updateUserProfileService(

@@ -36,7 +36,10 @@ function SubmitBtn() {
   );
 }
 
-function AuthFormInner() {
+/** A notice rendered above the form, e.g. the reason the visitor was sent back here. */
+type AuthFormProps = { notice?: string };
+
+function AuthFormInner({ notice }: AuthFormProps) {
   const { AUTH_LOGIN_LABEL, AUTH_REGISTER_LABEL, AUTH_DIVIDER_LABEL, AUTH_PASSWORD_LABEL, AUTH_FORGOT_PASSWORD_LABEL, AUTH_NO_ACCOUNT_HINT, FORM_LABELS } = useTexts();
   const localizePath = useLocalizedPath();
   const [formState, formAction] = useActionState(authAction, INITIAL_STATE);
@@ -46,6 +49,7 @@ function AuthFormInner() {
   return (
     <>
       <h1 className="auth-page__title">{AUTH_LOGIN_LABEL}</h1>
+      <CustomAlertMessage warningMessage={notice} />
       <form ref={formRef} className="auth-page__form" onSubmit={handleSubmit}>
         <input type="hidden" name="mode" defaultValue="login" />
         <CustomTextInput
@@ -83,6 +87,6 @@ function AuthFormInner() {
   );
 }
 
-export function AuthForm() {
-  return <AuthFormInner />;
+export function AuthForm({ notice }: AuthFormProps) {
+  return <AuthFormInner notice={notice} />;
 }

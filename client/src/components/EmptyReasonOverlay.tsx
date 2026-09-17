@@ -42,11 +42,7 @@ export function EmptyReasonOverlay({
       }}
     >
       <div className="empty-reason-overlay__clip">
-        <div
-          className={`empty-reason-overlay__panel${
-            backgroundImage?.url ? " empty-reason-overlay__panel--with-image" : ""
-          }`}
-        >
+        <div className="empty-reason-overlay__panel">
           {backgroundImage?.url && (
             <StrapiImage
               src={backgroundImage.url}

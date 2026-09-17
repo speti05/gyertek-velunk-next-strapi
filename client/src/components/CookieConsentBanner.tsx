@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import * as CookieConsent from "vanilla-cookieconsent";
 import { useCookieConsent } from "@/context/cookie-consent-context";
 import { useTexts } from "@/context/locale-context";
+import { AUTH_COOKIE, USER_EMAIL_COOKIE } from "@/data/auth-guard";
 
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 import { CustomDialog } from "@/components/custom-ui-components/custom-dialog/custom-dialog";
@@ -51,13 +52,13 @@ export function CookieConsentBanner() {
 
   const NECESSARY_COOKIES = [
     {
-      name: "jwt",
+      name: AUTH_COOKIE,
       domain: COOKIE_DOMAIN_SITE,
       expiration: COOKIE_EXPIRY_7_DAYS,
       description: COOKIE_JWT_DESC,
     },
     {
-      name: "user_email",
+      name: USER_EMAIL_COOKIE,
       domain: COOKIE_DOMAIN_SITE,
       expiration: COOKIE_EXPIRY_7_DAYS,
       description: COOKIE_EMAIL_DESC,

@@ -18,9 +18,9 @@ value in the correct location by hand.
 | Value | Tab | Why |
 | ----- | --- | --- |
 
-| `VPS_HOST` | Secrets | not used in local development (See FIRST_DEPLOYMENT.md) |
-| `VPS_USER` | Secrets | not used in local development (See FIRST_DEPLOYMENT.md) |
-| `VPS_SSH_KEY` | Secrets | not used in local development (See FIRST_DEPLOYMENT.md) |
+| `VPS_HOST` | Secrets | not used in local development (See docs/FIRST_DEPLOYMENT.md) |
+| `VPS_USER` | Secrets | not used in local development (See docs/FIRST_DEPLOYMENT.md) |
+| `VPS_SSH_KEY` | Secrets | not used in local development (See docs/FIRST_DEPLOYMENT.md) |
 | `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` | Secrets | build-time, referenced as `secrets.` |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Variables | build-time, referenced as `vars.` |
 | `NEXT_PUBLIC_STRAPI_URL` | Variables | build-time, referenced as `vars.` — set it to `https://admin.gyertekvelunk.eu` |

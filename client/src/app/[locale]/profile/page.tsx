@@ -12,6 +12,7 @@ import { StrapiImage } from "@/components/StrapiImage";
 import { getTexts } from "@/i18n/texts";
 import { getRequestLocale, localizedPath } from "@/data/locale";
 import { toPublicPath, Route } from "@/i18n/config";
+import { AUTH_COOKIE, sessionExpiredPath } from "@/data/auth-guard";
 
 type PaymentStatusChip = Record<
   PaymentStatus,
@@ -30,13 +31,25 @@ export default async function ProfilePage() {
   };
 
   const cookieStore = await cookies();
-  const jwt = cookieStore.get("jwt")?.value ?? null;
+  const jwt = cookieStore.get(AUTH_COOKIE)?.value ?? null;
 
+  // The proxy guard already turned away requests with no token or an expired one; this
+  // covers the same page being rendered outside a guarded request (and keeps the page
+  // correct on its own, should the route ever drop out of PROTECTED_ROUTES).
   if (!jwt) {
     redirect(await localizedPath(Route.Login));
   }
 
-  const { profile: userProfile, isNewsletterSubscribed } = await getUserProfilePageLoader(jwt);
+  const { profileResult, isNewsletterSubscribed } = await getUserProfilePageLoader(jwt);
+
+  // The token looked valid to the guard but Strapi refused it - the secret was rotated,
+  // or the user was deleted or blocked. A Server Component cannot clear cookies, so the
+  // route handler does it and sends the visitor on to the login page.
+  if (profileResult.status === "unauthorized") {
+    redirect(sessionExpiredPath(locale));
+  }
+
+  const userProfile = profileResult.status === "ok" ? profileResult.profile : null;
   const signups = userProfile ? await getUserEventSignupsLoader(jwt) : [];
 
   const displayEmail = userProfile?.email ?? "";

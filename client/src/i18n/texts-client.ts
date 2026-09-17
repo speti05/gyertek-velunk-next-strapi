@@ -137,6 +137,7 @@ export const MESSAGES = {
   recaptchaFailed: "A biztonsági ellenőrzés sikertelen. Kérjük, próbálja újra.",
   invalidPassword: "A jelszónak legalább 6 és legfeljebb 15 karakter hosszúnak kell lennie",
   loginFailed: "Hibás email cím vagy jelszó.",
+  sessionExpired: "A bejelentkezésed lejárt. Kérjük, jelentkezz be újra.",
   emailAlreadyTaken: "Ez az email cím már regisztrálva van.",
   registrationFailed: "Sikertelen regisztráció. Kérjük, próbálja újra.",
   invalidOperation: "Érvénytelen művelet.",

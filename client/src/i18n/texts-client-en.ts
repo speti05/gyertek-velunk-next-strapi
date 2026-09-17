@@ -124,6 +124,7 @@ export const MESSAGES = {
   recaptchaFailed: "The security check failed. Please try again.",
   invalidPassword: "The password must be between 6 and 15 characters long",
   loginFailed: "Incorrect email address or password.",
+  sessionExpired: "Your session has expired. Please sign in again.",
   emailAlreadyTaken: "This email address is already registered.",
   registrationFailed: "Registration failed. Please try again.",
   invalidOperation: "Invalid operation.",

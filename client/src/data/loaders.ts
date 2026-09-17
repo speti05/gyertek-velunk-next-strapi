@@ -1,7 +1,7 @@
 import qs from "qs";
 import { fetchAPI } from "@/utils/fetch-api";
 import { getStrapiURL } from "@/utils/get-strapi-url";
-import { getUserProfileService } from "./auth-service";
+import { getUserProfileResult, getUserProfileService } from "./auth-service";
 import { getPreviewContext, previewFetchOptions, type PreviewContext } from "@/utils/preview-mode";
 import { getViewerContext, viewerFetchOptions, type ViewerContext } from "@/data/viewer";
 import { getRequestLocale } from "@/data/locale";
@@ -460,12 +460,17 @@ export async function getMyNewsletterSubscriptionLoader(jwt: string): Promise<bo
   return result?.subscribed ?? false;
 }
 
+/**
+ * Everything the profile page needs. The profile comes back as a result rather than a
+ * plain value so the page can tell "Strapi rejected the token" (sign the visitor out)
+ * apart from "Strapi did not answer" (keep them signed in).
+ */
 export async function getUserProfilePageLoader(jwt: string) {
-  const [profile, isNewsletterSubscribed] = await Promise.all([
-    getUserProfileService(jwt),
+  const [profileResult, isNewsletterSubscribed] = await Promise.all([
+    getUserProfileResult(jwt),
     getMyNewsletterSubscriptionLoader(jwt),
   ]);
-  return { profile, isNewsletterSubscribed };
+  return { profileResult, isNewsletterSubscribed };
 }
 
 export async function getUserEventSignupsLoader(jwt: string): Promise<EventSignupEntry[]> {

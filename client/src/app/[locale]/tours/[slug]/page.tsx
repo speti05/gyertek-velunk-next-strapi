@@ -12,6 +12,7 @@ import { BlockRenderer } from "@/components/BlockRenderer";
 import { EventCard } from "@/components/EventCard";
 import { cookies } from "next/headers";
 import { getUserProfileService } from "@/data/auth-service";
+import { AUTH_COOKIE } from "@/data/auth-guard";
 import { getUserEventSignupsLoader } from "@/data/loaders";
 import { ContentListHeadline } from "@/components/ContentListHeadline";
 
@@ -33,7 +34,7 @@ export default async function SingleEventRoute({ params, searchParams }: ParamsP
   const { event, blocks } = await loader(slug);
 
   const cookieStore = await cookies();
-  const jwt = cookieStore.get("jwt")?.value ?? null;
+  const jwt = cookieStore.get(AUTH_COOKIE)?.value ?? null;
   const userProfile = jwt ? await getUserProfileService(jwt) : null;
 
   let alreadySignedUp = false;

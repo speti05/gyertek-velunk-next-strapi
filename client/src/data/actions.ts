@@ -3,6 +3,7 @@ import { z } from "zod";
 import { cookies } from "next/headers";
 import { subscribeService, eventsSubscribeService, contactRequestService } from "./services";
 import { getUserProfileService } from "./auth-service";
+import { AUTH_COOKIE } from "@/data/auth-guard";
 import { getTexts, type Texts } from "@/i18n/texts";
 import { getRequestLocale } from "@/data/locale";
 import { isDev } from "@clientRoot/env";
@@ -219,7 +220,7 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
   }
 
   const cookieStore = await cookies();
-  const jwt = cookieStore.get("jwt")?.value;
+  const jwt = cookieStore.get(AUTH_COOKIE)?.value;
   if (!jwt) {
     return {
       ...prevState,

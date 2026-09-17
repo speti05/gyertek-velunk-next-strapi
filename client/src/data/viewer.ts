@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { cache } from "react";
 import { getUserProfileService } from "@/data/auth-service";
+import { AUTH_COOKIE } from "@/data/auth-guard";
 
 /** Mirrors TEST_USER_ROLE_TYPE in the Strapi app. */
 const TEST_USER_ROLE_TYPE = "test-user";
@@ -23,7 +24,7 @@ const ANONYMOUS: ViewerContext = { jwt: null, isTestUser: false };
 export const getViewerContext = cache(async (): Promise<ViewerContext> => {
   let jwt: string | null = null;
   try {
-    jwt = (await cookies()).get("jwt")?.value ?? null;
+    jwt = (await cookies()).get(AUTH_COOKIE)?.value ?? null;
   } catch {
     return ANONYMOUS;
   }

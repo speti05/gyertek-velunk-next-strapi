@@ -18,6 +18,7 @@ import {
 } from "./auth-service";
 import { isDev } from "@clientRoot/env";
 import { Route } from "@/i18n/config";
+import { AUTH_COOKIE, USER_EMAIL_COOKIE } from "@/data/auth-guard";
 
 const STRAPI_URL = process.env.STRAPI_API_URL ?? "http://localhost:1337";
 
@@ -72,8 +73,8 @@ async function setAuthCookies(jwt: string, email: string) {
     maxAge: 60 * 60 * 24 * 7,
     path: "/",
   };
-  cookieStore.set("jwt", jwt, opts);
-  cookieStore.set("user_email", email, opts);
+  cookieStore.set(AUTH_COOKIE, jwt, opts);
+  cookieStore.set(USER_EMAIL_COOKIE, email, opts);
 }
 
 export async function authAction(prevState: any, formData: FormData) {
@@ -179,8 +180,8 @@ export async function authAction(prevState: any, formData: FormData) {
 
 export async function logoutAction() {
   const cookieStore = await cookies();
-  cookieStore.delete("jwt");
-  cookieStore.delete("user_email");
+  cookieStore.delete(AUTH_COOKIE);
+  cookieStore.delete(USER_EMAIL_COOKIE);
   redirect(await localizedPath(Route.Login));
 }
 
@@ -322,7 +323,7 @@ const profileSchema = (MESSAGES: Messages) => z.object({
 export async function updateProfileAction(prevState: any, formData: FormData) {
   const { MESSAGES } = getTexts(await getRequestLocale());
   const cookieStore = await cookies();
-  const jwt = cookieStore.get("jwt")?.value;
+  const jwt = cookieStore.get(AUTH_COOKIE)?.value;
   if (!jwt) redirect(await localizedPath(Route.Login));
 
   const firstName = formData.get("firstName") as string;
@@ -382,7 +383,7 @@ export async function updateProfileAction(prevState: any, formData: FormData) {
 export async function toggleNewsletterSubscriptionAction(prevState: any, formData: FormData) {
   const { MESSAGES } = getTexts(await getRequestLocale());
   const cookieStore = await cookies();
-  const jwt = cookieStore.get("jwt")?.value;
+  const jwt = cookieStore.get(AUTH_COOKIE)?.value;
   if (!jwt) redirect(await localizedPath(Route.Login));
 
   const subscribe = formData.get("subscribe") === "true";

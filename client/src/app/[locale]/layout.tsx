@@ -19,6 +19,7 @@ import { Footer } from "@/components/layout/Footer";
 import { ScrollToHash } from "@/components/ScrollToHash";
 import { MuiThemeProvider } from "@/components/providers/theme-provider/theme-provider";
 import { AuthProvider } from "@/context/auth-context";
+import { AUTH_COOKIE, USER_EMAIL_COOKIE } from "@/data/auth-guard";
 import { CookieConsentProvider } from "@/context/cookie-consent-context";
 import { CookieConsentInit } from "@/components/CookieConsentInit";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
@@ -114,8 +115,8 @@ export default async function RootLayout({
 
   const { header, footer, showLanguageSwitcher } = await loader();
   const cookieStore = await cookies();
-  const isLoggedIn = !!cookieStore.get("jwt")?.value;
-  const userEmail = cookieStore.get("user_email")?.value;
+  const isLoggedIn = !!cookieStore.get(AUTH_COOKIE)?.value;
+  const userEmail = cookieStore.get(USER_EMAIL_COOKIE)?.value;
   const { initialHasResponded, initialRecaptchaConsented, initialAnalyticsConsented } =
     parseInitialConsent(cookieStore.get("cc_cookie")?.value);
 
