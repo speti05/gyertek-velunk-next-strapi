@@ -4,6 +4,7 @@ import { logoutAction } from "@/data/auth-actions";
 import { SubmitButtonNoSSR } from "@/components/SubmitButtonNoSSR";
 import { getUserEventSignupsLoader, getUserProfilePageLoader, type PaymentStatus } from "@/data/loaders";
 import { ProfileForm } from "./ProfileForm";
+import { NewsletterPanel } from "./NewsletterPanel";
 import { SignupDetailsToggle } from "./SignupDetailsToggle";
 import { formatDate } from "@/utils/format-date";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
@@ -22,7 +23,7 @@ type PaymentStatusChip = Record<
 
 export default async function ProfilePage() {
   const locale = await getRequestLocale();
-  const { AUTH_LOGOUT_LABEL, YOUR_PROFILE_TITLE, PROFILE_MY_TOURS_SECTION, PROFILE_NO_TOURS_MESSAGE, PROFILE_PAYMENT_PENDING, PROFILE_PAYMENT_DEPOSIT_PAID, PROFILE_PAYMENT_PAID, PROFILE_PAYMENT_CANCELLED, FORM_LABELS, CURRENCY } = getTexts(locale);
+  const { AUTH_LOGOUT_LABEL, YOUR_PROFILE_TITLE, PROFILE_MY_TOURS_SECTION, PROFILE_NO_TOURS_MESSAGE, PROFILE_PAYMENT_PENDING, PROFILE_PAYMENT_DEPOSIT_PAID, PROFILE_PAYMENT_PAID, PROFILE_PAYMENT_CANCELLED, PROFILE_TOURS_STAT_LABEL, FORM_LABELS, CURRENCY } = getTexts(locale);
 
   const PAYMENT_STATUS_CHIP: PaymentStatusChip = {
     pending: { label: PROFILE_PAYMENT_PENDING, color: "warning" },
@@ -56,86 +57,129 @@ export default async function ProfilePage() {
   const displayEmail = userProfile?.email ?? "";
   const usernameFromEmail = displayEmail.split("@")[0];
   const firstName = userProfile?.firstName ?? null;
+  const lastName = userProfile?.lastName ?? null;
+
+  // Hungarian name order - the same one the sign-up details use. Until the profile is
+  // filled in there is no name to show, so the local part of the email stands in.
+  const displayName = [lastName, firstName].filter(Boolean).join(" ") || usernameFromEmail;
+  const initials =
+    [lastName, firstName]
+      .map((part) => part?.charAt(0) ?? "")
+      .join("")
+      .toUpperCase() || usernameFromEmail.charAt(0).toUpperCase();
 
   return (
     <>
       <ContentListHeadline headline={YOUR_PROFILE_TITLE} isMain={true} />
 
-      <main className="auth-page auth-page--profile">
-        <div className="auth-page__card auth-page__card--wide">
-          <ProfileForm
-            email={displayEmail}
-            firstName={userProfile?.firstName ?? null}
-            lastName={userProfile?.lastName ?? null}
-            phone={userProfile?.phone ?? null}
-            country={userProfile?.country ?? null}
-            city={userProfile?.city ?? null}
-            zip={userProfile?.zip ?? null}
-            street={userProfile?.street ?? null}
-            houseNumber={userProfile?.houseNumber ?? null}
-            isNewsletterSubscribed={isNewsletterSubscribed}
-          />
+      <main className="profile-page">
+        <div className="profile-page__layout">
+          <aside className="profile-page__sidebar">
+            <div className="profile-identity">
+              <span className="profile-identity__avatar" aria-hidden="true">
+                {initials}
+              </span>
+              <p className="profile-identity__name">{displayName}</p>
+              <p className="profile-identity__email">{displayEmail}</p>
 
-          <section className="auth-page__section">
-            <h2 className="auth-page__section-title">{PROFILE_MY_TOURS_SECTION}</h2>
-            {signups.length === 0 ? (
-              <p className="auth-page__footer-text">{PROFILE_NO_TOURS_MESSAGE}</p>
-            ) : (
-              <ul className="auth-page__tours-list no-list-style">
-                {signups.map((signup) =>
-                  signup.event ? (
-                    <li key={signup.id} className="auth-page__tour-item auth-page__tour-item--column">
-                      <div className="auth-page__tour-item-main">
-                        {signup.event.image?.url && (
-                          <div className="auth-page__tour-item__image">
-                            <StrapiImage
-                              src={signup.event.image.url}
-                              alt={signup.event.image.alternativeText || signup.event.title}
-                              width={80}
-                              height={80}
+              <div className="profile-identity__stat">
+                <span className="profile-identity__stat-value">{signups.length}</span>
+                <span className="profile-identity__stat-label">{PROFILE_TOURS_STAT_LABEL}</span>
+              </div>
+
+              <form action={logoutAction} className="profile-identity__logout">
+                <SubmitButtonNoSSR text={AUTH_LOGOUT_LABEL} />
+              </form>
+            </div>
+
+            <NewsletterPanel isNewsletterSubscribed={isNewsletterSubscribed} />
+          </aside>
+
+          <div className="profile-page__main">
+            <ProfileForm
+              email={displayEmail}
+              firstName={firstName}
+              lastName={lastName}
+              phone={userProfile?.phone ?? null}
+              country={userProfile?.country ?? null}
+              city={userProfile?.city ?? null}
+              zip={userProfile?.zip ?? null}
+              street={userProfile?.street ?? null}
+              houseNumber={userProfile?.houseNumber ?? null}
+            />
+
+            <section className="profile-panel">
+              <h2 className="profile-panel__title">{PROFILE_MY_TOURS_SECTION}</h2>
+              {signups.length === 0 ? (
+                <p className="profile-page__empty">{PROFILE_NO_TOURS_MESSAGE}</p>
+              ) : (
+                <ul className="profile-tours no-list-style">
+                  {signups.map((signup) =>
+                    signup.event ? (
+                      <li key={signup.id} className="profile-tour">
+                        <div className="profile-tour__head">
+                          <div className="profile-tour__main">
+                            {signup.event.image?.url && (
+                              <div className="profile-tour__image">
+                                <StrapiImage
+                                  src={signup.event.image.url}
+                                  alt={signup.event.image.alternativeText || signup.event.title}
+                                  width={96}
+                                  height={96}
+                                />
+                              </div>
+                            )}
+                            <div className="profile-tour__headings">
+                              <h3 className="profile-tour__title">
+                                <CustomLink
+                                  href={toPublicPath(`${Route.Tours}/${signup.event.slug}`, locale)}
+                                  className="profile-tour__link"
+                                  color="primary"
+                                  underline="hover"
+                                >
+                                  {signup.event.title}
+                                </CustomLink>
+                              </h3>
+                              <ul className="profile-tour__meta no-list-style">
+                                {signup.event.startDate && (
+                                  <li className="profile-tour__meta-item">
+                                    <span className="profile-tour__meta-label">
+                                      {FORM_LABELS.startDate}
+                                    </span>
+                                    <span className="profile-tour__meta-value">
+                                      {formatDate(signup.event.startDate, locale)}
+                                    </span>
+                                  </li>
+                                )}
+                                {signup.event.price && (
+                                  <li className="profile-tour__meta-item">
+                                    <span className="profile-tour__meta-label">
+                                      {FORM_LABELS.price}
+                                    </span>
+                                    <span className="profile-tour__meta-value">
+                                      {signup.event.price} {CURRENCY}
+                                    </span>
+                                  </li>
+                                )}
+                              </ul>
+                            </div>
+                          </div>
+                          <div className="profile-tour__status">
+                            <CustomChip
+                              label={PAYMENT_STATUS_CHIP[signup.paymentStatus].label}
+                              color={PAYMENT_STATUS_CHIP[signup.paymentStatus].color}
+                              size="large"
                             />
                           </div>
-                        )}
-                        <div className="auth-page__tour-item__info">
-                          <span className="auth-page__tour-title">
-                            <CustomLink
-                              href={toPublicPath(`${Route.Tours}/${signup.event.slug}`, locale)}
-                              className="auth-page__tour-title"
-                              color="primary"
-                            >
-                              {signup.event.title}
-                            </CustomLink>
-                          </span>
-                          {signup.event.startDate && (
-                            <span className="auth-page__tour-meta">
-                              {FORM_LABELS.startDate}: {formatDate(signup.event.startDate, locale)}
-                            </span>
-                          )}
-                          {signup.event.price && (
-                            <span className="auth-page__tour-meta">
-                              {FORM_LABELS.price}: {signup.event.price} {CURRENCY}
-                            </span>
-                          )}
                         </div>
-                        <div>
-                          <CustomChip
-                            label={PAYMENT_STATUS_CHIP[signup.paymentStatus].label}
-                            color={PAYMENT_STATUS_CHIP[signup.paymentStatus].color}
-                            size="large"
-                          />
-                        </div>
-                      </div>
-                      <SignupDetailsToggle signup={signup} />
-                    </li>
-                  ) : null
-                )}
-              </ul>
-            )}
-          </section>
-
-          <form action={logoutAction} className="auth-page__logout">
-            <SubmitButtonNoSSR text={AUTH_LOGOUT_LABEL} />
-          </form>
+                        <SignupDetailsToggle signup={signup} />
+                      </li>
+                    ) : null
+                  )}
+                </ul>
+              )}
+            </section>
+          </div>
         </div>
       </main>
     </>

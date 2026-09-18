@@ -1,0 +1,83 @@
+@use "../base/colors";
+@use "../base/mixins";
+
+// Below the header (1000) and the cookie banner (1000) on purpose: neither should ever
+// end up behind the button.
+$scroll-to-top-z-index: 999;
+$scroll-to-top-size: 5rem;
+
+.scroll-to-top {
+  position: fixed;
+  right: 2.4rem;
+  bottom: 2.4rem;
+  z-index: $scroll-to-top-z-index;
+  // visibility, not display: it keeps the fade and takes the button out of the tab
+  // order while the page is still at the top.
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(1rem);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    visibility 0.3s;
+
+  @include mixins.respond(phone) {
+    right: 1.6rem;
+    bottom: 1.6rem;
+  }
+
+  &--visible {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .scroll-to-top__button {
+    width: $scroll-to-top-size;
+    height: $scroll-to-top-size;
+    border-radius: 50%;
+    background-color: colors.$gy-v-dark-green;
+    color: colors.$gy-v-white;
+    box-shadow: 0 2px 8px colors.scrim(0.3);
+    transition:
+      background-color 0.2s,
+      transform 0.2s;
+
+    // The theme gives every icon button this touch size below the breakpoint; stated
+    // again here because the fixed width above would otherwise undercut it.
+    @media (max-width: 75em) {
+      min-width: 48px;
+      min-height: 48px;
+    }
+
+    // Outranks MUI's own .MuiIconButton-root:hover rule.
+    &:hover,
+    &:focus-visible {
+      background-color: colors.$gy-v-mid-green;
+      transform: translateY(-2px);
+    }
+
+    svg {
+      font-size: 2.4rem;
+      color: colors.$gy-v-white;
+    }
+  }
+}
+
+// Nothing should slide or lift for a visitor who asked for less motion - the button
+// still appears and disappears, it just does so at once.
+@media (prefers-reduced-motion: reduce) {
+  .scroll-to-top {
+    transform: none;
+    transition: none;
+
+    .scroll-to-top__button {
+      transition: none;
+
+      &:hover,
+      &:focus-visible {
+        transform: none;
+      }
+    }
+  }
+}

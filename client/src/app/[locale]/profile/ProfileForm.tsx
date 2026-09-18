@@ -2,10 +2,9 @@
 
 import { useLocale, useTexts } from "@/context/locale-context";
 
-import { useActionState, useEffect, useRef, useState } from "react";
-import { updateProfileAction, toggleNewsletterSubscriptionAction } from "@/data/auth-actions";
+import { useActionState, useEffect, useState } from "react";
+import { updateProfileAction } from "@/data/auth-actions";
 import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
-import { CustomCheckbox } from "@/components/custom-ui-components/custom-checkbox/custom-checkbox";
 import { CustomSelect } from "@/components/custom-ui-components/custom-select/custom-select";
 import { SubmitButtonNoSSR } from "@/components/SubmitButtonNoSSR";
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
@@ -35,7 +34,6 @@ interface ProfileFormProps {
   zip: string | null;
   street: string | null;
   houseNumber: string | null;
-  isNewsletterSubscribed: boolean;
 }
 
 export function ProfileForm({
@@ -48,21 +46,13 @@ export function ProfileForm({
   zip,
   street,
   houseNumber,
-  isNewsletterSubscribed,
 }: ProfileFormProps) {
-  const { FORM_LABELS, AUTH_SAVE_LABEL, PROFILE_BASIC_DATA_SECTION, PROFILE_ADDRESS_SECTION, PROFILE_INCOMPLETE_WARNING, PROFILE_BASIC_DATA_READONLY_INFO, PROFILE_NEWSLETTER_SECTION, PROFILE_NEWSLETTER_SUBSCRIBE_LABEL } = useTexts();
+  const { FORM_LABELS, AUTH_SAVE_LABEL, PROFILE_BASIC_DATA_SECTION, PROFILE_ADDRESS_SECTION, PROFILE_INCOMPLETE_WARNING, PROFILE_BASIC_DATA_READONLY_INFO } = useTexts();
   const countryOptions = getEuropeanCountries(useLocale());
   const [formState, formAction] = useActionState(updateProfileAction, INITIAL_STATE);
-  const [newsletterState, newsletterAction] = useActionState(toggleNewsletterSubscriptionAction, {
-    subscribed: isNewsletterSubscribed,
-    errorMessage: null,
-    successMessage: null,
-  });
-  const newsletterFormRef = useRef<HTMLFormElement>(null);
   const zodErrors = formState?.zodErrors as Record<string, string[]> | null;
 
   const [profileSuccessMsg, setProfileSuccessMsg] = useState<string | null>(null);
-  const [newsletterSuccessMsg, setNewsletterSuccessMsg] = useState<string | null>(null);
 
   useEffect(() => {
     if (!formState?.successMessage) return;
@@ -70,13 +60,6 @@ export function ProfileForm({
     const t = setTimeout(() => setProfileSuccessMsg(null), 5000);
     return () => clearTimeout(t);
   }, [formState?.successMessage]);
-
-  useEffect(() => {
-    if (!newsletterState?.successMessage) return;
-    setNewsletterSuccessMsg(newsletterState.successMessage);
-    const t = setTimeout(() => setNewsletterSuccessMsg(null), 5000);
-    return () => clearTimeout(t);
-  }, [newsletterState?.successMessage]);
 
   const toStr = (v: string | null) => v ?? "";
 
@@ -143,24 +126,32 @@ export function ProfileForm({
   const areBasicDataLocked = isFirstNameLocked && isLastNameLocked && isPhoneLocked;
 
   return (
-    <>
-      <section className="auth-page__section">
-        <h2 className="auth-page__section-title">{PROFILE_BASIC_DATA_SECTION}</h2>
-        {isProfileIncomplete && <CustomAlertMessage warningMessage={PROFILE_INCOMPLETE_WARNING} />}
-        <form action={formAction} className="auth-page__form">
-          <CustomTextInput
-            id="email"
-            label={FORM_LABELS.email}
-            name="email"
-            type="email"
-            value={email}
-            disabled
-          />
-          {isLastNameLocked && <input type="hidden" name="lastName" value={savedValues.lastName} />}
-          {isFirstNameLocked && (
-            <input type="hidden" name="firstName" value={savedValues.firstName} />
-          )}
-          <div className="signup-form__name-container">
+    <section className="profile-panel">
+      <h2 className="profile-panel__title">{PROFILE_BASIC_DATA_SECTION}</h2>
+      {isProfileIncomplete && <CustomAlertMessage warningMessage={PROFILE_INCOMPLETE_WARNING} />}
+
+      {/* One form, two field groups: the save button at the bottom commits both the
+          basic details and the address in a single submit. */}
+      <form action={formAction} className="profile-form">
+        <div className="profile-panel__group">
+          <div className="profile-form__grid">
+            <div className="profile-form__field--full">
+              <CustomTextInput
+                id="email"
+                label={FORM_LABELS.email}
+                name="email"
+                type="email"
+                value={email}
+                disabled
+              />
+            </div>
+
+            {isLastNameLocked && (
+              <input type="hidden" name="lastName" value={savedValues.lastName} />
+            )}
+            {isFirstNameLocked && (
+              <input type="hidden" name="firstName" value={savedValues.firstName} />
+            )}
             <CustomTextInput
               id="lastName"
               label={FORM_LABELS.lastName}
@@ -189,40 +180,47 @@ export function ProfileForm({
               slotProps={{ htmlInput: { maxLength: MAX_NAME } }}
               disabled={isFirstNameLocked}
             />
+
+            {isPhoneLocked && <input type="hidden" name="phone" value={savedValues.phone} />}
+            <CustomTextInput
+              id="phone"
+              label={FORM_LABELS.phone}
+              name="phone"
+              type="text"
+              error={zodErrors?.phone?.[0]}
+              value={values.phone}
+              onChange={
+                isPhoneLocked
+                  ? undefined
+                  : (e) => setValues((v) => ({ ...v, phone: e.target.value }))
+              }
+              slotProps={{ htmlInput: { maxLength: MAX_PHONE } }}
+              disabled={isPhoneLocked}
+            />
           </div>
-          {isPhoneLocked && <input type="hidden" name="phone" value={savedValues.phone} />}
-          <CustomTextInput
-            id="phone"
-            label={FORM_LABELS.phone}
-            name="phone"
-            type="text"
-            error={zodErrors?.phone?.[0]}
-            value={values.phone}
-            onChange={
-              isPhoneLocked ? undefined : (e) => setValues((v) => ({ ...v, phone: e.target.value }))
-            }
-            slotProps={{ htmlInput: { maxLength: MAX_PHONE } }}
-            disabled={isPhoneLocked}
-          />
 
           {areBasicDataLocked && (
             <CustomAlertMessage infoMessage={PROFILE_BASIC_DATA_READONLY_INFO} />
           )}
+        </div>
 
-          <h3 className="auth-page__subsection-title">{PROFILE_ADDRESS_SECTION}</h3>
+        <div className="profile-panel__group">
+          <h3 className="profile-panel__group-title">{PROFILE_ADDRESS_SECTION}</h3>
 
-          <CustomSelect
-            id="country"
-            name="country"
-            label={FORM_LABELS.country}
-            value={values.country}
-            onChange={(e) => setValues((v) => ({ ...v, country: e.target.value as string }))}
-            options={countryOptions}
-            error={!!zodErrors?.country?.[0]}
-            helperText={zodErrors?.country?.[0]}
-            required
-          />
-          <div className="auth-page__address-row">
+          <div className="profile-form__grid">
+            <div className="profile-form__field--full">
+              <CustomSelect
+                id="country"
+                name="country"
+                label={FORM_LABELS.country}
+                value={values.country}
+                onChange={(e) => setValues((v) => ({ ...v, country: e.target.value as string }))}
+                options={countryOptions}
+                error={!!zodErrors?.country?.[0]}
+                helperText={zodErrors?.country?.[0]}
+                required
+              />
+            </div>
             <CustomTextInput
               id="city"
               label={FORM_LABELS.city}
@@ -241,8 +239,6 @@ export function ProfileForm({
               onChange={(e) => setValues((v) => ({ ...v, zip: e.target.value }))}
               slotProps={{ htmlInput: { maxLength: MAX_ZIP } }}
             />
-          </div>
-          <div className="auth-page__address-row">
             <CustomTextInput
               id="street"
               label={FORM_LABELS.street}
@@ -262,38 +258,17 @@ export function ProfileForm({
               slotProps={{ htmlInput: { maxLength: MAX_HOUSE_NUMBER } }}
             />
           </div>
+        </div>
 
+        <CustomAlertMessage
+          errorMessage={formState?.errorMessage}
+          successMessage={profileSuccessMsg}
+        />
+
+        <div className="profile-panel__footer">
           <SubmitButtonNoSSR text={AUTH_SAVE_LABEL} disabled={!hasChanges} />
-          <CustomAlertMessage
-            errorMessage={formState?.errorMessage}
-            successMessage={profileSuccessMsg}
-          />
-        </form>
-      </section>
-      <section className="auth-page__section">
-        <h2 className="auth-page__section-title">{PROFILE_NEWSLETTER_SECTION}</h2>
-        <form
-          action={newsletterAction}
-          ref={newsletterFormRef}
-          className="auth-page__newsletter-form"
-        >
-          <input
-            type="hidden"
-            name="subscribe"
-            value={newsletterState.subscribed ? "false" : "true"}
-          />
-          <CustomCheckbox
-            label={PROFILE_NEWSLETTER_SUBSCRIBE_LABEL}
-            checked={newsletterState.subscribed}
-            size="large"
-            onChange={() => newsletterFormRef.current?.requestSubmit()}
-          />
-          <CustomAlertMessage
-            errorMessage={newsletterState.errorMessage}
-            successMessage={newsletterSuccessMsg}
-          />
-        </form>
-      </section>
-    </>
+        </div>
+      </form>
+    </section>
   );
 }

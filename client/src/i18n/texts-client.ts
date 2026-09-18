@@ -84,6 +84,7 @@ export const LANGUAGE_SHORT_NAMES: Record<string, string> = {
 export const HEADER_NAV_LABEL = "Főnavigáció";
 export const HEADER_ACCOUNT_MENU_LABEL = "Fiók";
 export const HEADER_MENU_TOGGLE_LABEL = "Menü";
+export const SCROLL_TO_TOP_LABEL = "Görgetés az oldal tetejére";
 
 // General
 export const SEARCH_PLACEHOLDER = "Keresés";
@@ -239,6 +240,8 @@ export const PROFILE_BASIC_DATA_READONLY_INFO =
   "Az alapadatok nem módosíthatók. A változást emailben vagy telefonon tudod jelezni.";
 export const PROFILE_SIGNUP_DETAILS_SHOW = "Jelentkezés részleteinek megtekintése";
 export const PROFILE_SIGNUP_DETAILS_HIDE = "Részletek elrejtése";
+export const PROFILE_TOURS_STAT_LABEL = "Túrajelentkezés";
+export const PROFILE_NEWSLETTER_HINT = "Értesülj elsőként az induló túráinkról.";
 
 // Event signup confirmation
 export const SIGNUP_BUTTON_LABEL = "Jelentkezés";

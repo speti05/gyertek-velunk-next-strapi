@@ -115,7 +115,16 @@ export function CookieConsentBanner() {
     }
   }, [preferencesOpen, recaptchaConsented, analyticsConsented]);
 
-  if (hasResponded && !preferencesOpen) return null;
+  const isBannerVisible = !hasResponded || preferencesOpen;
+
+  // The reCAPTCHA badge sits in this same corner, so it is faded out while the banner
+  // holds it - see sass/components/_recaptcha-badge.scss.
+  useEffect(() => {
+    document.body.classList.toggle("cookie-banner-open", isBannerVisible);
+    return () => document.body.classList.remove("cookie-banner-open");
+  }, [isBannerVisible]);
+
+  if (!isBannerVisible) return null;
 
   function buildCategories(recaptcha: boolean, analytics: boolean) {
     const cats: string[] = [];

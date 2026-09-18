@@ -10,13 +10,11 @@ import { SocialLinks } from "./SocialLinks";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { HeaderAccount } from "./HeaderAccount";
 import { Route } from "@/i18n/config";
+import { useHeaderCollapsed } from "@/hooks/use-header-collapsed";
 
 /** Matches the nav-collapse breakpoint in sass/base/_mixins.scss - above it the menu
  *  panel is laid out into the header grid, below it the hamburger owns it. */
 const NAV_COLLAPSE_QUERY = "(max-width: 78.125em)";
-
-/** How far the page has to move before the utility bar slides out of the way. */
-const SCROLL_THRESHOLD = 8;
 
 interface HeaderProps {
   data: {
@@ -31,7 +29,7 @@ interface HeaderProps {
 
 export function Header({ data, socialLinks, showLanguageSwitcher = false }: HeaderProps) {
   const [isActive, setIsActive] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const isScrolled = useHeaderCollapsed();
   const { HEADER_MENU_TOGGLE_LABEL, HEADER_NAV_LABEL, LOGO_ALT_FALLBACK, SITE_TITLE } = useTexts();
   const localizePath = useLocalizedPath();
   const pathname = usePathname();
@@ -70,13 +68,6 @@ export function Header({ data, socialLinks, showLanguageSwitcher = false }: Head
     query.addEventListener("change", sync);
     return () => query.removeEventListener("change", sync);
   }, [closeMenu]);
-
-  useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > SCROLL_THRESHOLD);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   if (!data) return null;
 

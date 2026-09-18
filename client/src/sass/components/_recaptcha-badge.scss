@@ -1,0 +1,65 @@
+@use "../base/colors";
+@use "../base/mixins";
+
+// Google injects the badge into <body> with inline styles and its own stylesheet, so
+// every rule here has to be !important - there is no other way to reach it.
+//
+// The badge is a 256x60 frame that Google normally parks at the right edge with only
+// its first 70px - the reCAPTCHA mark - sticking out. Here it is moved to the left and
+// cropped to a circle around that mark instead. Hovering still opens the full badge, so
+// the "Privacy" and "Terms" links Google's terms of service require stay reachable.
+$recaptcha-badge-size: 60px;
+$recaptcha-badge-width: 256px;
+// The slice of the frame that holds the mark.
+$recaptcha-mark-width: 70px;
+
+.grecaptcha-badge {
+  left: 2.4rem !important;
+  right: auto !important;
+  bottom: 2.4rem !important;
+  width: $recaptcha-badge-size !important;
+  height: $recaptcha-badge-size !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  box-shadow: 0 2px 8px colors.scrim(0.3) !important;
+  transition:
+    width 0.3s ease,
+    border-radius 0.3s ease !important;
+
+  @include mixins.respond(phone) {
+    left: 1.6rem !important;
+    bottom: 1.6rem !important;
+  }
+
+  // The mark sits in the middle of the frame's first 70px, so a 60px window has to
+  // start half the difference in - otherwise the mark lands off-centre in the circle.
+  .grecaptcha-logo {
+    margin-left: calc((#{$recaptcha-badge-size} - #{$recaptcha-mark-width}) / 2) !important;
+    transition: margin-left 0.3s ease !important;
+  }
+
+  // Opened up, it is the badge Google ships - only with its corners rounded to match.
+  &:hover,
+  &:focus-within {
+    width: $recaptcha-badge-width !important;
+    border-radius: calc(#{$recaptcha-badge-size} / 2) !important;
+
+    .grecaptcha-logo {
+      margin-left: 0 !important;
+    }
+  }
+}
+
+// The cookie banner opens in this same corner and is wide enough to sit under the
+// badge; the badge steps aside for as long as it is up.
+body.cookie-banner-open .grecaptcha-badge {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grecaptcha-badge,
+  .grecaptcha-badge .grecaptcha-logo {
+    transition: none !important;
+  }
+}

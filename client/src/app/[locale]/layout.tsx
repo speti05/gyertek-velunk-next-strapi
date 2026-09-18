@@ -17,6 +17,7 @@ import { LocaleProvider } from "@/context/locale-context";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToHash } from "@/components/ScrollToHash";
+import { ScrollToTopButton } from "@/components/ScrollToTopButton";
 import { MuiThemeProvider } from "@/components/providers/theme-provider/theme-provider";
 import { AuthProvider } from "@/context/auth-context";
 import { AUTH_COOKIE, USER_EMAIL_COOKIE } from "@/data/auth-guard";
@@ -142,6 +143,7 @@ export default async function RootLayout({
                 <Header data={header} socialLinks={footer} showLanguageSwitcher={showLanguageSwitcher} />
                 {children}
                 <Footer data={footer} />
+                <ScrollToTopButton />
                 <CookieConsentInit />
                 <CookieConsentBanner />
                 <GoogleAnalytics />

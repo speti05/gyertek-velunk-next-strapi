@@ -1,0 +1,475 @@
+@use "../base/colors";
+@use "../base/mixins";
+@use "../base/variables";
+
+// The profile is the one signed-in surface that carries more than a single form - an
+// identity summary, editable data and the tour sign-ups all live on it. It therefore
+// gets its own block instead of borrowing `.auth-page`, whose narrow single card is
+// shaped for the login and registration screens.
+
+// Hairline that separates panels from the page background without adding a hard edge.
+$panel-border: 1px solid color-mix(in srgb, colors.$gy-v-dark-brown 12%, transparent);
+
+.profile-page {
+  padding-inline: variables.$content-side-padding;
+  padding-bottom: 8rem;
+
+  @include mixins.respond(phone) {
+    padding-inline: variables.$content-side-padding-phone;
+  }
+
+  &__layout {
+    max-width: 120rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 32rem minmax(0, 1fr);
+    gap: 2.4rem;
+    align-items: start;
+
+    @include mixins.respond(tab-land) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  &__sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+    // Follows the page while the long form and tour list scroll past. The offset clears
+    // the navbar row, which is all that stays pinned once the utility bar collapses.
+    position: sticky;
+    top: calc(var(--navbar-height) + 2rem);
+
+    @include mixins.respond(tab-land) {
+      position: static;
+    }
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+    // Without this the grid column is sized by its widest child, so one long unbroken
+    // value inside a sign-up's details would stretch the whole column.
+    min-width: 0;
+  }
+
+  &__empty {
+    font-size: 1.6rem;
+    color: colors.$gy-v-gray-500;
+  }
+}
+
+// Identity card
+.profile-identity {
+  background-color: colors.$gy-v-light-beige;
+  border: $panel-border;
+  border-radius: 1.6rem;
+  box-shadow: colors.$box-shadow;
+  padding: 3.2rem 2.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  text-align: center;
+
+  &__avatar {
+    width: 8.8rem;
+    height: 8.8rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-luckiest-guy), cursive;
+    font-size: 3.4rem;
+    line-height: 1;
+    color: colors.$gy-v-white;
+    background: linear-gradient(135deg, colors.$gy-v-dark-green, colors.$gy-v-mid-green);
+    box-shadow: 0 6px 18px rgba(colors.$gy-v-dark-green, 0.35);
+  }
+
+  &__name {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: colors.$gy-v-dark-brown;
+    overflow-wrap: anywhere;
+  }
+
+  &__email {
+    font-size: 1.5rem;
+    color: colors.$gy-v-gray-500;
+    overflow-wrap: anywhere;
+  }
+
+  &__stat {
+    width: 100%;
+    margin-top: 0.8rem;
+    padding: 1.6rem 1.2rem;
+    border-radius: 1.2rem;
+    background-color: color-mix(in srgb, colors.$gy-v-light-green 35%, colors.$gy-v-white);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  &__stat-value {
+    font-family: var(--font-luckiest-guy), cursive;
+    font-size: 2.8rem;
+    line-height: 1.1;
+    color: colors.$gy-v-dark-green;
+  }
+
+  &__stat-label {
+    font-size: 1.4rem;
+    color: colors.$gy-v-dark-brown;
+  }
+
+  &__logout {
+    width: 100%;
+    margin-top: 0.8rem;
+
+    button {
+      width: 100%;
+    }
+  }
+}
+
+// Panels
+.profile-panel {
+  background-color: colors.$gy-v-light-beige;
+  border: $panel-border;
+  border-radius: 1.6rem;
+  box-shadow: colors.$box-shadow;
+  padding: 3.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  @include mixins.respond(phone) {
+    padding: 2.4rem 2rem;
+  }
+
+  &--compact {
+    padding: 2.4rem;
+    gap: 1.6rem;
+  }
+
+  &__title {
+    font-family: var(--font-luckiest-guy), cursive;
+    font-size: 2.2rem;
+    color: colors.$gy-v-dark-green;
+    width: fit-content;
+    max-width: 100%;
+
+    &::after {
+      content: "";
+      @include mixins.accent-underline;
+    }
+  }
+
+  &__subtitle {
+    font-size: 1.4rem;
+    color: colors.$gy-v-gray-500;
+    margin-top: -1rem;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+
+  // Separates the two field groups of one form without implying two separate cards -
+  // the save button at the bottom commits both of them at once.
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+
+    & + & {
+      margin-top: 1.2rem;
+      padding-top: 2.4rem;
+      border-top: $panel-border;
+    }
+  }
+
+  &__group-title {
+    font-size: 1.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: colors.$gy-v-dark-brown;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 2rem;
+    border-top: $panel-border;
+
+    @include mixins.respond(phone) {
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.6rem 1.5rem;
+
+    @include mixins.respond(phone-small) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  &__field--full {
+    grid-column: 1 / -1;
+  }
+}
+
+// Tour sign-ups
+.profile-tours {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.profile-tour {
+  background-color: colors.$gy-v-white;
+  border: $panel-border;
+  border-radius: 1.2rem;
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: colors.$box-shadow;
+  }
+
+  &__head {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+
+    // On a phone the payment status drops onto its own line, but the thumbnail stays
+    // beside the title - stacking all three left a tall card with an empty right half.
+    @include mixins.respond(phone) {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1.2rem;
+    }
+  }
+
+  &__main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+  }
+
+  &__image {
+    width: 9.6rem;
+    height: 9.6rem;
+    border-radius: 1rem;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0;
+    }
+
+    @include mixins.respond(phone) {
+      width: 8rem;
+      height: 8rem;
+    }
+  }
+
+  &__headings {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  // A heading, so the size comes from here and not from whatever the link inherits -
+  // and the body font, since the display face is reserved for the panel headings.
+  &__title {
+    font-family: var(--font-source-sans-3), sans-serif;
+    font-size: 2.2rem;
+    line-height: 1.3;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+
+    @include mixins.respond(phone) {
+      font-size: 2rem;
+    }
+  }
+
+  // Element + class: MUI injects the link's own styles at runtime, after this
+  // stylesheet, so a lone class of equal specificity would lose to them.
+  a#{&}__link {
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+  }
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.6rem;
+    padding: 0;
+    margin: 0;
+  }
+
+  // Both lists here carry .no-list-style: the global list styling would otherwise put
+  // the site's hiker bullet in front of every row and indent it for the icon.
+  &__meta-item {
+    display: flex;
+    gap: 0.6rem;
+    font-size: 1.5rem;
+  }
+
+  &__meta-label {
+    color: colors.$gy-v-gray-500;
+  }
+
+  &__meta-value {
+    font-weight: 600;
+    color: colors.$gy-v-dark-brown;
+  }
+
+  &__status {
+    flex-shrink: 0;
+
+    @include mixins.respond(phone) {
+      align-self: flex-start;
+    }
+  }
+}
+
+// Sign-up details
+.profile-details {
+  width: 100%;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  &__section {
+    background-color: colors.$gy-v-light-beige;
+    border-radius: 0.8rem;
+    padding: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  &__section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: colors.$gy-v-dark-green;
+  }
+
+  // Label above value, in two columns: these labels are long enough that an inline
+  // "label: value" pair wrapped on nearly every row at this width.
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.2rem 2rem;
+    margin: 0;
+
+    @include mixins.respond(phone-small) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+
+    &--full {
+      grid-column: 1 / -1;
+    }
+  }
+
+  &__label {
+    font-size: 1.2rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: colors.$gy-v-gray-500;
+    overflow-wrap: anywhere;
+  }
+
+  &__value {
+    font-size: 1.5rem;
+    color: colors.$gy-v-dark-brown;
+    overflow-wrap: anywhere;
+    margin: 0;
+  }
+
+  a.profile-details__value {
+    color: colors.$gy-v-dark-green;
+    text-decoration: underline;
+  }
+
+  &__companion {
+    border-radius: 0.8rem;
+    padding: 1.2rem;
+    background-color: color-mix(in srgb, colors.$gy-v-light-brown 45%, colors.$gy-v-white);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__companion-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: colors.$gy-v-dark-brown;
+  }
+
+  &__total {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.2rem;
+    background-color: color-mix(in srgb, colors.$gy-v-light-green 40%, colors.$gy-v-white);
+    border-radius: 0.8rem;
+    padding: 1.4rem 1.6rem;
+  }
+
+  &__total-label {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: colors.$gy-v-dark-brown;
+  }
+
+  &__total-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: colors.$gy-v-dark-green;
+    white-space: nowrap;
+  }
+}

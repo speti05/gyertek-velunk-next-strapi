@@ -73,6 +73,7 @@ export const LANGUAGE_SWITCHER_LABEL = "Language";
 export const HEADER_NAV_LABEL = "Main navigation";
 export const HEADER_ACCOUNT_MENU_LABEL = "Account";
 export const HEADER_MENU_TOGGLE_LABEL = "Menu";
+export const SCROLL_TO_TOP_LABEL = "Scroll back to the top of the page";
 
 // General
 export const SEARCH_PLACEHOLDER = "Search";
@@ -229,6 +230,8 @@ export const PROFILE_BASIC_DATA_READONLY_INFO =
   "Your basic details cannot be edited. You can request a change by email or by phone.";
 export const PROFILE_SIGNUP_DETAILS_SHOW = "Show sign-up details";
 export const PROFILE_SIGNUP_DETAILS_HIDE = "Hide details";
+export const PROFILE_TOURS_STAT_LABEL = "Tour sign-ups";
+export const PROFILE_NEWSLETTER_HINT = "Be the first to hear about our upcoming tours.";
 
 // Event signup confirmation
 export const SIGNUP_BUTTON_LABEL = "Sign up";
