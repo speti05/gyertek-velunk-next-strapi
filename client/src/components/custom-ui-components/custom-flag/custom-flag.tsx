@@ -3,6 +3,8 @@
 import React, { useId } from "react";
 import type { Locale } from "@/i18n/config";
 
+import { palette } from "@/sass/base/colors.generated";
+
 type CustomFlagProps = {
   locale: Locale;
   /** Rendered diameter. Any CSS length; defaults to the surrounding font size. */
@@ -15,9 +17,9 @@ type CustomFlagProps = {
 const FLAGS: Record<Locale, (idPrefix: string) => React.ReactElement> = {
   hu: () => (
     <g>
-      <rect width="60" height="10" fill="#cd2a3e" />
-      <rect y="10" width="60" height="10" fill="#ffffff" />
-      <rect y="20" width="60" height="10" fill="#436f4d" />
+      <rect width="60" height="10" fill={palette.flagHuRed} />
+      <rect y="10" width="60" height="10" fill={palette.white} />
+      <rect y="20" width="60" height="10" fill={palette.flagHuGreen} />
     </g>
   ),
   en: (idPrefix) => {
@@ -29,16 +31,16 @@ const FLAGS: Record<Locale, (idPrefix: string) => React.ReactElement> = {
         <clipPath id={clipId}>
           <path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z" />
         </clipPath>
-        <rect width="60" height="30" fill="#012169" />
-        <path d="M0,0 L60,30 M60,0 L0,30" stroke="#ffffff" strokeWidth="6" />
+        <rect width="60" height="30" fill={palette.flagGbBlue} />
+        <path d="M0,0 L60,30 M60,0 L0,30" stroke={palette.white} strokeWidth="6" />
         <path
           d="M0,0 L60,30 M60,0 L0,30"
-          stroke="#c8102e"
+          stroke={palette.flagGbRed}
           strokeWidth="4"
           clipPath={`url(#${clipId})`}
         />
-        <path d="M30,0 V30 M0,15 H60" stroke="#ffffff" strokeWidth="10" />
-        <path d="M30,0 V30 M0,15 H60" stroke="#c8102e" strokeWidth="6" />
+        <path d="M30,0 V30 M0,15 H60" stroke={palette.white} strokeWidth="10" />
+        <path d="M30,0 V30 M0,15 H60" stroke={palette.flagGbRed} strokeWidth="6" />
       </g>
     );
   },

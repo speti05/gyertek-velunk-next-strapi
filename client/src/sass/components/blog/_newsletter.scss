@@ -1,4 +1,5 @@
 @use "../../base/mixins";
+@use "../../base/colors";
 
 .newsletter {
   position: relative;
@@ -13,7 +14,7 @@
   &__backdrop {
     position: absolute;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.45);
+    background-color: colors.scrim(0.45);
     backdrop-filter: blur(8px);
   }
 
@@ -39,16 +40,16 @@
 
   &__info {
     flex: 1;
-    color: #fff;
+    color: colors.$gy-v-white;
     text-align: center;
 
     & h4 {
       margin-bottom: 1.2rem;
-      color: #fff;
+      color: colors.$gy-v-white;
     }
 
     & .copy {
-      color: rgba(255, 255, 255, 0.85);
+      color: colors.veil(0.85);
     }
   }
 

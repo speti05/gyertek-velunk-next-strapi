@@ -51,7 +51,7 @@
       color: colors.$gy-v-white;
       background-color: colors.$gy-v-dark-green;
       padding: 1.6rem 2rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid colors.veil(0.2);
     }
 
     & dd {

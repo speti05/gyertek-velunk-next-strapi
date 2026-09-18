@@ -59,6 +59,16 @@ Next.js fetches content from Strapi's REST API. The client uses `qs` for query s
 - **Providers** (`src/components/providers/`) wrap the app with React Context (e.g., reCAPTCHA v3, theme).
 - **Blocks** (`src/components/blocks/`) are content-type-driven components that render Strapi block data.
 
+#### Colors (client)
+`client/src/sass/base/_colors.scss` is the single source of truth for every colour on the client. No colour literal may appear anywhere else — not in SCSS, not in CSS, not in TSX, not in a Tailwind class.
+
+- **SCSS/CSS**: `@use "<path>/base/colors";` and reference `colors.$gy-v-*`. For a translucent black or white overlay use the `colors.scrim($alpha)` / `colors.veil($alpha)` helpers instead of writing `rgba(0, 0, 0, …)`; for a translucent brand colour use `rgba(colors.$gy-v-<token>, $alpha)`.
+- **TypeScript/TSX** (MUI theme, inline SVG fills, `sx` props): import `{ palette }` from `@/sass/base/colors.generated`. That file is generated from `_colors.scss` by `client/scripts/generate-color-tokens.mjs`, which runs automatically on `yarn dev` and `yarn build` (or manually via `yarn generate:colors`). Never edit it by hand.
+- **Tailwind**: colour utilities (`bg-white`, `text-slate-800`, `border-gray-300`, `bg-[#79C2B6]`, …) are not allowed. Keep layout utilities in Tailwind and move the colour into a CSS module class that reads from the palette.
+- Plain CSS files cannot reach the palette, so document-level colour variables are declared in `sass/base/_base.scss` and consumed as `var(--background)` / `var(--foreground)`.
+
+Need a colour that does not exist yet? Add a token to `_colors.scss` — do not inline the value.
+
 ### Server (`server/src/`)
 - **Content types** (in `src/api/`): `article`, `event`, `event-signup`, `global`, `home-page`, `newsletter-signup`, `page`.
 - **Components** (in `src/components/`): `blocks`, `elements`, `layout` — shared Strapi component schemas used across content types.

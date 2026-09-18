@@ -36,32 +36,45 @@ $width: 4rem;
     margin: 2rem 0 3.5rem 0;
   }
 
+  // The header lays the bar out itself - the logo has its own grid column there, so
+  // this variant only has to size and colour the icons.
   &--header {
     justify-content: flex-start;
-    // Keeps the icons clear of the logo: the logo is positioned at the header's
-    // left edge, while this bar only starts at the navbar's 5% side padding.
-    // 1st term: the original desktop reserve, 2nd: the real logo overhang.
-    padding-left: max(
-      calc(var(--header-logo-width, 256px) - 56px),
-      calc(var(--header-logo-width, 256px) - 5vw + 1rem)
-    );
-    padding-right: 3rem;
-    overflow: hidden;
-    height: var(--social-bar-height);
-    flex-flow: row-reverse;
+    font-size: 1.2rem;
 
-    @include mixins.respond(phone-small) {
-      padding-right: 1.5rem;
-      justify-content: flex-end;
+    .social-links__list {
+      gap: 3rem;
+
+      li {
+        width: auto;
+        font-size: inherit;
+      }
+    }
+
+    .social-links__link {
+      width: auto;
+      height: auto;
+      color: colors.veil(0.78);
+      transition: color 0.18s ease;
+
+      &:hover,
+      &:focus-visible {
+        color: colors.$gy-v-white;
+      }
+    }
+
+    // Below the breakpoint this row sits at the foot of the menu panel with the full
+    // width to itself, so the icons grow into a proper touch target instead of
+    // squeezing in beside the title.
+    @include mixins.respond(nav-collapse) {
+      font-size: 2.2rem;
 
       .social-links__list {
-        gap: 2rem;
+        gap: 1.6rem;
+      }
 
-        // trims the empty slack around each icon so all four still fit
-        // next to the logo
-        li {
-          width: 3rem;
-        }
+      .social-links__link {
+        padding: 1.2rem;
       }
     }
   }

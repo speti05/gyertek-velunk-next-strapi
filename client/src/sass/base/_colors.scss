@@ -1,28 +1,89 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// The single source of truth for every colour in the client.
+// No other file may declare a colour literal - not SCSS, not CSS, not TSX.
+// TypeScript reads these same tokens through `colors.generated.ts`, which
+// scripts/generate-color-tokens.mjs regenerates from this file, so the MUI theme
+// and the inline SVGs stay in sync too.
+// ─────────────────────────────────────────────────────────────────────────────
+
 // Colors from logo
 $gy-v-dark-green: rgb(55, 127, 118);
 $gy-v-mid-green: rgb(79, 182, 169);
 $gy-v-light-green: rgb(176, 223, 216);
 $gy-v-dark-brown: rgb(112, 99, 76);
 
+// Extended brand palette
+$gy-v-deep-green: rgb(44, 95, 88); // one step darker than dark-green - header utility bar
+$gy-v-soft-green: rgb(121, 194, 182); // calendar day that carries an event
+$gy-v-pale-green: rgb(216, 232, 226); // content list headline background
+$gy-v-darkest-brown: rgb(74, 60, 40); // EmptyContent illustration outlines
+$gy-v-deep-brown: rgb(45, 35, 20); // cookie consent accept button label
+
 // other colors
 $gy-v-light-brown: rgb(241, 232, 217);
 $gy-v-light-beige: rgb(255, 251, 244);
 $gy-v-very-light-beige: rgb(254, 253, 250); // #FEFDFA - page base background
-$gy-v-dark-beige: rgb(228, 203, 161);
+$gy-v-dark-beige: rgb(228, 203, 161); // #e4cba1
 $gy-v-white: rgb(255, 255, 255);
+$gy-v-black: rgb(0, 0, 0);
+$gy-v-near-black: rgb(26, 26, 26); // socials block icon sitting on a light surface
 $gy-v-overlay-dark: rgb(9, 26, 24);
+$gy-v-stroke-dark: rgb(10, 31, 28); // hero headline text stroke
 $gy-v-error: rgb(120, 2, 2);
 $gy-v-success: rgb(2, 120, 2);
+$gy-v-red: rgb(255, 0, 0); // pure red - required field markers and MUI error labels
 
-$box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+// Neutral grays - UI chrome and muted body copy
+$gy-v-gray-100: rgb(243, 244, 246);
+$gy-v-gray-200: rgb(229, 231, 235);
+$gy-v-gray-300: rgb(209, 213, 219);
+$gy-v-gray-400: rgb(156, 163, 175); // disabled controls, placeholder text
+$gy-v-gray-500: rgb(104, 104, 104); // muted body copy
+$gy-v-gray-600: rgb(75, 85, 99);
+$gy-v-gray-700: rgb(55, 65, 81);
+$gy-v-gray-800: rgb(51, 51, 51);
+$gy-v-gray-900: rgb(17, 24, 39);
+
+// Slate - carried over from the Tailwind defaults the calendar was originally built on
+$gy-v-slate-100: rgb(241, 245, 249);
+$gy-v-slate-200: rgb(226, 232, 240);
+$gy-v-slate-300: rgb(203, 213, 225);
+$gy-v-slate-400: rgb(148, 163, 184);
+$gy-v-slate-800: rgb(30, 41, 59);
+$gy-v-calendar-today: rgb(59, 130, 246); // Tailwind blue-500 - the "today" badge
+$gy-v-calendar-hover: rgb(34, 211, 238); // Tailwind cyan-400 - day cell hover border
+
+// Document base - mirrored onto :root as --background / --foreground in _base.scss
+$gy-v-foreground: rgb(23, 23, 23);
+$gy-v-dark-scheme-background: rgb(10, 10, 10);
+$gy-v-dark-scheme-foreground: rgb(237, 237, 237);
 
 // Social media brand colors
 $gy-v-facebook: rgb(8, 102, 255);
 $gy-v-youtube: rgb(255, 0, 51);
-$gy-v-tiktok: rgb(0, 0, 0);
+$gy-v-tiktok: $gy-v-black;
 $gy-v-instagram-gradient: linear-gradient(
   45deg,
   rgb(249, 206, 52) 0%,
   rgb(238, 42, 123) 50%,
   rgb(98, 40, 215) 100%
 );
+
+// National flag colors - the language switcher's inline SVG flags
+$gy-v-flag-hu-red: rgb(205, 42, 62);
+$gy-v-flag-hu-green: rgb(67, 111, 77);
+$gy-v-flag-gb-blue: rgb(1, 33, 105);
+$gy-v-flag-gb-red: rgb(200, 16, 46);
+
+// Translucent overlays. Every scrim in the app is pure black or pure white at some
+// alpha, so rather than spelling out rgba(0, 0, 0, x) everywhere these two helpers
+// keep the colour itself in the palette and leave only the opacity at the call site.
+@function scrim($alpha) {
+  @return rgba($gy-v-black, $alpha);
+}
+
+@function veil($alpha) {
+  @return rgba($gy-v-white, $alpha);
+}
+
+$box-shadow: 0 4px 24px scrim(0.08);

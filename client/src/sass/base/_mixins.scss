@@ -1,9 +1,12 @@
+@use "colors";
+
 // MEDIA QUERY MANAGER
 /*
 Every breakpoint used in the codebase lives here - never hard-code a @media
 width in a component, always go through respond().
 
 $breakpoint argument choices (all max-width unless noted):
+- phone-tiny      400px   narrow phones - below the width the header bar fits at
 - phone-small     600px   small phones
 - tablet          768px   portrait tablets / large phones
 - phone           900px   phone layout switch (the main mobile breakpoint)
@@ -32,6 +35,11 @@ of the html font-size, so 1em = 16px here.
       @content;
     } // 1800px
   }
+  @if $breakpoint == phone-tiny {
+    @media (max-width: 25em) {
+      @content;
+    } // 400px
+  }
   @if $breakpoint == phone-small {
     @media (max-width: 37.5em) {
       @content;
@@ -43,9 +51,9 @@ of the html font-size, so 1em = 16px here.
     } // 768px
   }
   @if $breakpoint == nav-collapse {
-    @media (max-width: 78.125em) {
+    @media (max-width: 56.25em) {
       @content;
-    } // 1250px
+    } // 900px;
   }
   @if $breakpoint == laptop {
     @media (max-width: 87.5em) {
@@ -61,8 +69,8 @@ of the html font-size, so 1em = 16px here.
 
 // Outline + shadow for light headline text placed over busy background images
 @mixin headline-text-outline {
-  -webkit-text-stroke: 1.5px rgba(10, 31, 28, 0.7);
+  -webkit-text-stroke: 1.5px rgba(colors.$gy-v-stroke-dark, 0.7);
   text-shadow:
-    0 2px 16px rgba(0, 0, 0, 0.55),
-    0 0 4px rgba(0, 0, 0, 0.4);
+    0 2px 16px colors.scrim(0.55),
+    0 0 4px colors.scrim(0.4);
 }

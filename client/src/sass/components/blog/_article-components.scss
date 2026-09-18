@@ -1,5 +1,6 @@
 @use "../../base/mixins";
 @use "../../base/variables";
+@use "../../base/colors";
 
 .article-headline {
   width: 100%;
@@ -62,7 +63,7 @@
   }
 
   &__caption {
-    color: #686868;
+    color: colors.$gy-v-gray-500;
   }
 
   // Stack text above image on phones, ignoring the row/reversed layout
@@ -120,7 +121,7 @@
   }
 
   &__caption {
-    color: #686868;
+    color: colors.$gy-v-gray-500;
     margin-top: 1.6rem;
   }
 }
@@ -161,7 +162,7 @@
   }
 
   &__description {
-    color: #686868;
+    color: colors.$gy-v-gray-500;
     margin: 1.6rem 0;
   }
 }
@@ -180,7 +181,7 @@
   }
 
   &__description {
-    color: #686868;
+    color: colors.$gy-v-gray-500;
     margin: 1.6rem 0;
   }
 

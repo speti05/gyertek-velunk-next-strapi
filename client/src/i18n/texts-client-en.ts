@@ -69,6 +69,11 @@ export const SITE_DESCRIPTION = "Hiking tours in Hungary and abroad.";
 // Language switcher
 export const LANGUAGE_SWITCHER_LABEL = "Language";
 
+// Header
+export const HEADER_NAV_LABEL = "Main navigation";
+export const HEADER_ACCOUNT_MENU_LABEL = "Account";
+export const HEADER_MENU_TOGGLE_LABEL = "Menu";
+
 // General
 export const SEARCH_PLACEHOLDER = "Search";
 export const DIALOG_CANCEL_LABEL = "Cancel";

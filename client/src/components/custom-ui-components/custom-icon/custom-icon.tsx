@@ -11,6 +11,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -26,6 +27,7 @@ const ICON_MAP = {
   person: { type: "mui" as const, component: PersonIcon },
   close: { type: "mui" as const, component: CloseIcon },
   expandMore: { type: "mui" as const, component: ExpandMoreIcon },
+  chevronRight: { type: "mui" as const, component: ChevronRightIcon },
   visibility: { type: "mui" as const, component: Visibility },
   visibilityOff: { type: "mui" as const, component: VisibilityOff },
   facebook: { type: "fa" as const, icon: faFacebook },

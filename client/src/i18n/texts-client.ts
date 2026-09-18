@@ -80,6 +80,11 @@ export const LANGUAGE_SHORT_NAMES: Record<string, string> = {
   en: "EN",
 };
 
+// Header
+export const HEADER_NAV_LABEL = "Főnavigáció";
+export const HEADER_ACCOUNT_MENU_LABEL = "Fiók";
+export const HEADER_MENU_TOGGLE_LABEL = "Menü";
+
 // General
 export const SEARCH_PLACEHOLDER = "Keresés";
 export const DIALOG_CONFIRM_LABEL = "OK";

@@ -59,7 +59,7 @@ $vertical-bleed: 6rem;
       position: absolute;
       inset: 0;
       z-index: 1;
-      background-color: rgba(0, 0, 0, 0.35);
+      background-color: colors.scrim(0.35);
     }
   }
 
@@ -81,11 +81,11 @@ $vertical-bleed: 6rem;
       right: 2rem;
       z-index: 3;
       color: colors.$gy-v-white;
-      background-color: rgba(0, 0, 0, 0.25);
+      background-color: colors.scrim(0.25);
       transition: background-color 0.2s;
 
       &:hover {
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: colors.scrim(0.5);
       }
 
       & svg {

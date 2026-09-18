@@ -42,20 +42,21 @@ export default function Error({
         className={`${luckiestGuy.variable} ${sourceSans3.variable} error-shell min-h-screen flex flex-col`}
       >
         <MuiThemeProvider>
-          <header>
-            <nav className="navbar" />
-            <span className="header__logo_wrapper">
-              <CustomLink href="/" className="navbar__logo-link" color="white" underline="none">
-                <Image
-                  src="/GYERTEK_V_FH.png"
-                  alt={SITE_TITLE}
-                  width={220}
-                  height={209}
-                  className="header__logo"
-                  priority
-                />
-              </CustomLink>
-            </span>
+          <header className="site-header site-header--static site-header--no-utility">
+            <div className="site-header__inner">
+              <span className="site-header__logo header__logo_wrapper">
+                <CustomLink href="/" className="navbar__logo-link" color="white" underline="none">
+                  <Image
+                    src="/GYERTEK_V_FH.png"
+                    alt={SITE_TITLE}
+                    width={220}
+                    height={209}
+                    className="header__logo"
+                    priority
+                  />
+                </CustomLink>
+              </span>
+            </div>
           </header>
           <main className="flex flex-col flex-1">
             <ErrorPage title={SERVER_SIDE_ERROR_LABEL} description={ERROR_LABEL} />

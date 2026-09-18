@@ -3,19 +3,22 @@
 import React from "react";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import { SxProps, Theme } from "@mui/material";
+import { rgba } from "polished";
+
+import { palette } from "@/sass/base/colors.generated";
 
 const stepperSx: SxProps<Theme> = {
-  backgroundColor: "rgba(55, 127, 118, 0.6)",
-  color: "white",
+  backgroundColor: rgba(palette.darkGreen, 0.6),
+  color: palette.white,
   width: "5rem",
   height: "5rem",
   transition: "background-color 0.2s",
   "&:hover": {
-    backgroundColor: "rgba(55, 127, 118, 1)",
+    backgroundColor: palette.darkGreen,
   },
   "& svg": {
     fontSize: "2.4rem",
-    color: "white",
+    color: palette.white,
   },
 };
 

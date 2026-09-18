@@ -6,7 +6,7 @@
   font-size: 2rem;
 
   &::placeholder {
-    color: black;
+    color: colors.$gy-v-black;
     font-size: 2rem;
   }
 
@@ -18,7 +18,7 @@
   }
 
   &__error {
-    color: red;
+    color: colors.$gy-v-red;
     font-size: 1.6rem;
     margin-top: 1.6rem;
   }

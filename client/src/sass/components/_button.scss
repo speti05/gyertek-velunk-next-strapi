@@ -14,27 +14,27 @@
   }
 
   &--black {
-    background-color: black;
-    color: white;
+    background-color: colors.$gy-v-black;
+    color: colors.$gy-v-white;
   }
 
   &--inverse {
-    background-color: white;
-    color: black;
+    background-color: colors.$gy-v-white;
+    color: colors.$gy-v-black;
   }
 
   &--turquoise {
     background-color: colors.$gy-v-mid-green;
-    color: white;
+    color: colors.$gy-v-white;
   }
 
   &--brown {
     background-color: colors.$gy-v-dark-brown;
-    color: white;
+    color: colors.$gy-v-white;
   }
 
   &--beige {
     background-color: colors.$gy-v-light-beige;
-    color: white;
+    color: colors.$gy-v-white;
   }
 }

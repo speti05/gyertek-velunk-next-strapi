@@ -14,6 +14,7 @@ import CustomAccordion from "@/components/custom-ui-components/custom-accordion/
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import CustomIcon from "@/components/custom-ui-components/custom-icon/custom-icon";
+import { colors } from "@/sass/mui-override/colors";
 
 type CookieRow = { name: string; domain: string; expiration: string; description: string };
 
@@ -204,7 +205,7 @@ export function CookieConsentBanner() {
           <CustomAccordion
             title={COOKIE_NECESSARY_TITLE}
             headerAction={<CustomSwitch checked disabled />}
-            sx={{ borderBottom: "1px solid rgba(0,0,0,0.1)" }}
+            sx={{ borderBottom: `1px solid ${colors.divider}` }}
           >
             <Typography sx={{ fontSize: "1.4rem", color: "text.secondary", mb: 1 }}>
               {COOKIE_NECESSARY_DESCRIPTION}
@@ -220,7 +221,7 @@ export function CookieConsentBanner() {
                 onChange={() => setRecaptchaEnabled((v) => !v)}
               />
             }
-            sx={{ borderBottom: "1px solid rgba(0,0,0,0.1)" }}
+            sx={{ borderBottom: `1px solid ${colors.divider}` }}
           >
             <Typography sx={{ fontSize: "1.4rem", color: "text.secondary", mb: 1 }}>
               {COOKIE_FUNCTIONAL_DESCRIPTION}

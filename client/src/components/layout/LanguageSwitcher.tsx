@@ -8,6 +8,7 @@ import CustomIcon from "../custom-ui-components/custom-icon/custom-icon";
 import CustomFlag from "../custom-ui-components/custom-flag/custom-flag";
 import CustomTooltip from "../custom-ui-components/custom-tooltip/custom-tooltip";
 import { CustomMenu, CustomMenuItem } from "../custom-ui-components/custom-menu/custom-menu";
+import CustomRadioGroup from "../custom-ui-components/custom-radio/custom-radio";
 
 interface LanguageSwitcherProps {
   /**
@@ -18,9 +19,20 @@ interface LanguageSwitcherProps {
    */
   alternates?: Partial<Record<Locale, string>>;
   onNavigate?: () => void;
+  /**
+   * How the choice is offered. "menu" is the compact trigger + dropdown used in the
+   * header's utility bar; "radio" is the expanded group used inside the mobile menu
+   * panel, where there is room to show every language at once and no second layer of
+   * overlay is wanted on top of the panel.
+   */
+  variant?: "menu" | "radio";
 }
 
-export function LanguageSwitcher({ alternates, onNavigate }: Readonly<LanguageSwitcherProps>) {
+export function LanguageSwitcher({
+  alternates,
+  onNavigate,
+  variant = "menu",
+}: Readonly<LanguageSwitcherProps>) {
   const { LANGUAGE_NAMES, LANGUAGE_SHORT_NAMES, LANGUAGE_SWITCHER_LABEL } = useTexts();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const activeLocale = useLocale();
@@ -40,8 +52,26 @@ export function LanguageSwitcher({ alternates, onNavigate }: Readonly<LanguageSw
     }
   };
 
+  if (variant === "radio") {
+    return (
+      <div className="language-switcher language-switcher--radio">
+        <CustomRadioGroup
+          name="header-locale"
+          label={LANGUAGE_SWITCHER_LABEL}
+          value={activeLocale}
+          onChange={(value) => select(value as Locale)}
+          options={LOCALES.map((locale) => ({
+            value: locale,
+            label: LANGUAGE_NAMES[locale],
+            icon: <CustomFlag locale={locale} className="language-switcher__flag" />,
+          }))}
+        />
+      </div>
+    );
+  }
+
   return (
-    <div className="language-switcher">
+    <div className="language-switcher language-switcher--menu">
       <CustomTooltip title={LANGUAGE_SWITCHER_LABEL} placement="bottom">
         <button
           type="button"

@@ -1,3 +1,5 @@
+import { palette } from "@/sass/base/colors.generated";
+
 interface EmptyContentProps {
   title: string;
   description: string;
@@ -17,14 +19,14 @@ function HikerSunsetIllustration() {
           <circle cx="150" cy="150" r="145" />
         </clipPath>
         <linearGradient id="empty-content-sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#b0dfd8" />
-          <stop offset="0.5" stopColor="#e4cba1" />
-          <stop offset="1" stopColor="#f1e8d9" />
+          <stop offset="0" stopColor={palette.lightGreen} />
+          <stop offset="0.5" stopColor={palette.darkBeige} />
+          <stop offset="1" stopColor={palette.lightBrown} />
         </linearGradient>
         <radialGradient id="empty-content-sun" cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0" stopColor="#fffbf4" />
-          <stop offset="0.55" stopColor="#e4cba1" />
-          <stop offset="1" stopColor="#e4cba1" stopOpacity="0" />
+          <stop offset="0" stopColor={palette.lightBeige} />
+          <stop offset="0.55" stopColor={palette.darkBeige} />
+          <stop offset="1" stopColor={palette.darkBeige} stopOpacity="0" />
         </radialGradient>
       </defs>
 
@@ -33,30 +35,30 @@ function HikerSunsetIllustration() {
 
         {/* Setting sun */}
         <circle cx="150" cy="150" r="78" fill="url(#empty-content-sun)" />
-        <circle cx="150" cy="150" r="34" fill="#fffbf4" />
+        <circle cx="150" cy="150" r="34" fill={palette.lightBeige} />
 
         {/* Far mountains */}
         <path
           d="M-10,205 L45,148 L95,190 L150,138 L205,188 L255,150 L310,200 L310,240 L-10,240 Z"
-          fill="#4fb6a9"
+          fill={palette.midGreen}
         />
         {/* Mid mountains */}
         <path
           d="M-10,220 L55,178 L120,212 L175,175 L235,210 L295,180 L310,214 L310,250 L-10,250 Z"
-          fill="#377f76"
+          fill={palette.darkGreen}
         />
         {/* Brown foreground hill the hiker walks along */}
         <path
           d="M-10,244 C55,228 110,254 165,240 C220,228 268,250 310,238 L310,300 L-10,300 Z"
-          fill="#70634c"
+          fill={palette.darkBrown}
         />
 
         {/* Hiker silhouette, cresting the hill toward the sun */}
-        <g fill="#4a3c28">
+        <g fill={palette.darkestBrown}>
           {/* trekking pole */}
           <path
             d="M160,198 L173,243"
-            stroke="#4a3c28"
+            stroke={palette.darkestBrown}
             strokeWidth="2.6"
             strokeLinecap="round"
             fill="none"
@@ -71,7 +73,7 @@ function HikerSunsetIllustration() {
           {/* forward arm reaching for the pole */}
           <path
             d="M152,197 L161,208"
-            stroke="#4a3c28"
+            stroke={palette.darkestBrown}
             strokeWidth="3.6"
             strokeLinecap="round"
             fill="none"
@@ -90,7 +92,7 @@ function HikerSunsetIllustration() {
         cy="150"
         r="145"
         fill="none"
-        stroke="#70634c"
+        stroke={palette.darkBrown}
         strokeWidth="3"
         opacity="0.4"
       />

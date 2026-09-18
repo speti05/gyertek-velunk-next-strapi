@@ -1,30 +1,43 @@
-import { darken, lighten } from "polished";
+import { darken, lighten, rgba } from "polished";
 
+import { palette } from "../base/colors.generated";
+
+// Every value here is derived from sass/base/_colors.scss via the generated palette in
+// colors.generated.ts. No colour literal belongs in this file - add the token to
+// _colors.scss instead and let the generator pick it up.
 const baseColors = {
-  darkGreen: "rgb(55 , 127, 118)", // gy-v-dark-green
-  darkBrown: "rgb(112 , 99, 76)", // gy-v-dark-brown
-  lightBrown: "rgb(241, 232, 217)", // gy-v-light-brown
-  veryLightBeige: "rgb(254, 253, 250)", // gy-v-very-light-beige, page base background
-  gray: "rgb(156, 163, 175)", // gy-v-gray
-  red: " rgb(255, 0, 0)", // red for errors, required fields
+  darkGreen: palette.darkGreen,
+  darkBrown: palette.darkBrown,
+  lightBrown: palette.lightBrown,
+  lightGreen: palette.lightGreen,
+  darkBeige: palette.darkBeige,
+  veryLightBeige: palette.veryLightBeige,
+  white: palette.white,
+  black: palette.black,
+  gray: palette.gray400,
+  error: palette.error,
+  red: palette.red,
 };
 
 export const colors = {
   background: {
     default: baseColors.veryLightBeige,
   },
+  divider: rgba(baseColors.black, 0.1),
   button: {
     primary: {
       main: baseColors.darkGreen,
       hover: lighten(0.1, baseColors.darkGreen),
       active: darken(0.1, baseColors.darkGreen),
       light: lighten(0.2, baseColors.darkGreen),
+      shadow: rgba(baseColors.darkGreen, 0.3),
     },
     secondary: {
       main: baseColors.darkBrown,
       hover: lighten(0.1, baseColors.darkBrown),
       active: darken(0.1, baseColors.darkBrown),
       light: lighten(0.2, baseColors.darkBrown),
+      shadow: rgba(baseColors.darkBrown, 0.3),
     },
     disabled: baseColors.gray,
   },
@@ -49,16 +62,23 @@ export const colors = {
     hover: lighten(0.2, baseColors.darkGreen),
     error: baseColors.red,
   },
+  switch: {
+    disabledChecked: baseColors.lightGreen,
+  },
   chip: {
-    success: { backgroundColor: "rgb(176, 223, 216)", color: "rgb(55, 127, 118)" },
-    warning: { backgroundColor: "rgb(228, 203, 161)", color: "rgb(112, 99, 76)" },
-    error: { backgroundColor: "rgba(120, 2, 2, 0.12)", color: "rgb(120, 2, 2)" },
-    default: { backgroundColor: "rgb(241, 232, 217)", color: "rgb(112, 99, 76)" },
+    success: { backgroundColor: baseColors.lightGreen, color: baseColors.darkGreen },
+    warning: { backgroundColor: baseColors.darkBeige, color: baseColors.darkBrown },
+    error: { backgroundColor: rgba(baseColors.error, 0.12), color: baseColors.error },
+    default: { backgroundColor: baseColors.lightBrown, color: baseColors.darkBrown },
   },
   link: {
     primary: { main: baseColors.darkGreen, hover: baseColors.darkBrown },
     secondary: { main: baseColors.darkBrown, hover: baseColors.darkGreen },
-    white: { main: "#ffffff", hover: baseColors.lightBrown },
+    white: {
+      main: baseColors.white,
+      hover: baseColors.lightBrown,
+      contrastText: baseColors.darkBrown,
+    },
   },
   accordion: {
     default: baseColors.lightBrown,

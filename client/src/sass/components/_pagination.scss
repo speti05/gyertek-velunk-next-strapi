@@ -1,3 +1,5 @@
+@use "../base/colors";
+
 .pagination-nav {
   display: flex;
   justify-content: center;
@@ -15,13 +17,13 @@
 .pagination-arrow {
   padding: 0.625rem 1.25rem;
   border-radius: 0.5rem;
-  background-color: #f3f4f6;
-  color: #4b5563;
+  background-color: colors.$gy-v-gray-100;
+  color: colors.$gy-v-gray-600;
   transition: all 0.2s ease;
 
   &:hover:not(.disabled) {
-    background-color: #e5e7eb;
-    color: #374151;
+    background-color: colors.$gy-v-gray-200;
+    color: colors.$gy-v-gray-700;
     transform: translateY(-1px);
   }
 
@@ -37,13 +39,13 @@
 .page-number {
   padding: 0.625rem 1rem;
   font-weight: 600;
-  color: #4b5563;
+  color: colors.$gy-v-gray-600;
   min-width: 2.5rem;
   text-align: center;
 
   &.active {
-    background-color: #e5e7eb;
+    background-color: colors.$gy-v-gray-200;
     border-radius: 0.5rem;
-    color: #111827;
+    color: colors.$gy-v-gray-900;
   }
 }

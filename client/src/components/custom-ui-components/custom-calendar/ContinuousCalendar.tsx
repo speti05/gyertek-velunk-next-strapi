@@ -178,15 +178,15 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
               data-month={month}
               data-day={day}
               onClick={() => handleDayClick(eventToDisplay)}
-              className={`${eventToDisplay ? "bg-[#79C2B6]" : ""} border-[#377F76] relative z-10 m-[-0.5px] group aspect-square w-full grow cursor-pointer rounded-xl border font-medium transition-all hover:z-20 hover:border-cyan-400 sm:-m-px sm:size-20 sm:rounded-2xl sm:border-2 lg:size-36 lg:rounded-3xl 2xl:size-40`}
+              className={`${eventToDisplay ? style["day-cell-with-event"] : ""} ${style["day-cell"]} relative z-10 m-[-0.5px] group aspect-square w-full grow cursor-pointer rounded-xl border font-medium transition-all hover:z-20 sm:-m-px sm:size-20 sm:rounded-2xl sm:border-2 lg:size-36 lg:rounded-3xl 2xl:size-40`}
             >
               <span
-                className={`absolute left-1 top-1 flex size-5 items-center justify-center rounded-full text-xs sm:size-6 sm:text-sm lg:left-2 lg:top-2 lg:size-8 lg:text-base ${isToday ? "bg-blue-500 font-semibold text-white" : ""} ${month < 0 ? "text-slate-400" : "text-slate-800"}`}
+                className={`absolute left-1 top-1 flex size-5 items-center justify-center rounded-full text-xs sm:size-6 sm:text-sm lg:left-2 lg:top-2 lg:size-8 lg:text-base ${isToday ? `${style["day-number-today"]} font-semibold` : ""} ${month < 0 ? style["day-number-muted"] : style["day-number"]}`}
               >
                 {day}
               </span>
               {isNewMonth && (
-                <span className="absolute bottom-0.5 left-0 w-full truncate px-1.5 text-sm font-semibold text-slate-300 sm:bottom-0 sm:text-lg lg:bottom-2.5 lg:left-3.5 lg:-mb-1 lg:w-fit lg:px-0 lg:text-xl 2xl:mb-[-4px] 2xl:text-2xl">
+                <span className={`${style["month-label"]} absolute bottom-0.5 left-0 w-full truncate px-1.5 text-sm font-semibold sm:bottom-0 sm:text-lg lg:bottom-2.5 lg:left-3.5 lg:-mb-1 lg:w-fit lg:px-0 lg:text-xl 2xl:mb-[-4px] 2xl:text-2xl`}>
                   {monthNames[month]}
                 </span>
               )}
@@ -195,7 +195,7 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
                 className="absolute right-2 top-2 rounded-full opacity-0 transition-all focus:opacity-100 group-hover:opacity-100"
               >
                 <svg
-                  className="size-8 scale-90 color-[#377F76]  transition-all hover:scale-100 group-focus:scale-100"
+                  className="size-8 scale-90 transition-all hover:scale-100 group-focus:scale-100"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -252,7 +252,7 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
 
   return (
     <div
-      className={`calendar-container rounded-2xl no-scrollbar max-h-full overflow-y-scroll rounded-t-2xl bg-white pb-10 text-slate-800 shadow-xl`}
+      className={`calendar-container ${style["calendar-container"]} rounded-2xl no-scrollbar max-h-full overflow-y-scroll rounded-t-2xl pb-10 shadow-xl`}
     >
       <div
         className={`${style["calendar-header-" + theme]} sticky -top-px z-50 w-full rounded-t-2xl px-5 pt-7 sm:px-8 sm:pt-8`}
@@ -262,7 +262,7 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
             variant="contained"
             color={buttonColor}
             onClick={handleTodayClick}
-            className="rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-900 hover:bg-gray-100 lg:px-5 lg:py-2.5"
+            className={`${style["today-button"]} rounded-lg border px-3 py-1.5 text-sm font-medium lg:px-5 lg:py-2.5`}
           >
             {todayText}
           </CustomButton>
@@ -275,7 +275,7 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
           <div className="flex items-center justify-between">
             <CustomButton onClick={handlePrevYear} color={buttonColor}>
               <svg
-                className="size-5 text-slate-100 font-semibold "
+                className={`${style["nav-icon"]} size-5 font-semibold`}
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -297,7 +297,7 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
             </h3>
             <CustomButton onClick={handleNextYear} color={buttonColor}>
               <svg
-                className="size-5 text-slate-100 font-semibold "
+                className={`${style["nav-icon"]} size-5 font-semibold`}
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -316,11 +316,11 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
             </CustomButton>
           </div>
         </div>
-        <div className="grid w-full grid-cols-7 justify-between text-slate-100 text-4xl">
+        <div className={`${style["weekday-row"]} grid w-full grid-cols-7 justify-between text-4xl`}>
           {daysOfWeek.map((day, index) => (
             <div
               key={index}
-              className="calendar-day w-full border-b border-slate-200 py-2 text-center font-semibold"
+              className={`${style["weekday-cell"]} calendar-day w-full border-b py-2 text-center font-semibold`}
             >
               {day}
             </div>

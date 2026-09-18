@@ -4,47 +4,397 @@
 $font-color: colors.$gy-v-white;
 $font-color-hovered: colors.$gy-v-light-brown;
 $header-background-color: colors.$gy-v-dark-green;
+// One step darker than the main row, so the utility bar reads as subordinate to it
+// without introducing a colour that is not already in the palette's range.
+$utility-background-color: colors.$gy-v-deep-green;
+$accent-color: colors.$gy-v-dark-beige;
+// The collapse/expand on scroll. The badge's margin has to ride the exact same curve as
+// the header's transform, because the two are meant to cancel out at every instant -
+// any difference in duration or easing shows up as the badge drifting.
+$header-collapse-transition: 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+
+// The two bands the header paints, in one element: the split follows
+// --utility-bar-height, so collapsing the bar to zero on mobile leaves a plain
+// single-colour bar with no extra rule.
+@mixin header-bands {
+  background: linear-gradient(
+    to bottom,
+    $utility-background-color 0,
+    $utility-background-color var(--utility-bar-height),
+    $header-background-color var(--utility-bar-height),
+    $header-background-color 100%
+  );
+}
 
 :root {
-  --navbar-height: 100px;
-  --social-bar-height: 4.6rem;
-  --header-height: var(--navbar-height);
-  // logo scales with the viewport, never wider than its intrinsic 256px
-  --header-logo-width: clamp(110px, 38vw, 256px);
+  // The two bands the header is built from. --header-height is what the rest of the
+  // app measures against (see _hero-section.scss), so it always stays the sum.
+  --navbar-height: 104px;
+  --utility-bar-height: 54px;
+  --header-height: calc(var(--navbar-height) + var(--utility-bar-height));
+  // The badge's unscrolled size. The column is measured from this rather than from
+  // --header-logo-width, so the badge can shrink while scrolled without the column
+  // shrinking with it and dragging the navigation sideways.
+  --header-logo-base-width: 256px;
+  --header-logo-width: var(--header-logo-base-width);
+  --header-logo-column: calc(var(--header-logo-base-width) + 2rem);
+  --header-side-padding: 2rem;
+  // How far the badge is pushed down inside the bar while the page is at the top.
+  --header-logo-top-offset: 40px;
+  // How far the badge hangs below the bar. Only the mobile panel needs it, to keep its
+  // first row clear of the badge. Authored rather than derived: the badge's rendered
+  // height follows the aspect ratio of whatever image Strapi serves, which CSS cannot
+  // measure - so it is kept next to the width it belongs to.
+  --header-logo-overhang: 0px;
+
+  @include mixins.respond(nav-collapse) {
+    --navbar-height: 76px;
+    --utility-bar-height: 0px;
+    --header-logo-base-width: 180px;
+    --header-logo-column: auto;
+    --header-side-padding: 1.6rem;
+    --header-logo-top-offset: 0px;
+    --header-logo-overhang: 96px;
+  }
+
+  // Narrow phones: the badge, the title and the hamburger no longer fit side by side at
+  // the full badge width, so the badge gives way first. The overhang follows it - the
+  // badge renders at roughly 0.95 of its width, less the bar's own height.
+  @include mixins.respond(phone-tiny) {
+    --header-logo-base-width: 120px;
+    --header-logo-overhang: 39px;
+  }
 }
 
 li {
   list-style: none;
 }
-.navbar {
-  width: 100%;
-  height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 5%;
-  font-size: 3rem;
-  color: $font-color;
-  background-color: $header-background-color;
-}
-.nav-menu {
-  display: flex;
-  align-items: center;
-  gap: 4rem;
 
-  li > a > span {
-    font-family: var(--font-luckiest-guy), cursive;
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  color: $font-color;
+  // One element, two bands: the split follows --utility-bar-height, so collapsing the
+  // bar to zero on mobile leaves a plain single-colour bar with no extra rule.
+  @include header-bands;
+
+  transition:
+    transform $header-collapse-transition,
+    box-shadow $header-collapse-transition;
+
+  &:not(&--scrolled) {
+    .site-header__logo {
+      padding-top: var(--header-logo-top-offset);
+    }
+  }
+  &--scrolled {
+    // Slides the utility bar out of view and leaves the main row pinned to the top.
+    transform: translateY(calc(-1 * var(--utility-bar-height)));
+    box-shadow: 0 4px 24px colors.scrim(0.18);
+
+    @include mixins.respond(nav-collapse) {
+      // `none`, not `translateY(0)`: any transform would turn the header into the
+      // containing block of the fixed menu panel inside it.
+      transform: none;
+    }
+  }
+
+  // No social links and no language switcher - nothing would be in the utility bar.
+  &--no-utility {
+    --utility-bar-height: 0px;
+  }
+
+  // The error shell renders a header with nothing but the badge and no page to scroll,
+  // so it keeps its place in the flow instead of being pinned over the content.
+  &--static {
+    position: static;
   }
 }
-.nav-branding {
-  font-size: 2rem;
+
+// Stands in for the fixed header's height, and paints the backdrop it slides over. While
+// the header is translated up, the strip it no longer covers is exposed here - without a
+// fill, that is the pale page background flashing through on every return to the top.
+//
+// Flat, not the header's gradient: the only part of this box that is ever uncovered is
+// the bottom strip, which always falls in the main row's green. Repeating the gradient
+// would add a hard colour stop for no gain, and its antialiased edge can show as a seam.
+.site-header__spacer {
+  flex-shrink: 0;
+  height: var(--header-height);
+  background-color: $header-background-color;
+
+  // Mirrors .site-header--no-utility: the header collapses the band on its own element,
+  // and a custom property set there cannot reach this sibling, so the reserved height
+  // would no longer match the header's.
+  &--no-utility {
+    --utility-bar-height: 0px;
+  }
 }
-/* transition for links */
-.nav-link {
-  transition: color 0.5s ease;
+
+.site-header__inner {
+  display: grid;
+  align-items: center;
+  width: 100%;
+  max-width: 140rem;
+  margin: 0 auto;
+  padding: 0 var(--header-side-padding);
+  grid-template-columns: var(--header-logo-column) 1fr auto;
+  grid-template-rows: var(--utility-bar-height) var(--navbar-height);
+  grid-template-areas:
+    "logo socials language"
+    "logo nav     account";
+  column-gap: 2rem;
 }
+
+/* ---------------------------------------------------------------- logo ---- */
+
+.site-header__logo {
+  grid-area: logo;
+  align-self: start;
+  z-index: 2;
+  // Both offsets change between the scrolled and unscrolled state, so both ride the same
+  // curve as the header's transform - otherwise one snaps while the other glides.
+  transition:
+    margin-top $header-collapse-transition,
+    padding-top $header-collapse-transition;
+
+  a.navbar__logo-link {
+    display: block;
+
+    img.header__logo {
+      display: block;
+      width: var(--header-logo-width);
+      height: auto;
+      filter: drop-shadow(0 6px 16px rgba(colors.$gy-v-overlay-dark, 0.35));
+      transition: width $header-collapse-transition;
+    }
+  }
+}
+
+// The badge keeps its size while scrolled. The header itself has moved up by the utility
+// bar's height, so adding that back as a margin holds the badge in exactly the same place
+// on screen while the bar condenses around it - without it, its top would be clipped.
+.site-header--scrolled .site-header__logo {
+  margin-top: var(--utility-bar-height);
+}
+
+/* --------------------------------------------------------------- brand ---- */
+
+.site-header__brand {
+  display: none;
+  grid-area: brand;
+  min-width: 0;
+  overflow: hidden;
+  font-family: var(--font-luckiest-guy), cursive;
+  font-size: 2.1rem;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* ------------------------------------------------------------- socials ---- */
+
+.site-header__socials {
+  grid-area: socials;
+  justify-self: end;
+  min-width: 0;
+}
+
+/* ------------------------------------------------- navigation and panel ---- */
+
+.site-header__panel {
+  // Above the breakpoint the panel is not a box of its own: its three children take
+  // their places in the header grid directly.
+  display: contents;
+}
+
+.site-header__nav-wrap {
+  grid-area: nav;
+  justify-self: start;
+  min-width: 0;
+}
+
+.site-header__nav {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  // The size lives on the list, not on the link. Every entry is a MUI Link whose emotion
+  // class carries `font: inherit`, and emotion is injected after this stylesheet, so a
+  // font-size written on the <a> loses to it - it has to be inherited from an ancestor,
+  // exactly as it came from .navbar before.
+  font-size: 3rem;
+
+  // CustomLink carries an inline `display: inline-block`, which a stylesheet cannot
+  // override. Making every item a flex container blockifies the link instead, so no
+  // baseline gap is left under it and `width: 100%` behaves in the mobile panel.
+  li {
+    display: flex;
+  }
+}
+
+.site-header__nav-link {
+  color: $font-color;
+  transition: color 0.18s ease;
+
+  &:hover {
+    color: colors.$gy-v-light-green;
+  }
+}
+
+// Two classes on purpose: _typography.scss sets the body font family on every element
+// through `*`, and the emotion class above sets it again on the <a>. Neither reaches
+// this label once it names the family itself.
+.site-header__nav .site-header__nav-label {
+  display: block;
+  font-family: var(--font-luckiest-guy), cursive;
+  line-height: 1;
+}
+
+.site-header__nav-underline {
+  display: block;
+  height: 3px;
+  margin-top: 0.6rem;
+  border-radius: 2px;
+  background-color: transparent;
+  transition: background-color 0.18s ease;
+}
+
+.site-header__nav-link[aria-current="page"] .site-header__nav-underline {
+  background-color: $accent-color;
+}
+
+/* ------------------------------------------------------------ language ---- */
+
+.site-header__language {
+  grid-area: language;
+  justify-self: end;
+}
+
+/* ------------------------------------------------------------- account ---- */
+
+.site-header__account {
+  grid-area: account;
+  justify-self: end;
+}
+
+// Flex for the same reason as the navigation items: it blockifies the inline-block
+// CustomLink inside, so the outlined button is not sitting on a text baseline.
+.header-account {
+  display: flex;
+  align-items: center;
+}
+
+.header-account--mobile {
+  display: none;
+}
+
+.header-account__trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  height: 4.2rem;
+  padding: 0 1.4rem 0 0.5rem;
+  border-radius: 999px;
+  background-color: colors.veil(0.12);
+  color: $font-color;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.18s ease;
+
+  &:hover,
+  &:focus-visible {
+    background-color: colors.veil(0.22);
+  }
+}
+
+.header-account__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background-color: $accent-color;
+  color: colors.$gy-v-overlay-dark;
+  font-family: var(--font-luckiest-guy), cursive;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.header-account__name {
+  font-weight: 600;
+}
+
+.header-account__logout-form {
+  display: contents;
+}
+
+// The dropdown renders in a portal, so these are written flat - they cannot be nested
+// under .site-header.
+.header-account__item {
+  padding: 0;
+
+  &--logout {
+    color: colors.$gy-v-error;
+  }
+}
+
+.header-account__item-link,
+.header-account__item-inner {
+  width: 100%;
+}
+
+.header-account__item-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.6rem;
+  font-size: 1.5rem;
+}
+
+/* ------------------------------------------- shared outlined auth button ---- */
+
+.header-auth-button {
+  border: 1.5px solid $accent-color;
+  border-radius: 999px;
+  background-color: transparent;
+  color: $accent-color;
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease;
+
+  &:hover,
+  &:focus-visible {
+    background-color: $accent-color;
+    color: colors.$gy-v-overlay-dark;
+  }
+}
+
+.header-auth-button__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  height: 4rem;
+  padding: 0 2.2rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+/* ----------------------------------------------------------- hamburger ---- */
+
 .hamburger {
   z-index: 1000;
+  grid-area: hamburger;
+  justify-self: end;
   display: none;
   cursor: pointer;
 }
@@ -54,70 +404,22 @@ li {
   margin: 5px auto;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  background: white;
-}
-.nav-item {
-  padding: 0 1.5rem;
+  background: colors.$gy-v-white;
 }
 
-.navbar__auth-group {
-  display: flex;
-  align-items: center;
-  gap: 1.2rem;
-}
-
-.navbar__auth-link {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  flex-direction: column;
-}
-
-.navbar__auth-name {
-  font-family: var(--font-luckiest-guy), cursive;
-  font-size: 1.6rem;
-  font-weight: 300;
-  line-height: 1;
-}
-
-.navbar__auth-btn {
-  display: flex;
-  align-items: center;
-  color: $font-color;
-  font-size: inherit;
-  transition: color 0.5s ease;
-  margin: 2rem;
-
-  &:hover {
-    color: $font-color-hovered;
-  }
-}
-.header__logo_wrapper {
-  z-index: 998;
-  position: absolute;
-  top: 0;
-
-  a.navbar__logo-link {
-    display: block;
-
-    img.header__logo {
-      position: relative;
-      width: var(--header-logo-width);
-      height: auto;
-      filter: drop-shadow(10px 10px 10px #222);
-    }
-  }
-}
+/* ---------------------------------------------------------- breakpoints ---- */
 
 @include mixins.respond(desktop-narrow) {
-  .navbar {
+  .site-header__nav {
     font-size: 2.2rem;
+    gap: 2.6rem;
   }
 }
 
 @include mixins.respond(laptop) {
-  .navbar {
+  .site-header__nav {
     font-size: 2rem;
+    gap: 2.2rem;
   }
 }
 
@@ -138,26 +440,172 @@ li {
   .hamburger.active .bar:nth-child(3) {
     transform: rotate(-45deg) translateY(-11.5px);
   }
-  .nav-menu {
-    z-index: 999;
-    position: fixed;
-    right: -100%;
-    flex-direction: column;
-    width: 100%;
-    text-align: center;
-    background: $header-background-color;
-    transition: 0.3s;
-  }
-  .nav-item {
-    padding: 1.5rem 0;
+
+  .site-header__inner {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-rows: var(--navbar-height);
+    grid-template-areas: "logo brand hamburger";
+    column-gap: 1.2rem;
   }
 
-  .nav-menu.active {
-    right: 0;
-    top: 0;
-    padding: 30px 0;
-    max-height: 100dvh;
+  // The badge is taller than the bar here, so it hangs over the sheet below. Aligned to
+  // the top rather than centred - centring a box taller than its row pushes the badge's
+  // crown above the viewport - and lifted over the panel, which would otherwise cover it.
+  .site-header__logo {
+    align-self: start;
+    margin-top: 0;
+    z-index: 1001;
+  }
+
+  // Scrolled, the badge is small enough to sit inside the bar, so it is centred in it.
+  // Centred with a margin rather than align-self: the alignment would snap while the
+  // width glides, whereas this margin rides the same curve as the shrink.
+  // 60px wide renders 57px tall, which leaves 9px above and below in the 76px bar.
+  .site-header--scrolled .site-header__logo {
+    --header-logo-width: 60px;
+
+    margin-top: 16px;
+  }
+
+  // The badge is too small here to read as a wordmark, so the title carries the brand
+  // in every state - open or closed.
+  // No justify-self: start here. That would size the title to its own text instead of to
+  // its grid track, so it would overrun the hamburger rather than ellipsising - the track
+  // already begins right after the badge, so stretching aligns it the same way.
+  .site-header__brand {
+    display: block;
+  }
+
+  .site-header__panel {
+    position: fixed;
+    top: var(--navbar-height);
+    right: -100%;
+    bottom: 0;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    // Top padding clears the badge hanging into the sheet, so the first entry never
+    // lands underneath it.
+    padding: calc(1.6rem + var(--header-logo-overhang)) var(--header-side-padding) 4rem;
     overflow-y: auto;
+    background-color: $header-background-color;
+    transition: right 0.3s ease;
+  }
+
+  .site-header--menu-open .site-header__panel {
+    right: 0;
+  }
+
+  .site-header__nav-wrap {
+    order: 1;
+  }
+  .site-header__account {
+    order: 2;
+  }
+  .site-header__language {
+    order: 3;
+  }
+  .site-header__socials {
+    order: 4;
+  }
+
+  .site-header__account,
+  .site-header__language,
+  .site-header__socials {
+    justify-self: stretch;
+    padding-top: 2rem;
+    border-top: 1px solid colors.veil(0.2);
+  }
+
+  // Centred at the foot of the panel rather than left-aligned as in the desktop
+  // utility bar, since it is the last thing in the sheet and has the full width.
+  .site-header__socials .social-links--header {
+    justify-content: center;
+  }
+
+  .site-header__nav {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+    font-size: 3.4rem;
+  }
+
+  .site-header__nav-link {
+    width: 100%;
+    padding: 1.6rem;
+    border-left: 4px solid transparent;
+    border-radius: 1.2rem;
+  }
+
+  .site-header__nav-link[aria-current="page"] {
+    border-left-color: $accent-color;
+    background-color: colors.veil(0.1);
+  }
+
+  .site-header__nav-underline {
+    display: none;
+  }
+
+  .header-account--desktop {
+    display: none;
+  }
+
+  .header-account--mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+  }
+
+  .header-account__avatar {
+    width: 4rem;
+    height: 4rem;
+    font-size: 1.9rem;
+  }
+
+  .header-account__profile-link {
+    width: 100%;
+    border-radius: 1.2rem;
+    background-color: colors.veil(0.1);
+    color: $font-color;
+  }
+
+  .header-account__profile-inner {
+    display: flex;
+    align-items: center;
+    gap: 1.3rem;
+    padding: 1.6rem;
+    font-size: 2.1rem;
+  }
+
+  .header-account__profile-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    flex-grow: 1;
+    min-width: 0;
+  }
+
+  .header-account__profile-hint {
+    font-size: 1.6rem;
+    color: colors.veil(0.6);
+  }
+
+  .header-account__name {
+    font-size: 2.1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .header-auth-button {
+    width: 100%;
+  }
+
+  .header-auth-button__inner {
+    height: 5.6rem;
+    font-size: 1.7rem;
   }
 
   // Lock the page while the hamburger menu overlay is open, so the overlay
@@ -168,20 +616,29 @@ li {
   body.nav-menu-open {
     overflow: hidden;
   }
+}
 
-  // The hamburger lives in the non-fixed .navbar, so when the menu is opened
-  // from a scrolled position the close button would sit above the viewport -
-  // pin it to the overlay instead.
-  .hamburger.active {
-    position: fixed;
-    top: calc((var(--navbar-height) - 29px) / 2);
-    right: 5%;
+@include mixins.respond(phone-small) {
+  .site-header__brand {
+    font-size: 1.9rem;
   }
 }
+
+@include mixins.respond(phone-tiny) {
+  .site-header__brand {
+    font-size: 1.7rem;
+  }
+}
+
+/* ----------------------------------------------------- language switcher ---- */
 
 .language-switcher {
   display: flex;
   align-items: center;
+
+  &--radio {
+    display: none;
+  }
 
   &__trigger {
     display: flex;
@@ -189,16 +646,16 @@ li {
     gap: 0.6rem;
     padding: 0.4rem 0.8rem;
     border-radius: 0.6rem;
-    font-size: 2rem;
+    font-size: 1.6rem;
     color: $font-color;
     transition:
-      background-color 0.2s ease,
-      color 0.2s ease;
+      background-color 0.18s ease,
+      color 0.18s ease;
 
     &:hover,
     &:focus-visible {
       color: $font-color-hovered;
-      background-color: rgba(255, 255, 255, 0.12);
+      background-color: colors.veil(0.12);
     }
   }
 
@@ -213,7 +670,7 @@ li {
     flex-shrink: 0;
     border-radius: 50%;
     // Hairline ring, so a flag's white band keeps an edge against a light surface.
-    box-shadow: 0 0 0 0.1rem rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 0 0.1rem colors.scrim(0.2);
   }
 
   &__option {
@@ -224,5 +681,58 @@ li {
     .language-switcher__flag {
       font-size: 1.8rem;
     }
+  }
+}
+
+@include mixins.respond(nav-collapse) {
+  .language-switcher--menu {
+    display: none;
+  }
+
+  .language-switcher--radio {
+    display: block;
+    width: 100%;
+  }
+
+  // CustomRadioGroup styles itself for a light form background, so the header's copy is
+  // recoloured here rather than by adding props to the shared control. Its class names
+  // are hashed by CSS modules, so the hooks are the markup it guarantees: the group's
+  // own label is its root's first <span>, and the options carry role="radiogroup".
+  .language-switcher--radio > div > span {
+    color: colors.veil(0.55);
+    font-size: 1.4rem;
+  }
+
+  .language-switcher--radio [role="radiogroup"] {
+    border-color: $accent-color;
+    border-radius: 1.2rem;
+  }
+
+  .language-switcher--radio [role="radiogroup"] > div:not(:last-child) label {
+    border-right-color: $accent-color;
+  }
+
+  .language-switcher--radio [role="radiogroup"] label {
+    gap: 1.2rem;
+    padding: 1.6rem 1.8rem;
+    color: $font-color;
+    font-size: 1.8rem;
+
+    &:hover {
+      background-color: colors.veil(0.12);
+    }
+  }
+
+  .language-switcher--radio [role="radiogroup"] input[type="radio"]:checked + label {
+    background-color: rgba(colors.$gy-v-dark-beige, 0.22);
+    color: $font-color;
+
+    &:hover {
+      background-color: rgba(colors.$gy-v-dark-beige, 0.3);
+    }
+  }
+
+  .language-switcher--radio .language-switcher__flag {
+    font-size: 2.4rem;
   }
 }

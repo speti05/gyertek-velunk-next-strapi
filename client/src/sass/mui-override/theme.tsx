@@ -46,7 +46,7 @@ export const theme = createTheme({
       main: colors.link.white.main,
       light: colors.link.white.main,
       dark: colors.link.white.hover,
-      contrastText: "rgb(112, 99, 76)",
+      contrastText: colors.link.white.contrastText,
     },
   },
   components: {
@@ -71,7 +71,7 @@ export const theme = createTheme({
           boxShadow: "none",
           "&:hover": {
             backgroundColor: colors.button.primary.hover,
-            boxShadow: "0 2px 8px rgba(55, 127, 118, 0.3)",
+            boxShadow: `0 2px 8px ${colors.button.primary.shadow}`,
           },
           "&:active": {
             backgroundColor: colors.button.primary.active,
@@ -98,7 +98,7 @@ export const theme = createTheme({
           boxShadow: "none",
           "&:hover": {
             backgroundColor: colors.button.secondary.hover,
-            boxShadow: "0 2px 8px rgba(112, 99, 76, 0.3)",
+            boxShadow: `0 2px 8px ${colors.button.secondary.shadow}`,
           },
           "&:active": {
             backgroundColor: colors.button.secondary.active,
@@ -327,8 +327,8 @@ export const theme = createTheme({
             "& + .MuiSwitch-track": { backgroundColor: colors.button.primary.main },
           },
           "&.Mui-checked.Mui-disabled": {
-            color: "rgb(176, 223, 216)",
-            "& + .MuiSwitch-track": { backgroundColor: "rgb(176, 223, 216)", opacity: 0.9 },
+            color: colors.switch.disabledChecked,
+            "& + .MuiSwitch-track": { backgroundColor: colors.switch.disabledChecked, opacity: 0.9 },
           },
         },
       },

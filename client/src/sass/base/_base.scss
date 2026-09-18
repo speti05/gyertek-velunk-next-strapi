@@ -1,6 +1,20 @@
 @use "mixins";
 @use "colors";
 
+// Document-level custom properties that globals.css reads. They are declared here,
+// not in plain CSS, so their values keep coming from the palette.
+:root {
+  --background: #{colors.$gy-v-very-light-beige};
+  --foreground: #{colors.$gy-v-foreground};
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #{colors.$gy-v-dark-scheme-background};
+    --foreground: #{colors.$gy-v-dark-scheme-foreground};
+  }
+}
+
 *,
 *::after,
 *::before {

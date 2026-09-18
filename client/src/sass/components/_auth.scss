@@ -153,7 +153,7 @@
     display: flex;
     align-items: center;
     gap: 1.2rem;
-    background-color: color-mix(in srgb, colors.$gy-v-light-beige 60%, white);
+    background-color: color-mix(in srgb, colors.$gy-v-light-beige 60%, colors.$gy-v-white);
     border: 1px solid color-mix(in srgb, colors.$gy-v-light-beige 20%, transparent);
     border-radius: 0.8rem;
     padding: 1.2rem 1.6rem;
@@ -255,7 +255,7 @@
   }
 
   &__signup-details-section {
-    background: color-mix(in srgb, colors.$gy-v-light-beige 40%, white);
+    background: color-mix(in srgb, colors.$gy-v-light-beige 40%, colors.$gy-v-white);
     border-radius: 0.6rem;
     padding: 1.2rem 1.6rem;
     display: flex;

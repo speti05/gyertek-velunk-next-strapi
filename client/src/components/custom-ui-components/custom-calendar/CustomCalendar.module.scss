@@ -1,23 +1,81 @@
-@import "../../../sass/base/colors";
-//@import "../../../sass/base/typography.scss";
+@use "../../../sass/base/colors" as c;
 
 .calendar-header-turquoise {
-  background-color: $gy-v-dark-green;
-  color: white;
+  background-color: c.$gy-v-dark-green;
+  color: c.$gy-v-white;
 }
 .calendar-header-brown {
-  background-color: $gy-v-dark-brown;
-  color: white;
+  background-color: c.$gy-v-dark-brown;
+  color: c.$gy-v-white;
 }
 .calendar-content-turquoise {
-  background-color: white;
+  background-color: c.$gy-v-white;
 }
 
 .calendar-content-brown {
-  background-color: $gy-v-light-brown;
+  background-color: c.$gy-v-light-brown;
 }
 
 .calendar-day {
   font-family: var(--font-luckiest-guy), cursive;
-  color: red;
+  color: c.$gy-v-red;
+}
+
+// The scroll container and the chrome inside it. These used to be Tailwind colour
+// utilities on the elements themselves; they live here so every colour keeps
+// coming from the palette. Only the colours moved - layout stays in Tailwind.
+.calendar-container {
+  background-color: c.$gy-v-white;
+  color: c.$gy-v-slate-800;
+}
+
+.today-button {
+  background-color: c.$gy-v-white;
+  border-color: c.$gy-v-gray-300;
+  color: c.$gy-v-gray-900;
+
+  &:hover {
+    background-color: c.$gy-v-gray-100;
+  }
+}
+
+.nav-icon {
+  color: c.$gy-v-slate-100;
+}
+
+.weekday-row {
+  color: c.$gy-v-slate-100;
+}
+
+.weekday-cell {
+  border-bottom-color: c.$gy-v-slate-200;
+}
+
+.day-cell {
+  border-color: c.$gy-v-dark-green;
+
+  &:hover {
+    border-color: c.$gy-v-calendar-hover;
+  }
+}
+
+.day-cell-with-event {
+  background-color: c.$gy-v-soft-green;
+}
+
+.day-number {
+  color: c.$gy-v-slate-800;
+}
+
+.day-number-muted {
+  color: c.$gy-v-slate-400;
+}
+
+.day-number-today {
+  background-color: c.$gy-v-calendar-today;
+  color: c.$gy-v-white;
+}
+
+.month-label {
+  color: c.$gy-v-slate-300;
 }

@@ -12,14 +12,14 @@
   background-image: url("/mountain_header.svg");
   background-size: cover;
   background-position: center 70%;
-  background-color: #d8e8e2;
+  background-color: colors.$gy-v-pale-green;
   overflow: hidden;
   margin-bottom: 6rem;
 
   &__backdrop {
     position: absolute;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.15);
+    background-color: colors.scrim(0.15);
     backdrop-filter: blur(1px);
   }
 

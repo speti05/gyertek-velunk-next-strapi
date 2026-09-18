@@ -3,18 +3,8 @@
 @import "tailwindcss/preflight";
 */
 
-:root {
-  /* mirrors $gy-v-very-light-beige in sass/base/_colors.scss */
-  --background: #fefdfa;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* --background / --foreground are declared in sass/base/_base.scss so that their
+   values come from the palette in sass/base/_colors.scss. */
 
 html,
 body {
