@@ -6,12 +6,13 @@ import { ImageProps } from "@/types";
 import CustomLink from "./custom-ui-components/custom-link/custom-link";
 import { StrapiImage } from "./StrapiImage";
 import { formatDate } from "@/utils/format-date";
+import { truncateText } from "@/utils/text-utils";
 import { TourDifficultyBadge } from "./TourDifficultyBadge";
 
 export interface CardProps {
   documentId: string;
   title: string;
-  description: string;
+  description?: string;
   slug: string;
   image: ImageProps;
   price?: number;
@@ -65,7 +66,7 @@ export async function Card({
           {(startDate ?? createdAt) && <p>{formatDate(startDate ?? createdAt, locale)}</p>}
         </div>
         <hr className="content-items__card-divider" />
-        <p>{description.slice(0, 144)}...</p>
+        {description && <p>{truncateText(description, 144)}</p>}
       </div>
     </CustomLink>
   );

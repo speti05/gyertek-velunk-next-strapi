@@ -344,6 +344,9 @@ export const SIGNUP_SUMMARY_NOTES = "Megjegyzés (opcionális)";
 export const GALLERY_PREV_IMAGE_ARIA = "Előző kép";
 export const GALLERY_NEXT_IMAGE_ARIA = "Következő kép";
 export const GALLERY_DOT_IMAGE_ARIA = (idx: number) => `${idx + 1}. kép`;
+export const GALLERY_POSITION_LABEL = (current: number, total: number) => `${current} / ${total}`;
+export const GALLERY_POSITION_ARIA = (current: number, total: number) =>
+  `${total} képből a ${current}.`;
 export const GALLERY_PAUSE_ARIA = "Automatikus váltás megállítása";
 export const GALLERY_PLAY_ARIA = "Automatikus váltás indítása";
 

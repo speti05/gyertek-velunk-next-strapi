@@ -80,12 +80,27 @@
             padding-top: 0;
           }
         }
+        // Sits directly under the headline, inside it, so the pair stays at the top of
+        // the hero while the buttons keep to the bottom.
         .hero__welcome-text {
-          padding: 4rem;
-          color: colors.$gy-v-white;
-          background-color: colors.scrim(0.55);
-          border-radius: 4rem;
-          margin: 0 8rem;
+          margin-top: 2rem;
+          max-width: 70rem;
+
+          p {
+            // The universal selector in _typography.scss sets the body font on every
+            // element, so the display font has to be set on the paragraph itself rather
+            // than inherited from this container.
+            font-family: var(--font-luckiest-guy), cursive;
+            font-size: 2.4rem;
+            line-height: 1.5;
+            color: colors.$gy-v-white;
+            // With no panel behind it the text has to hold its own against the photo.
+            text-shadow: 0 2px 12px colors.scrim(0.65);
+
+            @include mixins.respond(phone) {
+              font-size: 2rem;
+            }
+          }
         }
         .hero__button_container {
           padding: 4rem 0;
@@ -98,21 +113,6 @@
 
             a {
               width: 100%;
-            }
-          }
-        }
-
-        @include mixins.respond(phone-small) {
-          .hero__welcome-text {
-            margin: 0;
-
-            .hero__button_container {
-              flex-direction: column;
-              align-items: center;
-
-              a {
-                width: 100%;
-              }
             }
           }
         }

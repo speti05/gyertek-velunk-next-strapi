@@ -23,6 +23,10 @@
       "repeatable": true,
       "component": "elements.link"
     },
+    "showPager": {
+      "type": "boolean",
+      "default": true
+    },
     "welcomeText": {
       "type": "text"
     }

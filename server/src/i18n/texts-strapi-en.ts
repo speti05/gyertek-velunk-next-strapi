@@ -68,6 +68,10 @@ export const CONTACT_REQUEST_USER_OUTRO =
 export const CONTACT_REQUEST_DUPLICATE_ERROR = (windowHours: number) =>
   `An enquiry has already been received from these contact details within the last ${windowHours} hours.`;
 
+// Content validation — API errors
+export const PICTURE_GALLERY_TOO_MANY_IMAGES_ERROR = (max: number, count: number) =>
+  `A picture gallery can hold at most ${max} images, but it currently has ${count}.`;
+
 // Event signup — envelope
 export const EVENT_SIGNUP_FROM_NAME = (organizationName: string) =>
   `${organizationName} Tour registration`;

@@ -14,7 +14,7 @@ const eventcalendarDataMapper = (data: EventProps[]) =>
     id: event.documentId,
     title: event.title,
     link: `${Route.Tours}/${event.slug}`,
-    description: event.description,
+    description: event.description ?? "",
     startDate: new Date(event.startDate),
     endDate: new Date(event.endDate),
   }));

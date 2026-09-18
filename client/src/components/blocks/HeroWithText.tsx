@@ -10,12 +10,13 @@ export async function HeroWithTextBlock({
   images,
   link,
   welcomeText,
+  showPager,
 }: Readonly<HeroWithTextProps>) {
   const { HERO_WITH_TEXT_EMPTY_TITLE, HERO_WITH_TEXT_EMPTY_DESCRIPTION } = getTexts(await getRequestLocale());
   return (
     <section className="hero hero__with-text">
       {images?.length ? (
-        <CustomGallery images={images} />
+        <CustomGallery images={images} showPager={showPager ?? true} />
       ) : (
         <EmptyContent
           title={HERO_WITH_TEXT_EMPTY_TITLE}

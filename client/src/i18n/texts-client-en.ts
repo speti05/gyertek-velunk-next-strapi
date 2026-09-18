@@ -335,6 +335,9 @@ export const SIGNUP_SUMMARY_NOTES = "Note (optional)";
 export const GALLERY_PREV_IMAGE_ARIA = "Previous image";
 export const GALLERY_NEXT_IMAGE_ARIA = "Next image";
 export const GALLERY_DOT_IMAGE_ARIA = (idx: number) => `Image ${idx + 1}`;
+export const GALLERY_POSITION_LABEL = (current: number, total: number) => `${current} / ${total}`;
+export const GALLERY_POSITION_ARIA = (current: number, total: number) =>
+  `Image ${current} of ${total}.`;
 export const GALLERY_PAUSE_ARIA = "Stop automatic slideshow";
 export const GALLERY_PLAY_ARIA = "Start automatic slideshow";
 

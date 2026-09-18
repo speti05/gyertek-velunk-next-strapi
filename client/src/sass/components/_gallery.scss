@@ -73,8 +73,26 @@
     transform: translateX(-50%);
     display: flex;
     align-items: center;
+    justify-content: center;
+    // The frame clips whatever leaves it, so the row has to stay inside it rather than
+    // push its outermost controls out of reach.
+    flex-wrap: wrap;
+    max-width: calc(100% - 4rem);
     gap: 1.6rem;
     z-index: 2;
+  }
+
+  // Shown instead of the dots once a gallery has more images than the row can hold.
+  &__counter {
+    color: colors.$gy-v-white;
+    font-size: 1.6rem;
+    font-weight: bold;
+    line-height: 1;
+    padding: 0.6rem 1.2rem;
+    border-radius: 2rem;
+    // A dot carries its own contrast from the ring around it; a bare number needs a
+    // backdrop to stay readable over a light photo.
+    background-color: colors.scrim(0.45);
   }
 
   &__dot {

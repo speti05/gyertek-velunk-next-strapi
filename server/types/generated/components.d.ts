@@ -89,6 +89,7 @@ export interface BlocksHeroWithText extends Struct.ComponentSchema {
     headline: Schema.Attribute.String;
     images: Schema.Attribute.Media<"images", true> & Schema.Attribute.Required;
     link: Schema.Attribute.Component<"elements.link", true>;
+    showPager: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     welcomeText: Schema.Attribute.Text;
   };
 }
@@ -232,6 +233,7 @@ export interface BlocksYoutubeVideo extends Struct.ComponentSchema {
       Schema.Attribute.DefaultTo<"16:9">;
     description: Schema.Attribute.Text;
     privacyMode: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    sideBySide: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     startTime: Schema.Attribute.Integer &
       Schema.Attribute.SetMinMax<
         {

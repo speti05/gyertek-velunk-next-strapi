@@ -77,6 +77,10 @@ export const CONTACT_REQUEST_USER_OUTRO =
 export const CONTACT_REQUEST_DUPLICATE_ERROR = (windowHours: number) =>
   `Ezzel a kapcsolati adattal ${windowHours} órán belül már érkezett megkeresés.`;
 
+// Content validation — API errors
+export const PICTURE_GALLERY_TOO_MANY_IMAGES_ERROR = (max: number, count: number) =>
+  `Egy képgalériába legfeljebb ${max} kép tehető, most ${count} kép van benne.`;
+
 // Event signup — envelope
 export const EVENT_SIGNUP_FROM_NAME = (organizationName: string) =>
   `${organizationName} Túrajelentkezés`;

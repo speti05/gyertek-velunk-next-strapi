@@ -39,7 +39,7 @@ interface BaseBlogProps {
   id: number;
   documentId: string;
   title: string;
-  description: string;
+  description?: string;
   slug: string;
   image: ImageProps;
   author: string;
@@ -197,6 +197,8 @@ export interface HeroWithTextProps extends Base<"blocks.hero-with-text"> {
   searchParams: CustomSearchParams;
   link?: LinkProps[];
   welcomeText?: string;
+  /** Strapi leaves this null on entries saved before the field existed - treat that as on. */
+  showPager?: boolean | null;
 }
 
 export interface ParagraphProps extends Base<"blocks.paragraph"> {
@@ -220,6 +222,8 @@ export interface YoutubeVideoProps extends Base<"blocks.youtube-video"> {
   aspectRatio?: "16:9" | "9:16";
   startTime?: number;
   privacyMode?: boolean;
+  /** Puts the title and the description in a column beside the player instead of above it. */
+  sideBySide?: boolean | null;
 }
 
 export interface PictureGalleryProps extends Base<"blocks.picture-gallery"> {

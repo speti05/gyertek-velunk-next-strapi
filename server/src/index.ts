@@ -3,6 +3,7 @@ import type { Core } from "@strapi/strapi";
 import { sendNewsletterBroadcast } from "./lib/email/newsletter";
 import { getTransporter } from "./lib/email/mailer";
 import { applyAuthOverrides } from "./lib/auth/auth-overrides";
+import { applyPictureGalleryLimit } from "./lib/content/picture-gallery-limit";
 import { getClientUrl, throwErrorIfClientUrlMissing } from "./lib/config/client-url";
 import {
   TEST_USER_ROLE_DESCRIPTION,
@@ -32,6 +33,7 @@ export default {
   // patched here, in register().
   register({ strapi }: { strapi: Core.Strapi }) {
     applyAuthOverrides(strapi);
+    applyPictureGalleryLimit(strapi);
   },
 
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {

@@ -20,14 +20,14 @@ export const HeroTextAndButtons = ({
 
   return (
     <>
-      {headline && (
-        <div className={`hero__headline  hero__headline--${theme}`}>
-          <h2>{headline}</h2>
-        </div>
-      )}
-      {welcomeText && (
-        <div className={`hero__welcome-text welcome-text--${theme}`}>
-          <p>{welcomeText}</p>
+      {(headline || welcomeText) && (
+        <div className={`hero__headline hero__headline--${theme}`}>
+          {headline && <h2>{headline}</h2>}
+          {welcomeText && (
+            <div className={`hero__welcome-text welcome-text--${theme}`}>
+              <p>{welcomeText}</p>
+            </div>
+          )}
         </div>
       )}
 

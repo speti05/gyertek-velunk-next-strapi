@@ -28,7 +28,7 @@ async function loader(slug: string) {
 
 interface BlogOverviewProps {
   headline: string;
-  description: string;
+  description?: string;
   tableOfContent: { heading: string; linkId: string }[];
 }
 
@@ -37,7 +37,7 @@ function BlogOverview({ headline, description, tableOfContent }: Readonly<BlogOv
     <div className="article-overview">
       <div className="article-overview__info">
         <h3 className="section-headline article-overview__headline">{headline}</h3>
-        <p className="article-overview__description">{description}</p>
+        {description && <p className="article-overview__description">{description}</p>}
       </div>
       {tableOfContent && (
         <ul className="article-overview__contents no-list-style">

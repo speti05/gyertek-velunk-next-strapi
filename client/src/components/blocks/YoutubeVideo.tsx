@@ -30,6 +30,7 @@ export async function YoutubeVideo({
   aspectRatio = "16:9",
   startTime,
   privacyMode = true,
+  sideBySide,
 }: Readonly<YoutubeVideoProps>) {
   const { YOUTUBE_VIDEO_FALLBACK_TITLE } = getTexts(await getRequestLocale());
   const videoId = getYoutubeVideoId(videoUrl);
@@ -41,12 +42,18 @@ export async function YoutubeVideo({
   const query = params.toString();
   const embedUrl = `https://${domain}/embed/${videoId}${query ? `?${query}` : ""}`;
 
+  const orientation = aspectRatio === "9:16" ? "portrait" : "landscape";
+
   return (
     <div
-      className={`article-youtube-video article-youtube-video--${aspectRatio === "9:16" ? "portrait" : "landscape"}`}
+      className={`article-youtube-video article-youtube-video--${orientation}${sideBySide ? " article-youtube-video--side-by-side" : ""}`}
     >
-      {title && <h3 className="article-youtube-video__title">{title}</h3>}
-      {description && <p className="article-youtube-video__description">{description}</p>}
+      {(title || description) && (
+        <div className="article-youtube-video__text">
+          {title && <h3 className="article-youtube-video__title">{title}</h3>}
+          {description && <p className="article-youtube-video__description">{description}</p>}
+        </div>
+      )}
       <div className="article-youtube-video__frame">
         <iframe
           src={embedUrl}

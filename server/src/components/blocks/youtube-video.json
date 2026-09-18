@@ -30,6 +30,10 @@
     "privacyMode": {
       "type": "boolean",
       "default": true
+    },
+    "sideBySide": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
