@@ -1,0 +1,31 @@
+@use "../base/colors";
+@use "../base/mixins";
+
+// The shared look for a section heading: dark green, with the same accent bar under it
+// that marks the active page in the header nav. Both draw the bar from
+// mixins.accent-underline, so the two can never drift apart.
+//
+// The bar tracks the text rather than the column, exactly as it does in the nav, which
+// is what `width: fit-content` is for - and why the alignment lives here as modifiers
+// instead of coming from a `text-align` further out, since text-align cannot move a
+// shrink-wrapped box.
+.section-headline {
+  width: fit-content;
+  max-width: 100%;
+  color: colors.$gy-v-dark-green;
+
+  &::after {
+    content: "";
+    @include mixins.accent-underline;
+  }
+
+  &--center {
+    margin-inline: auto;
+  }
+
+  &--right {
+    margin-inline-start: auto;
+  }
+
+  // --left needs nothing: a shrink-wrapped box already sits at the start.
+}

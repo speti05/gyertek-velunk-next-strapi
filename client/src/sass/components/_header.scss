@@ -221,7 +221,7 @@ li {
 .site-header__nav {
   display: flex;
   align-items: center;
-  gap: 3rem;
+  gap: 4.5rem;
   // The size lives on the list, not on the link. Every entry is a MUI Link whose emotion
   // class carries `font: inherit`, and emotion is injected after this stylesheet, so a
   // font-size written on the <a> loses to it - it has to be inherited from an ancestor,
@@ -255,11 +255,8 @@ li {
 }
 
 .site-header__nav-underline {
-  display: block;
-  height: 3px;
-  margin-top: 0.6rem;
-  border-radius: 2px;
-  background-color: transparent;
+  // unlit until the entry is the current page, hence the transparent bar
+  @include mixins.accent-underline(transparent);
   transition: background-color 0.18s ease;
 }
 
@@ -336,25 +333,51 @@ li {
 
 // The dropdown renders in a portal, so these are written flat - they cannot be nested
 // under .site-header.
-.header-account__item {
+// MUI's own MenuItem padding is emotion, injected after this stylesheet, so a single
+// class would only tie with it and lose. Naming the entry twice wins, which matters:
+// until the entry's own padding is gone, the inner row cannot cover it, and the strip
+// left around the row swallows clicks meant for the link inside it.
+.header-account__item.header-account__item,
+.language-switcher__option.language-switcher__option {
   padding: 0;
+}
 
+.header-account__item {
+  // The menu sheet is green, and no red legible on it is dark enough to read as a
+  // warning, so the destructive signal moves from the label to the hover fill. The
+  // label itself inherits the sheet's white like every other entry. CustomMenu's
+  // primary variant hands the hover colour down as a custom property precisely so a
+  // single entry can redirect it like this.
   &--logout {
-    color: colors.$gy-v-error;
+    --custom-menu-hover-background: #{colors.$gy-v-error};
   }
 }
 
 .header-account__item-link,
-.header-account__item-inner {
+.header-account__item-inner,
+.language-switcher__option-inner {
   width: 100%;
 }
 
-.header-account__item-inner {
+// One menu row, shared by both header dropdowns so they end up with the same hit area.
+// The row owns the entry's whole width and carries all of its padding, which is what
+// makes the full height of an entry clickable rather than just its text. Written flat,
+// like the flag rule below, because the language menu renders in a portal and never
+// sits inside .language-switcher.
+.header-account__item-inner,
+.language-switcher__option-inner {
   display: flex;
   align-items: center;
   gap: 1rem;
   padding: 1rem 1.6rem;
   font-size: 1.5rem;
+
+  // The row is the target, so it is the row that grows on touch. px, not rem: the root
+  // font-size drops on small screens and would shrink a rem target instead.
+  @include mixins.respond(tab-land) {
+    min-height: 48px;
+    padding: 1.4rem 2rem;
+  }
 }
 
 /* ------------------------------------------- shared outlined auth button ---- */
@@ -412,14 +435,14 @@ li {
 @include mixins.respond(desktop-narrow) {
   .site-header__nav {
     font-size: 2.2rem;
-    gap: 2.6rem;
+    gap: 3.6rem;
   }
 }
 
 @include mixins.respond(laptop) {
   .site-header__nav {
     font-size: 2rem;
-    gap: 2.2rem;
+    gap: 2.8rem;
   }
 }
 
@@ -608,10 +631,10 @@ li {
     font-size: 1.7rem;
   }
 
-  // Lock the page while the hamburger menu overlay is open, so the overlay
-  // cannot be scrolled out of the viewport. The lock has to sit on <html> too:
-  // globals.css sets `overflow-x: hidden` on <html>, which makes <html> the
-  // scrolling element, so hiding overflow on <body> alone does nothing.
+  // Lock the page while the hamburger menu overlay is open, so the overlay cannot be
+  // scrolled out of the viewport. The body alone would now be enough - globals.css no
+  // longer makes <html> the scrolling element - but locking both keeps the overlay
+  // safe whichever element the viewport ends up taking its overflow from.
   html.nav-menu-open,
   body.nav-menu-open {
     overflow: hidden;
@@ -673,14 +696,8 @@ li {
     box-shadow: 0 0 0 0.1rem colors.scrim(0.2);
   }
 
-  &__option {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-
-    .language-switcher__flag {
-      font-size: 1.8rem;
-    }
+  &__option .language-switcher__flag {
+    font-size: 1.8rem;
   }
 }
 

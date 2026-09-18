@@ -12,6 +12,12 @@ const stepperSx: SxProps<Theme> = {
   color: palette.white,
   width: "5rem",
   height: "5rem",
+  // sx outranks the theme, so the touch size the theme gives every other icon button
+  // has to be restated here; 5rem would shrink to 45px once the root font-size drops
+  "@media (max-width: 75em)": {
+    minWidth: "48px",
+    minHeight: "48px",
+  },
   transition: "background-color 0.2s",
   "&:hover": {
     backgroundColor: palette.darkGreen,

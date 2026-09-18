@@ -8,6 +8,12 @@
   justify-content: center;
   padding: 6rem 2rem;
 
+  // The profile page puts the banner headline above this block, and the banner already
+  // carries its own bottom margin, so a second gap on top here would only double it.
+  &--profile {
+    padding-top: 0;
+  }
+
   &__card {
     background-color: colors.$gy-v-light-beige;
     border-radius: 1.6rem;

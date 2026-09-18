@@ -31,6 +31,21 @@
     margin-bottom: 2.4rem;
   }
 
+  // The details table and the signup block are a pair: they share a row in two equal
+  // columns, and collapse onto one at tablet width and below. `align-items: start` keeps
+  // the shorter of the two at its own height instead of stretching it to match the
+  // taller one.
+  &__columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+
+    @include mixins.respond(tablet) {
+      grid-template-columns: 1fr;
+    }
+  }
+
   &__details {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -121,8 +136,17 @@
     }
   }
 
-  &__submit-btn {
-    align-self: flex-start;
+  // The signup button belongs to the section as a whole, not to the image column it
+  // used to sit under, so it lives below both columns and stays centred at every width.
+  // The children simply fill the block, which keeps the button and the messages that
+  // explain it on the same width.
+  &__signup {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 40rem;
+    margin-inline: auto;
   }
 
   &__image {

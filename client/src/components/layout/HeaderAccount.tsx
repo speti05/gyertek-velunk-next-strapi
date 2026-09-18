@@ -130,6 +130,7 @@ export function HeaderAccount({ variant, onNavigate }: Readonly<HeaderAccountPro
       <form ref={logoutFormRef} action={logoutAction} className="header-account__logout-form" />
 
       <CustomMenu
+        color="primary"
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}

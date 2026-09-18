@@ -105,6 +105,9 @@ export function Header({ data, socialLinks, showLanguageSwitcher = false }: Head
 
   const headerClassName = [
     "site-header",
+    // MUI pads the body by the scrollbar's width while a modal holds the scroll lock;
+    // "mui-fixed" tells it to pad this fixed header too, so it does not shift sideways
+    "mui-fixed",
     isActive ? "site-header--menu-open" : "",
     isScrolled && !isActive ? "site-header--scrolled" : "",
     hasUtilityBar ? "" : "site-header--no-utility",

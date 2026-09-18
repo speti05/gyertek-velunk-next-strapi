@@ -9,6 +9,7 @@ import { formatDate } from "@/utils/format-date";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import CustomChip from "@/components/custom-ui-components/custom-chip/custom-chip";
 import { StrapiImage } from "@/components/StrapiImage";
+import { ContentListHeadline } from "@/components/ContentListHeadline";
 import { getTexts } from "@/i18n/texts";
 import { getRequestLocale, localizedPath } from "@/data/locale";
 import { toPublicPath, Route } from "@/i18n/config";
@@ -57,84 +58,86 @@ export default async function ProfilePage() {
   const firstName = userProfile?.firstName ?? null;
 
   return (
-    <main className="auth-page auth-page--profile">
-      <div className="auth-page__card auth-page__card--wide">
-        <h1 className="auth-page__title">{YOUR_PROFILE_TITLE}</h1>
+    <>
+      <ContentListHeadline headline={YOUR_PROFILE_TITLE} isMain={true} />
 
-        <ProfileForm
-          email={displayEmail}
-          firstName={userProfile?.firstName ?? null}
-          lastName={userProfile?.lastName ?? null}
-          phone={userProfile?.phone ?? null}
-          country={userProfile?.country ?? null}
-          city={userProfile?.city ?? null}
-          zip={userProfile?.zip ?? null}
-          street={userProfile?.street ?? null}
-          houseNumber={userProfile?.houseNumber ?? null}
-          isNewsletterSubscribed={isNewsletterSubscribed}
-        />
+      <main className="auth-page auth-page--profile">
+        <div className="auth-page__card auth-page__card--wide">
+          <ProfileForm
+            email={displayEmail}
+            firstName={userProfile?.firstName ?? null}
+            lastName={userProfile?.lastName ?? null}
+            phone={userProfile?.phone ?? null}
+            country={userProfile?.country ?? null}
+            city={userProfile?.city ?? null}
+            zip={userProfile?.zip ?? null}
+            street={userProfile?.street ?? null}
+            houseNumber={userProfile?.houseNumber ?? null}
+            isNewsletterSubscribed={isNewsletterSubscribed}
+          />
 
-        <section className="auth-page__section">
-          <h2 className="auth-page__section-title">{PROFILE_MY_TOURS_SECTION}</h2>
-          {signups.length === 0 ? (
-            <p className="auth-page__footer-text">{PROFILE_NO_TOURS_MESSAGE}</p>
-          ) : (
-            <ul className="auth-page__tours-list no-list-style">
-              {signups.map((signup) =>
-                signup.event ? (
-                  <li key={signup.id} className="auth-page__tour-item auth-page__tour-item--column">
-                    <div className="auth-page__tour-item-main">
-                      {signup.event.image?.url && (
-                        <div className="auth-page__tour-item__image">
-                          <StrapiImage
-                            src={signup.event.image.url}
-                            alt={signup.event.image.alternativeText || signup.event.title}
-                            width={80}
-                            height={80}
+          <section className="auth-page__section">
+            <h2 className="auth-page__section-title">{PROFILE_MY_TOURS_SECTION}</h2>
+            {signups.length === 0 ? (
+              <p className="auth-page__footer-text">{PROFILE_NO_TOURS_MESSAGE}</p>
+            ) : (
+              <ul className="auth-page__tours-list no-list-style">
+                {signups.map((signup) =>
+                  signup.event ? (
+                    <li key={signup.id} className="auth-page__tour-item auth-page__tour-item--column">
+                      <div className="auth-page__tour-item-main">
+                        {signup.event.image?.url && (
+                          <div className="auth-page__tour-item__image">
+                            <StrapiImage
+                              src={signup.event.image.url}
+                              alt={signup.event.image.alternativeText || signup.event.title}
+                              width={80}
+                              height={80}
+                            />
+                          </div>
+                        )}
+                        <div className="auth-page__tour-item__info">
+                          <span className="auth-page__tour-title">
+                            <CustomLink
+                              href={toPublicPath(`${Route.Tours}/${signup.event.slug}`, locale)}
+                              className="auth-page__tour-title"
+                              color="primary"
+                            >
+                              {signup.event.title}
+                            </CustomLink>
+                          </span>
+                          {signup.event.startDate && (
+                            <span className="auth-page__tour-meta">
+                              {FORM_LABELS.startDate}: {formatDate(signup.event.startDate, locale)}
+                            </span>
+                          )}
+                          {signup.event.price && (
+                            <span className="auth-page__tour-meta">
+                              {FORM_LABELS.price}: {signup.event.price} {CURRENCY}
+                            </span>
+                          )}
+                        </div>
+                        <div>
+                          <CustomChip
+                            label={PAYMENT_STATUS_CHIP[signup.paymentStatus].label}
+                            color={PAYMENT_STATUS_CHIP[signup.paymentStatus].color}
+                            size="large"
                           />
                         </div>
-                      )}
-                      <div className="auth-page__tour-item__info">
-                        <span className="auth-page__tour-title">
-                          <CustomLink
-                            href={toPublicPath(`${Route.Tours}/${signup.event.slug}`, locale)}
-                            className="auth-page__tour-title"
-                            color="primary"
-                          >
-                            {signup.event.title}
-                          </CustomLink>
-                        </span>
-                        {signup.event.startDate && (
-                          <span className="auth-page__tour-meta">
-                            {FORM_LABELS.startDate}: {formatDate(signup.event.startDate, locale)}
-                          </span>
-                        )}
-                        {signup.event.price && (
-                          <span className="auth-page__tour-meta">
-                            {FORM_LABELS.price}: {signup.event.price} {CURRENCY}
-                          </span>
-                        )}
                       </div>
-                      <div>
-                        <CustomChip
-                          label={PAYMENT_STATUS_CHIP[signup.paymentStatus].label}
-                          color={PAYMENT_STATUS_CHIP[signup.paymentStatus].color}
-                          size="large"
-                        />
-                      </div>
-                    </div>
-                    <SignupDetailsToggle signup={signup} />
-                  </li>
-                ) : null
-              )}
-            </ul>
-          )}
-        </section>
+                      <SignupDetailsToggle signup={signup} />
+                    </li>
+                  ) : null
+                )}
+              </ul>
+            )}
+          </section>
 
-        <form action={logoutAction} className="auth-page__logout">
-          <SubmitButtonNoSSR text={AUTH_LOGOUT_LABEL} />
-        </form>
-      </div>
-    </main>
+          <form action={logoutAction} className="auth-page__logout">
+            <SubmitButtonNoSSR text={AUTH_LOGOUT_LABEL} />
+          </form>
+        </div>
+      </main>
+    </>
   );
 }

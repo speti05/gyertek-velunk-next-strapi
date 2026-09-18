@@ -16,6 +16,12 @@ type CustomSelectProps = SelectProps & {
   helperText?: string;
   required?: boolean;
   options?: { value: string | number; name: string }[];
+  /**
+   * Keeps an empty helper text line under the select so it lines up with the text
+   * inputs in the same form. Turn it off for a standalone select that sits in a row
+   * of its own, such as the calendar's month picker.
+   */
+  reserveHelperSpace?: boolean;
   renderOption?: (option: { value: string | number; name: string }) => React.ReactNode;
 };
 
@@ -24,6 +30,7 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
   error = false,
   helperText,
   required = false,
+  reserveHelperSpace = true,
   id,
   renderOption,
   ...props
@@ -62,7 +69,9 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
           </MenuItem>
         ))}
       </Select>
-      {helperText && <FormHelperText>{helperText}</FormHelperText>}
+      {(helperText || reserveHelperSpace) && (
+        <FormHelperText>{helperText || " "}</FormHelperText>
+      )}
     </FormControl>
   );
 };

@@ -271,6 +271,7 @@ export const ContinuousCalendar: React.FC<ContinuousCalendarProps> = ({
             value={selectedMonth}
             options={monthOptions}
             onSelect={handleMonthChange}
+            reserveHelperSpace={false}
           />
           <div className="flex items-center justify-between">
             <CustomButton onClick={handlePrevYear} color={buttonColor}>

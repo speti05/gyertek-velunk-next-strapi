@@ -25,6 +25,22 @@ declare module "@mui/material/styles" {
   }
 }
 
+// Below this width the app is assumed to be driven by touch, so every control grows a
+// comfortable target. The width matches the `tab-land` breakpoint in
+// sass/base/_mixins.scss - that file is where every media query in the codebase is
+// declared, and em keeps it independent of the html font-size exactly as the mixin does.
+const TOUCH = "@media (max-width: 75em)";
+
+// Touch targets are sized in px on purpose, against the grain of the rest of this file.
+// The html font-size shrinks on small screens (62.5% -> 55% -> 50% in _base.scss), so a
+// rem-based target would get *smaller* precisely where a finger needs it to be bigger.
+// TOUCH_TARGET is the floor for controls that are only as big as their own box - an
+// icon button, a checkbox, a menu row. TOUCH_CONTROL_HEIGHT is the taller size shared
+// by everything that lines up in a form: fields, dropdowns and buttons alike, so a
+// button never sits shorter than the input above it.
+const TOUCH_TARGET = "48px";
+const TOUCH_CONTROL_HEIGHT = "56px";
+
 export const theme = createTheme({
   typography: {
     fontFamily: "var(--font-source-sans-3), sans-serif",
@@ -57,8 +73,14 @@ export const theme = createTheme({
         //   opacity: 0.6,
         // },
         root: {
-          textTransform: "none",
+          textTransform: "uppercase",
+          borderRadius: "999px",
           fontSize: "2rem",
+
+          [TOUCH]: {
+            minHeight: TOUCH_CONTROL_HEIGHT,
+            padding: "12px 24px",
+          },
           fontFamily: "var(--font-source-sans-3), sans-serif",
           fontOpticalSizing: "auto",
           fontWeight: 300,
@@ -120,6 +142,19 @@ export const theme = createTheme({
         },
       },
     },
+    // Icon buttons carry no text to size them, so on touch they get an explicit box
+    // rather than more padding - the icons themselves are only 15px here.
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          [TOUCH]: {
+            minWidth: TOUCH_TARGET,
+            minHeight: TOUCH_TARGET,
+          },
+        },
+      },
+    },
+
     MuiInputBase: {
       defaultProps: {
         slotProps: {
@@ -142,29 +177,105 @@ export const theme = createTheme({
 
           backgroundColor: colors.textInput.main, // Light background for default state
 
-          // overwriting default border color
-          "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: colors.textInput.textColor,
+          // Fully rounded pill shape
+          borderRadius: "999px",
+
+          // A textarea cannot carry a pill outline, so it keeps a plain rounded corner
+          "&.MuiInputBase-multiline": {
+            borderRadius: "1.6rem",
           },
 
-          // overwriting focused border color
+          // overwriting default border color
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: colors.textInput.border,
+
+            // the label notch has to clear the rounded corner it sits on
+            "& legend": {
+              marginLeft: "6px",
+            },
+          },
+
+          // overwriting hover border color - never on a disabled field, which has no
+          // hover state to speak of
+          "&:not(.Mui-disabled):hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: colors.textInput.border,
+          },
+
+          // A disabled field is not actionable, so it drops the brand border rather
+          // than reading like something you can type into. This has to be spelled out:
+          // MUI's own disabled rule carries the same specificity as the rules above,
+          // so whichever lands later in the stylesheet would otherwise decide.
+          "&.Mui-disabled .MuiOutlinedInput-notchedOutline": {
+            borderColor: colors.textInput.disabled,
+          },
+
+          // the focused field carries a darker, thicker outline so keyboard
+          // navigation stays readable
           "&.Mui-focused": {
             color: colors.textInput.focused,
             "& .MuiOutlinedInput-notchedOutline": {
-              borderColor: colors.textInput.textColor,
+              borderColor: colors.textInput.borderFocused,
+              borderWidth: "2px",
             },
           },
         },
         // Input text styling
         input: {
-          padding: "12px 14px",
+          // The root carries a 2rem font size, so MUI's own `line-height: 1.4375em`
+          // resolves there to 28.75px and is inherited here as an absolute length,
+          // while this input's content box is only 1.4375 x 1.5rem tall. That
+          // mismatch is what pushed the placeholder off centre, so the box is pinned
+          // explicitly and the line height is left to the browser to centre.
+          boxSizing: "border-box",
+          height: "4.8rem",
+          lineHeight: "normal",
+
+          [TOUCH]: {
+            height: TOUCH_CONTROL_HEIGHT,
+          },
+          // no vertical padding - the browser centres the value inside the fixed
+          // height; the side padding keeps the text clear of the pill's curve
+          padding: "0 20px",
           fontSize: "1.5rem",
           color: colors.textInput.textColor,
+
+          // A Select renders a div rather than an input, so it neither centres its own
+          // text nor keeps the height set above: MUI ships a deliberate
+          // `&.MuiSelect-select { height: auto }` reset to "win specificity over the
+          // input base", which collapses the field down to its min-height. Outranking
+          // that reset also drops MUI's `&&& { padding-right: 32 }`, so the room for
+          // the dropdown arrow has to be restored here too. Centring happens through
+          // the line box rather than flex, because flex would break the ellipsis MUI
+          // puts on overflowing values.
+          "&&&.MuiSelect-select": {
+            boxSizing: "border-box",
+            height: "4.8rem",
+            minHeight: "unset",
+            lineHeight: "4.8rem",
+            padding: "0 3.2rem 0 2rem",
+
+            [TOUCH]: {
+              height: TOUCH_CONTROL_HEIGHT,
+              lineHeight: TOUCH_CONTROL_HEIGHT,
+            },
+          },
 
           "&::placeholder": {
             color: colors.textInput.placeHolder,
             opacity: 0.5,
           },
+        },
+        multiline: {
+          padding: "12px 20px",
+
+          [TOUCH]: {
+            padding: "16px 20px",
+          },
+        },
+        inputMultiline: {
+          // a textarea grows with its rows, so the fixed height above must not apply
+          height: "auto",
+          padding: 0,
         },
       },
     },
@@ -175,6 +286,26 @@ export const theme = createTheme({
         root: {
           color: colors.label.main,
           fontSize: "1.5rem",
+
+          // The label follows the input's wider side padding so it clears the pill's
+          // curve. MUI's default 16px offset assumes a 56px field; ours is 4.8rem, so
+          // the resting position is recentred to match.
+          "&.MuiInputLabel-outlined": {
+            transform: "translate(20px, 13px) scale(1)",
+
+            // recentred again for the taller touch field
+            [TOUCH]: {
+              transform: "translate(20px, 17px) scale(1)",
+            },
+
+            "&.MuiInputLabel-sizeSmall": {
+              transform: "translate(20px, 9px) scale(1)",
+            },
+
+            "&.MuiInputLabel-shrink": {
+              transform: "translate(20px, -9px) scale(0.75)",
+            },
+          },
 
           // Focused label
           "&.Mui-focused": {
@@ -203,23 +334,20 @@ export const theme = createTheme({
         },
       },
     },
-    // Error text styling, outlined input
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          height: "7.5rem",
-          "&:has(textarea)": {
-            height: "auto",
-          },
-        },
-      },
-    },
-
     // Helper text styling (under outlined input)
+    //
+    // A TextField used to carry a fixed 7.5rem height to leave room for an error
+    // message. A Select is a bare FormControl, so it got no such reserve and the two
+    // ended up different heights in the same column. Instead every field now renders
+    // a helper text line at all times - CustomTextInput and CustomSelect pass " ",
+    // which MUI turns into a zero-width space - so the reserve comes from real
+    // content. That also means a two-line error grows the field rather than spilling
+    // over the one below it, which the fixed height could not do.
     MuiFormHelperText: {
       styleOverrides: {
         root: {
-          marginLeft: "4px",
+          // lines up with the input's side padding, clear of the pill's curve
+          marginLeft: "2rem",
           fontSize: "1.3rem",
 
           "&.Mui-error": {
@@ -244,6 +372,21 @@ export const theme = createTheme({
     MuiCheckbox: {
       styleOverrides: {
         root: {
+          // a box, not padding: MUI's icons resolve to 1.5rem, which this app's 62.5%
+          // root font-size turns into 15px, so padding alone would not reach a finger
+          [TOUCH]: {
+            minWidth: TOUCH_TARGET,
+            minHeight: TOUCH_TARGET,
+          },
+
+          // MUI sizes its icons in rem, and _base.scss drops the root font-size to 55%
+          // and then 50% on smaller screens - so the default box ends up at 15px on a
+          // desktop and 12px on a phone, smallest exactly where it is hardest to hit.
+          // px pins it to Material's own 24px everywhere.
+          "& .MuiSvgIcon-root": {
+            fontSize: "24px",
+          },
+
           color: colors.checkbox.unchecked,
           "&.Mui-checked": {
             color: colors.checkbox.checked,
@@ -262,7 +405,10 @@ export const theme = createTheme({
       styleOverrides: {
         label: {
           fontFamily: "var(--font-source-sans-3), sans-serif",
-          fontSize: "1.6rem",
+          // Same reason as the checkbox above: 1.6rem reads as 16px on a desktop but
+          // shrinks to 12.8px below 900px, which is too small for consent text that
+          // runs to several lines. px holds the desktop size and stops the shrink.
+          fontSize: "16px",
           fontWeight: 300,
           fontStyle: "normal",
         },
@@ -321,7 +467,22 @@ export const theme = createTheme({
 
     MuiSwitch: {
       styleOverrides: {
+        // The visible track is the root's content box, so growing the padding on the
+        // root and on the thumb's button by the same amount enlarges the target while
+        // the switch itself keeps its size. The 3px offset between the two is MUI's:
+        // it is what makes the thumb overhang the track.
+        root: {
+          [TOUCH]: {
+            width: "68px",
+            height: TOUCH_TARGET,
+            padding: "17px",
+          },
+        },
         switchBase: {
+          [TOUCH]: {
+            padding: "14px",
+          },
+
           "&.Mui-checked": {
             color: colors.button.primary.main,
             "& + .MuiSwitch-track": { backgroundColor: colors.button.primary.main },
@@ -370,6 +531,10 @@ export const theme = createTheme({
     MuiMenuItem: {
       styleOverrides: {
         root: {
+          [TOUCH]: {
+            minHeight: TOUCH_TARGET,
+          },
+
           fontSize: "1.5rem",
           fontFamily: "var(--font-source-sans-3), sans-serif",
           fontWeight: 300,
@@ -397,6 +562,10 @@ export const theme = createTheme({
     MuiAccordionSummary: {
       styleOverrides: {
         root: {
+          [TOUCH]: {
+            minHeight: TOUCH_CONTROL_HEIGHT,
+          },
+
           borderRadius: "0.6rem",
           transition: "background-color 0.2s ease",
           "&:hover": {

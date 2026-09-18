@@ -17,7 +17,10 @@ export function ContentListHeadline({
 
   if (!isMain) {
     return (
-      <h2 className={`content-items__headline content-items--${alignment}`} id={id}>
+      <h2
+        className={`section-headline section-headline--${alignment} content-items__headline content-items--${alignment}`}
+        id={id}
+      >
         {headline}
       </h2>
     );

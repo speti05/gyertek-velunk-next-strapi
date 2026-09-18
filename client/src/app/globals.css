@@ -6,7 +6,16 @@
 /* --background / --foreground are declared in sass/base/_base.scss so that their
    values come from the palette in sass/base/_colors.scss. */
 
-html,
+html {
+  max-width: 100vw;
+}
+
+/* overflow-x lives on the body alone, never on the html element. Once html has a
+   non-visible overflow it becomes the viewport's scroll container, and the body's
+   overflow stops propagating to the viewport - which is what MUI's scroll lock sets
+   when a Dialog, Drawer or Popover opens. Keeping html visible lets that lock reach
+   the viewport again, so the page behind a modal no longer scrolls. Horizontal
+   overflow is still clipped, because the body's overflow-x propagates up instead. */
 body {
   max-width: 100vw;
   overflow-x: hidden;

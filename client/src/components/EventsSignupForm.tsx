@@ -154,13 +154,17 @@ function EventSignupFormInner({
   return (
     <section className="signup-form">
       <div className="signup-form__title-row">
-        <h2 className="signup-form__headline">{eventTitle}</h2>
+        <h2 className="section-headline signup-form__headline">{eventTitle}</h2>
         {difficulty && <TourDifficultyBadge difficulty={difficulty} size="large" />}
       </div>
 
-      <div className="signup-form__info">
-        {description && <p className="signup-form__description">{description}</p>}
+      {description && (
+        <div className="signup-form__info">
+          <p className="signup-form__description">{description}</p>
+        </div>
+      )}
 
+      <div className="signup-form__columns">
         <dl className="signup-form__details">
           {startDate && (
             <div className="signup-form__details-row">
@@ -189,19 +193,21 @@ function EventSignupFormInner({
             </div>
           )}
         </dl>
+
+        <div className="signup-form__form">
+          {image && (
+            <StrapiImage
+              src={image.url}
+              alt={image.alt}
+              height={200}
+              width={200}
+              className="signup-form__image"
+            />
+          )}
+        </div>
       </div>
 
-      <div className="signup-form__form">
-        {image && (
-          <StrapiImage
-            src={image.url}
-            alt={image.alt}
-            height={200}
-            width={200}
-            className="signup-form__image"
-          />
-        )}
-
+      <div className="signup-form__signup">
         {renderSignupArea()}
 
         <CustomAlertMessage errorMessage={errorMessage} successMessage={successMessage} />

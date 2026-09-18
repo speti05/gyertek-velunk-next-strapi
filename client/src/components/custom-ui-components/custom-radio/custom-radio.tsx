@@ -15,6 +15,12 @@ interface CustomRadioGroupProps {
   value: string;
   onChange: (value: string) => void;
   label?: string;
+  /**
+   * Keeps an empty helper text line under the group so it lines up with the text inputs
+   * and selects in the same form. Turn it off for a standalone group that sits on its
+   * own, such as the header panel's language switcher.
+   */
+  reserveHelperSpace?: boolean;
 }
 
 const CustomRadioGroup: React.FC<CustomRadioGroupProps> = ({
@@ -23,9 +29,14 @@ const CustomRadioGroup: React.FC<CustomRadioGroupProps> = ({
   value,
   onChange,
   label,
+  reserveHelperSpace = true,
 }) => {
   return (
-    <div className={style.group}>
+    <div
+      className={[style.group, reserveHelperSpace ? style["reserve-helper-space"] : ""]
+        .filter(Boolean)
+        .join(" ")}
+    >
       {label && <span className={style.label}>{label}</span>}
       <div className={style.options} role="radiogroup" aria-label={label}>
         {options.map((option) => {

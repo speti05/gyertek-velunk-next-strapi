@@ -57,6 +57,7 @@ export function LanguageSwitcher({
       <div className="language-switcher language-switcher--radio">
         <CustomRadioGroup
           name="header-locale"
+          reserveHelperSpace={false}
           label={LANGUAGE_SWITCHER_LABEL}
           value={activeLocale}
           onChange={(value) => select(value as Locale)}
@@ -89,6 +90,7 @@ export function LanguageSwitcher({
       </CustomTooltip>
 
       <CustomMenu
+        color="primary"
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
@@ -103,8 +105,10 @@ export function LanguageSwitcher({
             onClick={() => select(locale)}
             lang={locale}
           >
-            <CustomFlag locale={locale} className="language-switcher__flag" />
-            <span>{LANGUAGE_NAMES[locale]}</span>
+            <span className="language-switcher__option-inner">
+              <CustomFlag locale={locale} className="language-switcher__flag" />
+              <span>{LANGUAGE_NAMES[locale]}</span>
+            </span>
           </CustomMenuItem>
         ))}
       </CustomMenu>

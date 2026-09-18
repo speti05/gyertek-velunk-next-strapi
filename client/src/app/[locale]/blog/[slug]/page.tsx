@@ -36,7 +36,7 @@ function BlogOverview({ headline, description, tableOfContent }: Readonly<BlogOv
   return (
     <div className="article-overview">
       <div className="article-overview__info">
-        <h3 className="article-overview__headline">{headline}</h3>
+        <h3 className="section-headline article-overview__headline">{headline}</h3>
         <p className="article-overview__description">{description}</p>
       </div>
       {tableOfContent && (

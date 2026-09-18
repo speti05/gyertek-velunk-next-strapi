@@ -12,9 +12,11 @@
     width: 60%;
   }
 
+  // Colour and underline come from .section-headline; only the spacing is this
+  // component's own. The padding stays outside the shrink-wrapped text, so the accent
+  // bar lines up with the headline rather than with the column edge.
   &__headline {
     margin-bottom: 2.4rem;
-    color: colors.$gy-v-gray-800;
     padding: 0 variables.$content-side-padding;
 
     @include mixins.respond(phone) {

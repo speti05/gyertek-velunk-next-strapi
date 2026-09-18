@@ -49,7 +49,9 @@ const CustomTextInput = React.forwardRef<HTMLInputElement, CustomTextInputInputP
               suppressHydrationWarning: true,
             },
           }}
-          helperText={error}
+          // a helper line is always rendered so the field keeps the same height
+          // with or without an error; MUI turns a lone space into a zero-width space
+          helperText={typeof error === "string" && error ? error : " "}
         />
       </FormControl>
     );

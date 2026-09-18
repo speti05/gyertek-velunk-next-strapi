@@ -47,6 +47,8 @@ export const colors = {
     focused: darken(0.3, baseColors.lightBrown),
     placeHolder: baseColors.gray,
     textColor: baseColors.darkBrown,
+    border: baseColors.darkGreen,
+    borderFocused: darken(0.1, baseColors.darkGreen),
     disabled: baseColors.gray,
   },
   label: {
