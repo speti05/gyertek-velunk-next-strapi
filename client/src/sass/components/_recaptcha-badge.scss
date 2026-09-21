@@ -12,8 +12,16 @@ $recaptcha-badge-size: 60px;
 $recaptcha-badge-width: 256px;
 // The slice of the frame that holds the mark.
 $recaptcha-mark-width: 70px;
+// Under the header and the cookie banner (1000) and the scroll-to-top button (999),
+// over everything the page itself paints.
+$recaptcha-badge-z-index: 998;
 
 .grecaptcha-badge {
+  // Google gives the badge no stacking order of its own, so any section that positions
+  // itself - the newsletter block, every card with a backdrop - ends up over it. Below
+  // the breakpoint those sections run the full width and the badge disappears under
+  // them, which is what this stops.
+  z-index: $recaptcha-badge-z-index !important;
   left: 2.4rem !important;
   right: auto !important;
   bottom: 2.4rem !important;
@@ -39,8 +47,12 @@ $recaptcha-mark-width: 70px;
   }
 
   // Opened up, it is the badge Google ships - only with its corners rounded to match.
+  // The --open class is the touch equivalent of the hover: there is no pointer to rest
+  // on the badge, so a tap opens it and use-recaptcha-badge-expand takes the class off
+  // again a few seconds later.
   &:hover,
-  &:focus-within {
+  &:focus-within,
+  &.grecaptcha-badge--open {
     width: $recaptcha-badge-width !important;
     border-radius: calc(#{$recaptcha-badge-size} / 2) !important;
 

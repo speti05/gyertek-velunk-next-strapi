@@ -41,6 +41,8 @@ $header-collapse-transition: 0.45s cubic-bezier(0.4, 0, 0.2, 1);
   --header-side-padding: 2rem;
   // How far the badge is pushed down inside the bar while the page is at the top.
   --header-logo-top-offset: 40px;
+  --header-logo-scrolled-width: 150px;
+  --header-logo-scrolled-top: 0px;
   // How far the badge hangs below the bar. Only the mobile panel needs it, to keep its
   // first row clear of the badge. Authored rather than derived: the badge's rendered
   // height follows the aspect ratio of whatever image Strapi serves, which CSS cannot
@@ -55,6 +57,11 @@ $header-collapse-transition: 0.45s cubic-bezier(0.4, 0, 0.2, 1);
     --header-side-padding: 1.6rem;
     --header-logo-top-offset: 0px;
     --header-logo-overhang: 96px;
+    // 60px wide renders 57px tall, which leaves room to spare in the 76px bar. Set
+    // outright rather than centred like the desktop offset: the badge is deliberately
+    // low here, so it reads against the brand title beside it.
+    --header-logo-scrolled-width: 60px;
+    --header-logo-scrolled-top: 16px;
   }
 
   // Narrow phones: the badge, the title and the hamburger no longer fit side by side at
@@ -174,11 +181,18 @@ li {
   }
 }
 
-// The badge keeps its size while scrolled. The header itself has moved up by the utility
-// bar's height, so adding that back as a margin holds the badge in exactly the same place
-// on screen while the bar condenses around it - without it, its top would be clipped.
+// Scrolled, the header is a single row - the same shape it has below the breakpoint -
+// so the badge shrinks to sit inside that row rather than hanging over the page, exactly
+// as it does there. The column it lives in is sized from --header-logo-base-width, so the
+// navigation beside it stays put while the badge shrinks.
+//
+// The header itself has moved up by the utility bar's height, so that comes back as a
+// margin - without it the badge's top would be clipped - and the offset on top of it
+// centres the shrunken badge in the row that is left.
 .site-header--scrolled .site-header__logo {
-  margin-top: var(--utility-bar-height);
+  --header-logo-width: var(--header-logo-scrolled-width);
+
+  margin-top: calc(var(--utility-bar-height) + var(--header-logo-scrolled-top));
 }
 
 /* --------------------------------------------------------------- brand ---- */
@@ -478,16 +492,6 @@ li {
     align-self: start;
     margin-top: 0;
     z-index: 1001;
-  }
-
-  // Scrolled, the badge is small enough to sit inside the bar, so it is centred in it.
-  // Centred with a margin rather than align-self: the alignment would snap while the
-  // width glides, whereas this margin rides the same curve as the shrink.
-  // 60px wide renders 57px tall, which leaves 9px above and below in the 76px bar.
-  .site-header--scrolled .site-header__logo {
-    --header-logo-width: 60px;
-
-    margin-top: 16px;
   }
 
   // The badge is too small here to read as a wordmark, so the title carries the brand
