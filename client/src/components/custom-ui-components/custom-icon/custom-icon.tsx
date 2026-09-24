@@ -11,6 +11,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -30,6 +31,7 @@ const ICON_MAP = {
   person: { type: "mui" as const, component: PersonIcon },
   close: { type: "mui" as const, component: CloseIcon },
   expandMore: { type: "mui" as const, component: ExpandMoreIcon },
+  chevronLeft: { type: "mui" as const, component: ChevronLeftIcon },
   chevronRight: { type: "mui" as const, component: ChevronRightIcon },
   arrowUpward: { type: "mui" as const, component: ArrowUpwardIcon },
   image: { type: "mui" as const, component: ImageOutlinedIcon },

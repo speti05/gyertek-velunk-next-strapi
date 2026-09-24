@@ -7,45 +7,54 @@
   font-size: 1.75rem;
 }
 
+// The whole pager reads as one primary pill: arrows and page label share the
+// same fill and are separated only by thin translucent dividers.
 .pagination-list {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  display: inline-flex;
+  align-items: stretch;
   list-style: none;
-}
+  border-radius: 999px;
+  overflow: hidden;
+  background-color: colors.$gy-v-dark-green;
+  transition: box-shadow 0.2s ease;
 
-.pagination-arrow {
-  padding: 0.625rem 1.25rem;
-  border-radius: 0.5rem;
-  background-color: colors.$gy-v-gray-100;
-  color: colors.$gy-v-gray-600;
-  transition: all 0.2s ease;
-
-  &:hover:not(.disabled) {
-    background-color: colors.$gy-v-gray-200;
-    color: colors.$gy-v-gray-700;
-    transform: translateY(-1px);
+  &:hover {
+    box-shadow: 0 2px 8px rgba(colors.$gy-v-dark-green, 0.3);
   }
 
-  &.disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
+  > li {
+    display: flex;
+  }
+
+  // Extra class keeps these rules above the MUI theme overrides. Size and padding
+  // are left to the theme so the arrows keep the same touch area as every button.
+  .pagination-arrow.MuiButton-root {
+    border-radius: 0;
+    box-shadow: none;
+    color: colors.$gy-v-white;
+
     &:hover {
-      transform: none;
+      box-shadow: none;
+    }
+
+    // An icon-only button has no text line box, so it would collapse to the icon's
+    // 1em height. Pad the icon up to the theme's 1.75 line-height so the arrows are
+    // exactly as tall as the text buttons.
+    svg {
+      margin-block: 0.375em;
     }
   }
 }
 
 .page-number {
-  padding: 0.625rem 1rem;
-  font-weight: 600;
-  color: colors.$gy-v-gray-600;
-  min-width: 2.5rem;
+  display: flex;
+  align-items: center;
+  padding: 0.625rem 1.5rem;
+  border-inline: 1px solid colors.veil(0.35);
+  font-family: var(--font-source-sans-3), sans-serif;
+  font-size: 2rem;
+  font-weight: 300;
+  color: colors.$gy-v-white;
+  white-space: nowrap;
   text-align: center;
-
-  &.active {
-    background-color: colors.$gy-v-gray-200;
-    border-radius: 0.5rem;
-    color: colors.$gy-v-gray-900;
-  }
 }

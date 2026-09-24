@@ -1,4 +1,6 @@
 import { removeAccents } from "@/utils/text-utils";
+import { getGlobalSettings } from "@/data/loaders";
+import { getStrapiMedia } from "@/components/StrapiImage";
 
 interface ContentListHeadlineProps {
   headline: string;
@@ -7,7 +9,16 @@ interface ContentListHeadlineProps {
   navigationId?: string;
 }
 
-export function ContentListHeadline({
+async function getHeadlineBackgroundUrl() {
+  try {
+    const { data } = await getGlobalSettings();
+    return getStrapiMedia(data?.pageHeadlineBackground?.url ?? null);
+  } catch {
+    return null;
+  }
+}
+
+export async function ContentListHeadline({
   headline,
   alignment = "center",
   isMain = false,
@@ -26,9 +37,13 @@ export function ContentListHeadline({
     );
   }
 
+  // The image set on the Strapi global settings overrides the default SVG backdrop.
+  const backgroundUrl = await getHeadlineBackgroundUrl();
+
   return (
     <section
       className={`content-list-headline content-list-headline--${alignment}`}
+      style={backgroundUrl ? { backgroundImage: `url(${backgroundUrl})` } : undefined}
       aria-labelledby={id}
     >
       <div className="content-list-headline__backdrop" />

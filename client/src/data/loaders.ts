@@ -241,6 +241,9 @@ const globalSettingQuery = {
         policies: true,
       },
     },
+    pageHeadlineBackground: {
+      fields: ["url", "alternativeText"],
+    },
   },
 };
 

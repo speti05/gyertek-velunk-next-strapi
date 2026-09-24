@@ -779,6 +779,12 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
       }>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<"oneToMany", "api::global.global">;
+    pageHeadlineBackground: Schema.Attribute.Media<"images"> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
     showLanguageSwitcher: Schema.Attribute.Boolean &
       Schema.Attribute.SetPluginOptions<{

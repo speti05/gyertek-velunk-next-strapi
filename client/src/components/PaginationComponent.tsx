@@ -2,6 +2,7 @@
 import { FC } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
+import CustomIcon from "@/components/custom-ui-components/custom-icon/custom-icon";
 import { useTexts } from "@/context/locale-context";
 
 // Props interface for the main pagination component
@@ -14,11 +15,10 @@ interface PaginationProps {
 interface PaginationArrowProps {
   direction: "left" | "right"; // Direction of the arrow
   href: string; // URL to navigate to
-  isDisabled: boolean; // Whether the arrow should be disabled
 }
 
 // Arrow button component for navigation
-const PaginationArrow: FC<PaginationArrowProps> = ({ direction, href, isDisabled }) => {
+const PaginationArrow: FC<PaginationArrowProps> = ({ direction, href }) => {
   const router = useRouter();
   const isLeft = direction === "left";
 
@@ -29,12 +29,13 @@ const PaginationArrow: FC<PaginationArrowProps> = ({ direction, href, isDisabled
         // Use Next.js client-side navigation without scroll reset
         router.push(href, { scroll: false });
       }}
-      variant="outlined"
-      className={`pagination-arrow ${isDisabled ? "disabled" : ""}`}
-      aria-disabled={isDisabled}
-      disabled={isDisabled}
+      variant="contained"
+      color="primary"
+      size="large"
+      disableElevation
+      className="pagination-arrow"
     >
-      {isLeft ? "«" : "»"}
+      <CustomIcon name={isLeft ? "chevronLeft" : "chevronRight"} fontSize="inherit" />
     </CustomButton>
   );
 };
@@ -52,30 +53,25 @@ export function PaginationComponent({ pageCount, pageParam = "page" }: Readonly<
     return `${pathname}?${params.toString()}`;
   };
 
+  // A single page needs no pager
+  if (pageCount <= 1) return null;
+
   return (
     <nav role="navigation" aria-label={PAGINATION_NAV_ARIA} className="pagination-nav">
       <ul className="pagination-list no-list-style">
-        {/* Left arrow - disabled if on first page */}
+        {/* Left arrow */}
         <li>
-          <PaginationArrow
-            direction="left"
-            href={createPageURL(currentPage - 1)}
-            isDisabled={currentPage <= 1}
-          />
+          <PaginationArrow direction="left" href={createPageURL(currentPage - 1)} />
         </li>
         {/* Current page indicator */}
         <li>
           <span className="page-number">
-            {PAGINATION_PAGE_LABEL} {currentPage}
+            {PAGINATION_PAGE_LABEL} {currentPage} / {pageCount}
           </span>
         </li>
-        {/* Right arrow - disabled if on last page */}
+        {/* Right arrow */}
         <li>
-          <PaginationArrow
-            direction="right"
-            href={createPageURL(currentPage + 1)}
-            isDisabled={currentPage >= pageCount}
-          />
+          <PaginationArrow direction="right" href={createPageURL(currentPage + 1)} />
         </li>
       </ul>
     </nav>
