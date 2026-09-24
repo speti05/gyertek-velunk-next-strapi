@@ -17,6 +17,8 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
+import ZoomInIcon from "@mui/icons-material/ZoomIn";
 
 config.autoAddCss = false;
 
@@ -30,6 +32,8 @@ const ICON_MAP = {
   expandMore: { type: "mui" as const, component: ExpandMoreIcon },
   chevronRight: { type: "mui" as const, component: ChevronRightIcon },
   arrowUpward: { type: "mui" as const, component: ArrowUpwardIcon },
+  image: { type: "mui" as const, component: ImageOutlinedIcon },
+  zoomIn: { type: "mui" as const, component: ZoomInIcon },
   visibility: { type: "mui" as const, component: Visibility },
   visibilityOff: { type: "mui" as const, component: VisibilityOff },
   facebook: { type: "fa" as const, icon: faFacebook },

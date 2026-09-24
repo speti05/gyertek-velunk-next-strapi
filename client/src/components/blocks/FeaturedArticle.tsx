@@ -1,6 +1,6 @@
 import type { FeaturedArticleProps } from "@/types";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
-import { StrapiImage } from "@/components/StrapiImage";
+import { MagnifiableImage } from "@/components/MagnifiableImage";
 import ReactMarkdown from "react-markdown";
 import CustomButton from "../custom-ui-components/custom-button/custom-button";
 
@@ -21,11 +21,13 @@ export function FeaturedArticle({
           </CustomButton>
         </CustomLink>
       </div>
-      <StrapiImage
+      <MagnifiableImage
         src={image.url}
         alt={image.alternativeText || "No alternative text provided"}
         height={200}
         width={300}
+        frameClassName="featured-article__frame"
+        isMagnifyEnabled
       />
     </article>
   );

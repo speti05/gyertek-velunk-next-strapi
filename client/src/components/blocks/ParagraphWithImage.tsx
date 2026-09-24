@@ -1,5 +1,5 @@
 import ReactMarkdown from "react-markdown";
-import { StrapiImage } from "../StrapiImage";
+import { MagnifiableImage } from "@/components/MagnifiableImage";
 import { ParagraphWithImageProps } from "@/types";
 
 export function ParagraphWithImage({
@@ -16,12 +16,14 @@ export function ParagraphWithImage({
         {content}
       </ReactMarkdown>
       <div className="article-text-image__container">
-        <StrapiImage
+        <MagnifiableImage
           src={image.url}
           alt={image.alternativeText || "No alternative text provided"}
           width={1920}
           height={1080}
           className="article-text-image__image"
+          withSkeleton
+          isMagnifyEnabled
         />
       </div>
     </div>

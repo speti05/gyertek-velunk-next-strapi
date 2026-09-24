@@ -35,6 +35,10 @@
         "turquoise",
         "brown"
       ]
+    },
+    "isMagnifyEnabled": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

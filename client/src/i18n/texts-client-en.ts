@@ -344,6 +344,13 @@ export const GALLERY_POSITION_ARIA = (current: number, total: number) =>
 export const GALLERY_PAUSE_ARIA = "Stop automatic slideshow";
 export const GALLERY_PLAY_ARIA = "Start automatic slideshow";
 
+// Magnify affordance and the fullscreen image overlay it opens
+export const IMAGE_MAGNIFY_ARIA = "View image full screen";
+export const IMAGE_LIGHTBOX_ARIA = "Image in full screen";
+export const GALLERY_MAGNIFY_ARIA = "View gallery full screen";
+export const GALLERY_LIGHTBOX_ARIA = "Gallery in full screen";
+export const LIGHTBOX_CLOSE_ARIA = "Close full screen view";
+
 // Footer social links
 export const FOOTER_FACEBOOK_ARIA = "Visit our Facebook page";
 export const FOOTER_INSTAGRAM_ARIA = "Visit our Instagram page";

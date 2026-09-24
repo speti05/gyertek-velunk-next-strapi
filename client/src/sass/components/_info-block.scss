@@ -14,21 +14,29 @@
     padding-left: 4.8rem;
     padding-right: 0;
 
-    & .info__image {
+    & .info__image-frame {
       border-radius: 329px 0px 0px 329px;
     }
   }
 
-  &__image,
+  &__image-frame,
   &__text {
     width: 48%;
   }
 
-  &__image {
+  // The rounding belongs to the frame, because that is what the magnify badge is
+  // positioned against; the frame then clips the picture to the same shape.
+  &__image-frame {
     border-radius: 0px 329px 329px 0px;
+    overflow: hidden;
+    height: 100%;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     object-position: center;
-    height: 100%;
   }
 
   &__headline {
@@ -56,7 +64,7 @@
       flex-direction: column-reverse;
     }
 
-    &__image,
+    &__image-frame,
     &__text {
       width: 100%;
     }

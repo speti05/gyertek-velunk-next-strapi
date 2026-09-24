@@ -1,3 +1,12 @@
 // Horizontal padding keeping text content away from the viewport edges
 $content-side-padding: 4.8rem;
 $content-side-padding-phone: 3rem;
+
+// The round floating controls pinned to the bottom corners of every page - the
+// scroll-to-top button on the right, the reCAPTCHA badge on the left. They read as a
+// pair, so they are sized from one token rather than each carrying its own number.
+//
+// max(), not a plain rem: the root font-size drops on smaller screens (see _base.scss),
+// which would take a rem-sized control below the 48px a finger needs. The floor renders
+// 50px above 1200px, 48px below it, and 60px past the big-desktop breakpoint.
+$floating-action-size: max(5rem, 48px);

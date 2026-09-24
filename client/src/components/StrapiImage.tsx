@@ -1,12 +1,11 @@
-import Image from "next/image";
+import type { Ref } from "react";
+import Image, { type ImageProps as NextImageProps } from "next/image";
 import { getStrapiMediaURL } from "@/utils/get-strapi-url";
 
-interface StrapiImageProps {
+export type StrapiImageProps = Omit<NextImageProps, "src"> & {
   src: string;
-  alt: string;
-  className?: string;
-  [key: string]: string | number | boolean | undefined;
-}
+  ref?: Ref<HTMLImageElement | null>;
+};
 
 export function StrapiImage({ src, alt, className, ...rest }: Readonly<StrapiImageProps>) {
   const imageUrl = getStrapiMedia(src);

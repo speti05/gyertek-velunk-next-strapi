@@ -1,0 +1,53 @@
+@use "../base/colors";
+
+// The placeholder that stands in for an image until the file itself has arrived.
+// It covers the image's own box rather than taking space of its own, so every
+// container that holds one has to establish a positioning context - that rule lives
+// with the rest of that image's layout, in the container's own block.
+.image-skeleton {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: none;
+
+  // The grey surface itself, lying under the marks so the sweep passes behind them.
+  .custom-skeleton {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    // The theme rounds every rectangular Skeleton; here the corners belong to the
+    // frame, which is what clips this surface, so it follows the frame instead.
+    border-radius: inherit;
+    background-color: colors.$gy-v-gray-200;
+
+    // The sweep MUI draws across the placeholder. Its own gradient is a near-black wash
+    // meant for a white surface, which over this grey reads as almost nothing.
+    &::after {
+      background: linear-gradient(90deg, transparent, colors.veil(0.55), transparent);
+    }
+  }
+
+  // What tells the reader the grey box is a picture on its way rather than a gap in the
+  // layout. Both marks are selected through the parent as well, to outrank the MUI
+  // classes that set an icon's font-size and a progress ring's colour.
+  &__marks {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.6rem;
+  }
+
+  .image-skeleton__icon {
+    font-size: 5.6rem;
+    color: colors.$gy-v-gray-400;
+  }
+
+  .image-skeleton__spinner {
+    color: colors.$gy-v-dark-green;
+  }
+}

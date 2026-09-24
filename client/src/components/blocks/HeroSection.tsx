@@ -1,5 +1,6 @@
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import { StrapiImage } from "../StrapiImage";
+import { StrapiImageWithSkeleton } from "../StrapiImageWithSkeleton";
 import type { HeroSectionProps } from "@/types";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 
@@ -16,7 +17,7 @@ export function HeroSection({
   return (
     <section className="hero">
       <div className="hero__background">
-        <StrapiImage
+        <StrapiImageWithSkeleton
           src={image.url}
           alt={image.alternativeText || "No alternative text provided"}
           className="hero__background-image"

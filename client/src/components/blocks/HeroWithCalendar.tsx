@@ -1,6 +1,6 @@
 "use server";
 
-import { StrapiImage } from "../StrapiImage";
+import { StrapiImageWithSkeleton } from "../StrapiImageWithSkeleton";
 import { CalendarWithContent } from "../CalendarWithContent";
 import { HeroWithCalendarProps, EventProps } from "@/types";
 import { getContentForCalendar } from "@/data/loaders";
@@ -32,7 +32,7 @@ export async function HeroWithCalendar({
   return (
     <section className="hero hero__with-calendar">
       <div className="hero__background">
-        <StrapiImage
+        <StrapiImageWithSkeleton
           src={image?.url}
           alt={image?.alternativeText || "No alternative text provided"}
           className="hero__background-image"

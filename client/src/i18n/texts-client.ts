@@ -353,6 +353,13 @@ export const GALLERY_POSITION_ARIA = (current: number, total: number) =>
 export const GALLERY_PAUSE_ARIA = "Automatikus váltás megállítása";
 export const GALLERY_PLAY_ARIA = "Automatikus váltás indítása";
 
+// Magnify affordance and the fullscreen image overlay it opens
+export const IMAGE_MAGNIFY_ARIA = "Kép megtekintése teljes képernyőn";
+export const IMAGE_LIGHTBOX_ARIA = "Kép teljes képernyőn";
+export const GALLERY_MAGNIFY_ARIA = "Galéria megtekintése teljes képernyőn";
+export const GALLERY_LIGHTBOX_ARIA = "Galéria teljes képernyőn";
+export const LIGHTBOX_CLOSE_ARIA = "Teljes képernyős nézet bezárása";
+
 // Footer social links
 export const FOOTER_FACEBOOK_ARIA = "Látogass el Facebook oldalunkra";
 export const FOOTER_INSTAGRAM_ARIA = "Látogass el Instagram oldalunkra";

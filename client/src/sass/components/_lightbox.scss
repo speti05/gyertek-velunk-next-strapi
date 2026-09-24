@@ -1,0 +1,90 @@
+@use "../base/colors";
+@use "../base/mixins";
+
+// The fullscreen surface an enlarged picture or gallery is shown on. MUI's Modal gives
+// the root its fixed full-viewport box and its place in the stacking order; the backdrop
+// and everything inside it are drawn here.
+.lightbox {
+  background-color: colors.scrim(0.92);
+
+  &__surface {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    // The point of the overlay is the picture, so the surface keeps only enough of a
+    // margin to stop it running into the edge of the screen. The close button floats
+    // over the corner instead of being given a band of its own to sit in.
+    padding: 1.6rem;
+    // The Modal moves focus here on open, which would draw a focus ring around the whole
+    // screen; the controls inside carry their own.
+    outline: none;
+
+    @include mixins.respond(phone) {
+      padding: 0.8rem;
+    }
+  }
+
+  &__stage {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    // A gallery lays its slides behind everything else with a negative z-index. Without a
+    // stacking context of its own here they would drop behind the backdrop instead.
+    isolation: isolate;
+  }
+
+  // The picture takes the whole stage and is fitted inside it, so it uses every bit of
+  // room the screen has rather than however large the file happens to be. `contain` is
+  // what keeps it whole - it is never cropped, which is the point of having opened it.
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+// Selected through the overlay to outrank the MUI classes that give an icon button its
+// own background, colour and icon size.
+.lightbox .lightbox__close {
+  position: absolute;
+  top: 1.6rem;
+  right: 1.6rem;
+  // Above the stage, so a gallery's arrows cannot cover the way out.
+  z-index: 3;
+  // The same green disc the gallery's own arrows wear, so the controls on screen
+  // together read as one set.
+  background-color: rgba(colors.$gy-v-dark-green, 0.6);
+  color: colors.$gy-v-white;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: colors.$gy-v-dark-green;
+  }
+
+  & svg {
+    font-size: 2.8rem;
+    color: colors.$gy-v-white;
+  }
+}
+
+// A gallery shown full screen. The scrims that keep hero text readable have nothing to
+// protect here, and the slide is shown whole rather than cropped to fill a frame.
+.lightbox__stage {
+  .gallery__background {
+    &__overlay,
+    &::before {
+      background-color: transparent;
+    }
+
+    & img {
+      object-fit: contain;
+      object-position: center;
+    }
+  }
+}

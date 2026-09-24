@@ -135,6 +135,8 @@ export interface InfoBlockProps extends Base<"blocks.info-block"> {
   content: string;
   image: ImageProps;
   cta?: LinkProps;
+  /** Editor-controlled here, unlike the article blocks where magnifying is always on. */
+  isMagnifyEnabled?: boolean;
 }
 
 export interface FeaturedArticleProps extends Base<"blocks.featured-article"> {

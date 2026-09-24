@@ -1,4 +1,4 @@
-import { StrapiImage } from "../StrapiImage";
+import { MagnifiableImage } from "@/components/MagnifiableImage";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import ReactMarkdown from "react-markdown";
 
@@ -12,16 +12,19 @@ export function InfoBlock({
   headline,
   content,
   cta,
+  isMagnifyEnabled = false,
 }: Readonly<InfoBlockProps>) {
   return (
     <section className={`info info--${theme} ${reversed && "info--reversed"}`}>
       {image && (
-        <StrapiImage
+        <MagnifiableImage
           src={image?.url}
           alt={image.alternativeText || "No alternative text provided"}
           height={500}
           width={600}
           className="info__image"
+          frameClassName="info__image-frame"
+          isMagnifyEnabled={isMagnifyEnabled}
         />
       )}
       <div className="info__text">

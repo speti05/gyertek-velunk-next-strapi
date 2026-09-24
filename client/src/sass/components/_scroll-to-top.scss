@@ -1,10 +1,12 @@
 @use "../base/colors";
 @use "../base/mixins";
+@use "../base/variables";
 
 // Below the header (1000) and the cookie banner (1000) on purpose: neither should ever
 // end up behind the button.
 $scroll-to-top-z-index: 999;
-$scroll-to-top-size: 5rem;
+// Shared with the reCAPTCHA badge in the opposite corner, so the two stay the same size.
+$scroll-to-top-size: variables.$floating-action-size;
 
 .scroll-to-top {
   position: fixed;
@@ -42,13 +44,6 @@ $scroll-to-top-size: 5rem;
     transition:
       background-color 0.2s,
       transform 0.2s;
-
-    // The theme gives every icon button this touch size below the breakpoint; stated
-    // again here because the fixed width above would otherwise undercut it.
-    @media (max-width: 75em) {
-      min-width: 48px;
-      min-height: 48px;
-    }
 
     // Outranks MUI's own .MuiIconButton-root:hover rule.
     &:hover,

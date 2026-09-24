@@ -48,6 +48,7 @@
   }
 
   &__container {
+    position: relative;
     width: 55%;
   }
 
@@ -110,6 +111,7 @@
 }
 
 .article-image {
+  position: relative;
   margin: 0 auto;
   width: 65%;
   min-width: 40rem;

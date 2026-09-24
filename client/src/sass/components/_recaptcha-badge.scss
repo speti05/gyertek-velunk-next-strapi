@@ -1,5 +1,6 @@
 @use "../base/colors";
 @use "../base/mixins";
+@use "../base/variables";
 
 // Google injects the badge into <body> with inline styles and its own stylesheet, so
 // every rule here has to be !important - there is no other way to reach it.
@@ -8,9 +9,14 @@
 // its first 70px - the reCAPTCHA mark - sticking out. Here it is moved to the left and
 // cropped to a circle around that mark instead. Hovering still opens the full badge, so
 // the "Privacy" and "Terms" links Google's terms of service require stay reachable.
-$recaptcha-badge-size: 60px;
-$recaptcha-badge-width: 256px;
-// The slice of the frame that holds the mark.
+
+// The circle's diameter, shared with the scroll-to-top button in the opposite corner so
+// the two floating controls read as a pair. It is smaller than the frame Google ships,
+// which is what the offsets on .grecaptcha-logo are for.
+$recaptcha-badge-size: variables.$floating-action-size;
+// The frame Google ships, and the slice of it that holds the mark.
+$recaptcha-frame-width: 256px;
+$recaptcha-frame-height: 60px;
 $recaptcha-mark-width: 70px;
 // Under the header and the cookie banner (1000) and the scroll-to-top button (999),
 // over everything the page itself paints.
@@ -39,9 +45,12 @@ $recaptcha-badge-z-index: 998;
     bottom: 1.6rem !important;
   }
 
-  // The mark sits in the middle of the frame's first 70px, so a 60px window has to
-  // start half the difference in - otherwise the mark lands off-centre in the circle.
+  // The whole 256x60 frame is one iframe, and the window cropping it to a circle is
+  // smaller on both axes, so the frame is pulled back by half the difference on each -
+  // otherwise the mark lands off-centre in the circle. Horizontally that is measured
+  // against the 70px slice the mark occupies, not the frame's full width.
   .grecaptcha-logo {
+    margin-top: calc((#{$recaptcha-badge-size} - #{$recaptcha-frame-height}) / 2) !important;
     margin-left: calc((#{$recaptcha-badge-size} - #{$recaptcha-mark-width}) / 2) !important;
     transition: margin-left 0.3s ease !important;
   }
@@ -53,9 +62,11 @@ $recaptcha-badge-z-index: 998;
   &:hover,
   &:focus-within,
   &.grecaptcha-badge--open {
-    width: $recaptcha-badge-width !important;
+    width: $recaptcha-frame-width !important;
     border-radius: calc(#{$recaptcha-badge-size} / 2) !important;
 
+    // Only the horizontal pull is undone: the frame is still cropped to the circle's
+    // height, so the vertical one has to stay or the wordmark drifts off centre.
     .grecaptcha-logo {
       margin-left: 0 !important;
     }

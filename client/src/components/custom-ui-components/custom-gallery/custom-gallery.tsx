@@ -3,10 +3,12 @@
 import { useTexts } from "@/context/locale-context";
 
 import React, { useCallback, useEffect, useState } from "react";
-import { StrapiImage } from "@/components/StrapiImage";
+import { StrapiImageWithSkeleton } from "@/components/StrapiImageWithSkeleton";
 import { ImageProps } from "@/types";
 import CustomIconButton from "@/components/custom-ui-components/custom-icon-button/custom-icon-button";
 import CustomDotButton from "@/components/custom-ui-components/custom-dot-button/custom-dot-button";
+import CustomMagnifyButton from "@/components/custom-ui-components/custom-magnify-button/custom-magnify-button";
+import CustomLightbox from "@/components/custom-ui-components/custom-lightbox/custom-lightbox";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import PauseIcon from "@mui/icons-material/Pause";
@@ -25,6 +27,10 @@ interface CustomGalleryProps {
   slideIntervalMs?: number;
   /** The dots (or the counter that replaces them above MAX_DOTS images). */
   showPager?: boolean;
+  /** Offers the whole gallery full screen, opened on the slide the reader is looking at. */
+  magnifiable?: boolean;
+  /** Which slide to start on - the fullscreen copy resumes where the in-page one stood. */
+  initialIndex?: number;
 }
 
 const CustomGallery: React.FC<CustomGalleryProps> = ({
@@ -32,14 +38,17 @@ const CustomGallery: React.FC<CustomGalleryProps> = ({
   autoplay = true,
   slideIntervalMs = SLIDE_INTERVAL_MS,
   showPager = true,
+  magnifiable = false,
+  initialIndex = 0,
 }) => {
-  const { GALLERY_PREV_IMAGE_ARIA, GALLERY_NEXT_IMAGE_ARIA, GALLERY_DOT_IMAGE_ARIA, GALLERY_PAUSE_ARIA, GALLERY_PLAY_ARIA, GALLERY_POSITION_LABEL, GALLERY_POSITION_ARIA } = useTexts();
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const { GALLERY_PREV_IMAGE_ARIA, GALLERY_NEXT_IMAGE_ARIA, GALLERY_DOT_IMAGE_ARIA, GALLERY_PAUSE_ARIA, GALLERY_PLAY_ARIA, GALLERY_POSITION_LABEL, GALLERY_POSITION_ARIA, GALLERY_MAGNIFY_ARIA, GALLERY_LIGHTBOX_ARIA } = useTexts();
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [paused, setPaused] = useState(false);
+  const [magnified, setMagnified] = useState(false);
   // Which slides may load their image. Every slide sits in the viewport at once - only
   // opacity hides the inactive ones - so the browser's own lazy loading would still pull
   // all of them the moment the gallery scrolls into view.
-  const [loadedSlides, setLoadedSlides] = useState<Set<number>>(() => new Set([0]));
+  const [loadedSlides, setLoadedSlides] = useState<Set<number>>(() => new Set([initialIndex]));
   const count = images?.length ?? 0;
 
   const goNext = useCallback(() => {
@@ -50,11 +59,13 @@ const CustomGallery: React.FC<CustomGalleryProps> = ({
     setCurrentIndex((prev) => (prev - 1 + count) % count);
   }, [count]);
 
+  // The fullscreen copy runs its own slideshow, so the one underneath holds still
+  // while the overlay is up rather than moving on behind it.
   useEffect(() => {
-    if (!autoplay || count <= 1 || paused) return;
+    if (!autoplay || count <= 1 || paused || magnified) return;
     const timer = setInterval(goNext, slideIntervalMs);
     return () => clearInterval(timer);
-  }, [goNext, count, paused, autoplay, slideIntervalMs]);
+  }, [goNext, count, paused, autoplay, slideIntervalMs, magnified]);
 
   // The current slide and its two neighbours, so the crossfade always has its target
   // ready. Slides stay loaded once reached - stepping back through the gallery should
@@ -81,7 +92,7 @@ const CustomGallery: React.FC<CustomGalleryProps> = ({
             className={`gallery__slide${idx === currentIndex ? " gallery__slide--active" : ""}`}
           >
             {loadedSlides.has(idx) && (
-              <StrapiImage
+              <StrapiImageWithSkeleton
                 src={img.url}
                 alt={img.alternativeText || ""}
                 className="gallery__background-image"
@@ -94,6 +105,30 @@ const CustomGallery: React.FC<CustomGalleryProps> = ({
         ))}
         <div className="gallery__background__overlay"></div>
       </div>
+
+      {magnifiable && (
+        <>
+          <CustomMagnifyButton
+            onClick={() => setMagnified(true)}
+            ariaLabel={GALLERY_MAGNIFY_ARIA}
+          />
+          <CustomLightbox
+            open={magnified}
+            onClose={() => setMagnified(false)}
+            ariaLabel={GALLERY_LIGHTBOX_ARIA}
+          >
+            {/* The whole gallery goes full screen, not just the slide on show, so the
+                reader can keep stepping through it there. Autoplay is left off: the
+                overlay is opened to look at one picture, not to be shown the next. */}
+            <CustomGallery
+              images={images}
+              autoplay={false}
+              showPager={showPager}
+              initialIndex={currentIndex}
+            />
+          </CustomLightbox>
+        </>
+      )}
 
       {count > 1 && (
         <>

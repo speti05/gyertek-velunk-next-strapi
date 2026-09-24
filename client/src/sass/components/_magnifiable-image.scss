@@ -1,0 +1,72 @@
+@use "../base/colors";
+
+// The frame a magnifiable picture and its badge share. It takes whatever size the host
+// block gives it and the picture fills it, so the badge's corner is the picture's corner
+// rather than the corner of some larger box around it. It is also what the loading
+// placeholder is positioned against, so it has to establish a positioning context.
+.magnifiable-image {
+  position: relative;
+  display: block;
+}
+
+// The control that opens the picture full screen. It covers the whole image and draws
+// nothing itself, so a click anywhere on the picture opens it while the badge in the
+// corner stays the only visible sign that it can be opened.
+.magnify-trigger {
+  position: absolute;
+  inset: 0;
+  // Above the picture, but under a gallery's own arrows and dots, which sit at 2.
+  z-index: 1;
+  display: block;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: zoom-in;
+
+  &:focus-visible {
+    outline: 3px solid colors.$gy-v-dark-green;
+    outline-offset: -3px;
+  }
+
+  &__badge {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.4rem;
+    height: 4.4rem;
+    border-radius: 50%;
+    // The badge lands on whatever the photograph happens to show, so it carries a disc
+    // of its own instead of trusting the picture underneath to be dark enough. It is the
+    // green the gallery's arrows and the overlay's close button wear, so every control
+    // over an image reads as the same set.
+    background-color: rgba(colors.$gy-v-dark-green, 0.6);
+    opacity: 0;
+    transition:
+      opacity 0.2s,
+      background-color 0.2s;
+  }
+
+  &:hover &__badge,
+  &:focus-visible &__badge {
+    opacity: 1;
+    background-color: colors.$gy-v-dark-green;
+  }
+
+  // Selected through the button as well, to outrank the MUI class that sets an icon's
+  // own font-size and colour.
+  .magnify-trigger__icon {
+    font-size: 2.4rem;
+    color: colors.$gy-v-white;
+  }
+
+  // Where there is no hover the badge cannot wait for one: it is the only sign that the
+  // picture opens, so on touch it stays on screen.
+  @media (hover: none) {
+    &__badge {
+      opacity: 1;
+    }
+  }
+}

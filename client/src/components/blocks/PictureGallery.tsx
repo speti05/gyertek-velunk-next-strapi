@@ -27,7 +27,12 @@ export async function PictureGallery({
       {description && <p className="article-picture-gallery__description">{description}</p>}
       {images?.length ? (
         <div className="article-picture-gallery__frame">
-          <CustomGallery images={images} autoplay={autoplay} slideIntervalMs={slideIntervalMs} />
+          <CustomGallery
+            images={images}
+            autoplay={autoplay}
+            slideIntervalMs={slideIntervalMs}
+            magnifiable
+          />
         </div>
       ) : (
         <EmptyContent

@@ -4,7 +4,7 @@ import { toPublicPath, Route } from "@/i18n/config";
 import { ImageProps } from "@/types";
 
 import CustomLink from "./custom-ui-components/custom-link/custom-link";
-import { StrapiImage } from "./StrapiImage";
+import { StrapiImageWithSkeleton } from "./StrapiImageWithSkeleton";
 import { formatDate } from "@/utils/format-date";
 import { truncateText } from "@/utils/text-utils";
 import { TourDifficultyBadge } from "./TourDifficultyBadge";
@@ -43,7 +43,7 @@ export async function Card({
       underline="none"
     >
       <div className="content-items__card-img">
-        <StrapiImage
+        <StrapiImageWithSkeleton
           src={image.url}
           alt={image.alternativeText || "No alternative text provided"}
           width={400}

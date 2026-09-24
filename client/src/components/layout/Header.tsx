@@ -9,7 +9,7 @@ import { StrapiImage } from "../StrapiImage";
 import { SocialLinks } from "./SocialLinks";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { HeaderAccount } from "./HeaderAccount";
-import { Route } from "@/i18n/config";
+import { Route, stripLocale } from "@/i18n/config";
 import { useHeaderCollapsed } from "@/hooks/use-header-collapsed";
 
 /** Matches the nav-collapse breakpoint in sass/base/_mixins.scss - above it the menu
@@ -77,11 +77,16 @@ export function Header({ data, socialLinks, showLanguageSwitcher = false }: Head
    * A menu entry is current for its own page and for anything below it, so a tour's
    * detail page keeps its section marked. A fragment is ignored: entries that point at
    * a section of the home page ("/#turaink") count as current while that page is open.
+   *
+   * Both sides are compared with the locale prefix stripped, because an English home
+   * entry localizes to "/en#tours" - matched as a raw prefix, "/en" would swallow every
+   * other English page.
    */
   const isCurrent = (href: string) => {
-    const target = href.split("#")[0].split("?")[0] || "/";
-    if (target === "/") return pathname === "/";
-    return pathname === target || pathname.startsWith(`${target}/`);
+    const target = stripLocale(href.split("#")[0].split("?")[0]);
+    const current = stripLocale(pathname);
+    if (target.length === 0) return current.length === 0;
+    return target.every((segment, index) => current[index] === segment);
   };
 
   // Nothing to put in the utility bar means it should not take up a band of its own.
@@ -144,11 +149,16 @@ export function Header({ data, socialLinks, showLanguageSwitcher = false }: Head
           <span className="site-header__brand">{SITE_TITLE}</span>
 
           {/* Left untouched on purpose: the bars and their transform into an X are the
-              existing animation. The attributes below only name the control. */}
+              existing animation. The attributes below only name the control.
+              suppressHydrationWarning: form-filler browser extensions stamp an
+              `fdprocessedid` attribute onto button-like elements before React hydrates,
+              which trips the hydration attribute check even though server and client
+              render this identically. */}
           <div
             className={`hamburger ${isActive ? "active" : ""}`}
             role="button"
             tabIndex={0}
+            suppressHydrationWarning
             aria-label={HEADER_MENU_TOGGLE_LABEL}
             aria-expanded={isActive}
             aria-controls="site-header-panel"
