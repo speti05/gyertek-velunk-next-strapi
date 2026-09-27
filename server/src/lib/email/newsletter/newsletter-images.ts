@@ -1,6 +1,6 @@
 import path from "path";
 import { promises as fs } from "fs";
-import sharp from "sharp";
+import sharp, { type OutputInfo } from "sharp";
 import type { Attachment } from "nodemailer/lib/mailer";
 import { getStrapiTexts } from "../../../i18n/get-strapi-texts";
 import {
@@ -68,7 +68,7 @@ export class NewsletterImageEmbedder {
   private async process(media: StrapiMedia, maxWidth: number): Promise<EmbeddedImage> {
     const displayName = media.name || path.basename(media.url);
 
-    let output: { data: Buffer; info: sharp.OutputInfo };
+    let output: { data: Buffer; info: OutputInfo };
     let hasAlpha: boolean;
     try {
       const source = await readMedia(media.url);

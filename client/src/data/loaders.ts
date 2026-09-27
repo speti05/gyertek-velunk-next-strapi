@@ -106,13 +106,13 @@ const homePageQuery = {
           },
         },
         "blocks.text-content-block": {
-          populate: true,
+          populate: "*",
         },
         "blocks.contact-request-form": {
-          populate: true,
+          populate: "*",
         },
         "blocks.calendar": {
-          populate: true,
+          populate: "*",
         },
       },
     },
@@ -198,13 +198,13 @@ const pageBySlugQuery = (slug: string, locale: Locale, status?: "draft") =>
             },
           },
           "blocks.text-content-block": {
-            populate: true,
+            populate: "*",
           },
           "blocks.contact-request-form": {
-            populate: true,
+            populate: "*",
           },
           "blocks.socials": {
-            populate: true,
+            populate: "*",
           },
         },
       },
@@ -342,7 +342,7 @@ const blogPopulate = {
         },
       },
       "blocks.heading": {
-        populate: true,
+        populate: "*",
       },
       "blocks.paragraph-with-image": {
         populate: {
@@ -352,7 +352,7 @@ const blogPopulate = {
         },
       },
       "blocks.paragraph": {
-        populate: true,
+        populate: "*",
       },
       "blocks.full-image": {
         populate: {
@@ -362,13 +362,13 @@ const blogPopulate = {
         },
       },
       "blocks.hero-with-calendar": {
-        populate: true,
+        populate: "*",
       },
       "blocks.hero-with-text": {
-        populate: true,
+        populate: "*",
       },
       "blocks.youtube-video": {
-        populate: true,
+        populate: "*",
       },
       "blocks.picture-gallery": {
         populate: {

@@ -318,7 +318,7 @@ export interface LayoutHeader extends Struct.ComponentSchema {
 }
 
 declare module "@strapi/strapi" {
-  export module Public {
+  export namespace Public {
     export interface ComponentSchemas {
       "blocks.calendar": BlocksCalendar;
       "blocks.contact-request-form": BlocksContactRequestForm;
