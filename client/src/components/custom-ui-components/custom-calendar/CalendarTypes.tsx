@@ -5,4 +5,5 @@ export interface CalendarEvent {
   link: string;
   startDate: Date;
   endDate: Date;
+  difficulty?: number | null;
 }

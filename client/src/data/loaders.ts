@@ -111,6 +111,9 @@ const homePageQuery = {
         "blocks.contact-request-form": {
           populate: true,
         },
+        "blocks.calendar": {
+          populate: true,
+        },
       },
     },
   },
@@ -531,7 +534,8 @@ export async function getContentForCalendar(path: string, year: number) {
   ]);
   const url = new URL(path, BASE_URL);
   const startOfYear = new Date(year, 0, 1).toISOString();
-  const endOfYear = new Date(year, 11, 31).toISOString();
+  // Exclusive upper bound: Dec 31 at midnight would drop tours starting later that day.
+  const startOfNextYear = new Date(year + 1, 0, 1).toISOString();
 
   url.search = qs.stringify({
     locale,
@@ -546,7 +550,7 @@ export async function getContentForCalendar(path: string, year: number) {
         },
         {
           startDate: {
-            $lte: endOfYear,
+            $lt: startOfNextYear,
           },
         },
         ...disabledFilters(preview, viewer),
@@ -560,6 +564,41 @@ export async function getContentForCalendar(path: string, year: number) {
       image: {
         fields: ["url", "alternativeText"],
       },
+    },
+  });
+
+  return fetchContent(url.href, preview, viewer);
+}
+
+/** Tours that have not ended yet, soonest first - the calendar's "upcoming" list. */
+export async function getUpcomingEvents(path: string, limit: number) {
+  const [preview, viewer, locale] = await Promise.all([
+    getPreviewContext(),
+    getViewerContext(),
+    getRequestLocale(),
+  ]);
+  const url = new URL(path, BASE_URL);
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+
+  url.search = qs.stringify({
+    locale,
+    status: preview.status,
+    sort: ["startDate:asc"],
+    filters: {
+      $and: [
+        {
+          $or: [
+            { endDate: { $gte: startOfToday.toISOString() } },
+            { $and: [{ endDate: { $null: true } }, { startDate: { $gte: startOfToday.toISOString() } }] },
+          ],
+        },
+        ...disabledFilters(preview, viewer),
+      ],
+    },
+    pagination: {
+      pageSize: limit,
+      page: 1,
     },
   });
 

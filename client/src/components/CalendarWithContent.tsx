@@ -1,28 +1,29 @@
 "use client";
 
-import { CalendarWrapper } from "@/components/custom-ui-components/custom-calendar/CalendarWrapper";
+import { TourCalendar } from "@/components/custom-ui-components/custom-calendar/TourCalendar";
 import { CalendarEvent } from "@/components/custom-ui-components/custom-calendar/CalendarTypes";
 
-interface ContentListProps {
+interface CalendarWithContentProps {
   theme: "turquoise" | "brown";
   calendarEvents: CalendarEvent[];
   onYearChange: (year: number) => Promise<CalendarEvent[]>;
+  upcomingEvents?: CalendarEvent[];
 }
 
 export function CalendarWithContent({
   theme,
   calendarEvents,
   onYearChange,
-}: Readonly<ContentListProps>) {
+  upcomingEvents,
+}: Readonly<CalendarWithContentProps>) {
   return (
-    <section className="content-items container">
-      <div className="calendar">
-        <CalendarWrapper
-          calendarEvents={calendarEvents}
-          theme={theme}
-          onYearChange={onYearChange}
-        />
-      </div>
-    </section>
+    <div className="container">
+      <TourCalendar
+        theme={theme}
+        initialEvents={calendarEvents}
+        onYearChange={onYearChange}
+        upcomingEvents={upcomingEvents}
+      />
+    </div>
   );
 }

@@ -15,6 +15,8 @@ import { ContactRequestBlock } from "@/components/blocks/ContactRequestBlock";
 import { YoutubeVideo } from "@/components/blocks/YoutubeVideo";
 import { PictureGallery } from "@/components/blocks/PictureGallery";
 import { Socials } from "@/components/blocks/Socials";
+import { CalendarBlock } from "@/components/blocks/CalendarBlock";
+
 function blockRenderer(block: Block, index: number, searchParams: CustomSearchParams) {
   switch (block.__component) {
     case "blocks.hero-section":
@@ -49,6 +51,8 @@ function blockRenderer(block: Block, index: number, searchParams: CustomSearchPa
       return <PictureGallery {...block} key={index} />;
     case "blocks.socials":
       return <Socials {...block} key={index} />;
+    case "blocks.calendar":
+      return <CalendarBlock {...block} key={index} />;
     default:
       return null;
   }

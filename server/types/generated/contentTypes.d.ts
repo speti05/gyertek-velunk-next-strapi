@@ -828,6 +828,7 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
         "blocks.searchable-card-list",
         "blocks.hero-with-text",
         "blocks.contact-request-form",
+        "blocks.calendar",
       ]
     > &
       Schema.Attribute.SetPluginOptions<{

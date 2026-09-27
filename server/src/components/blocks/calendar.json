@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_blocks_calendars",
+  "info": {
+    "displayName": "Calendar",
+    "icon": "calendar",
+    "description": "Event calendar rendered as a regular page section, without the hero background"
+  },
+  "options": {},
+  "attributes": {
+    "headline": {
+      "type": "string"
+    },
+    "theme": {
+      "type": "enumeration",
+      "enum": [
+        "turquoise",
+        "brown"
+      ],
+      "required": true,
+      "default": "turquoise"
+    }
+  }
+}

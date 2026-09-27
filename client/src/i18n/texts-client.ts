@@ -430,15 +430,17 @@ export const CONTACT_REQUEST_SUBMIT_LABEL = "Küldés";
 export const CONTACT_REQUEST_NEW_REQUEST_LABEL = "Küldök másikat";
 
 // Calendar
+// The calendar grid starts the week on Monday, so these do too.
 export const CALENDAR_DAYS_OF_WEEK = [
-  "Vasárnap",
   "Hétfő",
   "Kedd",
   "Szerda",
   "Csütörtök",
   "Péntek",
   "Szombat",
+  "Vasárnap",
 ];
+export const CALENDAR_DAYS_OF_WEEK_SHORT = ["H", "K", "Sze", "Cs", "P", "Szo", "V"];
 export const CALENDAR_MONTH_NAMES = [
   "Január",
   "Február",
@@ -453,7 +455,36 @@ export const CALENDAR_MONTH_NAMES = [
   "November",
   "December",
 ];
+export const CALENDAR_MONTH_NAMES_SHORT = [
+  "JAN",
+  "FEB",
+  "MÁR",
+  "ÁPR",
+  "MÁJ",
+  "JÚN",
+  "JÚL",
+  "AUG",
+  "SZEP",
+  "OKT",
+  "NOV",
+  "DEC",
+];
 export const CALENDAR_TODAY_LABEL = "Ma";
+export const CALENDAR_ARIA_LABEL = (year: number, month: string) => `Túranaptár, ${year}. ${month}`;
+export const CALENDAR_PICK_MONTH_ARIA = (year: number, month: string) =>
+  `Hónap választása, most: ${year}. ${month}`;
+export const CALENDAR_PREV_MONTH_ARIA = "Előző hónap";
+export const CALENDAR_NEXT_MONTH_ARIA = "Következő hónap";
+export const CALENDAR_UPCOMING_TITLE = "Közelgő túrák";
+export const CALENDAR_UPCOMING_EMPTY = "Jelenleg nincs meghirdetett túra.";
+export const CALENDAR_MONTH_TOURS_TITLE = (month: string) => `${month}i túrák`;
+export const CALENDAR_MONTH_TOURS_EMPTY = "Ebben a hónapban nincs túra.";
+export const CALENDAR_ALL_TOURS_LABEL = "Összes túránk";
+export const CALENDAR_LEGEND_UPCOMING = "Közelgő túra";
+export const CALENDAR_LEGEND_PAST = "Lezajlott túra";
+export const CALENDAR_LEGEND_TODAY = "Mai nap";
+export const CALENDAR_PAST_BADGE = "Lezajlott";
+export const CALENDAR_DAY_COUNT = (days: number) => `${days} nap`;
 export const DATE_INVALID = "Érvénytelen dátum";
 
 // Cookie consent - data values

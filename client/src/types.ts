@@ -77,6 +77,7 @@ type ComponentType =
   | "blocks.text-content-block"
   | "blocks.hero-with-text"
   | "blocks.hero-with-calendar"
+  | "blocks.calendar"
   | "blocks.contact-request-form"
   | "blocks.youtube-video"
   | "blocks.picture-gallery"
@@ -112,7 +113,7 @@ export type Block =
   | TextBlockProps
   | HeroWithCalendarProps
   | HeroWithTextProps
-  | HeroWithCalendarProps
+  | CalendarBlockProps
   | ContactRequestBlockProps
   | YoutubeVideoProps
   | PictureGalleryProps
@@ -191,6 +192,11 @@ export interface HeroWithCalendarProps extends Base<"blocks.hero-with-calendar">
   searchParams: CustomSearchParams;
   Link?: LinkProps[];
   welcomeText?: string;
+}
+
+export interface CalendarBlockProps extends Base<"blocks.calendar"> {
+  headline?: string | null;
+  theme: "turquoise" | "brown";
 }
 
 export interface HeroWithTextProps extends Base<"blocks.hero-with-text"> {

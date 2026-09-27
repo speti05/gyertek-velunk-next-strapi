@@ -39,7 +39,8 @@
         "blocks.subscribe",
         "blocks.searchable-card-list",
         "blocks.hero-with-text",
-        "blocks.contact-request-form"
+        "blocks.contact-request-form",
+        "blocks.calendar"
       ],
       "pluginOptions": {
         "i18n": {

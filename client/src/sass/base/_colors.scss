@@ -14,7 +14,6 @@ $gy-v-dark-brown: rgb(112, 99, 76);
 
 // Extended brand palette
 $gy-v-deep-green: rgb(44, 95, 88); // one step darker than dark-green - header utility bar
-$gy-v-soft-green: rgb(121, 194, 182); // calendar day that carries an event
 $gy-v-pale-green: rgb(216, 232, 226); // content list headline background
 $gy-v-darkest-brown: rgb(74, 60, 40); // EmptyContent illustration outlines
 $gy-v-deep-brown: rgb(45, 35, 20); // cookie consent accept button label
@@ -43,15 +42,6 @@ $gy-v-gray-600: rgb(75, 85, 99);
 $gy-v-gray-700: rgb(55, 65, 81);
 $gy-v-gray-800: rgb(51, 51, 51);
 $gy-v-gray-900: rgb(17, 24, 39);
-
-// Slate - carried over from the Tailwind defaults the calendar was originally built on
-$gy-v-slate-100: rgb(241, 245, 249);
-$gy-v-slate-200: rgb(226, 232, 240);
-$gy-v-slate-300: rgb(203, 213, 225);
-$gy-v-slate-400: rgb(148, 163, 184);
-$gy-v-slate-800: rgb(30, 41, 59);
-$gy-v-calendar-today: rgb(59, 130, 246); // Tailwind blue-500 - the "today" badge
-$gy-v-calendar-hover: rgb(34, 211, 238); // Tailwind cyan-400 - day cell hover border
 
 // Document base - mirrored onto :root as --background / --foreground in _base.scss
 $gy-v-foreground: rgb(23, 23, 23);

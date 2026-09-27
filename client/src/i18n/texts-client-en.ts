@@ -422,14 +422,15 @@ export const CONTACT_REQUEST_NEW_REQUEST_LABEL = "Send another";
 
 // Calendar
 export const CALENDAR_DAYS_OF_WEEK = [
-  "Sunday",
   "Monday",
   "Tuesday",
   "Wednesday",
   "Thursday",
   "Friday",
   "Saturday",
+  "Sunday",
 ];
+export const CALENDAR_DAYS_OF_WEEK_SHORT = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 export const CALENDAR_MONTH_NAMES = [
   "January",
   "February",
@@ -444,7 +445,36 @@ export const CALENDAR_MONTH_NAMES = [
   "November",
   "December",
 ];
+export const CALENDAR_MONTH_NAMES_SHORT = [
+  "JAN",
+  "FEB",
+  "MAR",
+  "APR",
+  "MAY",
+  "JUN",
+  "JUL",
+  "AUG",
+  "SEP",
+  "OCT",
+  "NOV",
+  "DEC",
+];
 export const CALENDAR_TODAY_LABEL = "Today";
+export const CALENDAR_ARIA_LABEL = (year: number, month: string) => `Tour calendar, ${month} ${year}`;
+export const CALENDAR_PICK_MONTH_ARIA = (year: number, month: string) =>
+  `Choose a month, currently ${month} ${year}`;
+export const CALENDAR_PREV_MONTH_ARIA = "Previous month";
+export const CALENDAR_NEXT_MONTH_ARIA = "Next month";
+export const CALENDAR_UPCOMING_TITLE = "Upcoming tours";
+export const CALENDAR_UPCOMING_EMPTY = "There are no tours announced at the moment.";
+export const CALENDAR_MONTH_TOURS_TITLE = (month: string) => `Tours in ${month}`;
+export const CALENDAR_MONTH_TOURS_EMPTY = "There are no tours this month.";
+export const CALENDAR_ALL_TOURS_LABEL = "All our tours";
+export const CALENDAR_LEGEND_UPCOMING = "Upcoming tour";
+export const CALENDAR_LEGEND_PAST = "Past tour";
+export const CALENDAR_LEGEND_TODAY = "Today";
+export const CALENDAR_PAST_BADGE = "Past";
+export const CALENDAR_DAY_COUNT = (days: number) => (days === 1 ? "1 day" : `${days} days`);
 export const DATE_INVALID = "Invalid date";
 
 // Cookie consent - data values

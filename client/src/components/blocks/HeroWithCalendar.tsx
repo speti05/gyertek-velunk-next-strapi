@@ -2,22 +2,9 @@
 
 import { StrapiImageWithSkeleton } from "../StrapiImageWithSkeleton";
 import { CalendarWithContent } from "../CalendarWithContent";
-import { HeroWithCalendarProps, EventProps } from "@/types";
-import { getContentForCalendar } from "@/data/loaders";
+import { HeroWithCalendarProps } from "@/types";
 import { loadCalendarData } from "@/data/calendar-actions";
-import { CalendarEvent } from "../custom-ui-components/custom-calendar/CalendarTypes";
 import { HeroTextAndButtons } from "../HeroTextAndButtons";
-import { Route } from "@/i18n/config";
-
-const eventcalendarDataMapper = (data: EventProps[]) =>
-  data.map((event: EventProps) => ({
-    id: event.documentId,
-    title: event.title,
-    link: `${Route.Tours}/${event.slug}`,
-    description: event.description ?? "",
-    startDate: new Date(event.startDate),
-    endDate: new Date(event.endDate),
-  }));
 
 export async function HeroWithCalendar({
   headline,
@@ -26,9 +13,7 @@ export async function HeroWithCalendar({
   Link,
   welcomeText,
 }: Readonly<HeroWithCalendarProps>) {
-  const year = new Date().getFullYear();
-  const { data } = await getContentForCalendar(`/api/events`, year);
-  const calendarData: CalendarEvent[] = eventcalendarDataMapper((data as EventProps[]) || []);
+  const calendarData = await loadCalendarData(new Date().getFullYear());
   return (
     <section className="hero hero__with-calendar">
       <div className="hero__background">

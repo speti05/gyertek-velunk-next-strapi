@@ -1,5 +1,20 @@
 import type { Schema, Struct } from "@strapi/strapi";
 
+export interface BlocksCalendar extends Struct.ComponentSchema {
+  collectionName: "components_blocks_calendars";
+  info: {
+    description: "Event calendar rendered as a regular page section, without the hero background";
+    displayName: "Calendar";
+    icon: "calendar";
+  };
+  attributes: {
+    headline: Schema.Attribute.String;
+    theme: Schema.Attribute.Enumeration<["turquoise", "brown"]> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<"turquoise">;
+  };
+}
+
 export interface BlocksContactRequestForm extends Struct.ComponentSchema {
   collectionName: "components_blocks_contact_request_forms";
   info: {
@@ -304,6 +319,7 @@ export interface LayoutHeader extends Struct.ComponentSchema {
 declare module "@strapi/strapi" {
   export module Public {
     export interface ComponentSchemas {
+      "blocks.calendar": BlocksCalendar;
       "blocks.contact-request-form": BlocksContactRequestForm;
       "blocks.featured-article": BlocksFeaturedArticle;
       "blocks.full-image": BlocksFullImage;
