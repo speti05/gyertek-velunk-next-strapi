@@ -84,7 +84,7 @@ Need a colour that does not exist yet? Add a token to `_colors.scss` — do not 
 The `copy-env.mts` utility at the root automates copying `.env.example` → `.env` during `yarn setup`.
 
 ### Docker
-- Both services have multi-stage Dockerfiles based on `node:20-alpine`.
+- Both services have multi-stage Dockerfiles based on `node:24-alpine`.
 - Client uses Next.js standalone output for minimal image size.
 - `docker-compose.yml` (production) uses `.env.production`; `docker-compose.local.yml` uses `.env`.
 - Strapi uploads and database are persisted via Docker volumes.

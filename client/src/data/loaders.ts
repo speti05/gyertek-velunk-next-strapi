@@ -138,6 +138,9 @@ const pageBySlugQuery = (slug: string, locale: Locale, status?: "draft") =>
       },
     },
     populate: {
+      pageHeadlineBackground: {
+        fields: ["url", "alternativeText"],
+      },
       blocks: {
         on: {
           "blocks.hero-section": {
@@ -244,7 +247,7 @@ const globalSettingQuery = {
         policies: true,
       },
     },
-    pageHeadlineBackground: {
+    defaultPageHeadlineBackground: {
       fields: ["url", "alternativeText"],
     },
   },

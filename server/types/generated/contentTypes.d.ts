@@ -771,6 +771,12 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+    defaultPageHeadlineBackground: Schema.Attribute.Media<"images"> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     description: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -791,12 +797,6 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
       }>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<"oneToMany", "api::global.global">;
-    pageHeadlineBackground: Schema.Attribute.Media<"images"> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
     publishedAt: Schema.Attribute.DateTime;
     showLanguageSwitcher: Schema.Attribute.Boolean &
       Schema.Attribute.SetPluginOptions<{
@@ -909,9 +909,21 @@ export interface ApiNewsletterNewsletter extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    body: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    blocks: Schema.Attribute.DynamicZone<
+      [
+        "blocks.paragraph",
+        "blocks.paragraph-with-image",
+        "blocks.hero-section",
+        "blocks.heading",
+        "blocks.full-image",
+        "blocks.youtube-video",
+        "blocks.picture-gallery",
+      ]
+    >;
+    body: Schema.Attribute.Blocks;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+    image: Schema.Attribute.Media<"images">;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<"oneToMany", "api::newsletter.newsletter"> &
       Schema.Attribute.Private;
@@ -968,6 +980,12 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
       }>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<"oneToMany", "api::page.page">;
+    pageHeadlineBackground: Schema.Attribute.Media<"images"> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<"title"> &
       Schema.Attribute.SetPluginOptions<{

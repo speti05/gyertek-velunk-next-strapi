@@ -304,7 +304,7 @@ docker compose logs -f strapi                          # schema sync should be a
 ```
 
 Uploaded media lives in the `strapi-uploads` volume, not in the dump. Restoring
-a database older than the current uploads is fine; restoring one *newer* than
+a database older than the current uploads is fine; restoring one _newer_ than
 the files on disk leaves broken media links.
 
 ## 8. Disabled entries and the `TestUser` role
@@ -357,3 +357,28 @@ ssh user@VPS_IP
 cd /opt/gyertek-velunk
 docker compose logs client | grep '\[loaders\]'
 ```
+
+## 9. Upgrading Node.js to the latest LTS
+
+Node runs inside the Docker images, not on the host — the version is set by the
+`FROM node:XX-alpine` lines in `client/Dockerfile` and `server/Dockerfile`, so
+upgrading Node on the VPS itself changes nothing.
+
+1. Pick the newest LTS major that Strapi allows (Strapi 5.38: `<=24.x.x`):
+
+   ```bash
+   node -p "require('./node_modules/@strapi/strapi/package.json').engines"
+   ```
+
+2. Replace every `FROM node:20-alpine` with the pinned major, e.g.
+   `node:24-alpine` (not `node:lts-alpine`, which jumps majors on its own).
+3. Widen `engines.node` in `server/package.json` if needed — yarn 1 refuses to
+   install otherwise.
+4. Test locally: `docker-compose -f docker-compose.local.yml up --build`.
+5. Commit, push, and run the standard redeploy (section 1). Then check:
+
+   ```bash
+   docker compose exec strapi node -v
+   docker compose exec client node -v
+   docker image prune -f      # optional: drop the old image layers
+   ```

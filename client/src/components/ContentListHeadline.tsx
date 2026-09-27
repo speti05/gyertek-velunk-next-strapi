@@ -7,12 +7,14 @@ interface ContentListHeadlineProps {
   alignment?: "center" | "right" | "left";
   isMain?: boolean;
   navigationId?: string;
+  /** Page-specific background; falls back to the global default when missing. */
+  backgroundImageUrl?: string | null;
 }
 
-async function getHeadlineBackgroundUrl() {
+async function getDefaultHeadlineBackgroundUrl() {
   try {
     const { data } = await getGlobalSettings();
-    return getStrapiMedia(data?.pageHeadlineBackground?.url ?? null);
+    return getStrapiMedia(data?.defaultPageHeadlineBackground?.url ?? null);
   } catch {
     return null;
   }
@@ -23,6 +25,7 @@ export async function ContentListHeadline({
   alignment = "center",
   isMain = false,
   navigationId,
+  backgroundImageUrl,
 }: Readonly<ContentListHeadlineProps>) {
   const id = navigationId ?? removeAccents(headline);
 
@@ -37,8 +40,9 @@ export async function ContentListHeadline({
     );
   }
 
-  // The image set on the Strapi global settings overrides the default SVG backdrop.
-  const backgroundUrl = await getHeadlineBackgroundUrl();
+  // A page-specific image wins, then the Strapi global default; with neither, the SVG backdrop shows.
+  const backgroundUrl =
+    getStrapiMedia(backgroundImageUrl ?? null) ?? (await getDefaultHeadlineBackgroundUrl());
 
   return (
     <section

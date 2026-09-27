@@ -1,5 +1,5 @@
 # ---- Builder: full dependency tree, compiles the server and the admin panel ----
-FROM node:20-alpine AS builder
+FROM node:24-alpine AS builder
 WORKDIR /opt/app
 
 COPY package.json yarn.lock ./
@@ -13,7 +13,7 @@ ENV NODE_ENV=production
 RUN yarn build
 
 # ---- Runtime: production dependencies plus the build output ----
-FROM node:20-alpine
+FROM node:24-alpine
 WORKDIR /opt/app
 
 ENV NODE_ENV=production

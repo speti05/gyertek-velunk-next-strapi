@@ -53,7 +53,7 @@
         }
       }
     },
-    "pageHeadlineBackground": {
+    "defaultPageHeadlineBackground": {
       "type": "media",
       "multiple": false,
       "required": false,

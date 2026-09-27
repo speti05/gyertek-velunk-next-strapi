@@ -11,15 +11,23 @@ async function loader(slug: string) {
   if (!data?.length) {
     return notFound();
   }
-  return { blocks: data[0]?.blocks, title: data[0]?.title as string };
+  return {
+    blocks: data[0]?.blocks,
+    title: data[0]?.title as string,
+    headlineBackgroundUrl: data[0]?.pageHeadlineBackground?.url as string | undefined,
+  };
 }
 
 export default async function DynamicPageRoute({ params, searchParams }: PageParams) {
   const slug = (await params).slug;
-  const { blocks, title } = await loader(slug);
+  const { blocks, title, headlineBackgroundUrl } = await loader(slug);
   return (
     <>
-      <ContentListHeadline headline={title} isMain={true} />
+      <ContentListHeadline
+        headline={title}
+        isMain={true}
+        backgroundImageUrl={headlineBackgroundUrl}
+      />
       <BlockRenderer blocks={blocks} searchParams={await searchParams} />
     </>
   );

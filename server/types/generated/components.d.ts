@@ -9,6 +9,7 @@ export interface BlocksCalendar extends Struct.ComponentSchema {
   };
   attributes: {
     headline: Schema.Attribute.String;
+    LinkToAllPosts: Schema.Attribute.Component<"elements.link", false>;
     theme: Schema.Attribute.Enumeration<["turquoise", "brown"]> &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<"turquoise">;
