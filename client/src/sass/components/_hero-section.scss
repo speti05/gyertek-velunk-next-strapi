@@ -187,6 +187,121 @@
     font-weight: 400;
   }
 
+  // Article table of contents: the chapters sit along the bottom of the photo like
+  // stops on a route - a waypoint marker per chapter, dashed trail segments between.
+  // In flow rather than absolutely positioned, so however many rows the chapters wrap
+  // onto, the hero grows to fit instead of the trail overlapping the headline.
+  &--with-toc {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__toc {
+    margin: auto -4.8rem 0;
+    padding: 8rem 4.8rem 4.8rem;
+    background: linear-gradient(to top, colors.scrim(0.75), colors.scrim(0.4) 60%, transparent);
+
+    @include mixins.respond(phone) {
+      padding: 4rem 3rem 5rem;
+      background: linear-gradient(to top, colors.scrim(0.8), colors.scrim(0.55) 70%, transparent);
+    }
+  }
+
+  &__toc-label {
+    margin-bottom: 2rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.3rem;
+    text-transform: uppercase;
+    color: colors.$gy-v-dark-beige;
+  }
+
+  &__toc-list.no-list-style {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 2rem;
+
+    @include mixins.respond(phone) {
+      position: relative;
+      flex-direction: column;
+      align-items: flex-start;
+      row-gap: 2.4rem;
+
+      // A single vertical trail running through every marker.
+      &::before {
+        content: "";
+        position: absolute;
+        top: 1.2rem;
+        bottom: 1.2rem;
+        left: 0.7rem;
+        border-left: 2px dashed rgba(colors.$gy-v-dark-beige, 0.6);
+      }
+    }
+  }
+
+  &__toc-item {
+    display: flex;
+    align-items: center;
+
+    // Dashed trail segment leading on to the next stop.
+    &:not(:last-child)::after {
+      content: "";
+      width: 4.8rem;
+      margin: 0 1.6rem;
+      border-top: 2px dashed rgba(colors.$gy-v-dark-beige, 0.6);
+
+      @include mixins.respond(phone) {
+        display: none;
+      }
+    }
+  }
+
+  &__toc-marker {
+    flex-shrink: 0;
+    position: relative;
+    width: 1.6rem;
+    height: 1.6rem;
+    border: 3px solid colors.$gy-v-dark-beige;
+    border-radius: 50%;
+    background-color: colors.$gy-v-dark-green;
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  // MUI's Link injects its own font family, size and colour after this stylesheet
+  // with a single class, so the rule needs the extra ancestor class to win.
+  &__toc &__toc-link {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 1.2rem;
+    font-family: var(--font-luckiest-guy), cursive;
+    font-size: 2.8rem;
+    line-height: 1.1;
+    letter-spacing: 0.05rem;
+    color: colors.$gy-v-white;
+    text-shadow: 0 2px 10px colors.scrim(0.6);
+    transition:
+      color 0.2s ease,
+      transform 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+      color: colors.$gy-v-dark-beige;
+      transform: translateY(-2px);
+
+      .hero__toc-marker {
+        background-color: colors.$gy-v-dark-beige;
+        transform: scale(1.2);
+      }
+    }
+
+    @include mixins.respond(phone) {
+      font-size: 2.4rem;
+    }
+  }
+
   &__logo {
     position: absolute;
     bottom: 0;

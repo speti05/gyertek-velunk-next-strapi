@@ -32,3 +32,18 @@ export function formatDate(dateString: string, locale: Locale): string {
     return getTexts(locale).DATE_INVALID;
   }
 }
+
+/**
+ * Renders an optional start/end date pair. Either end may be missing; when both are,
+ * returns undefined so the caller can omit the date entirely.
+ */
+export function formatDateRange(
+  startDate: string | null | undefined,
+  endDate: string | null | undefined,
+  locale: Locale,
+): string | undefined {
+  const dates = [startDate, endDate].filter((date): date is string => Boolean(date));
+  if (dates.length === 0) return undefined;
+  if (dates.length === 2 && dates[0] === dates[1]) return formatDate(dates[0], locale);
+  return dates.map((date) => formatDate(date, locale)).join(" – ");
+}

@@ -28,6 +28,7 @@ export const FEATURED_ARTICLES_LABEL = "Kiemelt beszámolók";
 export const FEATURED_ARTICLES_SEARCH_LABEL = "Keresés a kiemelt beszámolók között";
 export const ARTICLES_LABEL = "Beszámolóink";
 export const ARTICLES_SEARCH_LABEL = "Keresés a beszámolók között";
+export const ARTICLE_TABLE_OF_CONTENTS_LABEL = "Útvonalunk";
 
 // Blog
 export const BLOG_LABEL = "Blogunk";

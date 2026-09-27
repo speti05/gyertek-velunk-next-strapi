@@ -4,6 +4,15 @@ import { StrapiImageWithSkeleton } from "../StrapiImageWithSkeleton";
 import type { HeroSectionProps } from "@/types";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 
+export interface HeroTableOfContent {
+  label: string;
+  items: { heading: string; linkId: string }[];
+}
+
+interface Props extends HeroSectionProps {
+  tableOfContent?: HeroTableOfContent;
+}
+
 export function HeroSection({
   theme,
   heading,
@@ -13,9 +22,12 @@ export function HeroSection({
   author,
   publishedAt,
   darken = false,
-}: Readonly<HeroSectionProps>) {
+  tableOfContent,
+}: Readonly<Props>) {
+  const hasTableOfContent = Boolean(tableOfContent?.items.length);
+
   return (
-    <section className="hero">
+    <section className={`hero${hasTableOfContent ? " hero--with-toc" : ""}`}>
       <div className="hero__background">
         <StrapiImageWithSkeleton
           src={image.url}
@@ -31,6 +43,23 @@ export function HeroSection({
         {author && <p className="hero__author">{author}</p>}
         {publishedAt && <p className="hero__published-at">{publishedAt}</p>}
       </div>
+      {hasTableOfContent && tableOfContent && (
+        <nav className="hero__toc" aria-label={tableOfContent.label}>
+          <div className="container">
+            <p className="hero__toc-label">{tableOfContent.label}</p>
+            <ol className="hero__toc-list no-list-style">
+              {tableOfContent.items.map((item) => (
+                <li key={item.linkId} className="hero__toc-item">
+                  <CustomLink href={`#${item.linkId}`} className="hero__toc-link" underline="none">
+                    <span className="hero__toc-marker" aria-hidden="true" />
+                    {item.heading}
+                  </CustomLink>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </nav>
+      )}
       {cta && (
         <CustomButton variant="contained" size="large">
           <CustomLink href={cta.href} target={cta.isExternal ? "_blank" : "_self"} color="inherit" underline="none">

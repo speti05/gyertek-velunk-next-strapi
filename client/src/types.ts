@@ -50,8 +50,10 @@ interface BaseBlogProps {
   updatedAt: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface ArticleProps extends BaseBlogProps {}
+export interface ArticleProps extends BaseBlogProps {
+  startDate?: string | null;
+  endDate?: string | null;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface BlogProps extends Omit<BaseBlogProps, "featured"> {}

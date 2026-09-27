@@ -31,6 +31,7 @@ export const FEATURED_ARTICLES_LABEL = "Featured reports";
 export const FEATURED_ARTICLES_SEARCH_LABEL = "Search featured reports";
 export const ARTICLES_LABEL = "Our reports";
 export const ARTICLES_SEARCH_LABEL = "Search reports";
+export const ARTICLE_TABLE_OF_CONTENTS_LABEL = "Our route";
 
 // Blog
 export const BLOG_LABEL = "Our blog";
