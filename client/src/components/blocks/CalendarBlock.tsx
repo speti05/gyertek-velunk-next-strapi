@@ -5,7 +5,11 @@ import { loadCalendarData, loadUpcomingEvents } from "@/data/calendar-actions";
 
 // The same event calendar as the Hero with calendar block, but laid out as a plain page
 // section instead of sitting on top of a full-width hero image.
-export async function CalendarBlock({ headline, theme }: Readonly<CalendarBlockProps>) {
+export async function CalendarBlock({
+  headline,
+  theme,
+  LinkToAllPosts,
+}: Readonly<CalendarBlockProps>) {
   const [calendarEvents, upcomingEvents] = await Promise.all([
     loadCalendarData(new Date().getFullYear()),
     loadUpcomingEvents(),
@@ -19,6 +23,7 @@ export async function CalendarBlock({ headline, theme }: Readonly<CalendarBlockP
         calendarEvents={calendarEvents}
         onYearChange={loadCalendarData}
         upcomingEvents={upcomingEvents}
+        allPostsLink={LinkToAllPosts ?? undefined}
       />
     </div>
   );

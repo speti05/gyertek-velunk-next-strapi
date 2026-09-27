@@ -199,6 +199,7 @@ export interface HeroWithCalendarProps extends Base<"blocks.hero-with-calendar">
 export interface CalendarBlockProps extends Base<"blocks.calendar"> {
   headline?: string | null;
   theme: "turquoise" | "brown";
+  LinkToAllPosts?: LinkProps | null;
 }
 
 export interface HeroWithTextProps extends Base<"blocks.hero-with-text"> {

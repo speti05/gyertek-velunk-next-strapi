@@ -4,6 +4,8 @@ import { sendNewsletterBroadcast } from "./lib/email/newsletter";
 import { getTransporter } from "./lib/email/mailer";
 import { applyAuthOverrides } from "./lib/auth/auth-overrides";
 import { applyPictureGalleryLimit } from "./lib/content/picture-gallery-limit";
+import { applyNewsletterPublishCheck } from "./lib/content/newsletter-publish-check";
+import { NEWSLETTER_UID, loadNewsletter } from "./lib/email/newsletter/build-newsletter";
 import { getClientUrl, throwErrorIfClientUrlMissing } from "./lib/config/client-url";
 import {
   TEST_USER_ROLE_DESCRIPTION,
@@ -34,6 +36,7 @@ export default {
   register({ strapi }: { strapi: Core.Strapi }) {
     applyAuthOverrides(strapi);
     applyPictureGalleryLimit(strapi);
+    applyNewsletterPublishCheck(strapi);
   },
 
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
@@ -143,10 +146,21 @@ export default {
           return;
         }
 
-        const sentCount = await sendNewsletterBroadcast(result.subject, result.body, emails);
+        // The lifecycle result holds only the entry's own columns; the blocks and images
+        // have to be loaded separately.
+        const newsletter = await loadNewsletter(result.documentId, "published");
+        if (!newsletter) {
+          console.error(`Newsletter "${result.subject}": published entry not found, nothing sent`);
+          return;
+        }
 
-        await strapi.db.query("api::newsletter.newsletter").update({
-          where: { id: result.id },
+        const sentCount = await sendNewsletterBroadcast(newsletter, emails);
+
+        // Mark every row of the document, the draft included: publishing again deletes the
+        // published row and recreates it from the draft, so a sentAt stored only on the
+        // published row would be lost and the newsletter would go out a second time.
+        await strapi.db.query(NEWSLETTER_UID).updateMany({
+          where: { documentId: result.documentId },
           data: { sentAt: new Date() },
         });
 
@@ -159,7 +173,7 @@ export default {
     };
 
     strapi.db.lifecycles.subscribe({
-      models: ["api::newsletter.newsletter"],
+      models: [NEWSLETTER_UID],
       async afterCreate(event: any) {
         await handleNewsletterPublish(event.result);
       },

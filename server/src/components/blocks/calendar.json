@@ -18,6 +18,11 @@
       ],
       "required": true,
       "default": "turquoise"
+    },
+    "LinkToAllPosts": {
+      "type": "component",
+      "component": "elements.link",
+      "repeatable": false
     }
   }
 }

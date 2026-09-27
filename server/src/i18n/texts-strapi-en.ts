@@ -168,6 +168,17 @@ export const NEWSLETTER_SIGNUP_ADMIN_SECTION_TITLE = "Subscriber details";
 export const NEWSLETTER_HEADER_LOGO_ALT = "Gyertek velünk newsletter";
 export const NEWSLETTER_UNSUBSCRIBE_QUESTION = "No longer want to receive our newsletter?";
 export const NEWSLETTER_UNSUBSCRIBE_LINK_LABEL = "Unsubscribe";
+export const NEWSLETTER_YOUTUBE_WATCH_LABEL = "Watch the video";
+
+// Newsletter broadcast — errors shown in the admin panel when publishing
+export const NEWSLETTER_EMPTY_ERROR =
+  "The newsletter has no content. Add at least one block before publishing it.";
+export const NEWSLETTER_TOO_LARGE_ERROR = (maxMb: string, actualMb: string) =>
+  `The finished newsletter is too large (${actualMb} MB, the limit is ${maxMb} MB). Use fewer images, or split it into several newsletters.`;
+export const NEWSLETTER_HTML_TOO_LARGE_ERROR = (maxKb: number, actualKb: number) =>
+  `The newsletter text is too long (${actualKb} KB, the limit is ${maxKb} KB). Gmail clips longer messages, which would also hide the unsubscribe link. Shorten the content, or split it into several newsletters.`;
+export const NEWSLETTER_IMAGE_LOAD_ERROR = (imageName: string) =>
+  `The image "${imageName}" could not be loaded or processed, so the newsletter cannot be sent. Replace the image or remove it from the newsletter.`;
 
 // Unsubscribe landing page
 export const UNSUBSCRIBE_ERROR_TITLE = "Error";

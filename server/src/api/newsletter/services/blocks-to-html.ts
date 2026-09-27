@@ -36,7 +36,8 @@ type BlockNode = {
 };
 
 function resolveMediaUrl(url: string): string {
-  if (/^https?:\/\//i.test(url)) return url;
+  // `cid:` URLs point at images already embedded into the mail as inline attachments.
+  if (/^(https?:\/\/|cid:)/i.test(url)) return url;
   const base = process.env.STRAPI_URL ?? "http://localhost:1337";
   return `${base}${url.startsWith("/") ? "" : "/"}${url}`;
 }

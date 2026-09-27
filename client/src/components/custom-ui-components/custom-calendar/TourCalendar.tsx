@@ -10,7 +10,7 @@ import {
 } from "@/components/custom-ui-components/custom-menu/custom-menu";
 import { HIKER_PATH } from "@/components/TourDifficultyBadge";
 import { useLocale, useLocalizedPath, useTexts } from "@/context/locale-context";
-import { Route } from "@/i18n/config";
+import { LinkProps } from "@/types";
 import { formatDate } from "@/utils/format-date";
 
 const DAY_MS = 86_400_000;
@@ -214,18 +214,19 @@ function TourCard({ event, isPast }: Readonly<TourCardProps>) {
   );
 }
 
-function AllToursLink() {
+function AllToursLink({ link }: Readonly<{ link: LinkProps }>) {
   const localizePath = useLocalizedPath();
   const { CALENDAR_ALL_TOURS_LABEL } = useTexts();
 
   return (
     <CustomLink
-      href={localizePath(Route.Tours)}
+      href={link.isExternal ? link.href : localizePath(link.href)}
+      target={link.isExternal ? "_blank" : "_self"}
       underline="none"
       className="tour-calendar__all-link"
       style={{ display: "inline-flex" }}
     >
-      {CALENDAR_ALL_TOURS_LABEL}
+      {link.text || CALENDAR_ALL_TOURS_LABEL}
       <ArrowIcon />
     </CustomLink>
   );
@@ -239,6 +240,8 @@ interface TourCalendarProps {
   onYearChange: (year: number) => Promise<CalendarEvent[]>;
   /** The side list of the next few tours. Leave it out where there is no room for it. */
   upcomingEvents?: CalendarEvent[];
+  /** The "all tours" button under the lists. Without it the button is not rendered. */
+  allPostsLink?: LinkProps;
 }
 
 export function TourCalendar({
@@ -246,6 +249,7 @@ export function TourCalendar({
   initialEvents,
   onYearChange,
   upcomingEvents,
+  allPostsLink,
 }: Readonly<TourCalendarProps>) {
   const localizePath = useLocalizedPath();
   const {
@@ -504,7 +508,7 @@ export function TourCalendar({
             ) : (
               <p className="tour-calendar__empty">{CALENDAR_MONTH_TOURS_EMPTY}</p>
             )}
-            <AllToursLink />
+            {allPostsLink && <AllToursLink link={allPostsLink} />}
           </div>
         </div>
 
@@ -522,7 +526,7 @@ export function TourCalendar({
             ) : (
               <p className="tour-calendar__empty">{CALENDAR_UPCOMING_EMPTY}</p>
             )}
-            <AllToursLink />
+            {allPostsLink && <AllToursLink link={allPostsLink} />}
           </aside>
         )}
       </div>

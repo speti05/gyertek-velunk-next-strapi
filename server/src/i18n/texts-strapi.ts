@@ -178,6 +178,17 @@ export const NEWSLETTER_SIGNUP_ADMIN_SECTION_TITLE = "Feliratkozó adatai";
 export const NEWSLETTER_HEADER_LOGO_ALT = `${SITE_NAME} hírlevél`;
 export const NEWSLETTER_UNSUBSCRIBE_QUESTION = "Nem szeretnél több hírlevelet kapni?";
 export const NEWSLETTER_UNSUBSCRIBE_LINK_LABEL = "Leiratkozás";
+export const NEWSLETTER_YOUTUBE_WATCH_LABEL = "Videó megnézése";
+
+// Newsletter broadcast — errors shown in the admin panel when publishing
+export const NEWSLETTER_EMPTY_ERROR =
+  "A hírlevélnek nincs tartalma. Adj hozzá legalább egy blokkot, mielőtt közzéteszed.";
+export const NEWSLETTER_TOO_LARGE_ERROR = (maxMb: string, actualMb: string) =>
+  `Az elkészült hírlevél túl nagy (${actualMb} MB, legfeljebb ${maxMb} MB lehet). Használj kevesebb képet, vagy bontsd több hírlevélre.`;
+export const NEWSLETTER_HTML_TOO_LARGE_ERROR = (maxKb: number, actualKb: number) =>
+  `A hírlevél szövege túl hosszú (${actualKb} KB, legfeljebb ${maxKb} KB lehet). A Gmail ennél hosszabb leveleket levág, így a leiratkozási link sem látszana. Rövidítsd a tartalmat, vagy bontsd több hírlevélre.`;
+export const NEWSLETTER_IMAGE_LOAD_ERROR = (imageName: string) =>
+  `A(z) „${imageName}” kép nem tölthető be vagy nem dolgozható fel, ezért a hírlevél nem küldhető el. Cseréld le a képet, vagy töröld a hírlevélből.`;
 
 // Unsubscribe landing page
 export const UNSUBSCRIBE_ERROR_TITLE = "Hiba";

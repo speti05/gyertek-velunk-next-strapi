@@ -19,9 +19,27 @@
     "sentAt": {
       "type": "datetime"
     },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
     "body": {
-      "type": "blocks",
-      "required": true
+      "type": "blocks"
+    },
+    "blocks": {
+      "type": "dynamiczone",
+      "components": [
+        "blocks.paragraph",
+        "blocks.paragraph-with-image",
+        "blocks.hero-section",
+        "blocks.heading",
+        "blocks.full-image",
+        "blocks.youtube-video",
+        "blocks.picture-gallery"
+      ]
     }
   }
 }
