@@ -190,6 +190,10 @@ export const NEWSLETTER_HTML_TOO_LARGE_ERROR = (maxKb: number, actualKb: number)
 export const NEWSLETTER_IMAGE_LOAD_ERROR = (imageName: string) =>
   `A(z) „${imageName}” kép nem tölthető be vagy nem dolgozható fel, ezért a hírlevél nem küldhető el. Cseréld le a képet, vagy töröld a hírlevélből.`;
 
+// Newsletter preview in the admin panel
+export const NEWSLETTER_PREVIEW_ERROR_TITLE = "A hírlevél előnézete nem készíthető el";
+export const NEWSLETTER_PREVIEW_NOT_FOUND = "A hírlevél nem található. Mentsd el, majd nyisd meg újra az előnézetet.";
+
 // Unsubscribe landing page
 export const UNSUBSCRIBE_ERROR_TITLE = "Hiba";
 export const UNSUBSCRIBE_INCOMPLETE_LINK = "Hiányos leiratkozási link.";

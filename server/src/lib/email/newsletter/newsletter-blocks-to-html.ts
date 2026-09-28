@@ -10,8 +10,8 @@ import type { EmbeddedImage, NewsletterImageEmbedder, StrapiMedia } from "./news
  * and layouts are tables.
  */
 
-const FONT = "font-family:'Source Sans 3',Arial,sans-serif;";
-const HEADING_FONT = "font-family:'Luckiest Guy',cursive;";
+/** Headings use the body font too, so nothing is left for the mail client to pick. */
+const FONT = "font-family:'Source Sans 3',Arial,Helvetica,sans-serif;";
 const TEXT_STYLE = `${FONT}color:#333333;font-size:16px;line-height:26px;`;
 const LINK_STYLE = "color:#377F76;text-decoration:underline;";
 
@@ -40,14 +40,14 @@ const MARKDOWN_TAG_STYLES: Record<string, string> = {
   pre: "background:#f4f4f4;padding:16px;border-radius:6px;font-size:14px;margin:0 0 16px;font-family:monospace;white-space:pre-wrap;",
   code: "background:#f4f4f4;padding:2px 6px;border-radius:3px;font-family:monospace;font-size:14px;",
   hr: "border:0;border-top:1px solid #E4CBA1;margin:24px 0;",
-  table: "border-collapse:collapse;margin:0 0 16px;",
+  table: "border-collapse:collapse;margin:0 auto 16px;",
   th: `${TEXT_STYLE}border:1px solid #E4CBA1;padding:6px 10px;text-align:left;`,
   td: `${TEXT_STYLE}border:1px solid #E4CBA1;padding:6px 10px;`,
-  img: "display:block;max-width:100%;height:auto;margin:16px 0;border:0;",
+  img: "display:block;max-width:100%;height:auto;margin:16px auto;border:0;",
   ...Object.fromEntries(
     Object.entries(HEADING_SIZES).map(([tag, size]) => [
       tag,
-      `${HEADING_FONT}color:#377F76;font-size:${size};margin:24px 0 12px;font-weight:400;letter-spacing:1px;`,
+      `${FONT}color:#377F76;font-size:${size};line-height:1.3;margin:24px 0 12px;font-weight:600;`,
     ])
   ),
 };
@@ -78,12 +78,17 @@ function absoluteHref(href: string): string {
   return `${getClientUrl()}${href.startsWith("/") ? "" : "/"}${href}`;
 }
 
+/** Images narrower than their container are centred: `align` for Outlook, auto margins for the rest. */
 function imageTag(image: EmbeddedImage, style = ""): string {
-  return `<img src="${image.src}" width="${image.width}" alt="${escapeHtml(image.alt)}" style="display:block;width:100%;max-width:${image.width}px;height:auto;border:0;${style}" />`;
+  return `<img src="${image.src}" width="${image.width}" alt="${escapeHtml(image.alt)}" align="center" style="display:block;width:100%;max-width:${image.width}px;height:auto;margin:0 auto;border:0;${style}" />`;
+}
+
+function centered(content: string, style = ""): string {
+  return `<div align="center" style="text-align:center;${style}">${content}</div>`;
 }
 
 function button(href: string, label: string, background = "#377F76"): string {
-  return `<table cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px;"><tr><td bgcolor="${background}" style="border-radius:6px;"><a href="${escapeHtml(absoluteHref(href))}" style="display:inline-block;padding:12px 28px;${FONT}color:#ffffff;font-size:16px;font-weight:600;text-decoration:none;">${escapeHtml(label)}</a></td></tr></table>`;
+  return `<table align="center" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 24px;"><tr><td bgcolor="${background}" style="border-radius:6px;"><a href="${escapeHtml(absoluteHref(href))}" style="display:inline-block;padding:12px 28px;${FONT}color:#ffffff;font-size:16px;font-weight:600;text-decoration:none;">${escapeHtml(label)}</a></td></tr></table>`;
 }
 
 /** Renders Strapi rich text (markdown), embedding the images it contains. */
@@ -142,7 +147,7 @@ async function renderBlock(block: DynamicZoneBlock, ctx: RenderContext): Promise
     case "blocks.full-image": {
       if (!block.image) return "";
       const image = await ctx.images.embed(block.image as StrapiMedia);
-      return `<div style="margin:0 0 24px;">${imageTag(image)}</div>`;
+      return centered(imageTag(image), "margin:0 0 24px;");
     }
 
     case "blocks.paragraph-with-image": {
@@ -150,9 +155,10 @@ async function renderBlock(block: DynamicZoneBlock, ctx: RenderContext): Promise
       if (!block.image) return text;
       const imageWidth = block.imageLandscape === false ? 320 : NEWSLETTER_IMAGE_HALF_WIDTH;
       const image = await ctx.images.embed(block.image as StrapiMedia, imageWidth);
-      const imageCell = `<td width="${image.width}" valign="top" style="padding:0;">${imageTag(image)}</td>`;
-      const gapCell = `<td width="24" style="font-size:0;line-height:0;">&nbsp;</td>`;
-      const textCell = `<td valign="top" style="padding:0;">${text}</td>`;
+      // The nl-* classes stack the two columns on narrow screens (see the wrapper's media query).
+      const imageCell = `<td class="nl-stack nl-stack-image" width="${image.width}" align="center" valign="top" style="padding:0;">${imageTag(image)}</td>`;
+      const gapCell = `<td class="nl-hide" width="24" style="font-size:0;line-height:0;">&nbsp;</td>`;
+      const textCell = `<td class="nl-stack" valign="top" style="padding:0;">${text}</td>`;
       const cells = block.reversed
         ? [imageCell, gapCell, textCell]
         : [textCell, gapCell, imageCell];
@@ -162,38 +168,16 @@ async function renderBlock(block: DynamicZoneBlock, ctx: RenderContext): Promise
     case "blocks.hero-section": {
       const parts: string[] = [];
       if (block.image) {
-        parts.push(imageTag(await ctx.images.embed(block.image as StrapiMedia)));
+        parts.push(centered(imageTag(await ctx.images.embed(block.image as StrapiMedia))));
       }
       const color = HERO_THEME_COLORS[block.theme] ?? HERO_THEME_COLORS.turquoise;
       if (block.heading) {
         parts.push(
-          `<div style="background:${color};padding:16px 24px;"><h2 style="${HEADING_FONT}color:#ffffff;font-size:26px;margin:0;font-weight:400;letter-spacing:1px;">${escapeHtml(block.heading)}</h2></div>`
+          `<div style="background:${color};padding:16px 24px;"><h2 style="${FONT}color:#ffffff;font-size:26px;line-height:1.3;margin:0;font-weight:600;">${escapeHtml(block.heading)}</h2></div>`
         );
       }
       const cta = block.cta?.href && block.cta.text ? button(block.cta.href, block.cta.text, color) : "";
       return `<div style="margin:0 0 24px;">${parts.join("")}</div>${cta}`;
-    }
-
-    case "blocks.picture-gallery": {
-      const media = (block.images ?? []) as StrapiMedia[];
-      const images: EmbeddedImage[] = [];
-      for (const item of media) images.push(await ctx.images.embed(item, NEWSLETTER_IMAGE_HALF_WIDTH));
-
-      const rows: string[] = [];
-      for (let i = 0; i < images.length; i += 2) {
-        const cell = (image?: EmbeddedImage) =>
-          `<td width="50%" valign="top" style="padding:6px;">${image ? imageTag(image) : "&nbsp;"}</td>`;
-        rows.push(`<tr>${cell(images[i])}${cell(images[i + 1])}</tr>`);
-      }
-
-      const title = block.title ? `<h3 style="${MARKDOWN_TAG_STYLES.h3}">${escapeHtml(block.title)}</h3>` : "";
-      const description = block.description
-        ? `<p style="${MARKDOWN_TAG_STYLES.p}">${escapeHtml(block.description)}</p>`
-        : "";
-      const grid = rows.length
-        ? `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px;">${rows.join("")}</table>`
-        : "";
-      return `${title}${description}${grid}`;
     }
 
     case "blocks.youtube-video": {
@@ -212,7 +196,7 @@ async function renderBlock(block: DynamicZoneBlock, ctx: RenderContext): Promise
         ? `<p style="${MARKDOWN_TAG_STYLES.p}">${escapeHtml(block.description)}</p>`
         : "";
       const preview = thumbnail
-        ? `<a href="${escapeHtml(watchUrl)}" style="display:block;margin:0 0 16px;">${imageTag(thumbnail)}</a>`
+        ? centered(`<a href="${escapeHtml(watchUrl)}">${imageTag(thumbnail)}</a>`, "margin:0 0 16px;")
         : "";
       return `${title}${description}${preview}${button(watchUrl, ctx.texts.NEWSLETTER_YOUTUBE_WATCH_LABEL)}`;
     }
@@ -241,5 +225,5 @@ export async function newsletterCoverToHtml(
   images: NewsletterImageEmbedder
 ): Promise<string> {
   if (!image) return "";
-  return `<div style="margin:0 0 32px;">${imageTag(await images.embed(image))}</div>`;
+  return centered(imageTag(await images.embed(image)), "margin:0 0 32px;");
 }

@@ -37,8 +37,7 @@
         "blocks.hero-section",
         "blocks.heading",
         "blocks.full-image",
-        "blocks.youtube-video",
-        "blocks.picture-gallery"
+        "blocks.youtube-video"
       ]
     }
   }

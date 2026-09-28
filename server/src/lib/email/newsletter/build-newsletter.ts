@@ -26,7 +26,6 @@ export const NEWSLETTER_POPULATE = {
       "blocks.full-image": { populate: { image: true } },
       "blocks.paragraph-with-image": { populate: { image: true } },
       "blocks.hero-section": { populate: { image: true, cta: true } },
-      "blocks.picture-gallery": { populate: { images: true } },
     },
   },
 } as const;

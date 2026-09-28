@@ -13,7 +13,8 @@ export default () => [
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-          "frame-src": [getClientUrl()],
+          // 'self' lets the admin's preview panel show the newsletter preview Strapi serves.
+          "frame-src": ["'self'", getClientUrl()],
         },
       },
     },

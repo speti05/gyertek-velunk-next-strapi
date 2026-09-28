@@ -69,7 +69,7 @@ function renderBlock(block: BlockNode): string {
     case "paragraph": {
       const content = children.map(renderInline).join("");
       if (!content.trim()) return "<br>";
-      return `<p style="font-family:'Source Sans 3',Arial,sans-serif;color:#333333;font-size:16px;line-height:26px;margin:0 0 16px;">${content}</p>`;
+      return `<p style="font-family:'Source Sans 3',Arial,Helvetica,sans-serif;color:#333333;font-size:16px;line-height:26px;margin:0 0 16px;">${content}</p>`;
     }
     case "heading": {
       const level = block.level ?? 2;
@@ -83,13 +83,13 @@ function renderBlock(block: BlockNode): string {
         6: "14px",
       };
       const size = sizeMap[level] ?? "20px";
-      return `<h${level} style="font-family:'Luckiest Guy',cursive;color:#377F76;font-size:${size};margin:24px 0 12px;font-weight:400;letter-spacing:1px;">${content}</h${level}>`;
+      return `<h${level} style="font-family:'Source Sans 3',Arial,Helvetica,sans-serif;color:#377F76;font-size:${size};line-height:1.3;margin:24px 0 12px;font-weight:600;">${content}</h${level}>`;
     }
     case "list": {
       const items = children
         .map((item: any) => {
           const content = (item.children ?? []).map(renderInline).join("");
-          return `<li style="font-family:'Source Sans 3',Arial,sans-serif;color:#333333;font-size:16px;line-height:26px;margin-bottom:6px;">${content}</li>`;
+          return `<li style="font-family:'Source Sans 3',Arial,Helvetica,sans-serif;color:#333333;font-size:16px;line-height:26px;margin-bottom:6px;">${content}</li>`;
         })
         .join("");
       const tag = block.format === "ordered" ? "ol" : "ul";
@@ -97,7 +97,7 @@ function renderBlock(block: BlockNode): string {
     }
     case "quote": {
       const content = children.map(renderInline).join("");
-      return `<blockquote style="border-left:4px solid #377F76;margin:16px 0;padding:12px 20px;background:#F1E8D9;font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:16px;font-style:italic;">${content}</blockquote>`;
+      return `<blockquote style="border-left:4px solid #377F76;margin:16px 0;padding:12px 20px;background:#F1E8D9;font-family:'Source Sans 3',Arial,Helvetica,sans-serif;color:#70634C;font-size:16px;font-style:italic;">${content}</blockquote>`;
     }
     case "code": {
       const content = children.map((c: any) => escapeHtml(c.text ?? "")).join("\n");
@@ -107,7 +107,7 @@ function renderBlock(block: BlockNode): string {
       if (!block.image?.url) return "";
       const src = resolveMediaUrl(block.image.url);
       const alt = escapeHtml(block.image.alternativeText ?? "");
-      return `<img src="${src}" alt="${alt}" style="max-width:100%;height:auto;margin:16px 0;display:block;" />`;
+      return `<div align="center" style="text-align:center;margin:16px 0;"><img src="${src}" alt="${alt}" align="center" style="max-width:100%;height:auto;margin:0 auto;display:block;" /></div>`;
     }
     default:
       return "";
@@ -122,7 +122,7 @@ export function blocksToHtml(blocks: unknown): string {
     try {
       parsed = JSON.parse(blocks);
     } catch {
-      return `<p style="font-family:'Source Sans 3',Arial,sans-serif;color:#333333;font-size:16px;line-height:26px;">${escapeHtml(blocks)}</p>`;
+      return `<p style="font-family:'Source Sans 3',Arial,Helvetica,sans-serif;color:#333333;font-size:16px;line-height:26px;">${escapeHtml(blocks)}</p>`;
     }
   } else if (Array.isArray(blocks)) {
     parsed = blocks as BlockNode[];

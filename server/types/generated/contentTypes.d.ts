@@ -926,7 +926,6 @@ export interface ApiNewsletterNewsletter extends Struct.CollectionTypeSchema {
         "blocks.heading",
         "blocks.full-image",
         "blocks.youtube-video",
-        "blocks.picture-gallery",
       ]
     >;
     body: Schema.Attribute.Blocks;

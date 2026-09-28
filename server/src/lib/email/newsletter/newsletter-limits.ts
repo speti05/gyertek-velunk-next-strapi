@@ -12,7 +12,7 @@ export const NEWSLETTER_CONTENT_WIDTH = 1000;
 /** Widest an embedded image is ever sent. Full-width images are downscaled to this. */
 export const NEWSLETTER_IMAGE_MAX_WIDTH = NEWSLETTER_CONTENT_WIDTH;
 
-/** Images shown in half a row (gallery grid, paragraph with image) are downscaled to this. */
+/** Images shown in half a row (paragraph with image) are downscaled to this. */
 export const NEWSLETTER_IMAGE_HALF_WIDTH = 480;
 
 /** Tall portrait images are capped in height as well, so one photo cannot fill several screens. */

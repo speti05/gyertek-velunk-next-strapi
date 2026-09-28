@@ -36,6 +36,12 @@ export default ({ env }) => ({
     config: {
       allowedOrigins: env('CLIENT_URL'),
       async handler(uid: string, { documentId, locale, status }: { documentId: string; locale?: string; status: string }) {
+        // The newsletter has no page on the website; Strapi renders the e-mail itself.
+        if (uid === 'api::newsletter.newsletter') {
+          const params = new URLSearchParams({ secret: env('PREVIEW_SECRET'), status });
+          return `/api/newsletters/${encodeURIComponent(documentId)}/preview?${params}`;
+        }
+
         // Resolve the slug from the same version that is being previewed, so entries
         // that have never been published still produce a preview URL.
         const document = await strapi

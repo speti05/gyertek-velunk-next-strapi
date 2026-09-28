@@ -180,6 +180,10 @@ export const NEWSLETTER_HTML_TOO_LARGE_ERROR = (maxKb: number, actualKb: number)
 export const NEWSLETTER_IMAGE_LOAD_ERROR = (imageName: string) =>
   `The image "${imageName}" could not be loaded or processed, so the newsletter cannot be sent. Replace the image or remove it from the newsletter.`;
 
+// Newsletter preview in the admin panel
+export const NEWSLETTER_PREVIEW_ERROR_TITLE = "The newsletter preview could not be built";
+export const NEWSLETTER_PREVIEW_NOT_FOUND = "Newsletter not found. Save it, then open the preview again.";
+
 // Unsubscribe landing page
 export const UNSUBSCRIBE_ERROR_TITLE = "Error";
 export const UNSUBSCRIBE_INCOMPLETE_LINK = "Incomplete unsubscribe link.";
