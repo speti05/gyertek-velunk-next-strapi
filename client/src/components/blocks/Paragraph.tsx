@@ -1,11 +1,11 @@
 import React from "react";
 import { ParagraphProps } from "@/types";
-import ReactMarkdown from "react-markdown";
+import { MarkdownContent } from "@/components/MarkdownContent";
 
 export function Paragraph({ content }: Readonly<ParagraphProps>) {
   return (
     <div className="paragraph-reset copy article-paragraph">
-      <ReactMarkdown>{content}</ReactMarkdown>
+      <MarkdownContent>{content}</MarkdownContent>
     </div>
   );
 }

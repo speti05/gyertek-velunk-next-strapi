@@ -1,4 +1,4 @@
-import ReactMarkdown from "react-markdown";
+import { MarkdownContent } from "@/components/MarkdownContent";
 import { MagnifiableImage } from "@/components/MagnifiableImage";
 import { ParagraphWithImageProps } from "@/types";
 
@@ -12,9 +12,9 @@ export function ParagraphWithImage({
     <div
       className={`article-text-image ${reversed ? "article-text-image--reversed" : ""} ${imageLandscape ? "" : "article-text-image--portrait"}`}
     >
-      <ReactMarkdown className="paragraph-reset copy article-text-image__text article-paragraph">
+      <MarkdownContent className="paragraph-reset copy article-text-image__text article-paragraph">
         {content}
-      </ReactMarkdown>
+      </MarkdownContent>
       <div className="article-text-image__container">
         <MagnifiableImage
           src={image.url}

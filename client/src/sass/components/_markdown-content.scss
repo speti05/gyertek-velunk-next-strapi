@@ -1,0 +1,17 @@
+@use "../base/colors";
+
+// Links inside CMS rich text. The global reset makes every <a> look like plain text,
+// so these need their own colour and underline to read as clickable.
+.markdown-link {
+  color: colors.$gy-v-dark-green;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  word-break: break-word;
+  transition: color 0.2s;
+
+  &:hover,
+  &:focus {
+    color: colors.$gy-v-mid-green;
+    text-decoration: underline;
+  }
+}
