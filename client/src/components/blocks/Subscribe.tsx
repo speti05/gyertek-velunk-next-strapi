@@ -1,6 +1,6 @@
 "use client";
 import type { SubscribeProps } from "@/types";
-import { useActionState, useEffect, useRef, useState } from "react";
+import { useActionState, useRef, useState } from "react";
 import { subscribeAction } from "@/data/actions";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
@@ -8,6 +8,7 @@ import { CustomAlertMessage } from "@/components/custom-ui-components/custom-ale
 import { getStrapiMediaURL } from "@/utils/get-strapi-url";
 import { MAX_EMAIL } from "@/components/custom-ui-components/custom-text-input/input-length-limits";
 import { useRecaptchaSubmit } from "@/hooks/use-recaptcha-submit";
+import { useFlashMessage } from "@/hooks/use-flash-message";
 
 const INITIAL_STATE = {
   zodErrors: null,
@@ -27,16 +28,15 @@ export function Subscribe({
   const formRef = useRef<HTMLFormElement>(null);
   const handleSubmit = useRecaptchaSubmit(formRef, formAction, "newsletter_subscribe");
 
+  const displayedSuccess = useFlashMessage(formState);
   const [inputKey, setInputKey] = useState(0);
-  const [displayedSuccess, setDisplayedSuccess] = useState<string | null>(null);
+  const [handledState, setHandledState] = useState(formState);
 
-  useEffect(() => {
-    if (!formState?.successMessage) return;
-    setInputKey((k) => k + 1);
-    setDisplayedSuccess(formState.successMessage);
-    const t = setTimeout(() => setDisplayedSuccess(null), 5000);
-    return () => clearTimeout(t);
-  }, [formState?.successMessage]);
+  // Reacting to a new action result during render avoids the extra render pass a setState-in-effect causes
+  if (formState !== handledState) {
+    setHandledState(formState);
+    if (formState?.successMessage) setInputKey((k) => k + 1);
+  }
 
   const zodErrors = formState?.zodErrors?.email;
   const errorMessage = zodErrors || formState?.errorMessage;

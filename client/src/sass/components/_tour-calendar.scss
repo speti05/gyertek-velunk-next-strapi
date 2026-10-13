@@ -42,7 +42,7 @@ $wide: 1100px;
     width: 1px;
     height: 1px;
     overflow: hidden;
-    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
     white-space: nowrap;
   }
 
@@ -284,7 +284,7 @@ $wide: 1100px;
     width: 1px;
     height: 1px;
     overflow: hidden;
-    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
     white-space: nowrap;
   }
 
@@ -578,7 +578,7 @@ $wide: 1100px;
       width: auto;
       height: auto;
       overflow: visible;
-      clip: auto;
+      clip-path: none;
     }
 
     &__legend {

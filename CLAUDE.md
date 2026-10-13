@@ -32,8 +32,12 @@ cd server && yarn build   # Build Strapi admin panel
 
 ### Lint
 ```bash
-cd client && yarn lint    # ESLint on src/
+cd client && yarn lint       # ESLint + Stylelint on src/ (lint:js / lint:css run them separately)
+cd server && yarn lint       # ESLint (type-aware typescript-eslint)
+cd server && yarn typecheck  # tsc --noEmit
 ```
+
+The VS Code launch compound **Lint (client + server)** runs all of these. The client configs enforce the project conventions: MUI imports only inside `custom-ui-components/` (plus the theme provider and `sass/mui-override/`), no Tailwind colour utilities, and no colour literals in TS/TSX or SCSS/CSS outside `_colors.scss`.
 
 ### Database
 ```bash

@@ -1,7 +1,7 @@
 import qs from "qs";
 import { fetchAPI } from "@/utils/fetch-api";
 import { getStrapiURL } from "@/utils/get-strapi-url";
-import { getUserProfileResult, getUserProfileService } from "./auth-service";
+import { getUserProfileResult } from "./auth-service";
 import { getPreviewContext, previewFetchOptions, type PreviewContext } from "@/utils/preview-mode";
 import { getViewerContext, viewerFetchOptions, type ViewerContext } from "@/data/viewer";
 import { getRequestLocale } from "@/data/locale";
@@ -226,7 +226,7 @@ const globalSettingQuery = {
         logo: {
           populate: {
             image: {
-              fields: ["url", "alternativeText"],
+              fields: ["url", "alternativeText", "width", "height"],
             },
           },
         },
@@ -239,7 +239,7 @@ const globalSettingQuery = {
         logo: {
           populate: {
             image: {
-              fields: ["url", "alternativeText"],
+              fields: ["url", "alternativeText", "width", "height"],
             },
           },
         },

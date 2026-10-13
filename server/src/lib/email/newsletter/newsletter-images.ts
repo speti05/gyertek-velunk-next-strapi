@@ -48,7 +48,7 @@ export class NewsletterImageEmbedder {
   embed(media: StrapiMedia, maxWidth: number = NEWSLETTER_IMAGE_MAX_WIDTH): Promise<EmbeddedImage> {
     const key = `${media.url}@${maxWidth}`;
     let pending = this.cache.get(key);
-    if (!pending) {
+    if (pending === undefined) {
       pending = this.process(media, maxWidth);
       this.cache.set(key, pending);
     }

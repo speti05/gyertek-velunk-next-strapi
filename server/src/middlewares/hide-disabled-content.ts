@@ -20,7 +20,9 @@ type Config = { uid: UID.ContentType };
  * import/export tooling uses one), so it is trusted with disabled entries. Read-only and
  * custom tokens are not: those are handed out for public-facing reads.
  */
-const isFullAccessToken = (ctx: { state?: Record<string, any> }) =>
+const isFullAccessToken = (ctx: {
+  state?: { auth?: { strategy?: { name?: string }; credentials?: { type?: string } } };
+}) =>
   ctx.state?.auth?.strategy?.name === "api-token" &&
   ctx.state?.auth?.credentials?.type === "full-access";
 

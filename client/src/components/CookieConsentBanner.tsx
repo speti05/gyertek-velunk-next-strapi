@@ -11,8 +11,8 @@ import { CustomDialog } from "@/components/custom-ui-components/custom-dialog/cu
 import CustomSwitch from "@/components/custom-ui-components/custom-switch/custom-switch";
 import CustomIconButton from "@/components/custom-ui-components/custom-icon-button/custom-icon-button";
 import CustomAccordion from "@/components/custom-ui-components/custom-accordion/custom-accordion";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import CustomTypography from "@/components/custom-ui-components/custom-typography/custom-typography";
+import CustomBox from "@/components/custom-ui-components/custom-box/custom-box";
 import CustomIcon from "@/components/custom-ui-components/custom-icon/custom-icon";
 import { colors } from "@/sass/mui-override/colors";
 
@@ -23,7 +23,7 @@ function CookieTable({ rows }: { rows: CookieRow[] }) {
     useTexts();
 
   return (
-    <Box sx={{ overflowX: "auto", mt: 1.5 }}>
+    <CustomBox sx={{ overflowX: "auto", mt: 1.5 }}>
       <table className="cookie-table">
         <thead>
           <tr>
@@ -44,12 +44,12 @@ function CookieTable({ rows }: { rows: CookieRow[] }) {
           ))}
         </tbody>
       </table>
-    </Box>
+    </CustomBox>
   );
 }
 
 export function CookieConsentBanner() {
-  const { COOKIE_BANNER_TITLE, COOKIE_BANNER_DESCRIPTION, COOKIE_BANNER_ACCEPT_ALL, COOKIE_BANNER_SETTINGS, COOKIE_PREFS_TITLE, COOKIE_PREFS_ACCEPT_ALL, COOKIE_PREFS_REJECT_ALL, COOKIE_PREFS_SAVE, COOKIE_NECESSARY_TITLE, COOKIE_NECESSARY_DESCRIPTION, COOKIE_FUNCTIONAL_TITLE, COOKIE_FUNCTIONAL_DESCRIPTION, COOKIE_ANALYTICS_TITLE, COOKIE_ANALYTICS_DESCRIPTION, COOKIE_TABLE_NAME, COOKIE_TABLE_DOMAIN, COOKIE_TABLE_EXPIRATION, COOKIE_TABLE_DESCRIPTION, COOKIE_JWT_DESC, COOKIE_EMAIL_DESC, COOKIE_CC_DESC, COOKIE_RECAPTCHA_DESC, COOKIE_GA_DESC, COOKIE_GA_SESSION_DESC, COOKIE_DOMAIN_SITE, COOKIE_DOMAIN_GOOGLE, COOKIE_EXPIRY_7_DAYS, COOKIE_EXPIRY_6_MONTHS, COOKIE_EXPIRY_1_YEAR, COOKIE_EXPIRY_2_YEARS, COOKIE_PREFS_CLOSE } = useTexts();
+  const { COOKIE_BANNER_TITLE, COOKIE_BANNER_DESCRIPTION, COOKIE_BANNER_ACCEPT_ALL, COOKIE_BANNER_SETTINGS, COOKIE_PREFS_TITLE, COOKIE_PREFS_ACCEPT_ALL, COOKIE_PREFS_REJECT_ALL, COOKIE_PREFS_SAVE, COOKIE_NECESSARY_TITLE, COOKIE_NECESSARY_DESCRIPTION, COOKIE_FUNCTIONAL_TITLE, COOKIE_FUNCTIONAL_DESCRIPTION, COOKIE_ANALYTICS_TITLE, COOKIE_ANALYTICS_DESCRIPTION, COOKIE_JWT_DESC, COOKIE_EMAIL_DESC, COOKIE_CC_DESC, COOKIE_RECAPTCHA_DESC, COOKIE_GA_DESC, COOKIE_GA_SESSION_DESC, COOKIE_DOMAIN_SITE, COOKIE_DOMAIN_GOOGLE, COOKIE_EXPIRY_7_DAYS, COOKIE_EXPIRY_6_MONTHS, COOKIE_EXPIRY_1_YEAR, COOKIE_EXPIRY_2_YEARS, COOKIE_PREFS_CLOSE } = useTexts();
 
   const NECESSARY_COOKIES = [
     {
@@ -108,12 +108,16 @@ export function CookieConsentBanner() {
   const [recaptchaEnabled, setRecaptchaEnabled] = useState(recaptchaConsented);
   const [analyticsEnabled, setAnalyticsEnabled] = useState(analyticsConsented);
 
-  useEffect(() => {
+  const [wasPreferencesOpen, setWasPreferencesOpen] = useState(preferencesOpen);
+
+  // openPreferences is called from several hooks, so the draft is reset here on the open transition, during render
+  if (preferencesOpen !== wasPreferencesOpen) {
+    setWasPreferencesOpen(preferencesOpen);
     if (preferencesOpen) {
       setRecaptchaEnabled(recaptchaConsented);
       setAnalyticsEnabled(analyticsConsented);
     }
-  }, [preferencesOpen, recaptchaConsented, analyticsConsented]);
+  }
 
   const isBannerVisible = !hasResponded || preferencesOpen;
 
@@ -152,7 +156,7 @@ export function CookieConsentBanner() {
   }
 
   const dialogActions = (
-    <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", p: 1, width: "100%" }}>
+    <CustomBox sx={{ display: "flex", gap: 1, flexWrap: "wrap", p: 1, width: "100%" }}>
       <CustomButton variant="contained" color="primary" onClick={handleAcceptAll} sx={{ flex: 1 }}>
         {COOKIE_PREFS_ACCEPT_ALL}
       </CustomButton>
@@ -162,7 +166,7 @@ export function CookieConsentBanner() {
       <CustomButton variant="contained" color="secondary" onClick={handleSave} sx={{ flex: 1 }}>
         {COOKIE_PREFS_SAVE}
       </CustomButton>
-    </Box>
+    </CustomBox>
   );
 
   const closeButton = (
@@ -180,10 +184,10 @@ export function CookieConsentBanner() {
       {!hasResponded && !preferencesOpen && (
         <div className="cookie-banner">
           <h2 className="cookie-banner__title">{COOKIE_BANNER_TITLE}</h2>
-          <Typography className="cookie-banner__description">
+          <CustomTypography className="cookie-banner__description">
             {COOKIE_BANNER_DESCRIPTION}
-          </Typography>
-          <Box className="cookie-banner__actions">
+          </CustomTypography>
+          <CustomBox className="cookie-banner__actions">
             <CustomButton variant="contained" color="primary" onClick={handleAcceptAll} fullWidth>
               {COOKIE_BANNER_ACCEPT_ALL}
             </CustomButton>
@@ -195,7 +199,7 @@ export function CookieConsentBanner() {
             >
               {COOKIE_BANNER_SETTINGS}
             </CustomButton>
-          </Box>
+          </CustomBox>
         </div>
       )}
 
@@ -210,15 +214,15 @@ export function CookieConsentBanner() {
         fullWidth
         scroll="paper"
       >
-        <Box sx={{ p: 0 }}>
+        <CustomBox sx={{ p: 0 }}>
           <CustomAccordion
             title={COOKIE_NECESSARY_TITLE}
             headerAction={<CustomSwitch checked disabled />}
             sx={{ borderBottom: `1px solid ${colors.divider}` }}
           >
-            <Typography sx={{ fontSize: "1.4rem", color: "text.secondary", mb: 1 }}>
+            <CustomTypography sx={{ fontSize: "1.4rem", color: "text.secondary", mb: 1 }}>
               {COOKIE_NECESSARY_DESCRIPTION}
-            </Typography>
+            </CustomTypography>
             <CookieTable rows={NECESSARY_COOKIES} />
           </CustomAccordion>
 
@@ -232,9 +236,9 @@ export function CookieConsentBanner() {
             }
             sx={{ borderBottom: `1px solid ${colors.divider}` }}
           >
-            <Typography sx={{ fontSize: "1.4rem", color: "text.secondary", mb: 1 }}>
+            <CustomTypography sx={{ fontSize: "1.4rem", color: "text.secondary", mb: 1 }}>
               {COOKIE_FUNCTIONAL_DESCRIPTION}
-            </Typography>
+            </CustomTypography>
             <CookieTable rows={RECAPTCHA_COOKIES} />
           </CustomAccordion>
 
@@ -247,12 +251,12 @@ export function CookieConsentBanner() {
               />
             }
           >
-            <Typography sx={{ fontSize: "1.4rem", color: "text.secondary", mb: 1 }}>
+            <CustomTypography sx={{ fontSize: "1.4rem", color: "text.secondary", mb: 1 }}>
               {COOKIE_ANALYTICS_DESCRIPTION}
-            </Typography>
+            </CustomTypography>
             <CookieTable rows={ANALYTICS_COOKIES} />
           </CustomAccordion>
-        </Box>
+        </CustomBox>
       </CustomDialog>
     </>
   );

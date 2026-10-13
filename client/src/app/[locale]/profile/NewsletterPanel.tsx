@@ -2,7 +2,8 @@
 
 import { useTexts } from "@/context/locale-context";
 
-import { useActionState, useEffect, useRef, useState } from "react";
+import { useActionState, useRef } from "react";
+import { useFlashMessage } from "@/hooks/use-flash-message";
 import { toggleNewsletterSubscriptionAction } from "@/data/auth-actions";
 import { CustomCheckbox } from "@/components/custom-ui-components/custom-checkbox/custom-checkbox";
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
@@ -25,14 +26,7 @@ export function NewsletterPanel({ isNewsletterSubscribed }: NewsletterPanelProps
     successMessage: null,
   });
   const newsletterFormRef = useRef<HTMLFormElement>(null);
-  const [newsletterSuccessMsg, setNewsletterSuccessMsg] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!newsletterState?.successMessage) return;
-    setNewsletterSuccessMsg(newsletterState.successMessage);
-    const t = setTimeout(() => setNewsletterSuccessMsg(null), 5000);
-    return () => clearTimeout(t);
-  }, [newsletterState?.successMessage]);
+  const newsletterSuccessMsg = useFlashMessage(newsletterState);
 
   return (
     <section className="profile-panel profile-panel--compact">

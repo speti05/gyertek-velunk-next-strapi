@@ -48,8 +48,10 @@ const CustomGallery: React.FC<CustomGalleryProps> = ({
   // Which slides may load their image. Every slide sits in the viewport at once - only
   // opacity hides the inactive ones - so the browser's own lazy loading would still pull
   // all of them the moment the gallery scrolls into view.
-  const [loadedSlides, setLoadedSlides] = useState<Set<number>>(() => new Set([initialIndex]));
   const count = images?.length ?? 0;
+  const neighboursOf = (idx: number) => (count === 0 ? [] : [idx, (idx + 1) % count, (idx - 1 + count) % count]);
+  const [loadedSlides, setLoadedSlides] = useState<Set<number>>(() => new Set(neighboursOf(initialIndex)));
+  const [prevPosition, setPrevPosition] = useState({ index: currentIndex, count });
 
   const goNext = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % count);
@@ -70,16 +72,14 @@ const CustomGallery: React.FC<CustomGalleryProps> = ({
   // The current slide and its two neighbours, so the crossfade always has its target
   // ready. Slides stay loaded once reached - stepping back through the gallery should
   // not re-download what was already shown.
-  useEffect(() => {
-    if (count === 0) return;
-    const neighbours = [currentIndex, (currentIndex + 1) % count, (currentIndex - 1 + count) % count];
-    setLoadedSlides((prev) => {
-      if (neighbours.every((idx) => prev.has(idx))) return prev;
-      const next = new Set(prev);
-      neighbours.forEach((idx) => next.add(idx));
-      return next;
-    });
-  }, [currentIndex, count]);
+  // Done during render rather than in an effect, so the new slide's image starts in the same render
+  if (currentIndex !== prevPosition.index || count !== prevPosition.count) {
+    setPrevPosition({ index: currentIndex, count });
+    const neighbours = neighboursOf(currentIndex);
+    if (!neighbours.every((idx) => loadedSlides.has(idx))) {
+      setLoadedSlides(new Set([...loadedSlides, ...neighbours]));
+    }
+  }
 
   if (count === 0) return null;
 
@@ -98,7 +98,8 @@ const CustomGallery: React.FC<CustomGalleryProps> = ({
                 className="gallery__background-image"
                 width={1920}
                 height={1080}
-                loading={idx === 0 ? "eager" : "lazy"}
+                // loadedSlides already decides when a slide loads; a lazy one can become the LCP once autoplay shows it
+                loading="eager"
               />
             )}
           </div>

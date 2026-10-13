@@ -8,6 +8,8 @@ import { getTexts, type Texts } from "@/i18n/texts";
 import { getRequestLocale } from "@/data/locale";
 import { isDev } from "@clientRoot/env";
 import { DEFAULT_COUNTRY } from "@/utils/european-countries";
+import type { FormActionState } from "@/data/action-state";
+import type { SignupFormData } from "@/components/TourSignupDialog";
 
 /** The validation messages of the active locale, handed to each schema factory. */
 type Messages = Texts["MESSAGES"];
@@ -18,7 +20,7 @@ const subscribeSchema = (MESSAGES: Messages) => z.object({
   }),
 });
 
-export async function subscribeAction(prevState: any, formData: FormData) {
+export async function subscribeAction(prevState: FormActionState, formData: FormData): Promise<FormActionState> {
   const { MESSAGES } = getTexts(await getRequestLocale());
   const recaptchaToken = formData.get("recaptchaToken") as string | null;
   const isHuman = await verifyRecaptcha(recaptchaToken);
@@ -58,7 +60,7 @@ export async function subscribeAction(prevState: any, formData: FormData) {
 
   if (responseData.error) {
     const isAlreadySubscribed =
-      responseData.error.details?.errors?.some((e: any) =>
+      responseData.error.details?.errors?.some((e) =>
         e.message?.toLowerCase().includes("unique")
       ) || responseData.error.message?.toLowerCase().includes("unique");
     return {
@@ -128,7 +130,7 @@ const contactRequestSchema = (MESSAGES: Messages) => z
     }
   });
 
-export async function contactRequestAction(prevState: any, formData: FormData) {
+export async function contactRequestAction(prevState: FormActionState, formData: FormData): Promise<FormActionState> {
   const { MESSAGES } = getTexts(await getRequestLocale());
   const recaptchaToken = formData.get("recaptchaToken") as string | null;
   const isHuman = await verifyRecaptcha(recaptchaToken);
@@ -196,7 +198,7 @@ export async function contactRequestAction(prevState: any, formData: FormData) {
   };
 }
 
-export async function eventsSubscribeAction(prevState: any, formData: FormData) {
+export async function eventsSubscribeAction(prevState: FormActionState, formData: FormData): Promise<FormActionState> {
   const { MESSAGES } = getTexts(await getRequestLocale());
   const recaptchaToken = formData.get("recaptchaToken") as string | null;
   const isHuman = await verifyRecaptcha(recaptchaToken);
@@ -268,7 +270,8 @@ export async function eventsSubscribeAction(prevState: any, formData: FormData) 
     };
   }
 
-  let signupData: any;
+  // Partial: the payload comes from the client, so every field is defaulted below
+  let signupData: Partial<SignupFormData>;
   try {
     signupData = JSON.parse(signupDataRaw);
   } catch {

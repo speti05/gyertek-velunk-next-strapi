@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
+import { useActionState, useRef, useState } from "react";
 import { contactRequestAction } from "@/data/actions";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
@@ -40,11 +40,13 @@ export function ContactRequestForm({ title, subtitlePrefix, subtitleSuffix, link
   const [preferredContact, setPreferredContact] = useState<"phone" | "email">("phone");
   const [formKey, setFormKey] = useState(0);
   const [succeeded, setSucceeded] = useState(false);
+  const [handledState, setHandledState] = useState(formState);
 
-  useEffect(() => {
-    if (!formState?.successMessage) return;
-    setSucceeded(true);
-  }, [formState?.successMessage]);
+  // Reacting to a new action result during render avoids the extra render pass a setState-in-effect causes
+  if (formState !== handledState) {
+    setHandledState(formState);
+    if (formState?.successMessage) setSucceeded(true);
+  }
 
   const zodErrors = formState?.zodErrors as Record<string, string[]> | null;
 

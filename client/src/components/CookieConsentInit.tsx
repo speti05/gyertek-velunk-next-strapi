@@ -61,7 +61,8 @@ export function CookieConsentInit() {
         },
       },
     });
-  }, [setConsent]);
+    // Safe to list the texts: run() is guarded by window._ccRun, so a re-run is a no-op
+  }, [setConsent, COOKIE_BANNER_ACCEPT_ALL, COOKIE_BANNER_DECLINE, COOKIE_BANNER_SETTINGS, COOKIE_PREFS_TITLE, COOKIE_PREFS_ACCEPT_ALL, COOKIE_PREFS_REJECT_ALL, COOKIE_PREFS_SAVE, COOKIE_PREFS_CLOSE]);
 
   return null;
 }

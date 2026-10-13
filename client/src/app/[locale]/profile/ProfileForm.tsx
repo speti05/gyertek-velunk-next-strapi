@@ -2,7 +2,8 @@
 
 import { useLocale, useTexts } from "@/context/locale-context";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useState } from "react";
+import { useFlashMessage } from "@/hooks/use-flash-message";
 import { updateProfileAction } from "@/data/auth-actions";
 import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
 import { CustomSelect } from "@/components/custom-ui-components/custom-select/custom-select";
@@ -52,18 +53,11 @@ export function ProfileForm({
   const [formState, formAction] = useActionState(updateProfileAction, INITIAL_STATE);
   const zodErrors = formState?.zodErrors as Record<string, string[]> | null;
 
-  const [profileSuccessMsg, setProfileSuccessMsg] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!formState?.successMessage) return;
-    setProfileSuccessMsg(formState.successMessage);
-    const t = setTimeout(() => setProfileSuccessMsg(null), 5000);
-    return () => clearTimeout(t);
-  }, [formState?.successMessage]);
+  const profileSuccessMsg = useFlashMessage(formState);
 
   const toStr = (v: string | null) => v ?? "";
 
-  const [values, setValues] = useState({
+  const fresh = {
     firstName: toStr(firstName),
     lastName: toStr(lastName),
     phone: toStr(phone),
@@ -72,33 +66,18 @@ export function ProfileForm({
     zip: toStr(zip),
     street: toStr(street),
     houseNumber: toStr(houseNumber),
-  });
+  };
 
-  const [savedValues, setSavedValues] = useState({
-    firstName: toStr(firstName),
-    lastName: toStr(lastName),
-    phone: toStr(phone),
-    country: toStr(country) || DEFAULT_COUNTRY,
-    city: toStr(city),
-    zip: toStr(zip),
-    street: toStr(street),
-    houseNumber: toStr(houseNumber),
-  });
+  const [values, setValues] = useState(fresh);
+  const [savedValues, setSavedValues] = useState(fresh);
+  const [prevFresh, setPrevFresh] = useState(fresh);
 
-  useEffect(() => {
-    const fresh = {
-      firstName: toStr(firstName),
-      lastName: toStr(lastName),
-      phone: toStr(phone),
-      country: toStr(country) || DEFAULT_COUNTRY,
-      city: toStr(city),
-      zip: toStr(zip),
-      street: toStr(street),
-      houseNumber: toStr(houseNumber),
-    };
+  // Re-sync on new props during render; a `key` remount would also wipe the save confirmation
+  if ((Object.keys(fresh) as (keyof typeof fresh)[]).some((field) => fresh[field] !== prevFresh[field])) {
+    setPrevFresh(fresh);
     setValues(fresh);
     setSavedValues(fresh);
-  }, [firstName, lastName, phone, country, city, zip, street, houseNumber]);
+  }
 
   const hasChanges =
     values.firstName !== savedValues.firstName ||

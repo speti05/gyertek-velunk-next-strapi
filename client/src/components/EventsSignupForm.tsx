@@ -2,7 +2,7 @@
 
 import { useLocale, useLocalizedPath, useTexts } from "@/context/locale-context";
 
-import { useActionState, useEffect, useState, type ReactNode } from "react";
+import { useActionState, useState, type ReactNode } from "react";
 import Image from "next/image";
 import { formatDate } from "@/utils/format-date";
 import { StrapiImage } from "@/components/StrapiImage";
@@ -65,12 +65,16 @@ function EventSignupFormInner({
   const [dialogOpen, setDialogOpen] = useState(false);
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
 
-  useEffect(() => {
+  const [handledState, setHandledState] = useState(formState);
+
+  // Reacting to a new action result during render avoids the extra render pass a setState-in-effect causes
+  if (formState !== handledState) {
+    setHandledState(formState);
     if (formState?.successMessage) {
       setDialogOpen(false);
       setSuccessDialogOpen(true);
     }
-  }, [formState?.successMessage]);
+  }
 
   async function handleSignupComplete(data: SignupFormData) {
     const formData = new FormData();

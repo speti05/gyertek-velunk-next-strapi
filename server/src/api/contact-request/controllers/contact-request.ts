@@ -6,6 +6,10 @@ import { factories } from "@strapi/strapi";
 import { sendContactRequestEmails } from "../../../lib/email/contact-request";
 import { getStrapiTexts, readRequestLocale } from "../../../i18n/get-strapi-texts";
 
+type ContactRequestBody = {
+  data?: { phone?: string; email?: string; preferredContact?: "phone" | "email" };
+};
+
 // How long the same phone number / email address is blocked from sending
 // another request. Without a window a visitor could never reach us twice.
 const DUPLICATE_WINDOW_HOURS = 24;
@@ -14,7 +18,7 @@ export default factories.createCoreController("api::contact-request.contact-requ
   async create(ctx) {
     const locale = readRequestLocale(ctx);
     const texts = getStrapiTexts(locale);
-    const { phone, email, preferredContact } = (ctx.request.body as any)?.data ?? {};
+    const { phone, email, preferredContact } = (ctx.request.body as ContactRequestBody)?.data ?? {};
 
     const contactField = preferredContact === "phone" ? "phone" : "email";
     const contactValue = preferredContact === "phone" ? phone : email;

@@ -55,6 +55,7 @@ button {
 }
 
 html {
+  // Next.js reads data-scroll-behavior="smooth" on <html> (see app/[locale]/layout.tsx) to turn this off during route changes
   scroll-behavior: smooth !important;
 
   font-family: "Open Sans", sans-serif;

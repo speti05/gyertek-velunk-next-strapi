@@ -12,9 +12,9 @@ import {
 } from "@/i18n/texts-client";
 
 import { useState } from "react";
-import Box from "@mui/material/Box";
+import CustomBox from "@/components/custom-ui-components/custom-box/custom-box";
 import CustomStepper from "@/components/custom-ui-components/custom-stepper/custom-stepper";
-import Divider from "@mui/material/Divider";
+import CustomDivider from "@/components/custom-ui-components/custom-divider/custom-divider";
 import { CustomDialog } from "@/components/custom-ui-components/custom-dialog/custom-dialog";
 import { CustomConfirmDialog } from "@/components/custom-ui-components/custom-confirm-dialog/custom-confirm-dialog";
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
@@ -25,7 +25,7 @@ import CustomButton from "@/components/custom-ui-components/custom-button/custom
 import { UserProfile } from "@/data/auth-service";
 import { formatDate } from "@/utils/format-date";
 import { getEuropeanCountries, DEFAULT_COUNTRY } from "@/utils/european-countries";
-import Typography from "@mui/material/Typography";
+import CustomTypography from "@/components/custom-ui-components/custom-typography/custom-typography";
 import { colors } from "@/sass/mui-override/colors";
 import {
   MAX_COMPANY_NAME,
@@ -404,7 +404,7 @@ export function TourSignupDialog({
   const isLastStep = step === STEPS.length - 1;
 
   const dialogActions = (
-    <Box sx={{ display: "flex", gap: 1, width: "100%", p: 1 }}>
+    <CustomBox sx={{ display: "flex", gap: 1, width: "100%", p: 1 }}>
       {step === 0 ? (
         <CustomButton
           variant="outlined"
@@ -434,7 +434,7 @@ export function TourSignupDialog({
           {SIGNUP_NEXT_LABEL}
         </CustomButton>
       )}
-    </Box>
+    </CustomBox>
   );
 
   return (
@@ -451,7 +451,7 @@ export function TourSignupDialog({
         <CustomStepper steps={STEPS} activeStep={step} sx={{ mb: 3 }} />
 
         {step === 0 && (
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          <CustomBox sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <CustomAlertMessage infoMessage={SIGNUP_BILLING_INFO} />
             <div className="signup-form__name-container">
               <CustomTextInput
@@ -466,9 +466,9 @@ export function TourSignupDialog({
               />
             </div>
             <CustomTextInput label={FORM_LABELS.phone} value={userProfile.phone ?? ""} disabled />
-            <Typography variant="body1" sx={{ fontWeight: 600, mt: 1 }}>
+            <CustomTypography variant="body1" sx={{ fontWeight: 600, mt: 1 }}>
               {SIGNUP_BILLING_ADDRESS_LABEL}
-            </Typography>
+            </CustomTypography>
             <CustomSelect
               id="billing-country"
               label={FORM_LABELS.country}
@@ -507,7 +507,7 @@ export function TourSignupDialog({
               />
             </div>
 
-            <Divider sx={{ my: 1 }} />
+            <CustomDivider sx={{ my: 1 }} />
 
             <CustomCheckbox
               label={SIGNUP_BILLING_WANT_INVOICE}
@@ -537,11 +537,11 @@ export function TourSignupDialog({
                 />
               </>
             )}
-          </Box>
+          </CustomBox>
         )}
 
         {step === 1 && (
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          <CustomBox sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <CustomSelect
               id="birth-country"
               label={SIGNUP_TRAVEL_BIRTH_COUNTRY}
@@ -648,15 +648,15 @@ export function TourSignupDialog({
               onChange={(e) => setFbLink(e.target.value)}
               slotProps={{ htmlInput: { maxLength: MAX_FB_LINK } }}
             />
-          </Box>
+          </CustomBox>
         )}
 
         {step === 2 && (
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          <CustomBox sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <CustomAlertMessage infoMessage={SIGNUP_COMPANION_INFO} />
 
             {companions.map((companion, idx) => (
-              <Box
+              <CustomBox
                 key={idx}
                 sx={{
                   border: "1px solid",
@@ -668,7 +668,7 @@ export function TourSignupDialog({
                   gap: 2,
                 }}
               >
-                <Box
+                <CustomBox
                   sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
                 >
                   <strong>{SIGNUP_COMPANION_TITLE(idx + 1)}</strong>
@@ -680,7 +680,7 @@ export function TourSignupDialog({
                   >
                     {SIGNUP_COMPANION_REMOVE}
                   </CustomButton>
-                </Box>
+                </CustomBox>
                 <div className="signup-form__name-container">
                   <CustomTextInput
                     label={FORM_LABELS.lastName}
@@ -825,7 +825,7 @@ export function TourSignupDialog({
                   onChange={(e) => updateCompanion(idx, "fbLink", e.target.value)}
                   slotProps={{ htmlInput: { maxLength: MAX_FB_LINK } }}
                 />
-              </Box>
+              </CustomBox>
             ))}
 
             {companions.length < MAX_COMPANIONS && (
@@ -835,11 +835,11 @@ export function TourSignupDialog({
             )}
 
             <CustomAlertMessage infoMessage={SIGNUP_COMPANION_MAX_INFO} />
-          </Box>
+          </CustomBox>
         )}
 
         {step === 3 && (
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          <CustomBox sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <div className="tour-signup-summary">
               <div className="grid grid-cols-2 gap-3">
                 <span className="font-semibold">{SIGNUP_SUMMARY_TRAVELERS}:</span>
@@ -870,12 +870,12 @@ export function TourSignupDialog({
                     <span className="font-semibold">{SIGNUP_SUMMARY_TOTAL_PRICE}:</span>
                     <span>
                       {totalPrice.toLocaleString("hu-HU")} {CURRENCY}
-                      <Typography
+                      <CustomTypography
                         sx={{ fontSize: "1.5rem", color: colors.label.green }}
                         component="span"
                       >
                         ({totalTravelers} × {numericPrice.toLocaleString("hu-HU")} {CURRENCY})
-                      </Typography>
+                      </CustomTypography>
                     </span>
                   </>
                 )}
@@ -891,11 +891,11 @@ export function TourSignupDialog({
               slotProps={{ htmlInput: { maxLength: MAX_NOTES } }}
             />
 
-            <Divider sx={{ my: 1 }} />
+            <CustomDivider sx={{ my: 1 }} />
 
             <CustomAlertMessage infoMessage={SIGNUP_TOUR_INFO_IN_PROFILE} />
 
-            <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", flexDirection: "column" }}>
+            <CustomBox sx={{ display: "flex", gap: 1, flexWrap: "wrap", flexDirection: "column" }}>
               <CustomButton
                 variant="outlined"
                 size="small"
@@ -917,7 +917,7 @@ export function TourSignupDialog({
               >
                 {SIGNUP_TOUR_CONTRACT_LABEL}
               </CustomButton>
-            </Box>
+            </CustomBox>
 
             <CustomCheckbox
               checked={accepted}
@@ -926,7 +926,7 @@ export function TourSignupDialog({
               error={!accepted}
               isMandatory
             />
-          </Box>
+          </CustomBox>
         )}
       </CustomDialog>
 

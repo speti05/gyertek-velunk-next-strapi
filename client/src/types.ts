@@ -21,6 +21,9 @@ export interface ImageProps {
   documentId: string;
   url: string;
   alternativeText: string;
+  /** Intrinsic size in pixels; only present where the query asks for it. */
+  width?: number;
+  height?: number;
 }
 
 export interface LogoProps {
@@ -33,6 +36,38 @@ export interface SocialLinksProps {
   instagramUrl?: string;
   tiktokUrl?: string;
   youtubeUrl?: string;
+}
+
+export interface HeaderData {
+  logo: LogoProps;
+  navigation: LinkProps[];
+}
+
+export interface FooterData extends SocialLinksProps {
+  logo: LogoProps;
+  navigation: LinkProps[];
+  policies: LinkProps[];
+  copy: string;
+}
+
+export interface GlobalSettings {
+  header?: HeaderData;
+  footer?: FooterData;
+  showLanguageSwitcher?: boolean;
+}
+
+/** The `error` object Strapi puts in a failed REST response. */
+export interface StrapiError {
+  status: number;
+  name: string;
+  message: string;
+  details?: { errors?: { message?: string; path?: string[] }[] };
+}
+
+/** What the create endpoints the server actions post to send back - only the error is ever read. */
+export interface StrapiMutationResponse {
+  data?: unknown;
+  error?: StrapiError;
 }
 
 interface BaseBlogProps {

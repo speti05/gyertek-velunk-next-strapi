@@ -6,7 +6,7 @@
   color: colors.$gy-v-dark-green;
   text-decoration: underline;
   text-underline-offset: 0.2em;
-  word-break: break-word;
+  overflow-wrap: anywhere;
   transition: color 0.2s;
 
   &:hover,

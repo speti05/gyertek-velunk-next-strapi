@@ -3,9 +3,7 @@
 import { useTexts } from "@/context/locale-context";
 
 import { Luckiest_Guy, Source_Sans_3 } from "next/font/google";
-// @ts-ignore-next-line
 import "../sass/main.scss";
-// @ts-ignore-next-line
 import "./globals.css";
 import Image from "next/image";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";

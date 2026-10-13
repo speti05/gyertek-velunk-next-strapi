@@ -39,7 +39,7 @@ export default ({ env }) => ({
         // The newsletter has no page on the website; Strapi renders the e-mail itself.
         if (uid === 'api::newsletter.newsletter') {
           const params = new URLSearchParams({ secret: env('PREVIEW_SECRET'), status });
-          return `/api/newsletters/${encodeURIComponent(documentId)}/preview?${params}`;
+          return `/api/newsletters/${encodeURIComponent(documentId)}/preview?${params.toString()}`;
         }
 
         // Resolve the slug from the same version that is being previewed, so entries
@@ -57,7 +57,7 @@ export default ({ env }) => ({
           status,
         });
 
-        return `${env('CLIENT_URL')}/api/preview?${urlSearchParams}`;
+        return `${env('CLIENT_URL')}/api/preview?${urlSearchParams.toString()}`;
       },
     },
   },

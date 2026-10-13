@@ -21,9 +21,8 @@ export function useSocialEmbedTimeout(timeoutMs: number = SOCIAL_EMBED_TIMEOUT_M
     setStatus("loaded");
   }, []);
 
+  // No reset to "loading" here: that is already the initial state
   useEffect(() => {
-    setStatus("loading");
-
     timeoutIdRef.current = window.setTimeout(() => {
       timeoutIdRef.current = null;
       setStatus("failed");

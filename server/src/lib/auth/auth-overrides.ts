@@ -1,4 +1,8 @@
 import type { Core } from "@strapi/strapi";
+import type { StrapiContext } from "../types/strapi-context";
+
+// The users-permissions auth controller actions this file wraps.
+type AuthAction = (ctx: StrapiContext) => Promise<void>;
 
 // --- In-memory rate limiter (no extra dependencies) ---
 interface RateEntry {
@@ -19,10 +23,15 @@ setInterval(
   10 * 60 * 1000
 );
 
-function getClientIp(ctx: any): string {
+function getClientIp(ctx: StrapiContext): string {
+  // Node types any non-standard header as string | string[]
+  const header = (name: string) => {
+    const value = ctx.request.headers[name];
+    return Array.isArray(value) ? value[0] : value;
+  };
   return (
-    ctx.request.headers["cf-connecting-ip"] ||
-    ctx.request.headers["x-forwarded-for"]?.split(",")[0].trim() ||
+    header("cf-connecting-ip") ||
+    header("x-forwarded-for")?.split(",")[0].trim() ||
     ctx.request.ip ||
     "unknown"
   );
@@ -35,7 +44,7 @@ function getClientIp(ctx: any): string {
  * @param windowMs  Time window in milliseconds
  * @returns true if the request is blocked
  */
-function isRateLimited(ctx: any, key: string, limit: number, windowMs: number): boolean {
+function isRateLimited(ctx: StrapiContext, key: string, limit: number, windowMs: number): boolean {
   const now = Date.now();
   const entry = rateLimitStore.get(key);
 
@@ -75,7 +84,7 @@ const EMAIL_NOT_CONFIRMED_ERROR = "Email is registered but not confirmed";
  * later would have no effect.
  */
 export function applyAuthOverrides(strapi: Core.Strapi) {
-  const auth = strapi.plugin("users-permissions").controller("auth") as any;
+  const auth = strapi.plugin("users-permissions").controller<Record<string, AuthAction>>("auth");
 
   const originalCallback = auth.callback;
   const originalRegister = auth.register;
@@ -85,14 +94,14 @@ export function applyAuthOverrides(strapi: Core.Strapi) {
   const originalSendEmailConfirmation = auth.sendEmailConfirmation;
 
   // Login — 10 attempts / 15 minutes / IP
-  auth.callback = async (ctx: any) => {
+  auth.callback = async (ctx: StrapiContext) => {
     const ip = getClientIp(ctx);
     if (isRateLimited(ctx, `login:${ip}`, 10, 15 * 60 * 1000)) return;
     await originalCallback(ctx);
   };
 
   // Register — 5 attempts / hour / IP
-  auth.register = async (ctx: any) => {
+  auth.register = async (ctx: StrapiContext) => {
     const ip = getClientIp(ctx);
     if (isRateLimited(ctx, `register:${ip}`, 5, 60 * 60 * 1000)) return;
 
@@ -114,20 +123,20 @@ export function applyAuthOverrides(strapi: Core.Strapi) {
   };
 
   // Resend confirmation email — 3 attempts / hour / IP
-  auth.sendEmailConfirmation = async (ctx: any) => {
+  auth.sendEmailConfirmation = async (ctx: StrapiContext) => {
     const ip = getClientIp(ctx);
     if (isRateLimited(ctx, `send-email-confirmation:${ip}`, 3, 60 * 60 * 1000)) return;
     await originalSendEmailConfirmation(ctx);
   };
 
   // Forgot password — 5 attempts / hour / IP
-  auth.forgotPassword = async (ctx: any) => {
+  auth.forgotPassword = async (ctx: StrapiContext) => {
     const ip = getClientIp(ctx);
     if (isRateLimited(ctx, `forgot:${ip}`, 5, 60 * 60 * 1000)) return;
     await originalForgotPassword(ctx);
   };
 
-  auth.emailConfirmation = async (ctx: any) => {
+  auth.emailConfirmation = async (ctx: StrapiContext) => {
     try {
       await originalEmailConfirmation(ctx);
     } catch {
@@ -146,7 +155,7 @@ export function applyAuthOverrides(strapi: Core.Strapi) {
     }
   };
 
-  auth.resetPassword = async (ctx: any) => {
+  auth.resetPassword = async (ctx: StrapiContext) => {
     const code = ctx.request.body?.code;
     const userBeforeReset = code
       ? await strapi.db

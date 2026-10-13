@@ -1,3 +1,4 @@
+import type { StrapiMutationResponse } from "@/types";
 import { getRequestLocale } from "@/data/locale";
 
 const BASE_URL = process.env.STRAPI_API_URL ?? "http://localhost:1337";
@@ -12,7 +13,7 @@ async function localeHeader(): Promise<Record<string, string>> {
   return { "x-locale": await getRequestLocale() };
 }
 
-export async function subscribeService(email: string) {
+export async function subscribeService(email: string): Promise<StrapiMutationResponse | undefined> {
   const url = new URL("/api/newsletter-signups", BASE_URL);
 
   try {
@@ -84,7 +85,7 @@ export interface ContactRequestProps {
   preferredContact: "phone" | "email";
 }
 
-export async function contactRequestService(data: ContactRequestProps) {
+export async function contactRequestService(data: ContactRequestProps): Promise<StrapiMutationResponse | undefined> {
   const url = new URL("/api/contact-requests", BASE_URL);
 
   try {
@@ -103,7 +104,7 @@ export async function contactRequestService(data: ContactRequestProps) {
   }
 }
 
-export async function eventsSubscribeService(jwt: string, data: EventsSubscribeProps) {
+export async function eventsSubscribeService(jwt: string, data: EventsSubscribeProps): Promise<StrapiMutationResponse | undefined> {
   const url = new URL("/api/event-signups", BASE_URL);
 
   try {

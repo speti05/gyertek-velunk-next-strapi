@@ -2,16 +2,17 @@
  * newsletter-signup controller
  */
 
-import { factories } from "@strapi/strapi";
+import { factories, type Core } from "@strapi/strapi";
+import type { StrapiContext } from "../../../lib/types/strapi-context";
 import { verifyUnsubscribeToken } from "../../newsletter/services/unsubscribe-token";
 import { getClientUrl } from "../../../lib/config/client-url";
 import { getStrapiTexts, type StrapiTexts } from "../../../i18n/get-strapi-texts";
 
 const UID = "api::newsletter-signup.newsletter-signup" as const;
 
-async function resolveEmailFromJwt(ctx: any, strapi: any): Promise<string | null> {
+async function resolveEmailFromJwt(ctx: StrapiContext, strapi: Core.Strapi): Promise<string | null> {
   try {
-    const authHeader = ctx.request.headers["authorization"] as string;
+    const authHeader = ctx.request.headers.authorization;
     if (!authHeader?.startsWith("Bearer ")) return null;
     const token = authHeader.slice(7);
     const payload = await strapi.plugin("users-permissions").service("jwt").verify(token);

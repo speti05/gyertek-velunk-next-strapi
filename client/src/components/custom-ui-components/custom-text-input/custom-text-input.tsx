@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { useTexts } from "@/context/locale-context";
 import { FormControl, TextField, TextFieldProps, InputAdornment, IconButton } from "@mui/material";
 import CustomIcon from "../custom-icon/custom-icon";
-import style from "./custom-text-input.module.scss";
 
 type CustomTextInputInputProps = Omit<TextFieldProps, "error"> & {
   error?: string | boolean;
@@ -31,7 +30,7 @@ const CustomTextInput = React.forwardRef<HTMLInputElement, CustomTextInputInputP
     ) : undefined;
 
     return (
-      <FormControl fullWidth className={style.customTextInput}>
+      <FormControl fullWidth>
         <TextField
           inputRef={ref}
           type={isPassword ? (showPassword ? "text" : "password") : type}

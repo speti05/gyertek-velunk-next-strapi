@@ -15,7 +15,7 @@ export function getClientUrl(): string {
 /**
  * Checks once at boot when CLIENT_URL is missing.
  */
-export function throwErrorIfClientUrlMissing(strapi: { log: { warn: (msg: string) => void } }) {
+export function throwErrorIfClientUrlMissing() {
   if (!getClientUrl()) {
     throw new Error(
       `CLIENT_URL is not set, so the links in confirmation and password reset e-mails will point to the wrong host. Please set CLIENT_URL to the public URL of the Next.js frontend.`

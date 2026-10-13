@@ -71,7 +71,7 @@ function withFallback(base: StrapiTexts, overrides: Partial<StrapiTexts>): Strap
 
 const DICTIONARIES: Record<Locale, StrapiTexts> = {
   hu: huTexts,
-  en: withFallback(huTexts, enTexts as Partial<StrapiTexts>),
+  en: withFallback(huTexts, enTexts),
 };
 
 /**

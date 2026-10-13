@@ -29,7 +29,7 @@ const stripProtectedFields = (ctx: Context) => {
 };
 
 const guard = (handler: Handler): Handler =>
-  async function (this: unknown, ctx: Context) {
+  function (this: unknown, ctx: Context) {
     stripProtectedFields(ctx);
     return handler.call(this, ctx);
   };

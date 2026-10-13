@@ -1,6 +1,6 @@
 export default {
-  async beforeCreate(event: { params: { data: any } }) {
-    const ctx = strapi.requestContext.get() as any;
+  beforeCreate(event: { params: { data: { user?: number } } }) {
+    const ctx = strapi.requestContext.get();
     const userId = ctx?.state?.user?.id;
     if (userId) {
       event.params.data.user = userId;

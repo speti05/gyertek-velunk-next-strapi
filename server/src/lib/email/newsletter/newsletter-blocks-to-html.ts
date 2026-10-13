@@ -54,10 +54,32 @@ const MARKDOWN_TAG_STYLES: Record<string, string> = {
 
 const md = new MarkdownIt({ html: false, linkify: true, breaks: true });
 
-interface DynamicZoneBlock {
-  __component: string;
-  [key: string]: any;
-}
+/** The populated dynamic-zone blocks the newsletter renders (see NEWSLETTER_POPULATE). */
+export type NewsletterBlock =
+  | { __component: "blocks.heading"; heading?: string | null }
+  | { __component: "blocks.paragraph"; content?: string | null }
+  | { __component: "blocks.full-image"; image?: StrapiMedia | null }
+  | {
+      __component: "blocks.paragraph-with-image";
+      content?: string | null;
+      image?: StrapiMedia | null;
+      imageLandscape?: boolean | null;
+      reversed?: boolean | null;
+    }
+  | {
+      __component: "blocks.hero-section";
+      heading?: string | null;
+      image?: StrapiMedia | null;
+      theme?: "turquoise" | "orange" | null;
+      cta?: { href?: string | null; text?: string | null } | null;
+    }
+  | {
+      __component: "blocks.youtube-video";
+      videoUrl?: string | null;
+      title?: string | null;
+      description?: string | null;
+      startTime?: number | null;
+    };
 
 interface RenderContext {
   images: NewsletterImageEmbedder;
@@ -134,7 +156,7 @@ function getYoutubeVideoId(url: string): string | null {
   return parsed.searchParams.get("v");
 }
 
-async function renderBlock(block: DynamicZoneBlock, ctx: RenderContext): Promise<string> {
+async function renderBlock(block: NewsletterBlock, ctx: RenderContext): Promise<string> {
   switch (block.__component) {
     case "blocks.heading": {
       if (!block.heading) return "";
@@ -146,7 +168,7 @@ async function renderBlock(block: DynamicZoneBlock, ctx: RenderContext): Promise
 
     case "blocks.full-image": {
       if (!block.image) return "";
-      const image = await ctx.images.embed(block.image as StrapiMedia);
+      const image = await ctx.images.embed(block.image);
       return centered(imageTag(image), "margin:0 0 24px;");
     }
 
@@ -154,7 +176,7 @@ async function renderBlock(block: DynamicZoneBlock, ctx: RenderContext): Promise
       const text = await renderMarkdown(block.content, ctx);
       if (!block.image) return text;
       const imageWidth = block.imageLandscape === false ? 320 : NEWSLETTER_IMAGE_HALF_WIDTH;
-      const image = await ctx.images.embed(block.image as StrapiMedia, imageWidth);
+      const image = await ctx.images.embed(block.image, imageWidth);
       // The nl-* classes stack the two columns on narrow screens (see the wrapper's media query).
       const imageCell = `<td class="nl-stack nl-stack-image" width="${image.width}" align="center" valign="top" style="padding:0;">${imageTag(image)}</td>`;
       const gapCell = `<td class="nl-hide" width="24" style="font-size:0;line-height:0;">&nbsp;</td>`;
@@ -168,9 +190,9 @@ async function renderBlock(block: DynamicZoneBlock, ctx: RenderContext): Promise
     case "blocks.hero-section": {
       const parts: string[] = [];
       if (block.image) {
-        parts.push(centered(imageTag(await ctx.images.embed(block.image as StrapiMedia))));
+        parts.push(centered(imageTag(await ctx.images.embed(block.image))));
       }
-      const color = HERO_THEME_COLORS[block.theme] ?? HERO_THEME_COLORS.turquoise;
+      const color = HERO_THEME_COLORS[block.theme ?? "turquoise"] ?? HERO_THEME_COLORS.turquoise;
       if (block.heading) {
         parts.push(
           `<div style="background:${color};padding:16px 24px;"><h2 style="${FONT}color:#ffffff;font-size:26px;line-height:1.3;margin:0;font-weight:600;">${escapeHtml(block.heading)}</h2></div>`
@@ -202,13 +224,14 @@ async function renderBlock(block: DynamicZoneBlock, ctx: RenderContext): Promise
     }
 
     default:
-      console.warn(`Newsletter: block "${block.__component}" has no e-mail renderer, skipped`);
+      // Narrowed to never by the union, but a block type added in the CMS can still arrive here
+      console.warn(`Newsletter: block "${(block as { __component: string }).__component}" has no e-mail renderer, skipped`);
       return "";
   }
 }
 
 export async function newsletterBlocksToHtml(
-  blocks: DynamicZoneBlock[] | null | undefined,
+  blocks: NewsletterBlock[] | null | undefined,
   images: NewsletterImageEmbedder,
   texts: StrapiTexts
 ): Promise<string> {

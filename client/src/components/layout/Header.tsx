@@ -1,11 +1,11 @@
 "use client";
-import type { LinkProps, LogoProps, SocialLinksProps } from "@/types";
+import type { HeaderData, SocialLinksProps } from "@/types";
 import { useLocalizedPath, useTexts } from "@/context/locale-context";
 import CustomTooltip from "../custom-ui-components/custom-tooltip/custom-tooltip";
 import CustomLink from "../custom-ui-components/custom-link/custom-link";
 import { useCallback, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { StrapiImage } from "../StrapiImage";
+import { StrapiImage, heightForWidth } from "../StrapiImage";
 import { SocialLinks } from "./SocialLinks";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { HeaderAccount } from "./HeaderAccount";
@@ -17,10 +17,7 @@ import { useHeaderCollapsed } from "@/hooks/use-header-collapsed";
 const NAV_COLLAPSE_QUERY = "(max-width: 78.125em)";
 
 interface HeaderProps {
-  data: {
-    logo: LogoProps;
-    navigation: LinkProps[];
-  };
+  data: HeaderData | null;
   socialLinks?: SocialLinksProps;
   /** `showLanguageSwitcher` on the Strapi global settings - the site-wide switch for
    *  whether visitors are offered a language at all. */
@@ -138,7 +135,8 @@ export function Header({ data, socialLinks, showLanguageSwitcher = false }: Head
                   alt={logo.image.alternativeText || LOGO_ALT_FALLBACK}
                   className="header__logo"
                   width={256}
-                  height={174}
+                  // Must match the file's ratio: CSS sets only the width, so a wrong height attribute shifts the layout
+                  height={heightForWidth(logo.image, 256, 174)}
                 />
               </CustomLink>
             </span>

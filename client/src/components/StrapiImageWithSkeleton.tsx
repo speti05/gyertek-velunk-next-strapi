@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { StrapiImage, type StrapiImageProps } from "@/components/StrapiImage";
 import CustomSkeleton from "@/components/custom-ui-components/custom-skeleton/custom-skeleton";
 import CustomIcon from "@/components/custom-ui-components/custom-icon/custom-icon";
@@ -22,14 +22,11 @@ export function StrapiImageWithSkeleton({
   onError,
   ...imageProps
 }: Readonly<StrapiImageWithSkeletonProps>) {
-  const imageRef = useRef<HTMLImageElement | null>(null);
   const [loaded, setLoaded] = useState(false);
 
-  // A cached image can finish before this component hydrates, and a load that already
-  // happened fires no event - so once mounted the element itself has to be asked
-  // whether it is done, or the placeholder would sit there forever.
-  useEffect(() => {
-    if (imageRef.current?.complete) setLoaded(true);
+  // A cached image may finish before hydration and fire no load event, so the element is asked on attach
+  const imageRef = useCallback((image: HTMLImageElement | null) => {
+    if (image?.complete) setLoaded(true);
   }, []);
 
   return (

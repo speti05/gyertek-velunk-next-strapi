@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import { Luckiest_Guy, Source_Sans_3 } from "next/font/google";
-// @ts-ignore-next-line
 import "../../sass/main.scss";
-// @ts-ignore-next-line
 import "../globals.css";
-// @ts-ignore-next-line
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import { cookies } from "next/headers";
 import { getGlobalSettings } from "@/data/loaders";
+import type { GlobalSettings } from "@/types";
 import { getSiteURL } from "@/utils/get-site-url";
 import { DEFAULT_LOCALE, LOCALES, isLocale, type Locale } from "@/i18n/config";
 import { getTexts } from "@/i18n/texts";
@@ -61,7 +59,7 @@ export async function generateMetadata({
 async function loader() {
   try {
     const res = await getGlobalSettings();
-    const { data } = (res as any) ?? {};
+    const { data } = (res ?? {}) as { data?: GlobalSettings };
     return {
       header: data?.header ?? null,
       footer: data?.footer ?? null,
@@ -125,31 +123,35 @@ export default async function RootLayout({
   //throw new Error("Test error in RootLayout");
 
   return (
-    <html lang={locale}>
+    <html lang={locale} data-scroll-behavior="smooth">
       <body
         suppressHydrationWarning
         className={`${luckiestGuy.variable} ${sourceSans3.variable} min-h-screen flex flex-col`}
       >
         <LocaleProvider locale={locale}>
           <MuiThemeProvider>
-          <CookieConsentProvider
-            initialHasResponded={initialHasResponded}
-            initialRecaptchaConsented={initialRecaptchaConsented}
-            initialAnalyticsConsented={initialAnalyticsConsented}
-          >
-            <AuthProvider isLoggedIn={isLoggedIn} userEmail={userEmail}>
-              <RecaptchaProvider>
-                <ScrollToHash />
-                <Header data={header} socialLinks={footer} showLanguageSwitcher={showLanguageSwitcher} />
-                {children}
-                <Footer data={footer} />
-                <ScrollToTopButton />
-                <CookieConsentInit />
-                <CookieConsentBanner />
-                <GoogleAnalytics />
-              </RecaptchaProvider>
-            </AuthProvider>
-          </CookieConsentProvider>
+            <CookieConsentProvider
+              initialHasResponded={initialHasResponded}
+              initialRecaptchaConsented={initialRecaptchaConsented}
+              initialAnalyticsConsented={initialAnalyticsConsented}
+            >
+              <AuthProvider isLoggedIn={isLoggedIn} userEmail={userEmail}>
+                <RecaptchaProvider>
+                  <ScrollToHash />
+                  <Header
+                    data={header}
+                    socialLinks={footer ?? undefined}
+                    showLanguageSwitcher={showLanguageSwitcher}
+                  />
+                  {children}
+                  <Footer data={footer} />
+                  <ScrollToTopButton />
+                  <CookieConsentInit />
+                  <CookieConsentBanner />
+                  <GoogleAnalytics />
+                </RecaptchaProvider>
+              </AuthProvider>
+            </CookieConsentProvider>
           </MuiThemeProvider>
         </LocaleProvider>
       </body>

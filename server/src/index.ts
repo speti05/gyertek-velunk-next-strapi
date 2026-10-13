@@ -1,5 +1,6 @@
 import path from "path";
 import type { Core } from "@strapi/strapi";
+import type { Attachment } from "nodemailer/lib/mailer";
 import { sendNewsletterBroadcast } from "./lib/email/newsletter";
 import { getTransporter } from "./lib/email/mailer";
 import { applyAuthOverrides } from "./lib/auth/auth-overrides";
@@ -13,6 +14,19 @@ import {
   TEST_USER_ROLE_PERMISSIONS,
   TEST_USER_ROLE_TYPE,
 } from "./lib/auth/test-user-role";
+
+/** The part of the email plugin's service that is wrapped below. */
+type EmailService = {
+  send(options: { attachments?: Attachment[]; [key: string]: unknown }): Promise<unknown>;
+};
+
+/** The newsletter columns the publish lifecycle reads; components and media are not part of it. */
+type NewsletterLifecycleResult = {
+  documentId: string;
+  subject: string;
+  publishedAt?: string | null;
+  sentAt?: string | null;
+};
 
 async function grantPermission(strapi: Core.Strapi, roleId: number, action: string) {
   const existing = await strapi.db.query("plugin::users-permissions.permission").findOne({
@@ -47,9 +61,9 @@ export default {
       strapi.dirs.app.root,
       "src/lib/email/templates/email-fejlec-600.jpg"
     );
-    const emailService = strapi.plugin("email").service("email") as any;
+    const emailService = strapi.plugin("email").service<EmailService>("email");
     const _originalSend = emailService.send.bind(emailService);
-    emailService.send = async (options: any) => {
+    emailService.send = (options) => {
       options.attachments = [
         ...(options.attachments ?? []),
         { filename: "email-fejlec-600.jpg", path: headerImagePath, cid: "email-fejlec" },
@@ -57,7 +71,7 @@ export default {
       return _originalSend(options);
     };
 
-    throwErrorIfClientUrlMissing(strapi);
+    throwErrorIfClientUrlMissing();
     const clientUrl = getClientUrl();
 
     const pluginStore = strapi.store({
@@ -129,8 +143,8 @@ export default {
     }
 
     // Newsletter: send on first publish
-    const handleNewsletterPublish = async (result: any) => {
-      if (!result.publishedAt || result.sentAt) return;
+    const handleNewsletterPublish = async (result: NewsletterLifecycleResult | undefined) => {
+      if (!result?.publishedAt || result.sentAt) return;
 
       console.info(`Newsletter lifecycle triggered for "${result.subject}"`);
 
@@ -174,10 +188,10 @@ export default {
 
     strapi.db.lifecycles.subscribe({
       models: [NEWSLETTER_UID],
-      async afterCreate(event: any) {
+      async afterCreate(event: { result?: NewsletterLifecycleResult }) {
         await handleNewsletterPublish(event.result);
       },
-      async afterUpdate(event: any) {
+      async afterUpdate(event: { result?: NewsletterLifecycleResult }) {
         await handleNewsletterPublish(event.result);
       },
     });
@@ -185,7 +199,7 @@ export default {
     // Auto-subscribe new users to the newsletter on registration
     strapi.db.lifecycles.subscribe({
       models: ["plugin::users-permissions.user"],
-      async afterCreate(event: any) {
+      async afterCreate(event: { result?: { email?: string } }) {
         const email = event.result?.email;
         if (!email) return;
         try {

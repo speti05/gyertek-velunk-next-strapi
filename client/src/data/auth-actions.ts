@@ -19,6 +19,7 @@ import {
 import { isDev } from "@clientRoot/env";
 import { Route } from "@/i18n/config";
 import { AUTH_COOKIE, USER_EMAIL_COOKIE } from "@/data/auth-guard";
+import type { FormActionState, NewsletterToggleState } from "@/data/action-state";
 
 const STRAPI_URL = process.env.STRAPI_API_URL ?? "http://localhost:1337";
 
@@ -77,7 +78,7 @@ async function setAuthCookies(jwt: string, email: string) {
   cookieStore.set(USER_EMAIL_COOKIE, email, opts);
 }
 
-export async function authAction(prevState: any, formData: FormData) {
+export async function authAction(prevState: FormActionState, formData: FormData): Promise<FormActionState> {
   const { MESSAGES } = getTexts(await getRequestLocale());
   const recaptchaToken = formData.get("recaptchaToken") as string | null;
   const isHuman = await verifyRecaptcha(recaptchaToken);
@@ -189,7 +190,7 @@ const resendEmailConfirmationSchema = (MESSAGES: Messages) => z.object({
   email: z.string().email({ message: MESSAGES.emailInvalid }),
 });
 
-export async function resendEmailConfirmationAction(prevState: any, formData: FormData) {
+export async function resendEmailConfirmationAction(prevState: FormActionState, formData: FormData): Promise<FormActionState> {
   const { MESSAGES } = getTexts(await getRequestLocale());
   const recaptchaToken = formData.get("recaptchaToken") as string | null;
   const isHuman = await verifyRecaptcha(recaptchaToken);
@@ -229,7 +230,7 @@ const forgotPasswordSchema = (MESSAGES: Messages) => z.object({
   email: z.string().email({ message: MESSAGES.emailInvalid }),
 });
 
-export async function forgotPasswordAction(prevState: any, formData: FormData) {
+export async function forgotPasswordAction(prevState: FormActionState, formData: FormData): Promise<FormActionState> {
   const { MESSAGES, AUTH_FORGOT_PASSWORD_SUCCESS } = getTexts(await getRequestLocale());
   const recaptchaToken = formData.get("recaptchaToken") as string | null;
   const isHuman = await verifyRecaptcha(recaptchaToken);
@@ -269,7 +270,7 @@ const resetPasswordSchema = (MESSAGES: Messages) => z
     path: ["passwordConfirmation"],
   });
 
-export async function resetPasswordAction(prevState: any, formData: FormData) {
+export async function resetPasswordAction(prevState: FormActionState, formData: FormData): Promise<FormActionState> {
   const { MESSAGES } = getTexts(await getRequestLocale());
   const recaptchaToken = formData.get("recaptchaToken") as string | null;
   const isHuman = await verifyRecaptcha(recaptchaToken);
@@ -320,7 +321,7 @@ const profileSchema = (MESSAGES: Messages) => z.object({
   houseNumber: z.string().min(1, { message: MESSAGES.invalidHouseNumber }),
 });
 
-export async function updateProfileAction(prevState: any, formData: FormData) {
+export async function updateProfileAction(prevState: FormActionState, formData: FormData): Promise<FormActionState> {
   const { MESSAGES } = getTexts(await getRequestLocale());
   const cookieStore = await cookies();
   const jwt = cookieStore.get(AUTH_COOKIE)?.value;
@@ -380,7 +381,7 @@ export async function updateProfileAction(prevState: any, formData: FormData) {
   };
 }
 
-export async function toggleNewsletterSubscriptionAction(prevState: any, formData: FormData) {
+export async function toggleNewsletterSubscriptionAction(prevState: NewsletterToggleState, formData: FormData): Promise<NewsletterToggleState> {
   const { MESSAGES } = getTexts(await getRequestLocale());
   const cookieStore = await cookies();
   const jwt = cookieStore.get(AUTH_COOKIE)?.value;

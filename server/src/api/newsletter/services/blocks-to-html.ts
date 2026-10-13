@@ -63,17 +63,19 @@ function renderInline(node: InlineNode): string {
 }
 
 function renderBlock(block: BlockNode): string {
-  const children = (block.children ?? []) as any[];
+  const children = block.children ?? [];
+  // Which node types a block holds depends on its type, so each case states it
+  const inline = children as InlineNode[];
 
   switch (block.type) {
     case "paragraph": {
-      const content = children.map(renderInline).join("");
+      const content = inline.map(renderInline).join("");
       if (!content.trim()) return "<br>";
       return `<p style="font-family:'Source Sans 3',Arial,Helvetica,sans-serif;color:#333333;font-size:16px;line-height:26px;margin:0 0 16px;">${content}</p>`;
     }
     case "heading": {
       const level = block.level ?? 2;
-      const content = children.map(renderInline).join("");
+      const content = inline.map(renderInline).join("");
       const sizeMap: Record<number, string> = {
         1: "28px",
         2: "24px",
@@ -86,8 +88,8 @@ function renderBlock(block: BlockNode): string {
       return `<h${level} style="font-family:'Source Sans 3',Arial,Helvetica,sans-serif;color:#377F76;font-size:${size};line-height:1.3;margin:24px 0 12px;font-weight:600;">${content}</h${level}>`;
     }
     case "list": {
-      const items = children
-        .map((item: any) => {
+      const items = (children as ListItemNode[])
+        .map((item) => {
           const content = (item.children ?? []).map(renderInline).join("");
           return `<li style="font-family:'Source Sans 3',Arial,Helvetica,sans-serif;color:#333333;font-size:16px;line-height:26px;margin-bottom:6px;">${content}</li>`;
         })
@@ -96,11 +98,11 @@ function renderBlock(block: BlockNode): string {
       return `<${tag} style="margin:0 0 16px;padding-left:24px;">${items}</${tag}>`;
     }
     case "quote": {
-      const content = children.map(renderInline).join("");
+      const content = inline.map(renderInline).join("");
       return `<blockquote style="border-left:4px solid #377F76;margin:16px 0;padding:12px 20px;background:#F1E8D9;font-family:'Source Sans 3',Arial,Helvetica,sans-serif;color:#70634C;font-size:16px;font-style:italic;">${content}</blockquote>`;
     }
     case "code": {
-      const content = children.map((c: any) => escapeHtml(c.text ?? "")).join("\n");
+      const content = (children as TextNode[]).map((c) => escapeHtml(c.text ?? "")).join("\n");
       return `<pre style="background:#f4f4f4;padding:16px;border-radius:6px;font-size:14px;overflow-x:auto;margin:0 0 16px;font-family:monospace;white-space:pre-wrap;"><code>${content}</code></pre>`;
     }
     case "image": {

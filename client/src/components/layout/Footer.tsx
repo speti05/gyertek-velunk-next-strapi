@@ -1,19 +1,13 @@
 import { getTexts } from "@/i18n/texts";
 import { getRequestLocale } from "@/data/locale";
-import { toPublicPath, Route } from "@/i18n/config";
-import type { LinkProps, LogoProps, SocialLinksProps } from "@/types";
+import { toPublicPath } from "@/i18n/config";
+import type { FooterData } from "@/types";
 import CustomLink from "../custom-ui-components/custom-link/custom-link";
-import { StrapiImage } from "../StrapiImage";
-import CustomTooltip from "../custom-ui-components/custom-tooltip/custom-tooltip";
 import { SocialLinks } from "./SocialLinks";
+import { StrapiImage, heightForWidth } from "../StrapiImage";
 
 interface FooterProps {
-  data: {
-    logo: LogoProps;
-    navigation: LinkProps[];
-    policies: LinkProps[];
-    copy: string;
-  } & SocialLinksProps;
+  data: FooterData | null;
 }
 
 export async function Footer({ data }: FooterProps) {
@@ -27,22 +21,13 @@ export async function Footer({ data }: FooterProps) {
   return (
     <footer className="footer">
       <span className="footer__logo-wrapper">
-        <CustomTooltip title={logo.image.alternativeText || LOGO_ALT_FALLBACK} placement="top">
-          <CustomLink
-            href={localizePath(Route.Home)}
-            className="navbar__logo-link"
-            color="white"
-            underline="none"
-          >
-            <StrapiImage
-              src={logo.image.url}
-              alt={logo.image.alternativeText || LOGO_ALT_FALLBACK}
-              width={100}
-              height={100}
-              className="footer__logo"
-            />
-          </CustomLink>
-        </CustomTooltip>
+        <StrapiImage
+          src={logo.image.url}
+          alt={logo.image.alternativeText || LOGO_ALT_FALLBACK}
+          width={100}
+          height={heightForWidth(logo.image, 100, 100)}
+          className="footer__logo"
+        />
       </span>
       <SocialLinks socialLinks={data} as="nav" variant="footer" tooltipPlacement="top" />
       <nav className="footer__nav">

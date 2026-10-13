@@ -6,7 +6,7 @@ import { blocksToHtml } from "../../../api/newsletter/services/blocks-to-html";
 import { buildUnsubscribeUrl } from "../../../api/newsletter/services/unsubscribe-token";
 import { getStrapiTexts, type StrapiTexts } from "../../../i18n/get-strapi-texts";
 import { NewsletterImageEmbedder, type StrapiMedia } from "./newsletter-images";
-import { newsletterBlocksToHtml, newsletterCoverToHtml } from "./newsletter-blocks-to-html";
+import { newsletterBlocksToHtml, newsletterCoverToHtml, type NewsletterBlock } from "./newsletter-blocks-to-html";
 import {
   NEWSLETTER_MAX_EMAIL_BYTES,
   NEWSLETTER_MAX_HTML_BYTES,
@@ -35,7 +35,7 @@ export interface NewsletterContent {
   image?: StrapiMedia | null;
   /** Legacy rich-text field from before the newsletter was built from blocks. */
   body?: unknown;
-  blocks?: { __component: string; [key: string]: any }[] | null;
+  blocks?: NewsletterBlock[] | null;
 }
 
 export interface BuiltNewsletter {
@@ -58,13 +58,13 @@ export const loadNewsletter = async (
   (await strapi.documents(NEWSLETTER_UID).findOne({
     documentId,
     status,
-    populate: NEWSLETTER_POPULATE as any,
+    populate: NEWSLETTER_POPULATE,
   })) as unknown as NewsletterContent | null;
 
 /** Legacy `body` field: embeds its image nodes too, so no image is linked from the server. */
 async function renderLegacyBody(body: unknown, images: NewsletterImageEmbedder): Promise<string> {
   if (!Array.isArray(body) || body.length === 0) return "";
-  const nodes = structuredClone(body) as any[];
+  const nodes = structuredClone(body) as { type?: string; image?: StrapiMedia }[];
   for (const node of nodes) {
     if (node?.type === "image" && node.image?.url) {
       const embedded = await images.embed({
