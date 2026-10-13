@@ -338,8 +338,6 @@ $panel-border: 1px solid color-mix(in srgb, colors.$gy-v-dark-brown 12%, transpa
     margin: 0;
   }
 
-  // Both lists here carry .no-list-style: the global list styling would otherwise put
-  // the site's hiker bullet in front of every row and indent it for the icon.
   &__meta-item {
     display: flex;
     gap: 0.6rem;

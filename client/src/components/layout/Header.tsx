@@ -189,7 +189,7 @@ export function Header({ data, socialLinks, showLanguageSwitcher = false }: Head
             </div>
 
             <nav className="site-header__nav-wrap" aria-label={HEADER_NAV_LABEL}>
-              <ul className="site-header__nav no-list-style">
+              <ul className="site-header__nav">
                 {navigation.map((item) => {
                   const href = localizePath(item.href);
                   const current = !item.isExternal && isCurrent(href);

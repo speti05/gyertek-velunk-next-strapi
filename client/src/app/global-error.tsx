@@ -20,6 +20,8 @@ const luckiestGuy = Luckiest_Guy({
 const sourceSans3 = Source_Sans_3({
   variable: "--font-source-sans-3",
   subsets: ["latin"],
+  // Italic is loaded so CMS emphasis renders real italic glyphs, not a synthesized slant
+  style: ["normal", "italic"],
 });
 
 export default function Error({

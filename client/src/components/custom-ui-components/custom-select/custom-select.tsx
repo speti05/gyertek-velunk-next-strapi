@@ -64,7 +64,7 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
         {...props}
       >
         {props.options?.map((option) => (
-          <MenuItem key={option.value} value={option.value} className="no-list-style">
+          <MenuItem key={option.value} value={option.value}>
             {renderOption ? renderOption(option) : option.name}
           </MenuItem>
         ))}

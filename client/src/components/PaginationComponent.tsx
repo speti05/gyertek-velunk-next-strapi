@@ -58,7 +58,7 @@ export function PaginationComponent({ pageCount, pageParam = "page" }: Readonly<
 
   return (
     <nav role="navigation" aria-label={PAGINATION_NAV_ARIA} className="pagination-nav">
-      <ul className="pagination-list no-list-style">
+      <ul className="pagination-list">
         {/* Left arrow */}
         <li>
           <PaginationArrow direction="left" href={createPageURL(currentPage - 1)} />

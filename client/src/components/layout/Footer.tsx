@@ -31,7 +31,7 @@ export async function Footer({ data }: FooterProps) {
       </span>
       <SocialLinks socialLinks={data} as="nav" variant="footer" tooltipPlacement="top" />
       <nav className="footer__nav">
-        <ul className="footer__links no-list-style">
+        <ul className="footer__links">
           {navigation.map((item) => (
             <li key={item.id}>
               <CustomLink
@@ -47,7 +47,7 @@ export async function Footer({ data }: FooterProps) {
         </ul>
       </nav>
       <div className="footer__policies">
-        <ul className="footer__policies-nav no-list-style">
+        <ul className="footer__policies-nav">
           {policies.map((item) => (
             <li key={item.id}>
               <CustomLink

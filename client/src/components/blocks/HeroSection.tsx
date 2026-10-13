@@ -47,7 +47,7 @@ export function HeroSection({
         <nav className="hero__toc" aria-label={tableOfContent.label}>
           <div className="container">
             <p className="hero__toc-label">{tableOfContent.label}</p>
-            <ol className="hero__toc-list no-list-style">
+            <ol className="hero__toc-list">
               {tableOfContent.items.map((item) => (
                 <li key={item.linkId} className="hero__toc-item">
                   <CustomLink href={`#${item.linkId}`} className="hero__toc-link" underline="none">

@@ -498,7 +498,7 @@ export function TourCalendar({
           <div className="tour-calendar__month-list">
             <h3 className="tour-calendar__list-title">{CALENDAR_MONTH_TOURS_TITLE(monthName)}</h3>
             {monthEvents.length > 0 ? (
-              <ul className="tour-calendar__tours no-list-style">
+              <ul className="tour-calendar__tours">
                 {monthEvents.map((event) => (
                   <li key={event.id}>
                     <TourCard event={event} isPast={eventEnd(event) < todayIndex} />
@@ -516,7 +516,7 @@ export function TourCalendar({
           <aside className="tour-calendar__upcoming">
             <h3 className="tour-calendar__list-title">{CALENDAR_UPCOMING_TITLE}</h3>
             {upcomingEvents.length > 0 ? (
-              <ul className="tour-calendar__tours no-list-style">
+              <ul className="tour-calendar__tours">
                 {upcomingEvents.map((event) => (
                   <li key={event.id}>
                     <TourCard event={event} isPast={false} />

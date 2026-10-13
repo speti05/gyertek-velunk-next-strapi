@@ -113,7 +113,7 @@ export default async function ProfilePage() {
               {signups.length === 0 ? (
                 <p className="profile-page__empty">{PROFILE_NO_TOURS_MESSAGE}</p>
               ) : (
-                <ul className="profile-tours no-list-style">
+                <ul className="profile-tours">
                   {signups.map((signup) =>
                     signup.event ? (
                       <li key={signup.id} className="profile-tour">
@@ -140,7 +140,7 @@ export default async function ProfilePage() {
                                   {signup.event.title}
                                 </CustomLink>
                               </h3>
-                              <ul className="profile-tour__meta no-list-style">
+                              <ul className="profile-tour__meta">
                                 {signup.event.startDate && (
                                   <li className="profile-tour__meta-item">
                                     <span className="profile-tour__meta-label">

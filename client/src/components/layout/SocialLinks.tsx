@@ -50,7 +50,7 @@ export function SocialLinks({
 
   return (
     <Wrapper className={`social-links social-links--${variant}`}>
-      <ul className="social-links__list no-list-style">
+      <ul className="social-links__list">
         {activeSocialLinks.map(({ key, ariaLabel, iconName }) => (
           <li key={key}>
             <CustomTooltip title={key} placement={tooltipPlacement}>

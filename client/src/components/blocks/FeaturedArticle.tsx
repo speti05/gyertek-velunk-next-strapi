@@ -1,7 +1,7 @@
 import type { FeaturedArticleProps } from "@/types";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import { MagnifiableImage } from "@/components/MagnifiableImage";
-import ReactMarkdown from "react-markdown";
+import { MarkdownContent } from "@/components/MarkdownContent";
 import CustomButton from "../custom-ui-components/custom-button/custom-button";
 
 export function FeaturedArticle({
@@ -14,7 +14,7 @@ export function FeaturedArticle({
     <article className="featured-article container">
       <div className="featured-article__info">
         <h3>{headline}</h3>
-        <ReactMarkdown className="paragraph-reset copy">{excerpt}</ReactMarkdown>
+        <MarkdownContent className="paragraph-reset copy">{excerpt}</MarkdownContent>
         <CustomLink href={link.href} color="inherit" underline="none">
           <CustomButton variant="contained" size="large">
             {link.text}

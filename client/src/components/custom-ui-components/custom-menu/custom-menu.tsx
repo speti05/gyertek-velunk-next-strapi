@@ -81,8 +81,8 @@ export const CustomMenu: React.FC<CustomMenuProps> = ({
   );
 };
 
-export const CustomMenuItem: React.FC<MenuItemProps> = ({ children, className, ...props }) => (
-  <MenuItem className={["no-list-style", className].filter(Boolean).join(" ")} {...props}>
+export const CustomMenuItem: React.FC<MenuItemProps> = ({ children, ...props }) => (
+  <MenuItem {...props}>
     {children}
   </MenuItem>
 );

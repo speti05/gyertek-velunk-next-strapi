@@ -40,7 +40,7 @@ function BlogOverview({ headline, description, tableOfContent }: Readonly<BlogOv
         {description && <p className="article-overview__description">{description}</p>}
       </div>
       {tableOfContent && (
-        <ul className="article-overview__contents no-list-style">
+        <ul className="article-overview__contents">
           {tableOfContent.map((item, index) => (
             <li key={index}>
               <CustomLink

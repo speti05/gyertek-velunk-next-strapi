@@ -1,6 +1,6 @@
 import { MagnifiableImage } from "@/components/MagnifiableImage";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
-import ReactMarkdown from "react-markdown";
+import { MarkdownContent } from "@/components/MarkdownContent";
 
 import type { InfoBlockProps } from "@/types";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
@@ -29,7 +29,7 @@ export function InfoBlock({
       )}
       <div className="info__text">
         <h2 className={`info__headline info__headline--${theme}`}>{headline}</h2>
-        <ReactMarkdown className="paragraph-reset copy">{content}</ReactMarkdown>
+        <MarkdownContent className="paragraph-reset copy">{content}</MarkdownContent>
         {cta && (
           <CustomLink href={cta.href} target={cta.isExternal ? "_blank" : "_self"} color="inherit" underline="none">
             <CustomButton variant="contained" size="large">

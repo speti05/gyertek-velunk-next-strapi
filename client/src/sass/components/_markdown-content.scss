@@ -15,3 +15,110 @@
     text-decoration: underline;
   }
 }
+
+// Strapi rich-text toolbar formats. The global `*` reset in _typography.scss pins
+// font-style and font-weight on every element, so the browser defaults never apply.
+.markdown-bold {
+  font-weight: 700;
+}
+
+.markdown-italic {
+  font-style: italic;
+}
+
+.markdown-underline {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.markdown-strikethrough {
+  text-decoration: line-through;
+}
+
+.markdown-quote {
+  margin: 1.6rem 0;
+  padding: 0.8rem 0 0.8rem 1.6rem;
+  border-left: 0.4rem solid colors.$gy-v-mid-green;
+  background-color: rgba(colors.$gy-v-light-green, 0.25);
+  color: colors.$gy-v-gray-700;
+  font-style: italic;
+
+  // Nested formats and paragraphs inherit the quote's italic instead of the reset
+  * {
+    font-style: inherit;
+  }
+}
+
+// Lists - the markers are rendered by MarkdownContent (hiker icon for unordered,
+// number badge for ordered), so the native bullets and numbers stay off.
+.markdown-list {
+  list-style: none;
+  margin: 1.6rem 0;
+  padding-left: 2rem;
+
+  // A nested list sits inside the item's content column
+  .markdown-list {
+    margin: 0.6rem 0 0;
+    padding-left: 0;
+  }
+}
+
+.markdown-list__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.markdown-list__marker {
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+}
+
+.markdown-list__number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: colors.$gy-v-dark-green;
+  color: colors.$gy-v-white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.markdown-list__content {
+  flex: 1;
+  min-width: 0;
+  // Centres a single line of text on the 3rem marker
+  min-height: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+// Code - inline `code` and fenced ``` blocks from Strapi's code button
+.markdown-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  padding: 0.1em 0.4em;
+  border-radius: 0.4rem;
+  background-color: colors.$gy-v-light-brown;
+  color: colors.$gy-v-dark-brown;
+}
+
+.markdown-code-block {
+  margin: 1.6rem 0;
+  padding: 1.6rem 2rem;
+  border-radius: 0.8rem;
+  border-left: 0.4rem solid colors.$gy-v-dark-brown;
+  background-color: colors.$gy-v-light-brown;
+  overflow-x: auto;
+
+  .markdown-code {
+    padding: 0;
+    background-color: transparent;
+    white-space: pre;
+  }
+}

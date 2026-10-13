@@ -35,7 +35,7 @@ const RESEND_INITIAL_STATE = {
 function PasswordStrengthHint({ password }: { password: string }) {
   const { PASSWORD_RULES } = useTexts();
   return (
-    <ul className="auth-page__password-rules no-list-style">
+    <ul className="auth-page__password-rules">
       {PASSWORD_RULES.map((rule) => (
         <li
           key={rule.label}
