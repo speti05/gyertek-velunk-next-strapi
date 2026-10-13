@@ -7,8 +7,8 @@
 //
 // The badge is a 256x60 frame that Google normally parks at the right edge with only
 // its first 70px - the reCAPTCHA mark - sticking out. Here it is moved to the left and
-// cropped to a circle around that mark instead. Hovering still opens the full badge, so
-// the "Privacy" and "Terms" links Google's terms of service require stay reachable.
+// cropped to a circle around that mark instead. Clicking it still opens the full badge,
+// so the "Privacy" and "Terms" links Google's terms of service require stay reachable.
 
 // The circle's diameter, shared with the scroll-to-top button in the opposite corner so
 // the two floating controls read as a pair. It is smaller than the frame Google ships,
@@ -56,10 +56,9 @@ $recaptcha-badge-z-index: 998;
   }
 
   // Opened up, it is the badge Google ships - only with its corners rounded to match.
-  // The --open class is the touch equivalent of the hover: there is no pointer to rest
-  // on the badge, so a tap opens it and use-recaptcha-badge-expand takes the class off
-  // again a few seconds later.
-  &:hover,
+  // It opens on a click or tap only, never on hover: use-recaptcha-badge-expand sets the
+  // --open class and takes it off again a few seconds later. :focus-within keeps it open
+  // for as long as keyboard focus is inside it.
   &:focus-within,
   &.grecaptcha-badge--open {
     width: $recaptcha-frame-width !important;

@@ -5,13 +5,13 @@ import { useEffect } from "react";
 const BADGE_SELECTOR = ".grecaptcha-badge";
 const OPEN_CLASS = "grecaptcha-badge--open";
 
-/** How long a tapped badge stays open before it folds back into its circle. */
+/** How long a clicked badge stays open before it folds back into its circle. */
 export const RECAPTCHA_BADGE_OPEN_DURATION = 5000;
 
 /**
- * Opens the cropped reCAPTCHA badge on a tap, the way hovering opens it with a pointer.
- * Without this the "Privacy" and "Terms" links Google's terms of service require are
- * unreachable on touch, where there is no hover at all.
+ * Opens the cropped reCAPTCHA badge on a click or tap - it deliberately does not open on
+ * hover. Without this the "Privacy" and "Terms" links Google's terms of service require
+ * would be unreachable.
  *
  * The badge belongs to Google - it is injected into <body> outside the React tree - so
  * it is driven by a class rather than by state.
