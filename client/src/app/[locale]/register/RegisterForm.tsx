@@ -136,7 +136,7 @@ function RegisterFormInner() {
     <>
       <h1 className="auth-page__title auth-page__title--register">{AUTH_REGISTER_LABEL}</h1>
       <form ref={formRef} className="auth-page__form" onSubmit={handleSubmit}>
-        <input type="hidden" name="mode" defaultValue="register" />
+        <input suppressHydrationWarning type="hidden" name="mode" defaultValue="register" />
         <CustomTextInput
           id="email"
           label={FORM_LABELS.email}

@@ -47,7 +47,7 @@ const CustomRadioGroup: React.FC<CustomRadioGroupProps> = ({
               key={option.value}
               className={`${style.option}${isSelected ? ` ${style.selected}` : ""}`}
             >
-              <input
+              <input suppressHydrationWarning
                 type="radio"
                 id={id}
                 name={name}

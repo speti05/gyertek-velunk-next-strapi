@@ -35,9 +35,9 @@ export const BLOG_LABEL = "Blogunk";
 export const BLOG_SEARCH_LABEL = "Keresés a blogbejegyzések között";
 
 // Content list
-export const CONTENT_LIST_EMPTY_TITLE = "Nincs találat.";
+export const CONTENT_LIST_EMPTY_TITLE = "Nincs találat";
 export const CONTENT_LIST_EMPTY_DESCRIPTION =
-  "Egyelőre nincs ilyen típusú bejegyzés, ami a keresési feltételeknek megfelel.";
+  "Egyelőre nincs ilyen típusú bejegyzés, ami a keresési feltételeknek megfelel";
 
 // Pagination
 export const PAGINATION_PAGE_LABEL = "Oldal";

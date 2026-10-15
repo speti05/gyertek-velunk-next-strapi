@@ -18,6 +18,12 @@ const FUNC_COLOR_LITERAL = '/(?:rgba?|hsla?|oklch)\\(/'
 const COLOR_LITERAL_MESSAGE =
   'Colour literals are not allowed - import { palette } from "@/sass/base/colors.generated" (see CLAUDE.md).'
 
+// Browser extensions (Edge autofill, password managers) stamp attributes such as
+// fdprocessedid onto native form controls before React hydrates, which trips a
+// hydration mismatch. Every raw <button>/<input> must opt out of that warning.
+const MISSING_SUPPRESS_HYDRATION =
+  "JSXOpeningElement[name.name=/^(?:button|input)$/]:not(:has(> JSXAttribute[name.name='suppressHydrationWarning']))"
+
 const eslintConfig = defineConfig([
   ...fixupConfigRules(nextVitals),
 
@@ -61,6 +67,11 @@ const eslintConfig = defineConfig([
         { selector: `Literal[value=${HEX_COLOR_LITERAL}]`, message: COLOR_LITERAL_MESSAGE },
         { selector: `Literal[value=${FUNC_COLOR_LITERAL}]`, message: COLOR_LITERAL_MESSAGE },
         { selector: `TemplateElement[value.raw=${FUNC_COLOR_LITERAL}]`, message: COLOR_LITERAL_MESSAGE },
+        {
+          selector: MISSING_SUPPRESS_HYDRATION,
+          message:
+            'Native <button>/<input> elements need suppressHydrationWarning - browser extensions add attributes (e.g. fdprocessedid) before hydration.',
+        },
       ],
     },
   },

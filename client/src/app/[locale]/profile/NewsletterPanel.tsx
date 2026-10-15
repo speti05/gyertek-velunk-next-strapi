@@ -33,7 +33,7 @@ export function NewsletterPanel({ isNewsletterSubscribed }: NewsletterPanelProps
       <h2 className="profile-panel__title">{PROFILE_NEWSLETTER_SECTION}</h2>
       <p className="profile-panel__subtitle">{PROFILE_NEWSLETTER_HINT}</p>
       <form action={newsletterAction} ref={newsletterFormRef} className="profile-panel__body">
-        <input
+        <input suppressHydrationWarning
           type="hidden"
           name="subscribe"
           value={newsletterState.subscribed ? "false" : "true"}

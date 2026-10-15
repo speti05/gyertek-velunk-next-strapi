@@ -126,10 +126,10 @@ export function ProfileForm({
             </div>
 
             {isLastNameLocked && (
-              <input type="hidden" name="lastName" value={savedValues.lastName} />
+              <input suppressHydrationWarning type="hidden" name="lastName" value={savedValues.lastName} />
             )}
             {isFirstNameLocked && (
-              <input type="hidden" name="firstName" value={savedValues.firstName} />
+              <input suppressHydrationWarning type="hidden" name="firstName" value={savedValues.firstName} />
             )}
             <CustomTextInput
               id="lastName"
@@ -160,7 +160,7 @@ export function ProfileForm({
               disabled={isFirstNameLocked}
             />
 
-            {isPhoneLocked && <input type="hidden" name="phone" value={savedValues.phone} />}
+            {isPhoneLocked && <input suppressHydrationWarning type="hidden" name="phone" value={savedValues.phone} />}
             <CustomTextInput
               id="phone"
               label={FORM_LABELS.phone}

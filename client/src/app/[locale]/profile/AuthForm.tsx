@@ -51,7 +51,7 @@ function AuthFormInner({ notice }: AuthFormProps) {
       <h1 className="auth-page__title">{AUTH_LOGIN_LABEL}</h1>
       <CustomAlertMessage warningMessage={notice} />
       <form ref={formRef} className="auth-page__form" onSubmit={handleSubmit}>
-        <input type="hidden" name="mode" defaultValue="login" />
+        <input suppressHydrationWarning type="hidden" name="mode" defaultValue="login" />
         <CustomTextInput
           id="email"
           label={FORM_LABELS.email}

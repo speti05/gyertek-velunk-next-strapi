@@ -341,6 +341,7 @@ export function TourCalendar({
           <div className="tour-calendar__toolbar">
             <button
               type="button"
+              suppressHydrationWarning
               className="tour-calendar__title-button"
               aria-haspopup="menu"
               aria-expanded={Boolean(pickerAnchor)}
@@ -356,6 +357,7 @@ export function TourCalendar({
             <div className="tour-calendar__controls">
               <button
                 type="button"
+                suppressHydrationWarning
                 className="tour-calendar__today-button"
                 onClick={() => goTo(today.getFullYear(), today.getMonth())}
               >
@@ -363,6 +365,7 @@ export function TourCalendar({
               </button>
               <button
                 type="button"
+                suppressHydrationWarning
                 className="tour-calendar__nav-button"
                 aria-label={CALENDAR_PREV_MONTH_ARIA}
                 onClick={() => goTo(year, month - 1)}
@@ -371,6 +374,7 @@ export function TourCalendar({
               </button>
               <button
                 type="button"
+                suppressHydrationWarning
                 className="tour-calendar__nav-button"
                 aria-label={CALENDAR_NEXT_MONTH_ARIA}
                 onClick={() => goTo(year, month + 1)}

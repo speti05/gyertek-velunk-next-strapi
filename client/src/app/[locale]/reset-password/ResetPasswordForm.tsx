@@ -34,7 +34,7 @@ function ResetPasswordFormInner({ code }: { code: string }) {
 
   return (
     <form ref={formRef} className="auth-page__form" onSubmit={handleSubmit}>
-      <input type="hidden" name="code" value={code} />
+      <input suppressHydrationWarning type="hidden" name="code" value={code} />
       <CustomTextInput
         id="password"
         label={AUTH_NEW_PASSWORD_LABEL}
