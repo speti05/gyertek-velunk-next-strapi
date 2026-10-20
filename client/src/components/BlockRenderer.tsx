@@ -17,7 +17,7 @@ import { PictureGallery } from "@/components/blocks/PictureGallery";
 import { Socials } from "@/components/blocks/Socials";
 import { CalendarBlock } from "@/components/blocks/CalendarBlock";
 
-function blockRenderer(block: Block, index: number, searchParams: CustomSearchParams) {
+function blockRenderer(block: Block, index: number, searchParams: CustomSearchParams = {}) {
   switch (block.__component) {
     case "blocks.hero-section":
       return <HeroSection {...block} key={index} />;

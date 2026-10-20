@@ -121,7 +121,7 @@ export function Header({ data, socialLinks, showLanguageSwitcher = false }: Head
     <>
       <header className={headerClassName}>
         <div className="site-header__inner">
-          <CustomTooltip title={logo.image.alternativeText || LOGO_ALT_FALLBACK} placement="right">
+          <CustomTooltip title={logo?.image?.alternativeText || LOGO_ALT_FALLBACK} placement="right">
             <span className="site-header__logo header__logo_wrapper">
               <CustomLink
                 href={localizePath(Route.Home)}
@@ -131,12 +131,12 @@ export function Header({ data, socialLinks, showLanguageSwitcher = false }: Head
                 onClick={closeMenu}
               >
                 <StrapiImage
-                  src={logo.image.url}
-                  alt={logo.image.alternativeText || LOGO_ALT_FALLBACK}
+                  src={logo?.image?.url}
+                  alt={logo?.image?.alternativeText || LOGO_ALT_FALLBACK}
                   className="header__logo"
                   width={256}
                   // Must match the file's ratio: CSS sets only the width, so a wrong height attribute shifts the layout
-                  height={heightForWidth(logo.image, 256, 174)}
+                  height={heightForWidth(logo?.image, 256, 174)}
                 />
               </CustomLink>
             </span>

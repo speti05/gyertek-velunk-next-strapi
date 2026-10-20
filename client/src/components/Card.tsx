@@ -14,9 +14,9 @@ export interface CardProps {
   title: string;
   description?: string;
   slug: string;
-  image: ImageProps;
+  image: ImageProps | null;
   price?: number;
-  startDate?: string;
+  startDate?: string | null;
   createdAt: string;
   basePath: Route;
   difficulty?: number;
@@ -44,8 +44,8 @@ export async function Card({
     >
       <div className="content-items__card-img">
         <StrapiImageWithSkeleton
-          src={image.url}
-          alt={image.alternativeText || "No alternative text provided"}
+          src={image?.url}
+          alt={image?.alternativeText || "No alternative text provided"}
           width={400}
           height={400}
         />

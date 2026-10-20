@@ -22,10 +22,10 @@ export async function Footer({ data }: FooterProps) {
     <footer className="footer">
       <span className="footer__logo-wrapper">
         <StrapiImage
-          src={logo.image.url}
-          alt={logo.image.alternativeText || LOGO_ALT_FALLBACK}
+          src={logo?.image?.url}
+          alt={logo?.image?.alternativeText || LOGO_ALT_FALLBACK}
           width={100}
-          height={heightForWidth(logo.image, 100, 100)}
+          height={heightForWidth(logo?.image, 100, 100)}
           className="footer__logo"
         />
       </span>

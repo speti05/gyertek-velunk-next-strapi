@@ -6,7 +6,7 @@ import { LinkProps } from "@/types";
 interface HeroTextAndButtonsProps {
   headline: string;
   theme?: "turquoise" | "brown";
-  linkButtons: LinkProps[];
+  linkButtons?: LinkProps[];
   welcomeText?: string;
 }
 

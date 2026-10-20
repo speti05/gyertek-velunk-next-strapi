@@ -36,7 +36,7 @@ type EventSignupFormProps = {
   price?: string;
   difficulty?: number;
   image?: {
-    url: string;
+    url: string | null | undefined;
     alt: string;
   };
   userProfile?: UserProfile | null;

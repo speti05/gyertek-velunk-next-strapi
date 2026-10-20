@@ -28,7 +28,7 @@ export interface ImageProps {
 
 export interface LogoProps {
   logoText: string;
-  image: ImageProps;
+  image: ImageProps | null;
 }
 
 export interface SocialLinksProps {
@@ -76,7 +76,7 @@ interface BaseBlogProps {
   title: string;
   description?: string;
   slug: string;
-  image: ImageProps;
+  image: ImageProps | null;
   author: string;
   featured: boolean;
   disabled: boolean;
@@ -159,7 +159,7 @@ export type Block =
 export interface HeroSectionProps extends Base<"blocks.hero-section"> {
   theme: "turquoise" | "brown";
   heading: string;
-  image: ImageProps;
+  image: ImageProps | null;
   cta?: LinkProps;
   logo?: LogoProps;
   author?: string;
@@ -171,7 +171,7 @@ export interface InfoBlockProps extends Base<"blocks.info-block"> {
   reversed?: boolean;
   headline: string;
   content: string;
-  image: ImageProps;
+  image: ImageProps | null;
   cta?: LinkProps;
   /** Editor-controlled here, unlike the article blocks where magnifying is always on. */
   isMagnifyEnabled?: boolean;
@@ -181,7 +181,7 @@ export interface FeaturedArticleProps extends Base<"blocks.featured-article"> {
   headline: string;
   excerpt: string;
   link: LinkProps;
-  image: ImageProps;
+  image: ImageProps | null;
 }
 
 export interface SubscribeProps extends Base<"blocks.subscribe"> {
@@ -189,7 +189,7 @@ export interface SubscribeProps extends Base<"blocks.subscribe"> {
   content: string;
   placeholder: string;
   buttonText: string;
-  image: ImageProps;
+  image: ImageProps | null;
 }
 
 export interface HeadingProps extends Base<"blocks.heading"> {
@@ -199,7 +199,7 @@ export interface HeadingProps extends Base<"blocks.heading"> {
 
 export interface ParagraphWithImageProps extends Base<"blocks.paragraph-with-image"> {
   content: string;
-  image: ImageProps;
+  image: ImageProps | null;
   reversed?: boolean;
   imageLandscape?: boolean;
 }
@@ -224,7 +224,7 @@ export interface SearchableCardListProps extends Base<"blocks.searchable-card-li
 export interface HeroWithCalendarProps extends Base<"blocks.hero-with-calendar"> {
   headline: string;
   contentCollectionType: ContentCollectionType;
-  image: ImageProps;
+  image: ImageProps | null;
   theme: "turquoise" | "brown";
   searchParams: CustomSearchParams;
   Link?: LinkProps[];
@@ -239,7 +239,7 @@ export interface CalendarBlockProps extends Base<"blocks.calendar"> {
 
 export interface HeroWithTextProps extends Base<"blocks.hero-with-text"> {
   headline: string;
-  images: ImageProps[];
+  images: ImageProps[] | null;
   searchParams: CustomSearchParams;
   link?: LinkProps[];
   welcomeText?: string;
@@ -254,7 +254,7 @@ export interface ParagraphProps extends Base<"blocks.paragraph"> {
 export interface FullImageProps extends Base<"blocks.full-image"> {
   id: number;
   __component: "blocks.full-image";
-  image: ImageProps;
+  image: ImageProps | null;
 }
 
 export interface TextBlockProps extends Base<"blocks.text-content-block"> {
@@ -275,7 +275,7 @@ export interface YoutubeVideoProps extends Base<"blocks.youtube-video"> {
 export interface PictureGalleryProps extends Base<"blocks.picture-gallery"> {
   title?: string;
   description?: string;
-  images: ImageProps[];
+  images: ImageProps[] | null;
   aspectRatio?: "16:9" | "4:3" | "1:1";
   autoplay?: boolean;
   slideIntervalMs?: number;

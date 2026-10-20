@@ -18,7 +18,10 @@ async function loader(slug: string) {
   };
 }
 
-export default async function DynamicPageRoute({ params, searchParams }: PageParams) {
+export default async function DynamicPageRoute({
+  params,
+  searchParams,
+}: PageParams & { params: Promise<{ slug: string }> }) {
   const slug = (await params).slug;
   const { blocks, title, headlineBackgroundUrl } = await loader(slug);
   return (

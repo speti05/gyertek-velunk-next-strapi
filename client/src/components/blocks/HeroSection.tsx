@@ -30,8 +30,8 @@ export function HeroSection({
     <section className={`hero${hasTableOfContent ? " hero--with-toc" : ""}`}>
       <div className="hero__background">
         <StrapiImageWithSkeleton
-          src={image.url}
-          alt={image.alternativeText || "No alternative text provided"}
+          src={image?.url}
+          alt={image?.alternativeText || "No alternative text provided"}
           className="hero__background-image"
           width={1920}
           height={1080}
@@ -67,7 +67,7 @@ export function HeroSection({
           </CustomLink>
         </CustomButton>
       )}
-      {logo && (
+      {logo?.image?.url && (
         <StrapiImage
           src={logo.image.url}
           alt={logo.image.alternativeText || "No alternative text provided"}

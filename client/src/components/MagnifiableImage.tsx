@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useTexts } from "@/context/locale-context";
 import { StrapiImage, type StrapiImageProps } from "@/components/StrapiImage";
 import { StrapiImageWithSkeleton } from "@/components/StrapiImageWithSkeleton";
+import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import CustomMagnifyButton from "@/components/custom-ui-components/custom-magnify-button/custom-magnify-button";
 import CustomLightbox from "@/components/custom-ui-components/custom-lightbox/custom-lightbox";
 
@@ -36,6 +37,21 @@ export function MagnifiableImage({
 }: Readonly<MagnifiableImageProps>) {
   const { IMAGE_MAGNIFY_ARIA, IMAGE_LIGHTBOX_ARIA } = useTexts();
   const [open, setOpen] = useState(false);
+
+  // Nothing to enlarge: the frame keeps its place in the block with a placeholder in it
+  if (!imageProps.src) {
+    return (
+      <div className={`magnifiable-image${frameClassName ? ` ${frameClassName}` : ""}`}>
+        <ImagePlaceholder
+          alt={imageProps.alt}
+          className={imageProps.className}
+          skeletonClassName={skeletonClassName}
+          width={imageProps.width}
+          height={imageProps.height}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className={`magnifiable-image${frameClassName ? ` ${frameClassName}` : ""}`}>

@@ -41,10 +41,10 @@ export function Subscribe({
   const zodErrors = formState?.zodErrors?.email;
   const errorMessage = zodErrors || formState?.errorMessage;
 
-  const imageUrl = `${getStrapiMediaURL()}${image?.url}`;
+  const imageUrl = image?.url ? `${getStrapiMediaURL()}${image.url}` : null;
 
   return (
-    <section className="newsletter" style={{ backgroundImage: `url(${imageUrl})` }}>
+    <section className="newsletter" style={imageUrl ? { backgroundImage: `url(${imageUrl})` } : undefined}>
       <div className="newsletter__backdrop" />
       <div className="newsletter__inner">
         <div className="newsletter__info">

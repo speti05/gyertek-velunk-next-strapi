@@ -31,7 +31,7 @@ export const isRecaptchaConfigured = !!(siteKey && !siteKey.includes("your_recap
 export function RecaptchaProvider({ children }: { children: React.ReactNode }) {
   const { recaptchaConsented } = useCookieConsent();
 
-  if (!isRecaptchaConfigured || !recaptchaConsented) {
+  if (!siteKey || !isRecaptchaConfigured || !recaptchaConsented) {
     return (
       <RecaptchaContext.Provider value={{ executeRecaptcha: undefined }}>
         {children}

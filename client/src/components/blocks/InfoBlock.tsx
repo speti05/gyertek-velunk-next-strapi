@@ -19,7 +19,7 @@ export function InfoBlock({
       {image && (
         <MagnifiableImage
           src={image?.url}
-          alt={image.alternativeText || "No alternative text provided"}
+          alt={image?.alternativeText || "No alternative text provided"}
           height={500}
           width={600}
           className="info__image"

@@ -22,8 +22,8 @@ export function FeaturedArticle({
         </CustomLink>
       </div>
       <MagnifiableImage
-        src={image.url}
-        alt={image.alternativeText || "No alternative text provided"}
+        src={image?.url}
+        alt={image?.alternativeText || "No alternative text provided"}
         height={200}
         width={300}
         frameClassName="featured-article__frame"

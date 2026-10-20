@@ -5,6 +5,7 @@ import { StrapiImage, type StrapiImageProps } from "@/components/StrapiImage";
 import CustomSkeleton from "@/components/custom-ui-components/custom-skeleton/custom-skeleton";
 import CustomIcon from "@/components/custom-ui-components/custom-icon/custom-icon";
 import CustomCircularProgress from "@/components/custom-ui-components/custom-circular-progress/custom-circular-progress";
+import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 
 interface StrapiImageWithSkeletonProps extends Omit<StrapiImageProps, "ref"> {
   /** Extra classes for the placeholder - a border radius, mostly, so it matches the image. */
@@ -28,6 +29,19 @@ export function StrapiImageWithSkeleton({
   const imageRef = useCallback((image: HTMLImageElement | null) => {
     if (image?.complete) setLoaded(true);
   }, []);
+
+  // No file to wait for: the placeholder stays, without the spinner that promises one
+  if (!imageProps.src) {
+    return (
+      <ImagePlaceholder
+        alt={imageProps.alt}
+        className={imageProps.className}
+        skeletonClassName={skeletonClassName}
+        width={imageProps.width}
+        height={imageProps.height}
+      />
+    );
+  }
 
   return (
     <>
