@@ -19,11 +19,14 @@ import { CustomDialog } from "@/components/custom-ui-components/custom-dialog/cu
 import { CustomConfirmDialog } from "@/components/custom-ui-components/custom-confirm-dialog/custom-confirm-dialog";
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
 import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
+import CustomDatePicker from "@/components/custom-ui-components/custom-date-picker/custom-date-picker";
 import { CustomSelect } from "@/components/custom-ui-components/custom-select/custom-select";
 import { CustomCheckbox } from "@/components/custom-ui-components/custom-checkbox/custom-checkbox";
 import CustomButton from "@/components/custom-ui-components/custom-button/custom-button";
 import { UserProfile } from "@/data/auth-service";
 import { formatDate } from "@/utils/format-date";
+import { parsePrice } from "@/utils/format-price";
+import { Price } from "@/components/Price";
 import { getEuropeanCountries, DEFAULT_COUNTRY } from "@/utils/european-countries";
 import CustomTypography from "@/components/custom-ui-components/custom-typography/custom-typography";
 import { colors } from "@/sass/mui-override/colors";
@@ -397,7 +400,7 @@ export function TourSignupDialog({
     setCompanionBirthCountryCustoms((prev) => prev.filter((_, i) => i !== idx));
   }
 
-  const numericPrice = price ? parseFloat(price.replace(/[^0-9.]/g, "")) : 0;
+  const numericPrice = parsePrice(price);
   const totalTravelers = 1 + companions.length;
   const totalPrice = numericPrice * totalTravelers;
 
@@ -453,7 +456,7 @@ export function TourSignupDialog({
         {step === 0 && (
           <CustomBox sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <CustomAlertMessage infoMessage={SIGNUP_BILLING_INFO} />
-            <div className="signup-form__name-container">
+            <div className="signup-form__name-container signup-form__name-container--stack-on-phone">
               <CustomTextInput
                 label={FORM_LABELS.lastName}
                 value={userProfile.lastName ?? ""}
@@ -466,7 +469,9 @@ export function TourSignupDialog({
               />
             </div>
             <CustomTextInput label={FORM_LABELS.phone} value={userProfile.phone ?? ""} disabled />
-            <CustomTypography variant="body1" sx={{ fontWeight: 600, mt: 1 }}>
+            {/* body1 resolves to 10px against the 62.5% root, so the size is set explicitly
+                to match the dialog's own text */}
+            <CustomTypography variant="body1" sx={{ fontSize: "1.8rem", fontWeight: 600, mt: 1 }}>
               {SIGNUP_BILLING_ADDRESS_LABEL}
             </CustomTypography>
             <CustomSelect
@@ -478,7 +483,7 @@ export function TourSignupDialog({
               error={!!stepErrors.billingCountry}
               helperText={stepErrors.billingCountry}
             />
-            <div className="signup-form__name-container">
+            <div className="signup-form__name-container signup-form__name-container--stack-on-phone">
               <CustomTextInput
                 label={FORM_LABELS.city}
                 value={userProfile.city ?? ""}
@@ -492,7 +497,7 @@ export function TourSignupDialog({
                 error={stepErrors.billingZip}
               />
             </div>
-            <div className="signup-form__name-container">
+            <div className="signup-form__name-container signup-form__name-container--stack-on-phone">
               <CustomTextInput
                 label={FORM_LABELS.street}
                 value={userProfile.street ?? ""}
@@ -574,17 +579,14 @@ export function TourSignupDialog({
               required
               slotProps={{ htmlInput: { maxLength: MAX_PLACE_NAME } }}
             />
-            <CustomTextInput
+            <CustomDatePicker
               label={SIGNUP_TRAVEL_BIRTH_DATE}
-              type="date"
               value={birthDate}
-              onChange={(e) => setBirthDate(e.target.value)}
+              onChange={setBirthDate}
               error={stepErrors.birthDate}
               required
-              slotProps={{
-                inputLabel: { shrink: true },
-                htmlInput: { min: MIN_BIRTH_DATE, max: getMaxBirthDate() },
-              }}
+              minDate={MIN_BIRTH_DATE}
+              maxDate={getMaxBirthDate()}
             />
             <CustomSelect
               id="document-type"
@@ -604,33 +606,24 @@ export function TourSignupDialog({
               required
               slotProps={{ htmlInput: { maxLength: MAX_DOCUMENT_NUMBER } }}
             />
-            <div className="signup-form__name-container">
-              <CustomTextInput
+            <div className="signup-form__name-container signup-form__name-container--stack-on-phone">
+              <CustomDatePicker
                 label={SIGNUP_TRAVEL_DOCUMENT_ISSUE_DATE}
-                type="date"
                 value={documentIssueDate}
-                onChange={(e) => setDocumentIssueDate(e.target.value)}
+                onChange={setDocumentIssueDate}
                 error={stepErrors.documentIssueDate}
                 required
-                slotProps={{
-                  inputLabel: { shrink: true },
-                  htmlInput: { min: birthDate || MIN_BIRTH_DATE, max: getToday() },
-                }}
+                minDate={birthDate || MIN_BIRTH_DATE}
+                maxDate={getToday()}
               />
-              <CustomTextInput
+              <CustomDatePicker
                 label={SIGNUP_TRAVEL_DOCUMENT_EXPIRY_DATE}
-                type="date"
                 value={documentExpiryDate}
-                onChange={(e) => setDocumentExpiryDate(e.target.value)}
+                onChange={setDocumentExpiryDate}
                 error={stepErrors.documentExpiryDate}
                 required
-                slotProps={{
-                  inputLabel: { shrink: true },
-                  htmlInput: {
-                    min: [documentIssueDate, startDate].filter(Boolean).sort().at(-1) || undefined,
-                    max: getMaxExpiryDate(),
-                  },
-                }}
+                minDate={[documentIssueDate, startDate].filter(Boolean).sort().at(-1) || undefined}
+                maxDate={getMaxExpiryDate()}
               />
             </div>
             <CustomTextInput
@@ -681,7 +674,7 @@ export function TourSignupDialog({
                     {SIGNUP_COMPANION_REMOVE}
                   </CustomButton>
                 </CustomBox>
-                <div className="signup-form__name-container">
+                <div className="signup-form__name-container signup-form__name-container--stack-on-phone">
                   <CustomTextInput
                     label={FORM_LABELS.lastName}
                     value={companion.lastName}
@@ -753,17 +746,14 @@ export function TourSignupDialog({
                   required
                   slotProps={{ htmlInput: { maxLength: MAX_PLACE_NAME } }}
                 />
-                <CustomTextInput
+                <CustomDatePicker
                   label={SIGNUP_TRAVEL_BIRTH_DATE}
-                  type="date"
                   value={companion.birthDate}
-                  onChange={(e) => updateCompanion(idx, "birthDate", e.target.value)}
+                  onChange={(value) => updateCompanion(idx, "birthDate", value)}
                   error={stepErrors[`companion_${idx}_birthDate`]}
                   required
-                  slotProps={{
-                    inputLabel: { shrink: true },
-                    htmlInput: { min: MIN_BIRTH_DATE, max: getMaxBirthDate() },
-                  }}
+                  minDate={MIN_BIRTH_DATE}
+                  maxDate={getMaxBirthDate()}
                 />
                 <CustomSelect
                   id={`companion-${idx}-doc-type`}
@@ -783,32 +773,25 @@ export function TourSignupDialog({
                   required
                   slotProps={{ htmlInput: { maxLength: MAX_DOCUMENT_NUMBER } }}
                 />
-                <div className="signup-form__name-container">
-                  <CustomTextInput
+                <div className="signup-form__name-container signup-form__name-container--stack-on-phone">
+                  <CustomDatePicker
                     label={SIGNUP_TRAVEL_DOCUMENT_ISSUE_DATE}
-                    type="date"
                     value={companion.documentIssueDate}
-                    onChange={(e) => updateCompanion(idx, "documentIssueDate", e.target.value)}
+                    onChange={(value) => updateCompanion(idx, "documentIssueDate", value)}
                     error={stepErrors[`companion_${idx}_documentIssueDate`]}
                     required
-                    slotProps={{ inputLabel: { shrink: true } }}
                   />
-                  <CustomTextInput
+                  <CustomDatePicker
                     label={SIGNUP_TRAVEL_DOCUMENT_EXPIRY_DATE}
-                    type="date"
                     value={companion.documentExpiryDate}
-                    onChange={(e) => updateCompanion(idx, "documentExpiryDate", e.target.value)}
+                    onChange={(value) => updateCompanion(idx, "documentExpiryDate", value)}
                     error={stepErrors[`companion_${idx}_documentExpiryDate`]}
                     required
-                    slotProps={{
-                      inputLabel: { shrink: true },
-                      htmlInput: {
-                        min:
-                          [companion.documentIssueDate, startDate].filter(Boolean).sort().at(-1) ||
-                          undefined,
-                        max: getMaxExpiryDate(),
-                      },
-                    }}
+                    minDate={
+                      [companion.documentIssueDate, startDate].filter(Boolean).sort().at(-1) ||
+                      undefined
+                    }
+                    maxDate={getMaxExpiryDate()}
                   />
                 </div>
                 <CustomTextInput
@@ -869,12 +852,12 @@ export function TourSignupDialog({
                   <>
                     <span className="font-semibold">{SIGNUP_SUMMARY_TOTAL_PRICE}:</span>
                     <span>
-                      {totalPrice.toLocaleString("hu-HU")} {CURRENCY}
+                      <Price amount={totalPrice} currency={CURRENCY} />{" "}
                       <CustomTypography
                         sx={{ fontSize: "1.5rem", color: colors.label.green }}
                         component="span"
                       >
-                        ({totalTravelers} × {numericPrice.toLocaleString("hu-HU")} {CURRENCY})
+                        ({totalTravelers} × <Price amount={numericPrice} currency={CURRENCY} />)
                       </CustomTypography>
                     </span>
                   </>

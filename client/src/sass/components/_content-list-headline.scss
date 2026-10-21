@@ -19,8 +19,8 @@
   &__backdrop {
     position: absolute;
     inset: 0;
-    background-color: colors.scrim(0.15);
-    backdrop-filter: blur(1px);
+    //background-color: colors.scrim(0.15);
+    //backdrop-filter: blur(1px);
   }
 
   &__title {

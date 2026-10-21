@@ -74,6 +74,7 @@
     },
     "price": {
       "type": "string",
+      "regex": "^[0-9]+$",
       "pluginOptions": {
         "i18n": {
           "localized": false

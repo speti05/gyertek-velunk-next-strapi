@@ -5,6 +5,7 @@ import { useLocale, useLocalizedPath, useTexts } from "@/context/locale-context"
 import { useActionState, useState, type ReactNode } from "react";
 import Image from "next/image";
 import { formatDate } from "@/utils/format-date";
+import { Price } from "@/components/Price";
 import { StrapiImage } from "@/components/StrapiImage";
 import { eventsSubscribeAction } from "@/data/actions";
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
@@ -192,7 +193,7 @@ function EventSignupFormInner({
             <div className="signup-form__details-row">
               <dt>{FORM_LABELS.price}</dt>
               <dd>
-                {price} {CURRENCY}
+                <Price amount={price} currency={CURRENCY} />
               </dd>
             </div>
           )}

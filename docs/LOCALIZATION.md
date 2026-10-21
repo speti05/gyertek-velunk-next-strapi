@@ -246,10 +246,13 @@ just the locale code: adding a locale means deciding its formatting region too.
 
 ### Not formatted on purpose
 
-**`<input type="date">` fields** in the signup dialog. The browser renders and parses these
-in *its own* locale, not the site's, and that cannot be overridden. Their `value` is always
-ISO (`1985-03-15`), which is what gets stored — so the stored value is language-neutral,
-same principle as §3's "values that are stored, not shown".
+**Date fields** in the signup dialog. They are `CustomDatePicker`
+(`custom-ui-components/custom-date-picker/`), built on MUI X `DatePicker` with the dayjs
+adapter. The picker *displays* in the site's locale (dayjs `hu` / `en-gb`, matching `INTL_LOCALE`,
+with MUI's `huHU` / `enUS` texts), but the value it
+hands back is always ISO (`1985-03-15`), which is what gets stored. So the stored value
+is language-neutral, the same principle as §3's "values that are stored, not shown". Any
+new date field uses this component, not `<input type="date">`.
 
 **Machine-readable dates** — `<time datetime>`, canonical metadata, sitemap entries — stay
 ISO. They are read by crawlers, not people.
@@ -261,7 +264,7 @@ ISO. They are read by crawlers, not people.
 | What | Status |
 | --- | --- |
 | `© 2026` in every e-mail footer | `new Date().getFullYear()` — a bare number, identical in every language |
-| Birth / document dates in the admin signup e-mail | raw ISO, straight from the `type="date"` input — see above |
+| Birth / document dates in the admin signup e-mail | raw ISO, straight from `CustomDatePicker` — see above |
 | The user's confirmation e-mail | prints the tour **title** and price, no date |
 
 So there is no server-side `formatDate` and no `INTL_LOCALE` in the Strapi dictionaries —

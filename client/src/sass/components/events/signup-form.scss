@@ -109,6 +109,16 @@
     & .input__container {
       width: 48%;
     }
+
+    &--stack-on-phone {
+      @include mixins.respond(phone) {
+        flex-direction: column;
+
+        & .input__container {
+          width: 100%;
+        }
+      }
+    }
   }
 
   &__error {
@@ -157,7 +167,6 @@
     height: 400px;
     width: 100%;
   }
-
 }
 
 @include mixins.respond(tablet) {

@@ -7,6 +7,7 @@ import { ProfileForm } from "./ProfileForm";
 import { NewsletterPanel } from "./NewsletterPanel";
 import { SignupDetailsToggle } from "./SignupDetailsToggle";
 import { formatDate } from "@/utils/format-date";
+import { Price } from "@/components/Price";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import CustomChip from "@/components/custom-ui-components/custom-chip/custom-chip";
 import { StrapiImage } from "@/components/StrapiImage";
@@ -156,9 +157,11 @@ export default async function ProfilePage() {
                                     <span className="profile-tour__meta-label">
                                       {FORM_LABELS.price}
                                     </span>
-                                    <span className="profile-tour__meta-value">
-                                      {signup.event.price} {CURRENCY}
-                                    </span>
+                                    <Price
+                                      className="profile-tour__meta-value"
+                                      amount={signup.event.price}
+                                      currency={CURRENCY}
+                                    />
                                   </li>
                                 )}
                               </ul>

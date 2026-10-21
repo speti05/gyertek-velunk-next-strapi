@@ -8,6 +8,7 @@ import { StrapiImageWithSkeleton } from "./StrapiImageWithSkeleton";
 import { formatDate } from "@/utils/format-date";
 import { truncateText } from "@/utils/text-utils";
 import { TourDifficultyBadge } from "./TourDifficultyBadge";
+import { Price } from "./Price";
 
 export interface CardProps {
   documentId: string;
@@ -15,7 +16,7 @@ export interface CardProps {
   description?: string;
   slug: string;
   image: ImageProps | null;
-  price?: number;
+  price?: string | number;
   startDate?: string | null;
   createdAt: string;
   basePath: Route;
@@ -58,8 +59,7 @@ export async function Card({
         <div className="content-items__card-text__card-meta">
           {price && (
             <p>
-              {price}
-              <span> {CURRENCY}</span>
+              <Price amount={price} currency={CURRENCY} />
               <span> / {CARD_PERSON} </span>
             </p>
           )}

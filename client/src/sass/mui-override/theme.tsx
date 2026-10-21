@@ -3,6 +3,8 @@
 // this color import should be the first
 import { colors } from "./colors";
 import { createTheme } from "@mui/material/styles";
+// registers the date picker's component keys (MuiPickersOutlinedInput, ...) on the theme
+import type {} from "@mui/x-date-pickers/themeAugmentation";
 
 declare module "@mui/material/Chip" {
   interface ChipPropsSizeOverrides {
@@ -280,6 +282,151 @@ export const theme = createTheme({
       },
     },
 
+    // The date picker renders its own field (a section list, not an <input>), so the
+    // MuiOutlinedInput rules above never reach it. These mirror them so a date field
+    // sits in a form looking exactly like the text fields around it.
+    MuiPickersOutlinedInput: {
+      styleOverrides: {
+        root: {
+          // The notch in the outline is sized at 0.75em of this font size, so it has to
+          // match the text input's root, or the notch comes out narrower than the label
+          // and the border cuts through its text
+          fontSize: "2rem",
+          fontFamily: "var(--font-source-sans-3), sans-serif",
+          fontWeight: 300,
+          backgroundColor: colors.textInput.main,
+          borderRadius: "999px",
+          // the same side padding as the text input's value, clear of the pill's curve
+          paddingLeft: "20px",
+
+          "& .MuiPickersOutlinedInput-notchedOutline": {
+            borderColor: colors.textInput.border,
+
+            "& legend": {
+              marginLeft: "6px",
+            },
+          },
+
+          "&:not(.Mui-disabled):not(.Mui-error):hover .MuiPickersOutlinedInput-notchedOutline": {
+            borderColor: colors.textInput.border,
+          },
+
+          "&.Mui-disabled .MuiPickersOutlinedInput-notchedOutline": {
+            borderColor: colors.textInput.disabled,
+          },
+
+          "&.Mui-focused:not(.Mui-error) .MuiPickersOutlinedInput-notchedOutline": {
+            borderColor: colors.textInput.borderFocused,
+            borderWidth: "2px",
+          },
+
+          // The calendar button fills the pill's right end: a circle as tall as the
+          // field, flush with its edge, so its hover state matches the rounded corner
+          "&.MuiPickersInputBase-adornedEnd": {
+            paddingRight: 0,
+          },
+          "& .MuiInputAdornment-positionEnd": {
+            height: "auto",
+            maxHeight: "none",
+            marginLeft: 0,
+          },
+          "& .MuiInputAdornment-positionEnd .MuiIconButton-root": {
+            width: "4.8rem",
+            height: "4.8rem",
+            margin: 0,
+
+            [TOUCH]: {
+              width: TOUCH_CONTROL_HEIGHT,
+              height: TOUCH_CONTROL_HEIGHT,
+            },
+          },
+        },
+        sectionsContainer: {
+          // pinned to the text input's height; the sections are centred through flex
+          boxSizing: "border-box",
+          height: "4.8rem",
+          padding: 0,
+          alignItems: "center",
+          fontSize: "1.5rem",
+          color: colors.textInput.textColor,
+
+          [TOUCH]: {
+            height: TOUCH_CONTROL_HEIGHT,
+          },
+        },
+      },
+    },
+
+    // The date picker's calendar sizes its text in rem assuming a 16px root, but
+    // _base.scss sets the html font-size to 62.5%, so out of the box every label in
+    // the overlay came out at ~60% size. These restate the sizes on our 10px scale,
+    // in line with the 1.5rem the form fields use. The day cells themselves are sized
+    // in px by MUI, so only the text has to follow.
+    MuiPickersCalendarHeader: {
+      styleOverrides: {
+        label: {
+          fontSize: "1.6rem",
+        },
+        switchViewIcon: {
+          fontSize: "2.4rem",
+        },
+      },
+    },
+    MuiPickersArrowSwitcher: {
+      styleOverrides: {
+        root: {
+          "& .MuiSvgIcon-root": {
+            fontSize: "2.4rem",
+          },
+        },
+      },
+    },
+    MuiDayCalendar: {
+      styleOverrides: {
+        weekDayLabel: {
+          fontSize: "1.3rem",
+        },
+      },
+    },
+    MuiPickerDay: {
+      styleOverrides: {
+        root: {
+          fontSize: "1.4rem",
+        },
+      },
+    },
+    MuiYearCalendar: {
+      styleOverrides: {
+        button: {
+          fontSize: "1.6rem",
+        },
+      },
+    },
+    MuiMonthCalendar: {
+      styleOverrides: {
+        button: {
+          fontSize: "1.6rem",
+        },
+      },
+    },
+    // the header of the full-screen picker shown on touch devices
+    MuiPickersToolbar: {
+      styleOverrides: {
+        root: {
+          "& .MuiTypography-overline": {
+            fontSize: "1.2rem",
+          },
+        },
+      },
+    },
+    MuiDatePickerToolbar: {
+      styleOverrides: {
+        title: {
+          fontSize: "3.4rem",
+        },
+      },
+    },
+
     // Input Label styling
     MuiInputLabel: {
       styleOverrides: {
@@ -524,6 +671,13 @@ export const theme = createTheme({
         },
         text: {
           fontSize: "0.75rem",
+          // The number is drawn in the icon's 24-unit viewBox, so a rem size shrinks with
+          // the html font-size and becomes barely legible on phones. A fixed size keeps it
+          // readable there.
+          [TOUCH]: {
+            fontSize: "12px",
+            fontWeight: 600,
+          },
         },
       },
     },

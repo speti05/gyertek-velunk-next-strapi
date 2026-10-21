@@ -90,7 +90,14 @@ const eslintConfig = defineConfig([
         {
           patterns: [
             {
-              group: ['@mui/material', '@mui/material/*', '@mui/icons-material', '@mui/icons-material/*'],
+              group: [
+                '@mui/material',
+                '@mui/material/*',
+                '@mui/icons-material',
+                '@mui/icons-material/*',
+                '@mui/x-date-pickers',
+                '@mui/x-date-pickers/*',
+              ],
               allowTypeImports: true,
               message:
                 'Use (or create) a wrapper in src/components/custom-ui-components/ instead of importing MUI directly.',

@@ -5,6 +5,8 @@ import { useLocale, useTexts } from "@/context/locale-context";
 import type { EventSignupEntry } from "@/data/loaders";
 import CustomAccordion from "@/components/custom-ui-components/custom-accordion/custom-accordion";
 import { formatDate } from "@/utils/format-date";
+import { parsePrice } from "@/utils/format-price";
+import { Price } from "@/components/Price";
 
 interface SignupDetailsToggleProps {
   signup: EventSignupEntry;
@@ -52,7 +54,7 @@ export function SignupDetailsToggle({ signup }: SignupDetailsToggleProps) {
   const { PROFILE_SIGNUP_DETAILS_SHOW, FORM_LABELS, SIGNUP_STEP_BILLING, SIGNUP_STEP_TRAVEL, SIGNUP_STEP_COMPANIONS, SIGNUP_TRAVEL_BIRTH_COUNTRY, SIGNUP_TRAVEL_BIRTH_PLACE, SIGNUP_TRAVEL_BIRTH_DATE, SIGNUP_TRAVEL_DOCUMENT_TYPE, SIGNUP_TRAVEL_DOCUMENT_NUMBER, SIGNUP_TRAVEL_DOCUMENT_ISSUE_DATE, SIGNUP_TRAVEL_DOCUMENT_EXPIRY_DATE, SIGNUP_TRAVEL_ALLERGIES, SIGNUP_TRAVEL_FB_LINK, SIGNUP_SUMMARY_NOTES, SIGNUP_BILLING_WANT_INVOICE, SIGNUP_BILLING_COMPANY_NAME, SIGNUP_BILLING_TAX_NUMBER, SIGNUP_COMPANION_TITLE, SIGNUP_SUMMARY_TOTAL_PRICE, SIGNUP_CONFIRM_YES, CURRENCY } = useTexts();
   const locale = useLocale();
   const totalPrice = signup.event?.price
-    ? parseFloat(signup.event.price.replace(/[^0-9.]/g, "")) *
+    ? parsePrice(signup.event.price) *
       (1 + (signup.companions?.length ?? 0))
     : null;
 
@@ -184,9 +186,11 @@ export function SignupDetailsToggle({ signup }: SignupDetailsToggleProps) {
           {totalPrice !== null && (
             <div className="profile-details__total">
               <span className="profile-details__total-label">{SIGNUP_SUMMARY_TOTAL_PRICE}</span>
-              <span className="profile-details__total-value">
-                {totalPrice.toLocaleString("hu-HU")} {CURRENCY}
-              </span>
+              <Price
+                className="profile-details__total-value"
+                amount={totalPrice}
+                currency={CURRENCY}
+              />
             </div>
           )}
         </div>

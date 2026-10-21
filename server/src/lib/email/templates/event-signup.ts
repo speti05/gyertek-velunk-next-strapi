@@ -1,5 +1,13 @@
 import type { StrapiTexts } from "../../../i18n/get-strapi-texts";
 
+// Same format as the site's Price component: thousands grouped with a dot in every
+// language. Older entries may still hold separators, so only the digits are kept.
+const parsePrice = (price?: string) => Number(price?.replace(/\D/g, "") || 0);
+const formatPrice = (amount: number) =>
+  Math.round(amount)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
 export const userEmailContent = (
   t: StrapiTexts,
   firstName: string,
@@ -13,11 +21,11 @@ export const userEmailContent = (
   contactEmail?: string,
   organizationName?: string
 ) => {
-  const numericPrice = price ? parseFloat(price.replace(/[^0-9.]/g, "")) : 0;
+  const numericPrice = parsePrice(price);
   const travelers = totalTravelers ?? 1;
   const totalPrice = numericPrice * travelers;
   const totalPriceFormatted =
-    totalPrice > 0 ? `${totalPrice.toLocaleString("hu-HU")} ${currency ?? t.CURRENCY_FALLBACK}` : null;
+    totalPrice > 0 ? `${formatPrice(totalPrice)} ${currency ?? t.CURRENCY_FALLBACK}` : null;
   const contactEmailLink = `<a href="mailto:${contactEmail}" style="color:#377F76;text-decoration:none;">${contactEmail}</a>`;
   return `
   <tr>
@@ -50,7 +58,7 @@ export const userEmailContent = (
         <tr>
           <td bgcolor="#F1E8D9" style="padding:20px 24px;">
             <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#70634C;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin:0 0 6px;">${t.EVENT_SIGNUP_SELECTED_TOUR_LABEL}</p>
-            <p style="font-family:'Luckiest Guy',cursive;color:#377F76;font-size:22px;margin:0;letter-spacing:1px;font-weight:400;">${eventName}</p>
+            <p style="font-family:'Source Sans 3',Arial,sans-serif;color:#377F76;font-size:20px;line-height:28px;margin:0;font-weight:600;">${eventName}</p>
           </td>
         </tr>
       </table>
@@ -261,7 +269,7 @@ export const adminEmailContent = (
     [
       row(
         t.LABEL_TOUR_NAME,
-        `<strong style="font-family:'Luckiest Guy',cursive;color:#377F76;font-size:18px;letter-spacing:1px;font-weight:400;">${eventName}</strong>`,
+        `<strong style="font-family:'Source Sans 3',Arial,sans-serif;color:#377F76;font-size:16px;font-weight:600;">${eventName}</strong>`,
         "#F1E8D9"
       ),
     ].join("")
