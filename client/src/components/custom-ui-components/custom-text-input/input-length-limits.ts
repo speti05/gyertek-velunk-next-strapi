@@ -1,6 +1,7 @@
 export const MAX_EMAIL = 254;
 export const MAX_NAME = 100;
 export const MAX_PHONE = 30;
+export const MIN_PASSWORD = 6;
 export const MAX_PASSWORD = 15;
 export const MAX_ZIP = 20;
 export const MAX_STREET = 150;

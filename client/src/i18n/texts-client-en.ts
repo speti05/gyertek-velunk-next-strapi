@@ -4,6 +4,7 @@ import {
   MIN_PLACE_NAME,
   MIN_DOCUMENT_NUMBER,
 } from "@/components/custom-ui-components/custom-text-input/input-length-limits";
+import { PASSWORD_RULE_TESTS } from "@/utils/password-policy";
 
 /**
  * English overrides for `texts-client.ts`.
@@ -193,13 +194,13 @@ export const AUTH_RESEND_CONFIRMATION_PREFIX = " If you did not receive the emai
 export const PASSWORD_RULES = [
   {
     label: "Between 6 and 15 characters",
-    test: (p: string) => p.length >= 6 && p.length <= 15,
+    test: PASSWORD_RULE_TESTS.length,
   },
   {
     label: "Lowercase and uppercase letter",
-    test: (p: string) => /[a-z]/.test(p) && /[A-Z]/.test(p),
+    test: PASSWORD_RULE_TESTS.mixedCase,
   },
-  { label: "Special character (e.g. !@#$%)", test: (p: string) => /[^A-Za-z0-9]/.test(p) },
+  { label: "Special character (e.g. !@#$%)", test: PASSWORD_RULE_TESTS.special },
 ];
 export const AUTH_INVALID_RESET_LINK = "Invalid or expired link.";
 export const AUTH_SAVE_LABEL = "Save";

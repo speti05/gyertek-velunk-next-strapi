@@ -1,4 +1,4 @@
-import path from "path";
+import { EMAIL_HEADER_ATTACHMENT } from "./header-attachment";
 import { getTransporter } from "./mailer";
 import { sendMailWithRetry } from "./send-with-retry";
 import { emailWrapper } from "./templates/layout";
@@ -9,12 +9,6 @@ import {
 import { getSiteSettings } from "./get-site-settings";
 import { getClientUrl } from "../config/client-url";
 import { getStrapiTexts, type Locale } from "../../i18n/get-strapi-texts";
-
-const headerAttachment = {
-  filename: "email-fejlec-600.jpg",
-  path: path.join(process.cwd(), "src/lib/email/templates/email-fejlec-600.jpg"),
-  cid: "email-fejlec",
-};
 
 /**
  * Sends the admin notification about a contact request and, when the requester
@@ -57,7 +51,7 @@ export const sendContactRequestEmails = async (
           texts,
           organizationName
         ),
-        attachments: [headerAttachment],
+        attachments: [EMAIL_HEADER_ATTACHMENT],
       },
       "contact request admin notification"
     );
@@ -89,7 +83,7 @@ export const sendContactRequestEmails = async (
             texts,
             organizationName
           ),
-          attachments: [headerAttachment],
+          attachments: [EMAIL_HEADER_ATTACHMENT],
         },
         "contact request confirmation"
       );

@@ -16,6 +16,7 @@ import {
   MIN_PLACE_NAME,
   MIN_DOCUMENT_NUMBER,
 } from "@/components/custom-ui-components/custom-text-input/input-length-limits";
+import { PASSWORD_RULE_TESTS } from "@/utils/password-policy";
 
 // Events
 export const FEATURED_EVENTS_LABEL = "Kiemelt túrák";
@@ -206,10 +207,10 @@ export const AUTH_RESEND_CONFIRMATION_PREFIX = " Ha nem kaptad meg a levelet, ";
 export const PASSWORD_RULES = [
   {
     label: "Legalább 6, legfeljebb 15 karakter",
-    test: (p: string) => p.length >= 6 && p.length <= 15,
+    test: PASSWORD_RULE_TESTS.length,
   },
-  { label: "Kis- és nagybetű", test: (p: string) => /[a-z]/.test(p) && /[A-Z]/.test(p) },
-  { label: "Speciális karakter (pl. !@#$%)", test: (p: string) => /[^A-Za-z0-9]/.test(p) },
+  { label: "Kis- és nagybetű", test: PASSWORD_RULE_TESTS.mixedCase },
+  { label: "Speciális karakter (pl. !@#$%)", test: PASSWORD_RULE_TESTS.special },
 ];
 export const AUTH_INVALID_RESET_LINK = "Érvénytelen vagy lejárt link.";
 export const AUTH_SAVE_LABEL = "Mentés";

@@ -152,7 +152,7 @@ export function HeaderAccount({ variant, onNavigate }: Readonly<HeaderAccountPro
         </CustomMenuItem>
 
         <CustomMenuItem
-          className="header-account__item header-account__item--logout"
+          className="header-account__item"
           onClick={() => {
             setAnchorEl(null);
             logoutFormRef.current?.requestSubmit();

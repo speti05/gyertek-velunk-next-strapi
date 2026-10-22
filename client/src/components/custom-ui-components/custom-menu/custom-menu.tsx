@@ -25,6 +25,12 @@ const primaryPaperSx: SxProps<Theme> = {
   "--custom-menu-hover-background": palette.midGreen,
   "--custom-menu-selected-background": palette.deepGreen,
 
+  // MenuList's default vertical padding would leave a strip of sheet above the first
+  // and below the last entry, so a hover fill would stop short of the sheet's edges.
+  "& .MuiMenu-list": {
+    paddingBlock: 0,
+  },
+
   "& .MuiMenuItem-root": {
     "&:hover": {
       backgroundColor: "var(--custom-menu-hover-background)",

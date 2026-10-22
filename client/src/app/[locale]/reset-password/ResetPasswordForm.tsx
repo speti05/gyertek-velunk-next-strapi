@@ -2,7 +2,7 @@
 
 import { useTexts } from "@/context/locale-context";
 
-import { useActionState, useRef } from "react";
+import { useActionState, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { resetPasswordAction } from "@/data/auth-actions";
 import CustomTextInput from "@/components/custom-ui-components/custom-text-input/custom-text-input";
@@ -10,6 +10,7 @@ import CustomButton from "@/components/custom-ui-components/custom-button/custom
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
 import { useRecaptchaSubmit } from "@/hooks/use-recaptcha-submit";
 import { MAX_PASSWORD } from "@/components/custom-ui-components/custom-text-input/input-length-limits";
+import { PasswordStrengthHint } from "@/components/PasswordStrengthHint";
 
 const INITIAL_STATE = {
   zodErrors: null,
@@ -29,6 +30,7 @@ function SubmitBtn() {
 function ResetPasswordFormInner({ code }: { code: string }) {
   const { AUTH_NEW_PASSWORD_LABEL, AUTH_CONFIRM_PASSWORD_LABEL } = useTexts();
   const [formState, formAction] = useActionState(resetPasswordAction, INITIAL_STATE);
+  const [password, setPassword] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
   const handleSubmit = useRecaptchaSubmit(formRef, formAction, "reset_password");
 
@@ -41,8 +43,10 @@ function ResetPasswordFormInner({ code }: { code: string }) {
         name="password"
         type="password"
         error={formState?.zodErrors?.password?.[0]}
+        onChange={(e) => setPassword((e.target as HTMLInputElement).value)}
         slotProps={{ htmlInput: { maxLength: MAX_PASSWORD } }}
       />
+      <PasswordStrengthHint password={password} />
       <CustomTextInput
         id="passwordConfirmation"
         label={AUTH_CONFIRM_PASSWORD_LABEL}

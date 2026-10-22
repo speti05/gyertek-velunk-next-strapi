@@ -1,8 +1,8 @@
-import path from "path";
 import type { Core } from "@strapi/strapi";
 import type { Attachment } from "nodemailer/lib/mailer";
 import { sendNewsletterBroadcast } from "./lib/email/newsletter";
 import { getTransporter } from "./lib/email/mailer";
+import { EMAIL_HEADER_ATTACHMENT } from "./lib/email/header-attachment";
 import { applyAuthOverrides } from "./lib/auth/auth-overrides";
 import { applyPictureGalleryLimit } from "./lib/content/picture-gallery-limit";
 import { applyNewsletterPublishCheck } from "./lib/content/newsletter-publish-check";
@@ -57,17 +57,10 @@ export default {
     getTransporter().catch((err) => console.error("Mailer init failed:", err));
 
     // Inject header image as CID inline attachment into every Strapi system email
-    const headerImagePath = path.join(
-      strapi.dirs.app.root,
-      "src/lib/email/templates/email-fejlec-600.jpg"
-    );
     const emailService = strapi.plugin("email").service<EmailService>("email");
     const _originalSend = emailService.send.bind(emailService);
     emailService.send = (options) => {
-      options.attachments = [
-        ...(options.attachments ?? []),
-        { filename: "email-fejlec-600.jpg", path: headerImagePath, cid: "email-fejlec" },
-      ];
+      options.attachments = [...(options.attachments ?? []), EMAIL_HEADER_ATTACHMENT];
       return _originalSend(options);
     };
 

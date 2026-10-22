@@ -1,16 +1,10 @@
-import path from "path";
+import { EMAIL_HEADER_ATTACHMENT } from "./header-attachment";
 import { getTransporter } from "./mailer";
 import { emailWrapper } from "./templates/layout";
 import { userEmailContent, adminEmailContent } from "./templates/newsletter-signup";
 import { getSiteSettings } from "./get-site-settings";
 import { getClientUrl } from "../config/client-url";
 import { getStrapiTexts, type Locale } from "../../i18n/get-strapi-texts";
-
-const headerAttachment = {
-  filename: "email-fejlec-600.jpg",
-  path: path.join(process.cwd(), "src/lib/email/templates/email-fejlec-600.jpg"),
-  cid: "email-fejlec",
-};
 
 export const sendNewsletterSignupEmails = async (subscriberEmail: string, locale: Locale) => {
   const texts = getStrapiTexts(locale);
@@ -25,7 +19,7 @@ export const sendNewsletterSignupEmails = async (subscriberEmail: string, locale
     to: subscriberEmail,
     subject: texts.NEWSLETTER_SIGNUP_USER_MAIL_SUBJECT,
     html: emailWrapper(siteUrl, userEmailContent(texts, subscriberEmail), texts.SYSTEM_EMAIL_SUBJECT.newsletterSignup, texts, organizationName),
-    attachments: [headerAttachment],
+    attachments: [EMAIL_HEADER_ATTACHMENT],
   });
 
   await transporter.sendMail({
@@ -33,7 +27,7 @@ export const sendNewsletterSignupEmails = async (subscriberEmail: string, locale
     to: process.env.ADMIN_EMAIL,
     subject: texts.NEWSLETTER_SIGNUP_ADMIN_MAIL_SUBJECT,
     html: emailWrapper(siteUrl, adminEmailContent(texts, subscriberEmail), texts.SYSTEM_EMAIL_SUBJECT.newsletterSignup, texts, organizationName),
-    attachments: [headerAttachment],
+    attachments: [EMAIL_HEADER_ATTACHMENT],
   });
 
   console.info(`Newsletter signup emails sent for ${subscriberEmail}`);

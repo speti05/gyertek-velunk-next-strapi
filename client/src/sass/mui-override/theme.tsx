@@ -670,14 +670,11 @@ export const theme = createTheme({
           },
         },
         text: {
-          fontSize: "0.75rem",
-          // The number is drawn in the icon's 24-unit viewBox, so a rem size shrinks with
-          // the html font-size and becomes barely legible on phones. A fixed size keeps it
-          // readable there.
-          [TOUCH]: {
-            fontSize: "12px",
-            fontWeight: 600,
-          },
+          // The number is drawn in the icon's 24-unit viewBox, so a rem size would follow
+          // the html font-size rather than the circle and end up barely legible. A fixed
+          // size keeps it in proportion to the circle on every screen.
+          fontSize: "12px",
+          fontWeight: 600,
         },
       },
     },

@@ -10,7 +10,7 @@ import CustomButton from "@/components/custom-ui-components/custom-button/custom
 import { CustomAlertMessage } from "@/components/custom-ui-components/custom-alert/custom-alert-message";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
 import { useRecaptchaSubmit } from "@/hooks/use-recaptcha-submit";
-import CustomIcon from "@/components/custom-ui-components/custom-icon/custom-icon";
+import { PasswordStrengthHint } from "@/components/PasswordStrengthHint";
 import {
   MAX_EMAIL,
   MAX_PASSWORD,
@@ -31,23 +31,6 @@ const RESEND_INITIAL_STATE = {
   errorMessage: null,
   successMessage: null,
 };
-
-function PasswordStrengthHint({ password }: { password: string }) {
-  const { PASSWORD_RULES } = useTexts();
-  return (
-    <ul className="auth-page__password-rules">
-      {PASSWORD_RULES.map((rule) => (
-        <li
-          key={rule.label}
-          className={`auth-page__password-rule${rule.test(password) ? " auth-page__password-rule--met" : ""}`}
-        >
-          <CustomIcon name={rule.test(password) ? "checked" : "unchecked"}></CustomIcon>
-          {rule.label}
-        </li>
-      ))}
-    </ul>
-  );
-}
 
 function SubmitBtn() {
   const { LOADING_LABEL, AUTH_REGISTER_LABEL } = useTexts();

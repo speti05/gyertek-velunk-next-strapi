@@ -6,6 +6,7 @@ import { getUserEventSignupsLoader, getUserProfilePageLoader, type PaymentStatus
 import { ProfileForm } from "./ProfileForm";
 import { NewsletterPanel } from "./NewsletterPanel";
 import { SignupDetailsToggle } from "./SignupDetailsToggle";
+import { AuthStateSync } from "./AuthStateSync";
 import { formatDate } from "@/utils/format-date";
 import { Price } from "@/components/Price";
 import CustomLink from "@/components/custom-ui-components/custom-link/custom-link";
@@ -71,6 +72,7 @@ export default async function ProfilePage() {
 
   return (
     <>
+      <AuthStateSync />
       <ContentListHeadline headline={YOUR_PROFILE_TITLE} isMain={true} />
 
       <main className="profile-page">

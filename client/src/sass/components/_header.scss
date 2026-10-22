@@ -356,17 +356,6 @@ li {
   padding: 0;
 }
 
-.header-account__item {
-  // The menu sheet is green, and no red legible on it is dark enough to read as a
-  // warning, so the destructive signal moves from the label to the hover fill. The
-  // label itself inherits the sheet's white like every other entry. CustomMenu's
-  // primary variant hands the hover colour down as a custom property precisely so a
-  // single entry can redirect it like this.
-  &--logout {
-    --custom-menu-hover-background: #{colors.$gy-v-error};
-  }
-}
-
 .header-account__item-link,
 .header-account__item-inner,
 .language-switcher__option-inner {

@@ -20,6 +20,15 @@ import { isDev } from "@clientRoot/env";
 import { Route } from "@/i18n/config";
 import { AUTH_COOKIE, USER_EMAIL_COOKIE } from "@/data/auth-guard";
 import type { FormActionState, NewsletterToggleState } from "@/data/action-state";
+import {
+  MIN_PASSWORD,
+  MAX_PASSWORD,
+} from "@/components/custom-ui-components/custom-text-input/input-length-limits";
+import {
+  PASSWORD_UPPERCASE_REGEX,
+  PASSWORD_LOWERCASE_REGEX,
+  PASSWORD_SPECIAL_REGEX,
+} from "@/utils/password-policy";
 
 const STRAPI_URL = process.env.STRAPI_API_URL ?? "http://localhost:1337";
 
@@ -45,22 +54,28 @@ async function verifyRecaptcha(token: string | null): Promise<boolean> {
 
 const authSchema = (MESSAGES: Messages) => z.object({
   email: z.string().email({ message: MESSAGES.emailInvalid }),
-  password: z.string().min(6, { message: MESSAGES.invalidPassword }),
+  password: z.string().min(MIN_PASSWORD, { message: MESSAGES.invalidPassword }),
 });
+
+/** A new password (registration or reset) must satisfy the shared password policy. */
+const newPasswordSchema = (MESSAGES: Messages) => z
+  .string()
+  .min(MIN_PASSWORD, { message: MESSAGES.invalidPassword })
+  .max(MAX_PASSWORD, { message: MESSAGES.invalidPassword })
+  .regex(PASSWORD_UPPERCASE_REGEX, { message: MESSAGES.passwordNeedsUppercase })
+  .regex(PASSWORD_LOWERCASE_REGEX, { message: MESSAGES.passwordNeedsLowercase })
+  .regex(PASSWORD_SPECIAL_REGEX, { message: MESSAGES.passwordNeedsSpecial });
+
+const passwordsMatch = (data: { password: string; passwordConfirmation: string }) =>
+  data.password === data.passwordConfirmation;
 
 const registerSchema = (MESSAGES: Messages) => z
   .object({
     email: z.string().email({ message: MESSAGES.emailInvalid }),
-    password: z
-      .string()
-      .min(6, { message: MESSAGES.invalidPassword })
-      .max(15, { message: MESSAGES.invalidPassword })
-      .regex(/[A-Z]/, { message: MESSAGES.passwordNeedsUppercase })
-      .regex(/[a-z]/, { message: MESSAGES.passwordNeedsLowercase })
-      .regex(/[^A-Za-z0-9]/, { message: MESSAGES.passwordNeedsSpecial }),
+    password: newPasswordSchema(MESSAGES),
     passwordConfirmation: z.string(),
   })
-  .refine((data) => data.password === data.passwordConfirmation, {
+  .refine(passwordsMatch, {
     message: MESSAGES.passwordMismatch,
     path: ["passwordConfirmation"],
   });
@@ -262,10 +277,10 @@ export async function forgotPasswordAction(prevState: FormActionState, formData:
 
 const resetPasswordSchema = (MESSAGES: Messages) => z
   .object({
-    password: z.string().min(6, { message: MESSAGES.invalidPassword }),
+    password: newPasswordSchema(MESSAGES),
     passwordConfirmation: z.string(),
   })
-  .refine((data) => data.password === data.passwordConfirmation, {
+  .refine(passwordsMatch, {
     message: MESSAGES.passwordMismatch,
     path: ["passwordConfirmation"],
   });
