@@ -29,18 +29,17 @@ type NewsletterLifecycleResult = {
 };
 
 async function grantPermission(strapi: Core.Strapi, roleId: number, action: string) {
-  const existing = await strapi.db.query("plugin::users-permissions.permission").findOne({
-    where: { action, role: roleId },
-  });
+  const existing = await strapi.db
+    .query("plugin::users-permissions.permission")
+    .findOne({ where: { action, role: roleId } });
   if (!existing) {
-    await strapi.db.query("plugin::users-permissions.permission").create({
-      data: { action, role: roleId, enabled: true },
-    });
+    await strapi.db
+      .query("plugin::users-permissions.permission")
+      .create({ data: { action, role: roleId, enabled: true } });
   } else if (!existing.enabled) {
-    await strapi.db.query("plugin::users-permissions.permission").update({
-      where: { id: existing.id },
-      data: { enabled: true },
-    });
+    await strapi.db
+      .query("plugin::users-permissions.permission")
+      .update({ where: { id: existing.id }, data: { enabled: true } });
   }
 }
 
@@ -86,9 +85,9 @@ export default {
     });
 
     // Grant authenticated role necessary permissions
-    const authenticatedRole = await strapi.db.query("plugin::users-permissions.role").findOne({
-      where: { type: "authenticated" },
-    });
+    const authenticatedRole = await strapi.db
+      .query("plugin::users-permissions.role")
+      .findOne({ where: { type: "authenticated" } });
 
     if (authenticatedRole) {
       const id = authenticatedRole.id;
@@ -102,18 +101,20 @@ export default {
     // TestUser role: same access as Authenticated, plus the reads that the
     // hide-disabled-content middleware lets through for disabled entries. Provisioned
     // here so the role does not have to be assembled by hand in the admin panel.
-    let testUserRole = await strapi.db.query("plugin::users-permissions.role").findOne({
-      where: { type: TEST_USER_ROLE_TYPE },
-    });
+    let testUserRole = await strapi.db
+      .query("plugin::users-permissions.role")
+      .findOne({ where: { type: TEST_USER_ROLE_TYPE } });
 
     if (!testUserRole) {
-      testUserRole = await strapi.db.query("plugin::users-permissions.role").create({
-        data: {
-          name: TEST_USER_ROLE_NAME,
-          description: TEST_USER_ROLE_DESCRIPTION,
-          type: TEST_USER_ROLE_TYPE,
-        },
-      });
+      testUserRole = await strapi.db
+        .query("plugin::users-permissions.role")
+        .create({
+          data: {
+            name: TEST_USER_ROLE_NAME,
+            description: TEST_USER_ROLE_DESCRIPTION,
+            type: TEST_USER_ROLE_TYPE,
+          },
+        });
       console.info(`Created the "${TEST_USER_ROLE_NAME}" role`);
     }
 
@@ -123,9 +124,9 @@ export default {
 
     // Public role: allow requesting a new confirmation email (used by the register form
     // when the address is already registered but not confirmed yet)
-    const publicRole = await strapi.db.query("plugin::users-permissions.role").findOne({
-      where: { type: "public" },
-    });
+    const publicRole = await strapi.db
+      .query("plugin::users-permissions.role")
+      .findOne({ where: { type: "public" } });
 
     if (publicRole) {
       await grantPermission(
@@ -166,10 +167,9 @@ export default {
         // Mark every row of the document, the draft included: publishing again deletes the
         // published row and recreates it from the draft, so a sentAt stored only on the
         // published row would be lost and the newsletter would go out a second time.
-        await strapi.db.query(NEWSLETTER_UID).updateMany({
-          where: { documentId: result.documentId },
-          data: { sentAt: new Date() },
-        });
+        await strapi.db
+          .query(NEWSLETTER_UID)
+          .updateMany({ where: { documentId: result.documentId }, data: { sentAt: new Date() } });
 
         console.info(
           `Newsletter "${result.subject}" sent to ${sentCount}/${emails.length} subscribers`

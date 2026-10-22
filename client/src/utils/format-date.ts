@@ -34,6 +34,20 @@ export function formatDate(dateString: string, locale: Locale): string {
 }
 
 /**
+ * The date a blog post shows on its card and page: the editor-set `displayedDate`
+ * when there is one, otherwise the publication date.
+ */
+export function getBlogDate({
+  displayedDate,
+  publishedAt,
+}: {
+  displayedDate?: string | null;
+  publishedAt?: string | null;
+}): string | undefined {
+  return displayedDate || publishedAt || undefined;
+}
+
+/**
  * Renders an optional start/end date pair. Either end may be missing; when both are,
  * returns undefined so the caller can omit the date entirely.
  */

@@ -10,9 +10,8 @@ import { getContentBySlug } from "@/data/loaders";
 
 import { BlockRenderer } from "@/components/BlockRenderer";
 import { HeroSection } from "@/components/blocks/HeroSection";
-import { Card, type CardProps } from "@/components/Card";
+import { BlogCard } from "@/components/BlogCard";
 import { ContentList } from "@/components/ContentList";
-import { Route } from "@/i18n/config";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -41,8 +40,6 @@ function ArticleOverview({ headline, description }: Readonly<ArticleOverviewProp
     </div>
   );
 }
-
-const BlogCard = (props: Readonly<Omit<CardProps, "basePath">>) => <Card {...props} basePath={Route.Reports} />;
 
 export default async function SingleBlogRoute({ params, searchParams }: PageProps) {
   const locale = await getRequestLocale();

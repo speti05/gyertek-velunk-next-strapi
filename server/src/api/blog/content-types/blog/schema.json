@@ -48,6 +48,14 @@
         }
       }
     },
+    "displayedDate": {
+      "type": "date",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
     "disabled": {
       "type": "boolean",
       "default": false,

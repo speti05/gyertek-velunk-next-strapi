@@ -90,8 +90,9 @@ export interface ArticleProps extends BaseBlogProps {
   endDate?: string | null;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface BlogProps extends Omit<BaseBlogProps, "featured"> {}
+export interface BlogProps extends Omit<BaseBlogProps, "featured"> {
+  displayedDate?: string | null;
+}
 
 export interface EventProps extends BaseBlogProps {
   price: string;

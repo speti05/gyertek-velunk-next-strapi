@@ -18,7 +18,11 @@ export interface CardProps {
   image: ImageProps | null;
   price?: string | number;
   startDate?: string | null;
+  displayedDate?: string | null;
+  publishedAt?: string;
   createdAt: string;
+  /** Overrides the default `startDate ?? createdAt` date shown on the card. */
+  date?: string | null;
   basePath: Route;
   difficulty?: number;
 }
@@ -31,10 +35,12 @@ export async function Card({
   price,
   createdAt,
   startDate,
+  date,
   basePath,
   difficulty,
 }: Readonly<CardProps>) {
   const locale = await getRequestLocale();
+  const shownDate = date ?? startDate ?? createdAt;
   const { CARD_PERSON, CURRENCY } = getTexts(locale);
   return (
     <CustomLink
@@ -63,7 +69,7 @@ export async function Card({
               <span> / {CARD_PERSON} </span>
             </p>
           )}
-          {(startDate ?? createdAt) && <p>{formatDate(startDate ?? createdAt, locale)}</p>}
+          {shownDate && <p>{formatDate(shownDate, locale)}</p>}
         </div>
         <hr className="content-items__card-divider" />
         {description && <p>{truncateText(description, 144)}</p>}

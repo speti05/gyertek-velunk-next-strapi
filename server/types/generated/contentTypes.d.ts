@@ -547,6 +547,12 @@ export interface ApiBlogBlog extends Struct.CollectionTypeSchema {
         };
       }> &
       Schema.Attribute.DefaultTo<false>;
+    displayedDate: Schema.Attribute.Date &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     image: Schema.Attribute.Media<"images"> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
