@@ -8,6 +8,7 @@ interface HeroTextAndButtonsProps {
   theme?: "turquoise" | "brown";
   linkButtons?: LinkProps[];
   welcomeText?: string;
+  hideButtonsOnMobile?: boolean;
 }
 
 export const HeroTextAndButtons = ({
@@ -15,6 +16,7 @@ export const HeroTextAndButtons = ({
   theme = "turquoise",
   linkButtons,
   welcomeText,
+  hideButtonsOnMobile = false,
 }: Readonly<HeroTextAndButtonsProps>) => {
   const defaultButtonColor = theme === "turquoise" ? "primary" : "secondary";
 
@@ -32,7 +34,9 @@ export const HeroTextAndButtons = ({
       )}
 
       {linkButtons && (linkButtons as []).length > 0 && (
-        <div className={`hero__button_container`}>
+        <div
+          className={`hero__button_container${hideButtonsOnMobile ? " hero__button_container--hide-on-mobile" : ""}`}
+        >
           {(linkButtons as LinkProps[]).map((l: LinkProps) => (
             <CustomButton
               key={l.id}

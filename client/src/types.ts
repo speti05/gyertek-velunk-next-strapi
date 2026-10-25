@@ -246,6 +246,8 @@ export interface HeroWithTextProps extends Base<"blocks.hero-with-text"> {
   welcomeText?: string;
   /** Strapi leaves this null on entries saved before the field existed - treat that as on. */
   showPager?: boolean | null;
+  /** Hides the CTA buttons on phones, where they cover much of the hero. Null on older entries - treat as off. */
+  hideButtonsOnMobile?: boolean | null;
 }
 
 export interface ParagraphProps extends Base<"blocks.paragraph"> {

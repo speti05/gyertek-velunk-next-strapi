@@ -11,6 +11,7 @@ export async function HeroWithTextBlock({
   link,
   welcomeText,
   showPager,
+  hideButtonsOnMobile,
 }: Readonly<HeroWithTextProps>) {
   const { HERO_WITH_TEXT_EMPTY_TITLE, HERO_WITH_TEXT_EMPTY_DESCRIPTION } = getTexts(await getRequestLocale());
   return (
@@ -30,6 +31,7 @@ export async function HeroWithTextBlock({
             headline={headline}
             linkButtons={link}
             welcomeText={welcomeText}
+            hideButtonsOnMobile={hideButtonsOnMobile ?? false}
           />
         </div>
       </div>

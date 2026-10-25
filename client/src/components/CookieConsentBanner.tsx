@@ -155,15 +155,26 @@ export function CookieConsentBanner() {
     closePreferences();
   }
 
+  // Stack full-width on phones; share the row equally from sm up
+  const dialogButtonSx = { flex: { xs: "none", sm: 1 }, width: { xs: "100%", sm: "auto" }, ml: 0 };
+
   const dialogActions = (
-    <CustomBox sx={{ display: "flex", gap: 1, flexWrap: "wrap", p: 1, width: "100%" }}>
-      <CustomButton variant="contained" color="primary" onClick={handleAcceptAll} sx={{ flex: 1 }}>
+    <CustomBox
+      sx={{
+        display: "flex",
+        flexDirection: { xs: "column", sm: "row" },
+        gap: 1,
+        p: 1,
+        width: "100%",
+      }}
+    >
+      <CustomButton variant="contained" color="primary" onClick={handleAcceptAll} sx={dialogButtonSx}>
         {COOKIE_PREFS_ACCEPT_ALL}
       </CustomButton>
-      <CustomButton variant="outlined" color="primary" onClick={handleRejectAll} sx={{ flex: 1 }}>
+      <CustomButton variant="outlined" color="primary" onClick={handleRejectAll} sx={dialogButtonSx}>
         {COOKIE_PREFS_REJECT_ALL}
       </CustomButton>
-      <CustomButton variant="contained" color="secondary" onClick={handleSave} sx={{ flex: 1 }}>
+      <CustomButton variant="contained" color="secondary" onClick={handleSave} sx={dialogButtonSx}>
         {COOKIE_PREFS_SAVE}
       </CustomButton>
     </CustomBox>

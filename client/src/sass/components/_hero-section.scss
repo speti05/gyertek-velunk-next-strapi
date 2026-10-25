@@ -114,6 +114,12 @@
               width: 100%;
             }
           }
+
+          &--hide-on-mobile {
+            @include mixins.respond(phone-small) {
+              display: none;
+            }
+          }
         }
       }
     }

@@ -6,6 +6,8 @@ const getPreviewPathname = (uid: string, { document }: { locale?: string; docume
       return slug ? `/beszamolok/${slug}` : null;
     case 'api::event.event':
       return slug ? `/turaink/${slug}` : null;
+    case 'api::blog.blog':
+      return slug ? `/blog/${slug}` : null;
     case 'api::page.page':
       return slug ? `/${slug}` : null;
     case 'api::home-page.home-page':

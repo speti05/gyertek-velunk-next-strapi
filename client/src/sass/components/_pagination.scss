@@ -7,54 +7,39 @@
   font-size: 1.75rem;
 }
 
-// The whole pager reads as one primary pill: arrows and page label share the
-// same fill and are separated only by thin translucent dividers.
+// Two round primary buttons with the page label between them on a transparent
+// background, so the label reads in the brand green instead of sitting on a fill.
 .pagination-list {
   display: inline-flex;
-  align-items: stretch;
+  align-items: center;
+  gap: 1.6rem;
   list-style: none;
-  border-radius: 999px;
-  overflow: hidden;
-  background-color: colors.$gy-v-dark-green;
-  transition: box-shadow 0.2s ease;
-
-  &:hover {
-    box-shadow: 0 2px 8px rgba(colors.$gy-v-dark-green, 0.3);
-  }
 
   > li {
     display: flex;
   }
 
-  // Extra class keeps these rules above the MUI theme overrides. Size and padding
-  // are left to the theme so the arrows keep the same touch area as every button.
+  // Extra class keeps these rules above the MUI theme overrides, which give every
+  // button pill padding and a touch min-height. A fixed square with no padding turns
+  // the button into a circle of the same touch size.
   .pagination-arrow.MuiButton-root {
-    border-radius: 0;
-    box-shadow: none;
-    color: colors.$gy-v-white;
-
-    &:hover {
-      box-shadow: none;
-    }
-
-    // An icon-only button has no text line box, so it would collapse to the icon's
-    // 1em height. Pad the icon up to the theme's 1.75 line-height so the arrows are
-    // exactly as tall as the text buttons.
-    svg {
-      margin-block: 0.375em;
-    }
+    width: 5.6rem;
+    height: 5.6rem;
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    border-radius: 50%;
   }
 }
 
 .page-number {
   display: flex;
   align-items: center;
-  padding: 0.625rem 1.5rem;
-  border-inline: 1px solid colors.veil(0.35);
+  padding: 0.625rem 0.8rem;
   font-family: var(--font-source-sans-3), sans-serif;
   font-size: 2rem;
-  font-weight: 300;
-  color: colors.$gy-v-white;
+  font-weight: 400;
+  color: colors.$gy-v-dark-green;
   white-space: nowrap;
   text-align: center;
 }

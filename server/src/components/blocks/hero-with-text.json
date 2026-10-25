@@ -27,6 +27,10 @@
       "type": "boolean",
       "default": true
     },
+    "hideButtonsOnMobile": {
+      "type": "boolean",
+      "default": false
+    },
     "welcomeText": {
       "type": "text"
     }

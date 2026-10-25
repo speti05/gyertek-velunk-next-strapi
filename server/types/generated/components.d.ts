@@ -103,6 +103,7 @@ export interface BlocksHeroWithText extends Struct.ComponentSchema {
   };
   attributes: {
     headline: Schema.Attribute.String;
+    hideButtonsOnMobile: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     images: Schema.Attribute.Media<"images", true> & Schema.Attribute.Required;
     link: Schema.Attribute.Component<"elements.link", true>;
     showPager: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
