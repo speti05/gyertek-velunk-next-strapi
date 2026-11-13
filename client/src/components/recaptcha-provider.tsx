@@ -39,8 +39,24 @@ function RecaptchaBridge({ children }: { children: React.ReactNode }) {
 const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 export const isRecaptchaConfigured = !!(siteKey && !siteKey.includes("your_recaptcha"));
 
+/**
+ * Without a site key the forms submit with no token, and the server skips the check when it
+ * has no secret either (data/actions.ts). Mark that as ready too, so the e2e tests - which run
+ * without keys in CI - do not wait for a reCAPTCHA that never loads.
+ */
+function useUnconfiguredRecaptchaMarker() {
+  useEffect(() => {
+    if (isRecaptchaConfigured) return;
+    document.body.dataset.recaptchaReady = "unconfigured";
+    return () => {
+      delete document.body.dataset.recaptchaReady;
+    };
+  }, []);
+}
+
 export function RecaptchaProvider({ children }: { children: React.ReactNode }) {
   const { recaptchaConsented } = useCookieConsent();
+  useUnconfiguredRecaptchaMarker();
 
   if (!siteKey || !isRecaptchaConfigured || !recaptchaConsented) {
     return (

@@ -15,7 +15,8 @@ export async function acceptCookies(page: Page) {
 
 /**
  * reCAPTCHA only loads after consent, and a form submitted before it is ready reopens the
- * cookie preferences instead (use-recaptcha-submit.ts). The flag is set by recaptcha-provider.tsx.
+ * cookie preferences instead (use-recaptcha-submit.ts). The flag is set by recaptcha-provider.tsx,
+ * right away when no site key is configured (as in CI) - the forms then submit without a token.
  */
 async function waitForRecaptcha(page: Page) {
   await page.locator("body[data-recaptcha-ready]").waitFor({ state: "attached", timeout: 15_000 });
