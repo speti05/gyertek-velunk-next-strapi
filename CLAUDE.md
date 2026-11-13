@@ -39,6 +39,17 @@ cd server && yarn typecheck  # tsc --noEmit
 
 The VS Code launch compound **Lint (client + server)** runs all of these. The client configs enforce the project conventions: MUI imports only inside `custom-ui-components/` (plus the theme provider and `sass/mui-override/`), no Tailwind colour utilities, and no colour literals in TS/TSX or SCSS/CSS outside `_colors.scss`.
 
+### E2E tests and user docs
+```bash
+yarn setup:e2e && yarn setup:docs   # Install Playwright (+ Chromium) and Starlight
+yarn e2e            # Playwright suite (reuses a running `yarn dev` locally)
+yarn docs:dev       # Build coverage.json from the last e2e run, then serve the docs
+```
+
+- `e2e/` — Playwright tests. Each test is tagged with the use case it covers via `useCase("UC-XXX-00")` (`e2e/support/docs.ts`); `docScreenshot()` saves images into the docs. Assert against `getTexts("hu")`, never literal strings.
+- `docs-site/` — Astro Starlight user docs (Hungarian), published to GitHub Pages by `.github/workflows/docs.yml`. A page lists its use cases in the `usecases` frontmatter and shows `<TestCoverage id="..." />` / `<Screenshot name="..." />`.
+- `scripts/build-coverage.mjs` joins the two on the use case ID; `--strict` fails on untested or undocumented use cases.
+
 ### Database
 ```bash
 yarn seed           # Import seed data into Strapi (from seed-data.tar.gz)

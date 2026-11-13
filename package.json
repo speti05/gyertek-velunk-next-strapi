@@ -13,6 +13,13 @@
     "dev": "yarn concurrently \"cd server && yarn develop\" \"npx wait-on http://localhost:1337 && cd client && yarn dev\"",
     "seed": "cd server && yarn strapi import -f ../seed-data.tar.gz --force",
     "export": "cd server && yarn strapi export --no-encrypt -f ../seed-data",
+    "setup:e2e": "cd e2e && yarn && yarn install:browsers",
+    "setup:docs": "cd docs-site && yarn",
+    "e2e": "cd e2e && yarn test",
+    "e2e:ui": "cd e2e && yarn test:ui",
+    "docs:coverage": "node scripts/build-coverage.mjs",
+    "docs:dev": "node scripts/build-coverage.mjs && cd docs-site && yarn dev",
+    "docs:build": "node scripts/build-coverage.mjs && cd docs-site && yarn build",
     "docker:local": "docker compose --env-file client/.env.local --env-file .env -f docker-compose.local.yml up --build",
     "repo:upstream": "git fetch upstream && git merge upstream/main",
     "format": "prettier --write \"client/src/**/*.{ts,tsx,scss}\" \"server/src/**/*.{ts,js}\""

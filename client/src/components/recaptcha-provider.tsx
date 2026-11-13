@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { GoogleReCaptchaProvider, useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { useCookieConsent } from "@/context/cookie-consent-context";
 import { useRecaptchaBadgeExpand } from "@/hooks/use-recaptcha-badge-expand";
@@ -20,6 +20,17 @@ function RecaptchaBridge({ children }: { children: React.ReactNode }) {
   // Only mounted once the badge is actually on the page, so the listeners are not
   // hanging off the document for visitors who never load reCAPTCHA.
   useRecaptchaBadgeExpand();
+
+  // Effects run after commit, so once this is set every form already holds executeRecaptcha.
+  // The e2e tests wait for it before submitting (e2e/support/site.ts).
+  useEffect(() => {
+    if (!executeRecaptcha) return;
+    document.body.dataset.recaptchaReady = "true";
+    return () => {
+      delete document.body.dataset.recaptchaReady;
+    };
+  }, [executeRecaptcha]);
+
   return (
     <RecaptchaContext.Provider value={{ executeRecaptcha }}>{children}</RecaptchaContext.Provider>
   );

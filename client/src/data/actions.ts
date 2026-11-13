@@ -27,6 +27,7 @@ export async function subscribeAction(prevState: FormActionState, formData: Form
   if (!isHuman) {
     return {
       ...prevState,
+      successMessage: null,
       zodErrors: null,
       strapiErrors: null,
       errorMessage: MESSAGES.recaptchaFailed,
@@ -42,6 +43,7 @@ export async function subscribeAction(prevState: FormActionState, formData: Form
   if (!validatedFields.success) {
     return {
       ...prevState,
+      successMessage: null,
       zodErrors: validatedFields.error.flatten().fieldErrors,
       strapiErrors: null,
     };
@@ -52,6 +54,7 @@ export async function subscribeAction(prevState: FormActionState, formData: Form
   if (!responseData) {
     return {
       ...prevState,
+      successMessage: null,
       strapiErrors: null,
       zodErrors: null,
       errorMessage: MESSAGES.someThingWentWrong,
@@ -65,6 +68,7 @@ export async function subscribeAction(prevState: FormActionState, formData: Form
       ) || responseData.error.message?.toLowerCase().includes("unique");
     return {
       ...prevState,
+      successMessage: null,
       strapiErrors: responseData.error,
       zodErrors: null,
       errorMessage: isAlreadySubscribed

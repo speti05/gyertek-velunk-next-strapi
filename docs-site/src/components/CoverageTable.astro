@@ -1,0 +1,51 @@
+---
+/** Lists every use case known to the docs or the tests, with its coverage status. */
+import { Badge } from "@astrojs/starlight/components";
+import { coverage, STATUS_LABEL, STATUS_VARIANT } from "../data/coverage";
+
+const rows = Object.entries(coverage.useCases).sort(([a], [b]) => a.localeCompare(b));
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+/** docs-site/src/content/docs/hirlevel/feliratkozas.mdx -> /<base>/hirlevel/feliratkozas/ */
+function docHref(file: string) {
+  const slug = file.replace(/^docs-site\/src\/content\/docs\//, "").replace(/(index)?\.mdx?$/, "");
+  return `${base}/${slug}`;
+}
+---
+
+{coverage.generatedAt && <p>Utolsó tesztfutás: {new Date(coverage.generatedAt).toLocaleString("hu-HU")}</p>}
+
+{
+  rows.length === 0 ? (
+    <p>Még nincs lefedettségi adat – futtasd az e2e teszteket, majd a <code>yarn docs:coverage</code> parancsot.</p>
+  ) : (
+    <table>
+      <thead>
+        <tr>
+          <th>Use case</th>
+          <th>Állapot</th>
+          <th>Leírás</th>
+          <th>Tesztek</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map(([id, entry]) => (
+          <tr>
+            <td>
+              <code>{id}</code>
+            </td>
+            <td>
+              <Badge text={STATUS_LABEL[entry.status]} variant={STATUS_VARIANT[entry.status]} />
+            </td>
+            <td>
+              {entry.docs.length ? entry.docs.map((file) => <a href={docHref(file)}>{docHref(file)}</a>) : "–"}
+            </td>
+            <td>
+              {entry.tests.length ? entry.tests.map((test) => <a href={test.url}>{test.title}</a>) : "–"}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )
+}

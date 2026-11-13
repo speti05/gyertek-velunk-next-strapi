@@ -1,0 +1,27 @@
+---
+/**
+ * A screenshot taken by the e2e tests (e2e/support/docs.ts -> docScreenshot).
+ * Usage in MDX: <Screenshot name="UC-NEWS-01-form" alt="..." />
+ */
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  name: string;
+  alt: string;
+}
+
+const { name, alt } = Astro.props;
+const images = import.meta.glob<ImageMetadata>("../assets/screenshots/*.png", { eager: true, import: "default" });
+const image = images[`../assets/screenshots/${name}.png`];
+---
+
+{
+  image ? (
+    <Image src={image} alt={alt} />
+  ) : (
+    <p class="missing-screenshot">
+      <em>Képernyőkép hiányzik ({name}) – futtasd az e2e teszteket.</em>
+    </p>
+  )
+}

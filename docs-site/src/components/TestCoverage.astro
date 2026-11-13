@@ -1,0 +1,42 @@
+---
+/**
+ * Shows which e2e tests cover a use case and how they did on the last run.
+ * Usage in MDX: <TestCoverage id="UC-NEWS-01" />
+ */
+import { Badge } from "@astrojs/starlight/components";
+import { coverage, STATUS_LABEL, STATUS_VARIANT } from "../data/coverage";
+
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+const entry = coverage.useCases[id];
+const status = entry?.tests.length ? entry.status : "untested";
+---
+
+<div class="test-coverage not-content">
+  <code>{id}</code>
+  <Badge text={STATUS_LABEL[status]} variant={STATUS_VARIANT[status]} />
+  {
+    entry?.tests.map((test) => (
+      <a href={test.url} title={test.file}>
+        {test.title}
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .test-coverage {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-block: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 0.5rem;
+    font-size: var(--sl-text-sm);
+  }
+</style>

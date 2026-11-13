@@ -53,6 +53,12 @@ export default {
   },
 
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
+    // Node closes idle keep-alive sockets after 5s. The Next.js server pools its sockets to
+    // Strapi, and when its event loop is busy it can reuse one Strapi has just closed, which
+    // surfaces as "fetch failed: ECONNRESET". Outliving the client's pool timeout avoids that.
+    strapi.server.httpServer.keepAliveTimeout = 65_000;
+    strapi.server.httpServer.headersTimeout = 66_000;
+
     getTransporter().catch((err) => console.error("Mailer init failed:", err));
 
     // Inject header image as CID inline attachment into every Strapi system email

@@ -42,7 +42,8 @@ export async function fetchAPI(url: string, options: FetchAPIOptions) {
       return { status: response.status, statusText: response.statusText, body: text };
     }
   } catch (error) {
-    console.error(`Error ${method} data:`, error);
+    // undici hides the network error in `cause` ("fetch failed" alone says nothing)
+    console.error(`Error ${method} ${url}:`, error, (error as { cause?: unknown }).cause);
     return null;
   }
 }

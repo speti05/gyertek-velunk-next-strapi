@@ -1,0 +1,49 @@
+---
+title: Feliratkozás a hírlevélre
+description: Hogyan iratkozhatsz fel a Gyertek Velünk hírlevelére, és milyen üzeneteket láthatsz közben.
+usecases: [UC-NEWS-01, UC-NEWS-02, UC-NEWS-03]
+---
+import TestCoverage from "../../../components/TestCoverage.astro";
+import Screenshot from "../../../components/Screenshot.astro";
+
+A hírlevélben értesítünk az új túrákról és beszámolókról. A feliratkozó űrlapot a főoldal
+alján találod.
+
+## Feliratkozás
+
+<TestCoverage id="UC-NEWS-01" />
+
+1. Nyisd meg a főoldalt, és görgess le a **hírlevél** blokkhoz.
+2. Ha még nem tetted meg, fogadd el a sütiket az **Elfogadom** gombbal – a spamszűrés
+   (reCAPTCHA) enélkül nem működik.
+3. Írd be az e-mail címedet a mezőbe.
+
+   <Screenshot name="UC-NEWS-01-form" alt="A hírlevél feliratkozó űrlap a főoldalon" />
+
+4. Kattints a feliratkozás gombra.
+5. Sikeres feliratkozás után zöld üzenet jelenik meg, és a mező kiürül. Néhány percen belül
+   visszaigazoló e-mailt is kapsz.
+
+   <Screenshot name="UC-NEWS-01-success" alt="Sikeres feliratkozás üzenete" />
+
+## Hibás e-mail cím
+
+<TestCoverage id="UC-NEWS-02" />
+
+Ha a beírt szöveg nem érvényes e-mail cím, piros hibaüzenet jelenik meg, és a feliratkozás
+nem történik meg. Javítsd ki a címet, majd próbáld újra.
+
+<Screenshot name="UC-NEWS-02-invalid" alt="Hibaüzenet érvénytelen e-mail cím esetén" />
+
+## Már feliratkoztál
+
+<TestCoverage id="UC-NEWS-03" />
+
+Egy e-mail címmel csak egyszer lehet feliratkozni. Ha a cím már szerepel a listán, erről
+üzenetet kapsz – ilyenkor nincs teendőd, a hírlevelet továbbra is megkapod.
+
+<Screenshot name="UC-NEWS-03-duplicate" alt="Üzenet már feliratkozott e-mail cím esetén" />
+
+:::tip[Bejelentkezett felhasználóként]
+A **Profil** oldalon egy jelölőnégyzettel is fel- és leiratkozhatsz a hírlevélről.
+:::

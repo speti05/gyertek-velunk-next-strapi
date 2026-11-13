@@ -1,0 +1,116 @@
+name: E2E tests and docs
+
+# Runs the Playwright suite against a freshly seeded Strapi, then builds the Starlight
+# user docs (with the test screenshots and coverage badges) and publishes them to
+# GitHub Pages. Pages must be enabled with "Source: GitHub Actions" in the repo settings.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: docs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  e2e-and-docs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CI: true
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
+      NEXT_PUBLIC_STRAPI_URL: http://localhost:1337
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: |
+          (cd server && yarn install --frozen-lockfile)
+          (cd client && yarn install --frozen-lockfile)
+          (cd e2e && yarn install)
+          (cd docs-site && yarn install)
+
+      - name: Create Strapi .env with throwaway secrets
+        working-directory: server
+        run: |
+          rand() { openssl rand -base64 24; }
+          cat > .env <<EOF
+          HOST=0.0.0.0
+          PORT=1337
+          APP_KEYS=$(rand),$(rand)
+          API_TOKEN_SALT=$(rand)
+          ADMIN_JWT_SECRET=$(rand)
+          TRANSFER_TOKEN_SALT=$(rand)
+          JWT_SECRET=$(rand)
+          NEWSLETTER_UNSUBSCRIBE_SECRET=$(rand)
+          PREVIEW_SECRET=$(rand)
+          CLIENT_URL=http://localhost:3000
+          STRAPI_URL=http://localhost:1337
+          ADMIN_EMAIL=admin@example.com
+          # No mail server in CI: signup e-mails fail in the background and are only logged
+          SMTP_HOST=127.0.0.1
+          SMTP_PORT=2525
+          SMTP_USER=e2e@example.com
+          SMTP_PASS=unused
+          EOF
+
+      - name: Seed database and build Strapi
+        run: |
+          yarn seed
+          (cd server && yarn build)
+
+      - name: Install Playwright browsers
+        working-directory: e2e
+        run: yarn install:browsers
+
+      # Playwright starts Strapi first, then builds and starts the client (its pages are
+      # statically generated from Strapi content, so the build needs Strapi running)
+      - name: Run e2e tests
+        working-directory: e2e
+        run: yarn test
+
+      - name: Upload Playwright report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: e2e/playwright-report
+          retention-days: 14
+
+      # The docs are built even when a test failed, so the coverage page shows the failure
+      - name: Build coverage data
+        if: ${{ !cancelled() }}
+        run: node scripts/build-coverage.mjs
+
+      - name: Build docs
+        if: ${{ !cancelled() }}
+        working-directory: docs-site
+        run: |
+          yarn build
+          cp -r ../e2e/playwright-report dist/report
+
+      - name: Upload Pages artifact
+        if: ${{ !cancelled() && github.ref == 'refs/heads/main' }}
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs-site/dist
+
+  deploy:
+    if: ${{ !cancelled() && github.ref == 'refs/heads/main' }}
+    needs: e2e-and-docs
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
