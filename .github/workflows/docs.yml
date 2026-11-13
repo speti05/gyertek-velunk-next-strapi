@@ -1,6 +1,6 @@
 name: E2E tests and docs
 
-# Runs the Playwright suite against a freshly seeded Strapi, then builds the Starlight
+# Runs the Playwright suite against Strapi on the committed test database, then builds the Starlight
 # user docs (with the test screenshots and coverage badges) and publishes them to
 # GitHub Pages. Pages must be enabled with "Source: GitHub Actions" in the repo settings.
 
@@ -63,10 +63,10 @@ jobs:
           SMTP_PASS=unused
           EOF
 
-      - name: Seed database and build Strapi
-        run: |
-          yarn seed
-          (cd server && yarn build)
+      # No seeding: the tests start from the committed e2e/fixtures/data.db
+      - name: Build Strapi
+        working-directory: server
+        run: yarn build
 
       - name: Typecheck e2e
         working-directory: e2e
@@ -76,7 +76,7 @@ jobs:
         working-directory: e2e
         run: yarn install:browsers
 
-      # Playwright starts Strapi on a copy of the seeded database first, then builds and
+      # Playwright starts Strapi on a copy of e2e/fixtures/data.db first, then builds and
       # starts the client (its pages are statically generated from Strapi content, so the
       # build needs Strapi running)
       - name: Run e2e tests
@@ -101,7 +101,8 @@ jobs:
         working-directory: docs-site
         run: |
           yarn build
-          cp -r ../e2e/playwright-report dist/report
+          # Missing when an earlier step failed before the tests ran
+          if [ -d ../e2e/playwright-report ]; then cp -r ../e2e/playwright-report dist/report; fi
 
       - name: Upload Pages artifact
         if: ${{ !cancelled() && github.ref == 'refs/heads/main' }}

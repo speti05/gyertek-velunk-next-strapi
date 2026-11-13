@@ -44,12 +44,21 @@ The VS Code launch compound **Lint (client + server)** runs all of these. The cl
 ```bash
 yarn setup:e2e && yarn setup:docs   # Install Playwright (+ Chromium) and Starlight
 yarn e2e            # Playwright suite on its own Strapi (:1338, on a DB copy) + client (:3001)
+yarn e2e:no-content # The same on the no-content test database
+yarn e2e:snapshot   # Rebuild e2e/fixtures/*.db from the dev database (after schema/content changes)
 yarn docs:dev       # Build coverage.json from the last e2e run, then serve the docs
 ```
 
-- `e2e/` — Playwright tests. They never write to the dev database: `e2e/scripts/start-strapi.mjs` copies it to `server/.tmp/e2e/` and `e2e/scripts/run.mjs` (behind `yarn test` / `yarn test:ui`) deletes the copy after the run. Each test is tagged with the use case it covers via `useCase("UC-XXX-00")` (`e2e/support/docs.ts`); `docScreenshot()` saves images into the docs. Assert against `getTexts("hu")`, never literal strings.
+- `e2e/` — Playwright tests. They never write to the dev database: `e2e/scripts/start-strapi.mjs` copies a committed fixture (`e2e/fixtures/data.db`, or `data-no-content.db` with `--db no-content`; personal data stripped by `scripts/build-test-dbs.mjs`) to `server/.tmp/e2e/` and `e2e/scripts/run.mjs` (behind `yarn test` / `yarn test:ui`) deletes the copy after the run. Each test is tagged with the use case it covers via `useCase("UC-XXX-00")` (`e2e/support/docs.ts`); `docScreenshot()` saves images into the docs. Assert against `getTexts("hu")`, never literal strings.
 - `docs-site/` — Astro Starlight user docs (Hungarian), published to GitHub Pages by `.github/workflows/docs.yml`. A page lists its use cases in the `usecases` frontmatter and shows `<TestCoverage id="..." />` / `<Screenshot name="..." />`.
 - `scripts/build-coverage.mjs` joins the two on the use case ID; `--strict` fails on untested or undocumented use cases.
+
+**Schema change → refresh the test databases.** Whenever a Strapi schema changes (`server/src/api/*/content-types/` or `server/src/components/`), regenerate the committed fixtures as part of the same change:
+
+1. Start the dev Strapi once with the new schema, so `server/.tmp/data.db` is migrated.
+2. If a new type holds personal data, add its table to `PRIVATE_TABLES` in `scripts/build-test-dbs.mjs` first (the repo is public).
+3. Run `yarn e2e:snapshot` → rebuilds `e2e/fixtures/data.db` and `e2e/fixtures/data-no-content.db`.
+4. Verify with `yarn e2e` and `yarn e2e:no-content`, and commit the fixtures with the schema change.
 
 ### Database
 ```bash

@@ -37,7 +37,7 @@ themselves, which keeps them up to date.
 | `e2e/` | A standalone Yarn package with the Playwright tests. It is not part of the client or server dependencies. |
 | `docs-site/` | A standalone Yarn package: the user guide, built with **Astro** + **Starlight**. |
 | `scripts/build-coverage.mjs` | Joins test results and docs pages on the use case ID and writes `coverage.json`. |
-| `.github/workflows/docs.yml` | CI: runs the tests on a freshly seeded Strapi, builds the guide and publishes it to GitHub Pages. |
+| `.github/workflows/docs.yml` | CI: runs the tests on the committed test database, builds the guide and publishes it to GitHub Pages. |
 | `package.json` (root) | `setup:e2e`, `setup:docs`, `e2e`, `e2e:ui`, `docs:coverage`, `docs:dev`, `docs:build` scripts. |
 | `.vscode/launch.json` | `E2E: …` run configurations. |
 
@@ -103,16 +103,42 @@ e2e/
 
 ### The database copy
 
-1. `scripts/start-strapi.mjs` deletes any leftover copy, then copies
-   `server/.tmp/data.db` (override with `E2E_SOURCE_DB`, relative to `server/`) to
-   `server/.tmp/e2e/data.db` with SQLite's backup API. That gives a consistent copy even
-   while the dev Strapi is writing to it.
+1. `scripts/start-strapi.mjs` deletes any leftover copy, then copies the source database to
+   `server/.tmp/e2e/data.db` with SQLite's backup API. The source is one of the committed
+   fixtures, the same locally and in CI (see below).
 2. The tests write only to the copy. The dev data never changes.
 3. `scripts/run.mjs` deletes `server/.tmp/e2e/` once Playwright has exited and stopped the
    servers. A `globalTeardown` would be too early: it runs before the servers stop, and
    Windows does not let a file go while Strapi holds it open.
 
 Run the suite through `yarn test` / `yarn test:ui` (or the root `yarn e2e` / `yarn e2e:ui`).
+
+### The test databases (`e2e/fixtures/`)
+
+| File | Content | Run with |
+| --- | --- | --- |
+| `data.db` (default) | Every piece of content: pages, articles, blogs, events, newsletters, media library | `yarn e2e` |
+| `data-no-content.db` | Only what the site needs to come up: pages, global / home page / site settings, media library | `yarn e2e:no-content` (or `yarn test --db no-content` in `e2e/`) |
+
+`--db` also takes a path relative to the repo root, e.g. `yarn test --db server/.tmp/data.db`
+runs against a copy of the dev database (the same as `E2E_DB=...`).
+
+Both are committed, and the repo is public, so they hold **no personal data or credentials**:
+admin and end users, signups, contact requests, sessions, API / transfer tokens and the
+content history are emptied. There is no admin user in them; open the e2e Strapi admin and
+it asks you to register one. The media files are not in the database (they live in
+`server/public/uploads`, which is not committed), so in CI the images do not load.
+
+**Refresh them** whenever the schema or the test content changes - the schema must match
+the code, or Strapi has to migrate on start:
+
+```bash
+yarn e2e:snapshot   # scripts/build-test-dbs.mjs: server/.tmp/data.db → e2e/fixtures/*.db
+```
+
+The script works from the content-type and component schemas in `server/src`, so a new
+content type is handled without changes. A new type holding personal data must be added to
+`PRIVATE_TABLES` in the script.
 Calling `npx playwright test` directly (or the VS Code Playwright extension) skips
 `run.mjs`. The tests still run on a copy, but it stays on disk until the next run replaces it.
 
@@ -244,9 +270,9 @@ Triggers: push to `main`, every pull request, and manual runs.
 1. Installs the server, client, e2e and docs-site dependencies.
 2. Writes a throwaway `server/.env` with random secrets and the Ethereal account from the
    `ETHEREAL_USER` / `ETHEREAL_PASS` repo secrets, so the run's e-mails land in that inbox.
-3. Seeds the database from `seed-data.tar.gz` (`yarn seed`) and builds Strapi.
-4. Installs Chromium and runs `yarn test`. Playwright starts Strapi on a copy of the seeded
-   database, then builds and starts the client.
+3. Builds Strapi. There is no seeding: the run starts from the committed `e2e/fixtures/data.db`.
+4. Typechecks `e2e/`, installs Chromium and runs `yarn test`. Playwright starts Strapi on a
+   copy of the fixture, then builds and starts the client.
 5. Uploads the Playwright HTML report as the `playwright-report` artifact (14 days).
 6. **Even when a test failed:** builds `coverage.json`, builds the guide, and copies the
    HTML report to `dist/report/`. That way the published coverage page shows the failure.

@@ -12,7 +12,8 @@ const baseURL = `http://localhost:${CLIENT_PORT}`;
  * Both apps are started here, on their own ports, and Strapi runs on a copy of the
  * database (scripts/start-strapi.mjs) - the dev data is never written to. Run the suite
  * through `yarn test` / `yarn test:ui` (scripts/run.mjs), which deletes the copy afterwards.
- * In CI the copy is made from the seeded database (see .github/workflows/docs.yml).
+ * The copy is made from the committed e2e/fixtures/data.db (E2E_DB picks another one,
+ * see scripts/e2e-db.mjs), locally and in CI alike.
  */
 export default defineConfig({
   testDir: "./tests",
