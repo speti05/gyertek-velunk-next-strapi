@@ -4,13 +4,15 @@
   "private": true,
   "description": "Gyertek Velunk end-to-end tests (Playwright)",
   "scripts": {
-    "test": "playwright test",
-    "test:ui": "playwright test --ui",
+    "test": "node scripts/run.mjs",
+    "test:ui": "node scripts/run.mjs --ui",
+    "typecheck": "tsc -p tsconfig.json",
     "report": "playwright show-report",
     "install:browsers": "playwright install --with-deps chromium"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.0",
-    "@types/node": "^24"
+    "@types/node": "^24",
+    "typescript": "^5"
   }
 }

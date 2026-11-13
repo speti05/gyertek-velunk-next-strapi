@@ -7,6 +7,8 @@ const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337"
 const strapiOrigin = new URL(STRAPI_URL);
 
 const nextConfig = {
+  // The e2e run starts a second client next to `yarn dev` and gives it its own build dir
+  distDir: process.env.NEXT_DIST_DIR || ".next",
   output: isDev ? undefined : "standalone",
   async headers() {
     return [

@@ -8,9 +8,14 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
+    "allowJs": true,
+    "checkJs": true,
     "paths": {
-      "@client/*": ["../client/src/*"]
+      "@client/*": ["../client/src/*"],
+      // The client files imported here (i18n/texts.ts) use the client's own alias
+      "@/*": ["../client/src/*"]
     }
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "scripts/**/*.mjs"],
+  "exclude": ["node_modules", "playwright-report", "test-results"]
 }

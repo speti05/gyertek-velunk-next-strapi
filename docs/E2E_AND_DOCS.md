@@ -62,6 +62,10 @@ e2e/
 ├── package.json          # @playwright/test; scripts: test, test:ui, report, install:browsers
 ├── playwright.config.ts  # projects, reporters, web servers
 ├── tsconfig.json         # "@client/*" → ../client/src/*  (to reuse the site's texts)
+├── scripts/
+│   ├── e2e-db.mjs        # where the database copy lives
+│   ├── start-strapi.mjs  # copies the database, starts Strapi on the copy
+│   └── run.mjs           # runs Playwright, then deletes the copy (behind `yarn test`)
 ├── support/
 │   ├── docs.ts           # useCase(), docScreenshot()
 │   └── site.ts           # hu texts, acceptCookies(), uniqueEmail()
@@ -75,14 +79,42 @@ e2e/
 - **Reporters:** `list` for the terminal, `html` (`playwright-report/`, opened with
   `yarn report`), and `json` → `test-results/results.json`, which is the input for
   `build-coverage.mjs`.
-- **`webServer`:** Playwright makes sure Strapi (`:1337/_health`) and then the client
-  (`:3000`) are up before the tests start.
-  - **Locally** (`reuseExistingServer`) it uses the `yarn dev` you already have running. If
-    nothing is running, it starts `yarn develop` / `yarn dev` itself, which can take a few
-    minutes the first time.
-  - **In CI** it starts a built Strapi and runs `yarn build && yarn start` for the client.
-    The order matters: the client build pre-renders pages from Strapi content.
-- `E2E_BASE_URL` overrides the client URL (default `http://localhost:3000`).
+- **`webServer`:** every run starts **its own** Strapi and client, next to (not instead of)
+  a running `yarn dev`. They are stopped when the run ends.
+
+  | | Dev (`yarn dev`) | E2E run |
+  |---|---|---|
+  | Strapi | `:1337`, `server/.tmp/data.db` | `:1338`, `server/.tmp/e2e/data.db` (a copy) |
+  | Client | `:3000`, `client/.next/` | `:3001`, `client/.next-e2e/` |
+
+  - Strapi is started by `scripts/start-strapi.mjs` (`strapi start`, after a `tsc` so
+    `dist/` is current). The client gets `STRAPI_API_URL` / `NEXT_PUBLIC_STRAPI_URL`
+    pointing at `:1338`, and `NEXT_DIST_DIR=.next-e2e` (read in `client/next.config.ts`),
+    so its cache does not clash with the dev server's.
+  - **Locally** the client runs as `next dev`. The first run compiles from scratch and is
+    slower.
+  - **In CI** the client runs as `yarn build && yarn start`. The order matters: the client
+    build pre-renders pages from Strapi content.
+  - No real e-mail leaves a test run: Strapi runs with `NODE_ENV=development`, so every
+    e-mail (our own and the email plugin's) goes to the Ethereal account set in `server/.env`
+    (`ETHEREAL_USER` / `ETHEREAL_PASS`, see `server/src/lib/email/ethereal.ts`). Its inbox is at
+    https://ethereal.email/messages. Without that account a throwaway one is created per start,
+    and the email plugin's `SMTP_HOST` points at a closed port.
+
+### The database copy
+
+1. `scripts/start-strapi.mjs` deletes any leftover copy, then copies
+   `server/.tmp/data.db` (override with `E2E_SOURCE_DB`, relative to `server/`) to
+   `server/.tmp/e2e/data.db` with SQLite's backup API. That gives a consistent copy even
+   while the dev Strapi is writing to it.
+2. The tests write only to the copy. The dev data never changes.
+3. `scripts/run.mjs` deletes `server/.tmp/e2e/` once Playwright has exited and stopped the
+   servers. A `globalTeardown` would be too early: it runs before the servers stop, and
+   Windows does not let a file go while Strapi holds it open.
+
+Run the suite through `yarn test` / `yarn test:ui` (or the root `yarn e2e` / `yarn e2e:ui`).
+Calling `npx playwright test` directly (or the VS Code Playwright extension) skips
+`run.mjs`. The tests still run on a copy, but it stays on disk until the next run replaces it.
 
 ### `support/docs.ts`
 
@@ -179,7 +211,7 @@ yarn setup:e2e
 yarn setup:docs
 ```
 
-Day to day, with `yarn dev` running:
+Day to day. `yarn dev` may or may not be running, the tests start their own servers:
 
 ```bash
 yarn e2e        # all tests, headless (desktop + mobile)
@@ -210,11 +242,11 @@ VS Code (**Run and Debug**):
 Triggers: push to `main`, every pull request, and manual runs.
 
 1. Installs the server, client, e2e and docs-site dependencies.
-2. Writes a throwaway `server/.env` with random secrets. SMTP points at a closed port, so
-   signup e-mails fail in the background and are only logged.
+2. Writes a throwaway `server/.env` with random secrets and the Ethereal account from the
+   `ETHEREAL_USER` / `ETHEREAL_PASS` repo secrets, so the run's e-mails land in that inbox.
 3. Seeds the database from `seed-data.tar.gz` (`yarn seed`) and builds Strapi.
-4. Installs Chromium and runs `yarn test`. Playwright starts Strapi, then builds and starts
-   the client.
+4. Installs Chromium and runs `yarn test`. Playwright starts Strapi on a copy of the seeded
+   database, then builds and starts the client.
 5. Uploads the Playwright HTML report as the `playwright-report` artifact (14 days).
 6. **Even when a test failed:** builds `coverage.json`, builds the guide, and copies the
    HTML report to `dist/report/`. That way the published coverage page shows the failure.
@@ -274,8 +306,8 @@ Conventions:
   not implementation details.
 - Screenshot names start with the use case ID (`UC-TOUR-01-…`).
 - Prefer role-based locators (`getByRole`) scoped to a section of the page.
-- Tests must be safe to rerun against the same database. Use `uniqueEmail()` or similar
-  for anything with a unique constraint.
+- Every run starts from a fresh copy, but the tests of one run share it and run in
+  parallel. Use `uniqueEmail()` or similar for anything with a unique constraint.
 
 ---
 
@@ -288,8 +320,10 @@ Conventions:
 | The page shows **Szerver oldali hiba** and the Next log has `fetch failed … ECONNRESET` | Keep-alive race between Next and Strapi. `server/src/index.ts` raises Strapi's `keepAliveTimeout` to 65 s. Check that Strapi was restarted (`curl -sI localhost:1337/api/global` shows `Keep-Alive: timeout=65`). |
 | Success and error message shown together | A server action spread `prevState` without clearing `successMessage`. Error branches must return `successMessage: null`. |
 | Guide says "Képernyőkép hiányzik" / "Nincs teszt" | No test run on this machine yet, or `docs:dev` was started before it. Run `yarn e2e`, then `yarn docs:dev`. |
-| Flaky first run after editing client code | The Next dev server is still compiling. Run the tests again once it has settled. |
+| Flaky first run after editing client code | The e2e client (`next dev` on `:3001`) is still compiling. Run the tests again. |
+| `http://localhost:1338 is already used` / `:3001 …` | An e2e server from an aborted run is still alive. Stop that node process. |
+| `server/.tmp/e2e/` left on disk | The run was started without `run.mjs` (see above), or the process was killed. The next run replaces it, or delete it by hand. |
 
 For the Next.js server-side error behind a failing page, check
-`client/.next/dev/logs/next-development.log`. `fetchAPI` logs the failing URL and the real
+`client/.next-e2e/dev/logs/next-development.log` (the e2e client's log). `fetchAPI` logs the failing URL and the real
 network error (`cause`) there.

@@ -1,22 +1,25 @@
 import nodemailer from "nodemailer";
+import { ETHEREAL_HOST, ETHEREAL_PORT, getEtherealAccount, isDevelopment } from "./ethereal";
 
 let transporter: nodemailer.Transporter;
 
 export const getTransporter = async (): Promise<nodemailer.Transporter> => {
   if (transporter) return transporter;
 
-  if (process.env.NODE_ENV === "development") {
-    const testAccount = await nodemailer.createTestAccount();
+  if (isDevelopment()) {
+    // A fixed account from the env, or a throwaway one created now (see ethereal.ts)
+    const account = getEtherealAccount() ?? (await nodemailer.createTestAccount());
     transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
-      port: 587,
+      host: ETHEREAL_HOST,
+      port: ETHEREAL_PORT,
       secure: false,
-      auth: {
-        user: testAccount.user,
-        pass: testAccount.pass,
-      },
+      auth: { user: account.user, pass: account.pass },
     });
-    console.log("Using Ethereal test account:", testAccount);
+    console.log(
+      getEtherealAccount()
+        ? `Using Ethereal account ${account.user} - inbox: https://ethereal.email/messages`
+        : `Using a throwaway Ethereal account (set ETHEREAL_USER / ETHEREAL_PASS for a fixed one): ${account.user} / ${account.pass}`
+    );
   } else {
     transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,

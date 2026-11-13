@@ -1,11 +1,18 @@
 import { defineConfig, devices } from "@playwright/test";
 
 const isCI = !!process.env.CI;
-const baseURL = process.env.E2E_BASE_URL ?? "http://localhost:3000";
+
+// Next to, not instead of, a running `yarn dev` (1337 / 3000)
+const STRAPI_PORT = 1338;
+const CLIENT_PORT = 3001;
+const strapiURL = `http://localhost:${STRAPI_PORT}`;
+const baseURL = `http://localhost:${CLIENT_PORT}`;
 
 /**
- * Locally the tests reuse whatever `yarn dev` is already serving. In CI both apps are
- * built and started here, against the seeded SQLite database (see .github/workflows/docs.yml).
+ * Both apps are started here, on their own ports, and Strapi runs on a copy of the
+ * database (scripts/start-strapi.mjs) - the dev data is never written to. Run the suite
+ * through `yarn test` / `yarn test:ui` (scripts/run.mjs), which deletes the copy afterwards.
+ * In CI the copy is made from the seeded database (see .github/workflows/docs.yml).
  */
 export default defineConfig({
   testDir: "./tests",
@@ -30,19 +37,36 @@ export default defineConfig({
   ],
   webServer: [
     {
-      command: isCI ? "yarn start" : "yarn develop",
-      cwd: "../server",
-      url: "http://localhost:1337/_health",
-      reuseExistingServer: !isCI,
+      command: "node scripts/start-strapi.mjs",
+      url: `${strapiURL}/_health`,
+      reuseExistingServer: false,
       timeout: 180_000,
+      env: {
+        PORT: String(STRAPI_PORT),
+        STRAPI_URL: strapiURL,
+        CLIENT_URL: baseURL,
+        // Development mode sends every e-mail to the Ethereal account in server/.env
+        // (ETHEREAL_USER / ETHEREAL_PASS, see server/src/lib/email/ethereal.ts). Without it
+        // the email plugin falls back to SMTP, which points at a closed port here.
+        NODE_ENV: "development",
+        SMTP_HOST: "127.0.0.1",
+        SMTP_PORT: "2525",
+      },
     },
     {
       // Web servers start in order: the client build pre-renders pages from Strapi
-      command: isCI ? "yarn build && yarn start" : "yarn dev",
+      command: isCI ? `yarn build && yarn start -p ${CLIENT_PORT}` : `yarn dev -p ${CLIENT_PORT}`,
       cwd: "../client",
       url: baseURL,
-      reuseExistingServer: !isCI,
+      reuseExistingServer: false,
       timeout: 600_000,
+      env: {
+        // Its own build dir, so it does not clash with the `yarn dev` cache in .next/
+        NEXT_DIST_DIR: ".next-e2e",
+        STRAPI_API_URL: strapiURL,
+        NEXT_PUBLIC_STRAPI_URL: strapiURL,
+        NEXT_PUBLIC_SITE_URL: baseURL,
+      },
     },
   ],
 });

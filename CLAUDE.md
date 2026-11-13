@@ -35,6 +35,7 @@ cd server && yarn build   # Build Strapi admin panel
 cd client && yarn lint       # ESLint + Stylelint on src/ (lint:js / lint:css run them separately)
 cd server && yarn lint       # ESLint (type-aware typescript-eslint)
 cd server && yarn typecheck  # tsc --noEmit
+cd e2e && yarn typecheck     # tsc on the tests, support files and scripts/*.mjs
 ```
 
 The VS Code launch compound **Lint (client + server)** runs all of these. The client configs enforce the project conventions: MUI imports only inside `custom-ui-components/` (plus the theme provider and `sass/mui-override/`), no Tailwind colour utilities, and no colour literals in TS/TSX or SCSS/CSS outside `_colors.scss`.
@@ -42,11 +43,11 @@ The VS Code launch compound **Lint (client + server)** runs all of these. The cl
 ### E2E tests and user docs
 ```bash
 yarn setup:e2e && yarn setup:docs   # Install Playwright (+ Chromium) and Starlight
-yarn e2e            # Playwright suite (reuses a running `yarn dev` locally)
+yarn e2e            # Playwright suite on its own Strapi (:1338, on a DB copy) + client (:3001)
 yarn docs:dev       # Build coverage.json from the last e2e run, then serve the docs
 ```
 
-- `e2e/` — Playwright tests. Each test is tagged with the use case it covers via `useCase("UC-XXX-00")` (`e2e/support/docs.ts`); `docScreenshot()` saves images into the docs. Assert against `getTexts("hu")`, never literal strings.
+- `e2e/` — Playwright tests. They never write to the dev database: `e2e/scripts/start-strapi.mjs` copies it to `server/.tmp/e2e/` and `e2e/scripts/run.mjs` (behind `yarn test` / `yarn test:ui`) deletes the copy after the run. Each test is tagged with the use case it covers via `useCase("UC-XXX-00")` (`e2e/support/docs.ts`); `docScreenshot()` saves images into the docs. Assert against `getTexts("hu")`, never literal strings.
 - `docs-site/` — Astro Starlight user docs (Hungarian), published to GitHub Pages by `.github/workflows/docs.yml`. A page lists its use cases in the `usecases` frontmatter and shows `<TestCoverage id="..." />` / `<Screenshot name="..." />`.
 - `scripts/build-coverage.mjs` joins the two on the use case ID; `--strict` fails on untested or undocumented use cases.
 
@@ -88,7 +89,7 @@ Need a colour that does not exist yet? Add a token to `_colors.scss` — do not 
 - **Content types** (in `src/api/`): `article`, `event`, `event-signup`, `global`, `home-page`, `newsletter-signup`, `page`.
 - **Components** (in `src/components/`): `blocks`, `elements`, `layout` — shared Strapi component schemas used across content types.
 - **Database**: SQLite in development (`.tmp/data.db`); configurable for MySQL/PostgreSQL via environment variables.
-- **Email**: Nodemailer (Gmail SMTP by default), configured in `server/config/`.
+- **Email**: Nodemailer (Gmail SMTP by default), configured in `server/config/`. In development (`NODE_ENV=development`, also the e2e runs) every e-mail goes to the Ethereal account in `ETHEREAL_USER` / `ETHEREAL_PASS` instead (`src/lib/email/ethereal.ts`).
 - **Plugins**: `@strapi/plugin-users-permissions`, `@offset-dev/strapi-calendar`.
 
 ### Environment Files

@@ -18,10 +18,9 @@ jobs:
   e2e-and-docs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    # The URLs and ports of both apps are set by e2e/playwright.config.ts
     env:
       CI: true
-      NEXT_PUBLIC_SITE_URL: http://localhost:3000
-      NEXT_PUBLIC_STRAPI_URL: http://localhost:1337
     steps:
       - uses: actions/checkout@v4
 
@@ -53,7 +52,11 @@ jobs:
           CLIENT_URL=http://localhost:3000
           STRAPI_URL=http://localhost:1337
           ADMIN_EMAIL=admin@example.com
-          # No mail server in CI: signup e-mails fail in the background and are only logged
+          # The e2e Strapi runs in development mode, so every e-mail goes to this Ethereal
+          # account (repo secrets; without them a throwaway account is created per run)
+          ETHEREAL_USER=${{ secrets.ETHEREAL_USER }}
+          ETHEREAL_PASS=${{ secrets.ETHEREAL_PASS }}
+          # Not used while Ethereal is on; a closed port, so nothing could leave anyway
           SMTP_HOST=127.0.0.1
           SMTP_PORT=2525
           SMTP_USER=e2e@example.com
@@ -65,12 +68,17 @@ jobs:
           yarn seed
           (cd server && yarn build)
 
+      - name: Typecheck e2e
+        working-directory: e2e
+        run: yarn typecheck
+
       - name: Install Playwright browsers
         working-directory: e2e
         run: yarn install:browsers
 
-      # Playwright starts Strapi first, then builds and starts the client (its pages are
-      # statically generated from Strapi content, so the build needs Strapi running)
+      # Playwright starts Strapi on a copy of the seeded database first, then builds and
+      # starts the client (its pages are statically generated from Strapi content, so the
+      # build needs Strapi running)
       - name: Run e2e tests
         working-directory: e2e
         run: yarn test

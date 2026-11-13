@@ -115,6 +115,16 @@
       "skipFiles": ["<node_internals>/**"]
     },
     {
+      "name": "Lint: E2E (tsc typecheck)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["run", "typecheck"],
+      "cwd": "${workspaceFolder}/e2e",
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
       "name": "E2E: All tests (headless)",
       "type": "node",
       "request": "launch",
@@ -162,7 +172,8 @@
         "Lint: Client (ESLint)",
         "Lint: Client (Stylelint)",
         "Lint: Server (ESLint)",
-        "Lint: Server (tsc typecheck)"
+        "Lint: Server (tsc typecheck)",
+        "Lint: E2E (tsc typecheck)"
       ]
     },
     {
