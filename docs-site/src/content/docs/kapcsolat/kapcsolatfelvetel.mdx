@@ -1,0 +1,95 @@
+---
+title: Kapcsolatfelvétel
+description: Hogyan kérhetsz visszahívást vagy e-mailes megkeresést a Gyertek Velünk szervezőitől, és milyen e-maileket küld ilyenkor a rendszer.
+usecases: [UC-CONTACT-01, UC-CONTACT-02, UC-CONTACT-03, UC-CONTACT-04]
+---
+import TestCoverage from "../../../components/TestCoverage.astro";
+import Screenshot from "../../../components/Screenshot.astro";
+
+Ha még nem szeretnél fiókot létrehozni, vagy előbb többet hallanál a túrázásról, a
+**Kapcsolatfelvétel** űrlapon megadhatod az elérhetőségedet, és a szervezők felveszik veled a
+kapcsolatot. Az űrlapot a főoldal alsó részén találod.
+
+Választhatod, hogy **telefonon** vagy **e-mailben** keressünk. Mindkét esetben csak a neved
+és a választott elérhetőség kell, regisztráció nem.
+
+:::note[Sütik]
+Az űrlap elküldéséhez el kell fogadnod a sütiket – a spamszűrés (reCAPTCHA) enélkül nem
+működik. Ha még nem fogadtad el őket, a **Küldés** gomb a sütibeállításokat nyitja meg.
+:::
+
+## Visszahívás kérése telefonon
+
+<TestCoverage id="UC-CONTACT-01" />
+
+1. Nyisd meg a főoldalt, és görgess le a **Kapcsolatfelvétel** blokkhoz.
+2. Írd be a **neved**.
+3. A **Hogyan keressünk?** kérdésnél hagyd bejelölve a **Telefonon keress** lehetőséget
+   (ez az alapértelmezett).
+4. Add meg a **telefonszámodat**.
+
+   <Screenshot name="UC-CONTACT-01-form" alt="A kitöltött kapcsolatfelvételi űrlap telefonos visszahívással" />
+
+5. Kattints a **Küldés** gombra. Zöld üzenet jelzi, hogy a kérésed megérkezett.
+
+   <Screenshot name="UC-CONTACT-01-success" alt="Sikeres kapcsolatfelvételi kérés üzenete" />
+
+Ha még valakinek a nevében szeretnél kérést küldeni, kattints a **Küldök másikat** gombra –
+az űrlap üresen nyílik meg újra.
+
+### Mit kapnak a szervezők?
+
+A szervezők e-mailben értesítést kapnak a nevedről, a telefonszámodról és arról, hogy telefonon
+szeretnéd, ha keresnénk. Telefonos kérésnél **te nem kapsz visszaigazoló e-mailt**, hiszen nem
+adtál meg e-mail címet.
+
+<Screenshot name="UC-CONTACT-01-admin-email" alt="A szervezőknek küldött értesítő e-mail a visszahívási kérésről" />
+
+## Kapcsolatfelvétel kérése e-mailben
+
+<TestCoverage id="UC-CONTACT-02" />
+
+1. A **Hogyan keressünk?** kérdésnél válaszd az **Emailben keress** lehetőséget. A telefonszám
+   mező helyett ekkor az **Email címed** mező jelenik meg.
+2. Töltsd ki a **neved** és az **e-mail címedet**.
+
+   <Screenshot name="UC-CONTACT-02-form" alt="A kapcsolatfelvételi űrlap e-mailes kapcsolattartással" />
+
+3. Kattints a **Küldés** gombra.
+
+Néhány percen belül **visszaigazoló e-mailt** kapsz *Megkaptuk a megkeresésedet* tárggyal.
+A levélben látod a megadott elérhetőségedet – ha időközben megváltozna, egyszerűen válaszolj
+a levélre. A szervezők ugyanúgy értesítést kapnak, mint a telefonos kérésnél, benne a megadott
+e-mail címmel.
+
+<Screenshot name="UC-CONTACT-02-email" alt="A visszaigazoló e-mail, amelyet a kérés beküldője kap" />
+
+:::tip[Nem érkezett meg a levél?]
+Nézd meg a levélszemét (spam) mappát is. Ha ott sincs, ellenőrizd, hogy jól írtad-e be a
+címedet – a kérésed ettől függetlenül megérkezett hozzánk.
+:::
+
+## Hiányzó vagy hibás adatok
+
+<TestCoverage id="UC-CONTACT-03" />
+
+Ha valamelyik kötelező mező üres, a mező piros keretet kap, és alatta megjelenik, mit kell
+pótolni (*Add meg a neved.*, *Add meg a telefonszámod.*, *Add meg az email címedet.*).
+
+<Screenshot name="UC-CONTACT-03-missing" alt="Hibaüzenetek üresen hagyott név és telefonszám esetén" />
+
+Érvénytelen e-mail címnél (például ha hiányzik a végéről a `.hu` vagy `.com`) a mező alatt
+hibaüzenet jelenik meg. Javítsd ki az adatokat, majd küldd el újra – amíg a hibák meg nem
+szűnnek, a kérés nem kerül el hozzánk.
+
+<Screenshot name="UC-CONTACT-03-invalid-email" alt="Hibaüzenet érvénytelen e-mail cím esetén" />
+
+## Már küldtél kérést
+
+<TestCoverage id="UC-CONTACT-04" />
+
+Ugyanarról a telefonszámról vagy e-mail címről **24 órán belül csak egy** kérést fogadunk.
+Ha ismét elküldöd, üzenet jelzi, hogy a kérésed már megvan – ilyenkor nincs teendőd,
+hamarosan jelentkezünk. Az ismételt kérésről a szervezők nem kapnak újabb értesítést.
+
+<Screenshot name="UC-CONTACT-04-duplicate" alt="Üzenet ismételt kapcsolatfelvételi kérés esetén" />

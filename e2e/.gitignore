@@ -1,3 +1,5 @@
 node_modules
 test-results
 playwright-report
+# The cookie consent state saved by setup/cookie-consent.setup.ts
+.state

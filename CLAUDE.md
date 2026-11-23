@@ -50,6 +50,7 @@ yarn docs:dev       # Build coverage.json from the last e2e run, then serve the 
 ```
 
 - `e2e/` — Playwright tests. They never write to the dev database: `e2e/scripts/start-strapi.mjs` copies a committed fixture (`e2e/fixtures/data.db`, or `data-no-content.db` with `--db no-content`; personal data stripped by `scripts/build-test-dbs.mjs`) to `server/.tmp/e2e/` and `e2e/scripts/run.mjs` (behind `yarn test` / `yarn test:ui`) deletes the copy after the run. Each test is tagged with the use case it covers via `useCase("UC-XXX-00")` (`e2e/support/docs.ts`); `docScreenshot()` saves images into the docs. Assert against `getTexts("hu")`, never literal strings.
+- E-mails in e2e: the test Strapi gets `EMAIL_OUTBOX_DIR`, and every mail sent through `sendMailWithRetry` is also saved there as JSON (`server/src/lib/email/outbox.ts`; inline images as data URIs, plus the Ethereal preview link). Tests read it with `waitForMail()` from `e2e/support/outbox.ts` and assert against `getStrapiTexts("hu")` (`@server/i18n/get-strapi-texts`). Mails sent with a plain `transporter.sendMail` (event signup, newsletter) do not reach the outbox yet.
 - `docs-site/` — Astro Starlight user docs (Hungarian), published to GitHub Pages by `.github/workflows/docs.yml`. A page lists its use cases in the `usecases` frontmatter and shows `<TestCoverage id="..." />` / `<Screenshot name="..." />`.
 - `scripts/build-coverage.mjs` joins the two on the use case ID; `--strict` fails on untested or undocumented use cases.
 

@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import { docScreenshot, useCase } from "../../support/docs";
-import { acceptCookies, hu, uniqueEmail } from "../../support/site";
+import { hu, openPage, uniqueEmail } from "../../support/site";
 
 // Docs: docs-site/src/content/docs/hirlevel/feliratkozas.mdx
 
@@ -24,8 +24,7 @@ async function subscribe(page: Page, email: string) {
 
 test.describe("Hírlevél feliratkozás", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/");
-    await acceptCookies(page);
+    await openPage(page, "/");
     await newsletterBlock(page).section.scrollIntoViewIfNeeded();
   });
 

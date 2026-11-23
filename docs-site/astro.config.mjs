@@ -18,6 +18,7 @@ export default defineConfig({
       editLink: { baseUrl: `${REPO}/edit/main/docs-site/` },
       sidebar: [
         { label: "Hírlevél", autogenerate: { directory: "hirlevel" } },
+        { label: "Kapcsolatfelvétel", autogenerate: { directory: "kapcsolat" } },
         { label: "Tesztlefedettség", link: "/lefedettseg/" },
       ],
     }),

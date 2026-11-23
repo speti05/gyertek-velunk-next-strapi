@@ -1,4 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
+import { CONSENT_STATE } from "./support/consent-state";
+import { OUTBOX_DIR } from "./support/outbox";
 
 const isCI = !!process.env.CI;
 
@@ -19,6 +21,9 @@ export default defineConfig({
   testDir: "./tests",
   fullyParallel: true,
   forbidOnly: isCI,
+  // Locally the client runs `yarn dev`, which compiles a page on its first request - often
+  // more than 30 s on a cold start (e.g. a single test started from UI mode). CI serves a build.
+  timeout: isCI ? 30_000 : 120_000,
   retries: isCI ? 1 : 0,
   workers: isCI ? 2 : undefined,
   reporter: [
@@ -33,8 +38,21 @@ export default defineConfig({
     trace: "on-first-retry",
   },
   projects: [
-    { name: "desktop", use: { ...devices["Desktop Chrome"] } },
-    { name: "mobile", use: { ...devices["Pixel 7"] } },
+    {
+      name: "desktop",
+      dependencies: ["setup"],
+      use: { ...devices["Desktop Chrome"], storageState: CONSENT_STATE },
+    },
+    {
+      name: "mobile",
+      dependencies: ["setup"],
+      use: { ...devices["Pixel 7"], storageState: CONSENT_STATE },
+    },
+    // Accepts the cookie banner once and saves the state the other projects start from
+    // (setup/cookie-consent.setup.ts) - it also warms up the client before the tests run.
+    // Listed last: UI mode preselects the first project, which should be a real one -
+    // the dependencies above make it run first all the same.
+    { name: "setup", testDir: "./setup", testMatch: /.*\.setup\.ts/, use: { ...devices["Desktop Chrome"] } },
   ],
   webServer: [
     {
@@ -52,6 +70,8 @@ export default defineConfig({
         NODE_ENV: "development",
         SMTP_HOST: "127.0.0.1",
         SMTP_PORT: "2525",
+        // A copy of every e-mail sent, for the tests to inspect (support/outbox.ts)
+        EMAIL_OUTBOX_DIR: OUTBOX_DIR,
       },
     },
     {

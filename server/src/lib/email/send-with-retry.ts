@@ -1,4 +1,5 @@
 import type { Transporter, SendMailOptions } from "nodemailer";
+import { addToOutbox } from "./outbox";
 
 const MAX_ATTEMPTS = 3;
 const RETRY_BASE_DELAY_MS = 2000;
@@ -15,6 +16,7 @@ const formatRecipients = (to: SendMailOptions["to"]): string =>
 /**
  * Sends one mail, retrying transient SMTP failures with a linear backoff.
  * Rethrows the last error when every attempt failed, so the caller can alert on it.
+ * In the e2e runs a copy of the mail lands in the outbox before it is sent (see outbox.ts).
  */
 export const sendMailWithRetry = async (
   transporter: Transporter,
@@ -22,10 +24,13 @@ export const sendMailWithRetry = async (
   label: string
 ) => {
   let lastError: unknown;
+  const recordOutcome = await addToOutbox(options, label);
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     try {
-      return await transporter.sendMail(options);
+      const info: unknown = await transporter.sendMail(options);
+      await recordOutcome(info);
+      return info;
     } catch (err) {
       lastError = err;
       console.warn(
@@ -36,5 +41,6 @@ export const sendMailWithRetry = async (
     }
   }
 
+  await recordOutcome(null);
   throw lastError;
 };

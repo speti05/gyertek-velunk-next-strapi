@@ -14,7 +14,8 @@ import { getStrapiTexts, type Locale } from "../../i18n/get-strapi-texts";
  * Sends the admin notification about a contact request and, when the requester
  * left an email address, a confirmation to the requester as well.
  *
- * Each mail is sent independently so one failure cannot suppress the other.
+ * The two mails are sent independently and side by side, so one failure cannot suppress
+ * the other and a slow or retrying SMTP connection for one does not hold back the other.
  * If any of them failed after its retries, the collected errors are rethrown
  * so the caller can log and alert.
  */
@@ -37,63 +38,69 @@ export const sendContactRequestEmails = async (
 
   const failures: string[] = [];
 
-  try {
-    await sendMailWithRetry(
-      transporter,
-      {
-        from: `"${texts.CONTACT_REQUEST_FROM_NAME(organizationName)}" <${process.env.SMTP_USER}>`,
-        to: process.env.ADMIN_EMAIL,
-        subject: texts.CONTACT_REQUEST_ADMIN_MAIL_SUBJECT,
-        html: emailWrapper(
-          siteUrl,
-          adminContactRequestEmailContent(texts, name, phone, email, preferredContact),
-          texts.SYSTEM_EMAIL_SUBJECT.contactRequestAdmin,
-          texts,
-          organizationName
-        ),
-        attachments: [EMAIL_HEADER_ATTACHMENT],
-      },
-      "contact request admin notification"
-    );
-    console.info(`Contact request admin email sent, from ${name}`);
-  } catch (err) {
-    failures.push(`admin notification: ${(err as Error).message}`);
-  }
-
-  // The confirmation can only be sent to someone who gave us an email address.
-  // Requesters who asked to be called back leave a phone number only.
-  if (email) {
+  const sendAdminNotification = async () => {
     try {
       await sendMailWithRetry(
         transporter,
         {
-          from: `"${organizationName}" <${process.env.SMTP_USER}>`,
-          to: email,
-          subject: texts.CONTACT_REQUEST_USER_MAIL_SUBJECT,
+          from: `"${texts.CONTACT_REQUEST_FROM_NAME(organizationName)}" <${process.env.SMTP_USER}>`,
+          to: process.env.ADMIN_EMAIL,
+          subject: texts.CONTACT_REQUEST_ADMIN_MAIL_SUBJECT,
           html: emailWrapper(
             siteUrl,
-            userContactRequestEmailContent(
-              texts,
-              name,
-              preferredContact,
-              preferredContact === "phone" ? (phone ?? email) : email,
-              organizationName
-            ),
-            texts.SYSTEM_EMAIL_SUBJECT.contactRequest,
+            adminContactRequestEmailContent(texts, name, phone, email, preferredContact),
+            texts.SYSTEM_EMAIL_SUBJECT.contactRequestAdmin,
             texts,
             organizationName
           ),
           attachments: [EMAIL_HEADER_ATTACHMENT],
         },
-        "contact request confirmation"
+        "contact request admin notification"
       );
-      console.info(`Contact request confirmation email sent to ${email}`);
+      console.info(`Contact request admin email sent, from ${name}`);
     } catch (err) {
-      failures.push(`confirmation to ${email}: ${(err as Error).message}`);
+      failures.push(`admin notification: ${(err as Error).message}`);
     }
-  } else {
-    console.info(`No email address given by ${name}, confirmation email skipped`);
-  }
+  };
+
+  const sendConfirmation = async () => {
+    // The confirmation can only be sent to someone who gave us an email address.
+    // Requesters who asked to be called back leave a phone number only.
+    if (email) {
+      try {
+        await sendMailWithRetry(
+          transporter,
+          {
+            from: `"${organizationName}" <${process.env.SMTP_USER}>`,
+            to: email,
+            subject: texts.CONTACT_REQUEST_USER_MAIL_SUBJECT,
+            html: emailWrapper(
+              siteUrl,
+              userContactRequestEmailContent(
+                texts,
+                name,
+                preferredContact,
+                preferredContact === "phone" ? (phone ?? email) : email,
+                organizationName
+              ),
+              texts.SYSTEM_EMAIL_SUBJECT.contactRequest,
+              texts,
+              organizationName
+            ),
+            attachments: [EMAIL_HEADER_ATTACHMENT],
+          },
+          "contact request confirmation"
+        );
+        console.info(`Contact request confirmation email sent to ${email}`);
+      } catch (err) {
+        failures.push(`confirmation to ${email}: ${(err as Error).message}`);
+      }
+    } else {
+      console.info(`No email address given by ${name}, confirmation email skipped`);
+    }
+  };
+
+  await Promise.all([sendAdminNotification(), sendConfirmation()]);
 
   if (failures.length > 0) {
     throw new Error(failures.join(" | "));

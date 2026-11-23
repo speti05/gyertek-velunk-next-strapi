@@ -12,6 +12,7 @@
     "checkJs": true,
     "paths": {
       "@client/*": ["../client/src/*"],
+      "@server/*": ["../server/src/*"],
       // The client files imported here (i18n/texts.ts) use the client's own alias
       "@/*": ["../client/src/*"]
     }

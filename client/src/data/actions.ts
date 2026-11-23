@@ -141,6 +141,7 @@ export async function contactRequestAction(prevState: FormActionState, formData:
   if (!isHuman) {
     return {
       ...prevState,
+      successMessage: null,
       zodErrors: null,
       strapiErrors: null,
       errorMessage: MESSAGES.recaptchaFailed,
@@ -157,6 +158,7 @@ export async function contactRequestAction(prevState: FormActionState, formData:
   if (!validatedFields.success) {
     return {
       ...prevState,
+      successMessage: null,
       zodErrors: validatedFields.error.flatten().fieldErrors,
       strapiErrors: null,
       errorMessage: null,
@@ -175,6 +177,7 @@ export async function contactRequestAction(prevState: FormActionState, formData:
   if (!responseData) {
     return {
       ...prevState,
+      successMessage: null,
       strapiErrors: null,
       zodErrors: null,
       errorMessage: MESSAGES.contactRequestFailed,
@@ -185,6 +188,7 @@ export async function contactRequestAction(prevState: FormActionState, formData:
     const isDuplicate = responseData.error.status === 409;
     return {
       ...prevState,
+      successMessage: null,
       strapiErrors: responseData.error,
       zodErrors: null,
       errorMessage: isDuplicate
