@@ -1,0 +1,78 @@
+---
+title: Bejelentkezés és kijelentkezés
+description: Hogyan jelentkezhetsz be a fiókodba és ki belőle, és mit jelentenek a bejelentkezéskor megjelenő üzenetek.
+sidebar:
+  order: 2
+usecases: [UC-LOGIN-01, UC-LOGIN-02, UC-LOGIN-03, UC-LOGIN-04]
+---
+import TestCoverage from "../../../components/TestCoverage.astro";
+import Screenshot from "../../../components/Screenshot.astro";
+
+Bejelentkezni a [regisztráció](../regisztracio/) és az e-mail címed megerősítése után tudsz.
+A bejelentkezési oldalt a fejléc **Bejelentkezés** gombjával nyitod meg.
+
+## Bejelentkezés
+
+<TestCoverage id="UC-LOGIN-01" />
+
+1. Add meg az **e-mail címedet** és a **jelszavadat**. A jelszó mező végén lévő szem ikonnal
+   megnézheted, mit írtál be.
+
+   <Screenshot name="UC-LOGIN-01-form" alt="A kitöltött bejelentkezési űrlap" />
+
+2. Kattints a **Bejelentkezés** gombra. Sikeres bejelentkezés után a **Profilod** oldalra
+   kerülsz, ahol a személyes adataidat, a hírlevél-beállításodat és a túrajelentkezéseidet
+   látod.
+
+   <Screenshot name="UC-LOGIN-01-profile" alt="A Profilod oldal bejelentkezés után" />
+
+A bejelentkezés egy hétig marad érvényes ezen a böngészőn. Amíg be vagy jelentkezve, a
+bejelentkezési oldal helyett mindig a profilod nyílik meg.
+
+### Kijelentkezés
+
+Kattints a **Profilod** oldalon a **Kijelentkezés** gombra (vagy a fejlécben a neved melletti
+menüben a **Kijelentkezés** pontra). Ezután visszakerülsz a bejelentkezési oldalra, és a
+profilod csak újabb bejelentkezés után nyílik meg. Közös vagy nyilvános gépen mindig
+jelentkezz ki.
+
+## Hibás e-mail cím vagy jelszó
+
+<TestCoverage id="UC-LOGIN-02" />
+
+Ha az e-mail cím vagy a jelszó nem stimmel, a *Hibás email cím vagy jelszó.* üzenet jelenik
+meg. Biztonsági okból az üzenet nem árulja el, hogy a cím vagy a jelszó volt-e hibás.
+Ellenőrizd a beírt adatokat (nincs-e bekapcsolva a Caps Lock), és próbáld újra.
+Ha nem emlékszel a jelszavadra, kattints az **Elfelejtett jelszó?** linkre
+([részletek](../elfelejtett-jelszo/)).
+
+<Screenshot name="UC-LOGIN-02-failed" alt="Hibaüzenet hibás e-mail cím vagy jelszó esetén" />
+
+Ha az e-mail cím formailag hibás, vagy a jelszó rövidebb 6 karakternél, a hiba már a mező
+alatt megjelenik.
+
+<Screenshot name="UC-LOGIN-02-invalid" alt="Hibaüzenetek formailag hibás e-mail cím és túl rövid jelszó esetén" />
+
+:::caution[Túl sok próbálkozás]
+Ugyanarról a gépről 15 percen belül legfeljebb 10 bejelentkezési kísérletet fogadunk el.
+Ha ezt túllépted, várj egy kicsit, mielőtt újra próbálkozol.
+:::
+
+## Még nem erősítetted meg az e-mail címedet
+
+<TestCoverage id="UC-LOGIN-03" />
+
+Amíg a regisztráció után kapott levélben nem kattintottál a megerősítő linkre, nem tudsz
+bejelentkezni – ilyenkor is a *Hibás email cím vagy jelszó.* üzenet jelenik meg. Keresd meg
+a megerősítő levelet (a spam mappában is), vagy kérj újat a
+[regisztrációs oldalon](../regisztracio/#már-regisztráltál-de-nem-erősítetted-meg-a-címedet).
+
+## Lejárt bejelentkezés
+
+<TestCoverage id="UC-LOGIN-04" />
+
+A **Profilod** oldal csak bejelentkezve érhető el; ha bejelentkezés nélkül nyitod meg, a
+bejelentkezési oldalra kerülsz. Ha a bejelentkezésed időközben lejárt, ezt sárga üzenet
+jelzi. Jelentkezz be újra, és ismét a profilodra kerülsz.
+
+<Screenshot name="UC-LOGIN-04-expired" alt="Figyelmeztetés lejárt bejelentkezés esetén" />

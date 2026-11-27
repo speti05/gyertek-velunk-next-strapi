@@ -28,6 +28,16 @@ export type OutboxMail = {
 
 const outboxDir = () => process.env.EMAIL_OUTBOX_DIR;
 
+/**
+ * EMAIL_DELIVERY=outbox: no e-mail leaves the machine - both transports (our own in mailer.ts
+ * and the email plugin's in config/plugins.ts) become nodemailer's jsonTransport, which
+ * "sends" by returning the message. Set only by e2e/playwright.config.ts (unless the run asks
+ * for Ethereal), so the tests depend neither on the network nor on an open SMTP port.
+ * Strapi sends its e-mail confirmation inside the register request, so a mail that cannot
+ * be sent would fail the registration itself.
+ */
+export const isOutboxOnlyDelivery = () => process.env.EMAIL_DELIVERY === "outbox";
+
 // "to" already covers everything "from" can hold (a string or an Address)
 type Addresses = SendMailOptions["to"];
 

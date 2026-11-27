@@ -52,11 +52,9 @@ jobs:
           CLIENT_URL=http://localhost:3000
           STRAPI_URL=http://localhost:1337
           ADMIN_EMAIL=admin@example.com
-          # The e2e Strapi runs in development mode, so every e-mail goes to this Ethereal
-          # account (repo secrets; without them a throwaway account is created per run)
-          ETHEREAL_USER=${{ secrets.ETHEREAL_USER }}
-          ETHEREAL_PASS=${{ secrets.ETHEREAL_PASS }}
-          # Not used while Ethereal is on; a closed port, so nothing could leave anyway
+          # No Ethereal account: the e2e mails only go to the outbox (EMAIL_DELIVERY=outbox,
+          # set by e2e/playwright.config.ts), nothing is sent. The SMTP settings are never
+          # used; a closed port all the same, so nothing could leave anyway
           SMTP_HOST=127.0.0.1
           SMTP_PORT=2525
           SMTP_USER=e2e@example.com

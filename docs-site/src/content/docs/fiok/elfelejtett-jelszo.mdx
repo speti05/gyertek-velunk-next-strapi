@@ -1,0 +1,100 @@
+---
+title: Elfelejtett jelszó
+description: Hogyan állíthatsz be új jelszót, ha elfelejtetted a régit, és mit tehetsz, ha a visszaállító link nem működik.
+sidebar:
+  order: 3
+usecases: [UC-PWD-01, UC-PWD-02, UC-PWD-03, UC-PWD-04, UC-PWD-05]
+---
+import TestCoverage from "../../../components/TestCoverage.astro";
+import Screenshot from "../../../components/Screenshot.astro";
+
+Ha nem emlékszel a jelszavadra, e-mailben kérhetsz egy linket, amellyel új jelszót
+állíthatsz be. A régi jelszavadra ehhez nincs szükség.
+
+:::note[Sütik]
+Az űrlapok elküldéséhez el kell fogadnod a sütiket – a spamszűrés (reCAPTCHA) enélkül nem
+működik.
+:::
+
+## Új jelszó beállítása
+
+<TestCoverage id="UC-PWD-01" />
+
+1. A [bejelentkezési oldalon](../bejelentkezes/) kattints az **Elfelejtett jelszó?** linkre.
+2. Add meg az **e-mail címet**, amellyel regisztráltál.
+
+   <Screenshot name="UC-PWD-01-request" alt="Az Elfelejtett jelszó űrlap kitöltött e-mail címmel" />
+
+3. Kattints az **Elfelejtett jelszó** gombra. Zöld üzenet jelzi, hogy ha a cím regisztrálva
+   van, hamarosan levelet kapsz.
+
+   <Screenshot name="UC-PWD-01-requested" alt="Üzenet a jelszó-visszaállító levél elküldéséről" />
+
+4. Nyisd meg az **Elfelejtett jelszó - Gyertek velünk** tárgyú levelet, és kattints a
+   **Jelszó visszaállítása** gombra (ha a gomb nem működik, másold a böngészőbe a levél alján
+   található linket).
+
+   <Screenshot name="UC-PWD-01-email" alt="A jelszó-visszaállító e-mail a Jelszó visszaállítása gombbal" />
+
+5. A megnyíló oldalon add meg az **új jelszót** kétszer. Ugyanazok a szabályok érvényesek, mint
+   [regisztrációkor](../regisztracio/#fiók-létrehozása): 6–15 karakter, kis- és nagybetű, és
+   legalább egy speciális karakter. A lista menet közben kipipálja a teljesült szabályokat.
+
+   <Screenshot name="UC-PWD-01-new-password" alt="Az új jelszó beállítása, a jelszószabályok mind kipipálva" />
+
+6. Kattints a **Mentés** gombra. A bejelentkezési oldalra kerülsz, ahol már az **új
+   jelszóval** jelentkezhetsz be – a régi ettől kezdve nem működik.
+
+:::caution[A link egyszer használható]
+A levélben kapott link csak egyszer használható. Ha újra kérsz linket,
+mindig a **legutóbbi** levélben lévőt használd.
+:::
+
+## Ismeretlen e-mail cím
+
+<TestCoverage id="UC-PWD-02" />
+
+Ha olyan címet adsz meg, amellyel nincs fiók, ugyanazt az üzenetet látod, mint egy
+regisztrált címnél – biztonsági okból nem áruljuk el, mely címekhez tartozik fiók. Ilyenkor
+azonban **nem érkezik levél**. Ha nem kapsz levelet, ellenőrizd a spam mappát, és hogy
+melyik címmel regisztráltál.
+
+<Screenshot name="UC-PWD-02-unknown" alt="Az Elfelejtett jelszó űrlap üzenete" />
+
+## Hiányzó vagy hibás adatok
+
+<TestCoverage id="UC-PWD-03" />
+
+Érvénytelen e-mail címnél (például ha hiányzik a végéről a `.hu` vagy `.com`) a mező alatt
+hibaüzenet jelenik meg, és levél sem megy ki.
+
+<Screenshot name="UC-PWD-03-invalid-email" alt="Hibaüzenet érvénytelen e-mail cím esetén" />
+
+Ha az új jelszó nem felel meg a szabályoknak, a mező alatt megjelenik, mi hiányzik belőle.
+Ha a két jelszó nem egyezik, a **Jelszó megerősítése** mező alatt jelenik meg a hiba. Amíg a
+hibák meg nem szűnnek, a jelszavad nem változik.
+
+<Screenshot name="UC-PWD-03-weak-password" alt="Hibaüzenet, ha az új jelszóból hiányzik a nagybetű" />
+
+## A link nem működik
+
+<TestCoverage id="UC-PWD-04" />
+
+Ha a link hiányos (például nem a teljes linket másoltad be), az oldal az
+*Érvénytelen vagy lejárt link.* üzenetet mutatja.
+
+<Screenshot name="UC-PWD-04-no-code" alt="Üzenet hiányos jelszó-visszaállító link esetén" />
+
+Ha a linket már felhasználtad, vagy azóta újat kértél, a **Mentés** után a
+*Hiba történt. Kérjük, próbálja újra.* üzenet jelenik meg, és a jelszavad nem változik.
+Kérj új linket az [Új jelszó beállítása](#új-jelszó-beállítása) lépései szerint.
+
+<Screenshot name="UC-PWD-04-invalid-code" alt="Hibaüzenet felhasznált vagy érvénytelen link esetén" />
+
+## Jelszócsere még meg nem erősített fióknál
+
+<TestCoverage id="UC-PWD-05" />
+
+Ha regisztráltál, de a megerősítő levelet nem találod, az új jelszó beállítása megerősíti a
+fiókodat is: a jelszó-visszaállító levél ugyanarra a címre érkezik, így igazolja, hogy a cím
+a tiéd. Az új jelszó mentése után rögtön be tudsz jelentkezni.

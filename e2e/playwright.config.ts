@@ -1,14 +1,12 @@
 import { defineConfig, devices } from "@playwright/test";
 import { CONSENT_STATE } from "./support/consent-state";
 import { OUTBOX_DIR } from "./support/outbox";
+import { CLIENT_PORT, CLIENT_URL, STRAPI_PORT, STRAPI_URL } from "./support/servers";
 
 const isCI = !!process.env.CI;
 
-// Next to, not instead of, a running `yarn dev` (1337 / 3000)
-const STRAPI_PORT = 1338;
-const CLIENT_PORT = 3001;
-const strapiURL = `http://localhost:${STRAPI_PORT}`;
-const baseURL = `http://localhost:${CLIENT_PORT}`;
+const strapiURL = STRAPI_URL;
+const baseURL = CLIENT_URL;
 
 /**
  * Both apps are started here, on their own ports, and Strapi runs on a copy of the
@@ -24,8 +22,16 @@ export default defineConfig({
   // Locally the client runs `yarn dev`, which compiles a page on its first request - often
   // more than 30 s on a cold start (e.g. a single test started from UI mode). CI serves a build.
   timeout: isCI ? 30_000 : 120_000,
+  // The same goes for what a server action leads to: logging in redirects to /profil, which
+  // the dev server compiles on that very request, and registering waits for Strapi to hash
+  // the password and send the confirmation - well over the default 5 s while the parallel
+  // workers keep the dev server busy.
+  expect: { timeout: isCI ? 5_000 : 30_000 },
   retries: isCI ? 1 : 0,
-  workers: isCI ? 2 : undefined,
+  // Locally Playwright would start one worker per two cores (11 on a 22-core machine), all
+  // against the one `next dev` server and Strapi - which then answer so slowly that every
+  // test times out. A few workers finish sooner. Override with --workers.
+  workers: isCI ? 2 : 3,
   reporter: [
     ["list"],
     ["html", { open: "never" }],
@@ -64,7 +70,8 @@ export default defineConfig({
         PORT: String(STRAPI_PORT),
         STRAPI_URL: strapiURL,
         CLIENT_URL: baseURL,
-        // Development mode sends every e-mail to the Ethereal account in server/.env
+        // With E2E_EMAIL_DELIVERY=ethereal (see EMAIL_DELIVERY below), development mode sends
+        // every e-mail to the Ethereal account in server/.env
         // (ETHEREAL_USER / ETHEREAL_PASS, see server/src/lib/email/ethereal.ts). Without it
         // the email plugin falls back to SMTP, which points at a closed port here.
         NODE_ENV: "development",
@@ -72,6 +79,13 @@ export default defineConfig({
         SMTP_PORT: "2525",
         // A copy of every e-mail sent, for the tests to inspect (support/outbox.ts)
         EMAIL_OUTBOX_DIR: OUTBOX_DIR,
+        // The mails are only saved to that outbox, nothing goes out (lib/email/outbox.ts) - the
+        // tests need no network and no open SMTP port. E2E_EMAIL_DELIVERY=ethereal sends them
+        // to Ethereal as well (as described above), which adds its preview link to the report.
+        EMAIL_DELIVERY: process.env.E2E_EMAIL_DELIVERY === "ethereal" ? "" : "outbox",
+        // Every auth request of the suite comes from the one Next.js server, i.e. one IP:
+        // the per-IP limits on register / login (lib/auth/auth-overrides.ts) would trip
+        AUTH_RATE_LIMIT_DISABLED: "true",
       },
     },
     {

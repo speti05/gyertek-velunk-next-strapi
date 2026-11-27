@@ -17,6 +17,7 @@ export default defineConfig({
       social: [{ icon: "github", label: "GitHub", href: REPO }],
       editLink: { baseUrl: `${REPO}/edit/main/docs-site/` },
       sidebar: [
+        { label: "Fiók", autogenerate: { directory: "fiok" } },
         { label: "Hírlevél", autogenerate: { directory: "hirlevel" } },
         { label: "Kapcsolatfelvétel", autogenerate: { directory: "kapcsolat" } },
         { label: "Tesztlefedettség", link: "/lefedettseg/" },

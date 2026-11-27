@@ -45,6 +45,10 @@ function getClientIp(ctx: StrapiContext): string {
  * @returns true if the request is blocked
  */
 function isRateLimited(ctx: StrapiContext, key: string, limit: number, windowMs: number): boolean {
+  // Only the e2e Strapi sets this (e2e/playwright.config.ts): every request of the suite
+  // comes from the same Next.js server, so the per-IP limits would fail the tests.
+  if (process.env.AUTH_RATE_LIMIT_DISABLED === "true") return false;
+
   const now = Date.now();
   const entry = rateLimitStore.get(key);
 

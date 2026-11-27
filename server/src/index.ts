@@ -1,5 +1,6 @@
 import type { Core } from "@strapi/strapi";
 import type { Attachment } from "nodemailer/lib/mailer";
+import { addToOutbox } from "./lib/email/outbox";
 import { sendNewsletterBroadcast } from "./lib/email/newsletter";
 import { getTransporter } from "./lib/email/mailer";
 import { EMAIL_HEADER_ATTACHMENT } from "./lib/email/header-attachment";
@@ -61,12 +62,21 @@ export default {
 
     getTransporter().catch((err) => console.error("Mailer init failed:", err));
 
-    // Inject header image as CID inline attachment into every Strapi system email
+    // Inject header image as CID inline attachment into every Strapi system email, and keep a
+    // copy of it in the e2e outbox (a no-op unless EMAIL_OUTBOX_DIR is set, see outbox.ts)
     const emailService = strapi.plugin("email").service<EmailService>("email");
     const _originalSend = emailService.send.bind(emailService);
-    emailService.send = (options) => {
+    emailService.send = async (options) => {
       options.attachments = [...(options.attachments ?? []), EMAIL_HEADER_ATTACHMENT];
-      return _originalSend(options);
+      const recordOutcome = await addToOutbox(options, "strapi-system-email");
+      try {
+        const info = await _originalSend(options);
+        await recordOutcome(info);
+        return info;
+      } catch (err) {
+        await recordOutcome(null);
+        throw err;
+      }
     };
 
     throwErrorIfClientUrlMissing();

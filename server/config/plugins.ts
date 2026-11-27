@@ -1,5 +1,6 @@
 import { EMAIL_DEFAULT_FROM_NAME } from "../src/i18n/texts-strapi";
 import { ETHEREAL_HOST, ETHEREAL_PORT, getEtherealAccount, isDevelopment } from "../src/lib/email/ethereal";
+import { isOutboxOnlyDelivery } from "../src/lib/email/outbox";
 
 export default () => {
   // In development the Strapi system e-mails (password reset, e-mail confirmation) go to the
@@ -15,19 +16,24 @@ export default () => {
         pass: process.env.SMTP_PASS,
       };
 
+  // The e2e runs keep every e-mail on the machine (see isOutboxOnlyDelivery)
+  const outboxOnly = isOutboxOnlyDelivery();
+
   const config = {
     email: {
       config: {
         provider: "nodemailer",
-        providerOptions: {
-          host: smtp.host,
-          port: smtp.port,
-          secure: smtp.secure,
-          auth: {
-            user: smtp.user,
-            pass: smtp.pass,
-          },
-        },
+        providerOptions: outboxOnly
+          ? { jsonTransport: true }
+          : {
+              host: smtp.host,
+              port: smtp.port,
+              secure: smtp.secure,
+              auth: {
+                user: smtp.user,
+                pass: smtp.pass,
+              },
+            },
         settings: {
           defaultFrom: `"${EMAIL_DEFAULT_FROM_NAME}" <${smtp.user}>`,
           defaultReplyTo: smtp.user,
@@ -37,7 +43,7 @@ export default () => {
   };
 
   console.log(
-    `Strapi Email plugin config(for reset password, email confirmation): ${ethereal ? "Ethereal" : "SMTP"} as ${smtp.user}`
+    `Strapi Email plugin config(for reset password, email confirmation): ${outboxOnly ? "outbox only" : ethereal ? "Ethereal" : "SMTP"} as ${smtp.user}`
   );
   return config;
 };

@@ -1,0 +1,120 @@
+---
+title: Regisztráció
+description: Hogyan hozhatsz létre fiókot a Gyertek Velünk oldalon, hogyan erősítheted meg az e-mail címedet, és mit tehetsz, ha valami nem sikerül.
+sidebar:
+  order: 1
+usecases: [UC-REG-01, UC-REG-02, UC-REG-03, UC-REG-04, UC-REG-05]
+---
+import TestCoverage from "../../../components/TestCoverage.astro";
+import Screenshot from "../../../components/Screenshot.astro";
+
+Fiókkal jelentkezhetsz a túráinkra, és a **Profilod** oldalon egy helyen látod a
+jelentkezéseidet és a befizetéseid állapotát. A regisztrációhoz csak egy e-mail cím és egy
+jelszó kell; a nevedet, telefonszámodat és címedet később, a profilodon adhatod meg.
+
+A regisztrációs oldalt a fejléc **Bejelentkezés** gombjával, majd a
+*Még nincs fiókod?* **Regisztráció** linkjével éred el.
+
+:::note[Sütik]
+A regisztrációhoz el kell fogadnod a sütiket – a spamszűrés (reCAPTCHA) enélkül nem működik.
+Ha még nem fogadtad el őket, a **Regisztráció** gomb a sütibeállításokat nyitja meg.
+:::
+
+## Fiók létrehozása
+
+<TestCoverage id="UC-REG-01" />
+
+1. Add meg az **e-mail címedet**.
+2. Adj meg egy **jelszót**. A mező alatti lista menet közben pipálja ki, melyik szabálynak
+   felel már meg a jelszó. A jelszó legyen
+   - legalább 6, legfeljebb 15 karakter hosszú,
+   - tartalmazzon kis- és nagybetűt,
+   - és legalább egy speciális karaktert (pl. `!@#$%`).
+3. Írd be ugyanazt a jelszót a **Jelszó megerősítése** mezőbe is.
+4. Pipáld be, hogy elolvastad és elfogadod az **ÁSZF-et** és az **Adatvédelmi tájékoztatót**
+   (a linkek új lapon nyílnak meg).
+
+   <Screenshot name="UC-REG-01-form" alt="A kitöltött regisztrációs űrlap, a jelszószabályok mind kipipálva" />
+
+5. Kattints a **Regisztráció** gombra. Zöld üzenet jelzi, hogy a regisztráció sikerült, és
+   megerősítő e-mailt küldtünk.
+
+   <Screenshot name="UC-REG-01-success" alt="Sikeres regisztráció üzenete" />
+
+### Az e-mail cím megerősítése
+
+A fiókod csak az e-mail címed megerősítése után használható. Néhány percen belül levelet
+kapsz **Regisztráció - Email megerősítése** tárggyal. Kattints a levélben az
+**Email cím megerősítése** gombra (ha a gomb nem működik, másold a böngészőbe a levél alján
+található linket).
+
+<Screenshot name="UC-REG-01-email" alt="A megerősítő e-mail az Email cím megerősítése gombbal" />
+
+A link megnyitja az oldalt, és egy üzenet jelzi, hogy az e-mail címed megerősítése sikerült.
+Ezután már [be is jelentkezhetsz](../bejelentkezes/).
+
+<Screenshot name="UC-REG-01-confirmed" alt="Sikeres e-mail megerősítés üzenete" />
+
+:::tip[Hírlevél]
+Regisztrációkor automatikusan feliratkozol a hírlevelünkre is. Ha nem kéred, a **Profilod**
+oldalon a *Feliratkozom a hírlevélre* jelölőnégyzettel bármikor leiratkozhatsz.
+:::
+
+## Hiányzó vagy hibás adatok
+
+<TestCoverage id="UC-REG-02" />
+
+Ha nem pipálod be az ÁSZF és az Adatvédelmi tájékoztató elfogadását, a regisztráció nem
+indul el, és a jelölőnégyzet alatt piros figyelmeztetés jelenik meg. A pipa bejelölésével
+a figyelmeztetés eltűnik.
+
+<Screenshot name="UC-REG-02-terms" alt="Figyelmeztetés, ha az ÁSZF elfogadása hiányzik" />
+
+Ha valamelyik adat nem megfelelő, a **Regisztráció** gomb megnyomása után a hibás mező piros
+keretet kap, és alatta megjelenik, mi a gond – például érvénytelen e-mail cím (hiányzik a
+végéről a `.hu` vagy `.com`), vagy a jelszóból hiányzik a nagybetű. A jelszószabályok
+listáján a ki nem pipált sorok mutatják, mit kell még pótolni.
+
+<Screenshot name="UC-REG-02-invalid" alt="Hibaüzenetek érvénytelen e-mail cím és gyenge jelszó esetén" />
+
+Ha a két jelszó nem egyezik, a **Jelszó megerősítése** mező alatt jelenik meg a hiba.
+
+<Screenshot name="UC-REG-02-mismatch" alt="Hibaüzenet, ha a két jelszó nem egyezik" />
+
+## Már regisztráltál, de nem erősítetted meg a címedet
+
+<TestCoverage id="UC-REG-03" />
+
+Ha egy olyan e-mail címmel regisztrálnál, amellyel már regisztráltál, de a megerősítő levél
+linkjére még nem kattintottál, üzenet figyelmeztet erre. Ha a levelet nem találod (nézd meg a
+spam mappát is), kattints az üzenetben az **ide kattintva új megerősítő emailt kapsz**
+linkre.
+
+<Screenshot name="UC-REG-03-not-confirmed" alt="Üzenet, ha a cím már regisztrálva van, de nincs megerősítve" />
+
+Zöld üzenet jelzi, hogy új megerősítő levelet küldtünk. Mindig a **legutóbb kapott** levél
+linkjét használd – egy új levél kérésével a korábbi link érvényét veszti.
+
+<Screenshot name="UC-REG-03-resent" alt="Üzenet az új megerősítő e-mail elküldéséről" />
+
+## Már van fiókod ezzel a címmel
+
+<TestCoverage id="UC-REG-04" />
+
+Egy e-mail címmel csak egy fiók hozható létre. Ha a címed már regisztrálva és meg is van
+erősítve, üzenet jelzi ezt – ilyenkor egyszerűen [jelentkezz be](../bejelentkezes/). Ha
+nem emlékszel a jelszavadra, a bejelentkezési oldalon az **Elfelejtett jelszó?** linkkel
+[újat állíthatsz be](../elfelejtett-jelszo/).
+
+<Screenshot name="UC-REG-04-taken" alt="Üzenet, ha az e-mail cím már regisztrálva van" />
+
+## Érvénytelen megerősítő link
+
+<TestCoverage id="UC-REG-05" />
+
+Ha a megerősítő link hibás, már felhasználtad, vagy azóta új megerősítő levelet kértél,
+az oldal azt jelzi, hogy a megerősítés sikertelen. Ha a címed még nincs megerősítve,
+regisztrálj újra ugyanazzal a címmel, és kérj új megerősítő levelet
+([lásd fent](#már-regisztráltál-de-nem-erősítetted-meg-a-címedet)).
+
+<Screenshot name="UC-REG-05-invalid-link" alt="Sikertelen e-mail megerősítés üzenete" />

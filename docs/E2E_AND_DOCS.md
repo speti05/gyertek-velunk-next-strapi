@@ -95,11 +95,39 @@ e2e/
     slower.
   - **In CI** the client runs as `yarn build && yarn start`. The order matters: the client
     build pre-renders pages from Strapi content.
-  - No real e-mail leaves a test run: Strapi runs with `NODE_ENV=development`, so every
-    e-mail (our own and the email plugin's) goes to the Ethereal account set in `server/.env`
-    (`ETHEREAL_USER` / `ETHEREAL_PASS`, see `server/src/lib/email/ethereal.ts`). Its inbox is at
-    https://ethereal.email/messages. Without that account a throwaway one is created per start,
-    and the email plugin's `SMTP_HOST` points at a closed port.
+  - **No e-mail leaves a test run, and by default none is even sent.** See
+    [E-mails and the Ethereal account](#e-mails-and-the-ethereal-account) below.
+
+### E-mails and the Ethereal account
+
+[Ethereal](https://ethereal.email) is a fake SMTP service: it accepts every e-mail, delivers
+none, and shows them in a web inbox (https://ethereal.email/messages, log in with the account).
+**The tests do not use it** unless you ask for it:
+
+| Where | `EMAIL_DELIVERY` | What happens to an e-mail | Ethereal account used? |
+|---|---|---|---|
+| `yarn e2e` / `yarn e2e:ui` (default), locally and in CI | `outbox` | Saved as JSON to `server/.tmp/e2e/outbox/`, then "sent" by nodemailer's `jsonTransport`, which goes nowhere | **No** |
+| `E2E_EMAIL_DELIVERY=ethereal yarn e2e` | not set | Saved to the outbox **and** sent to Ethereal; the report gets an `Ethereal` preview link per mail | **Yes**, `ETHEREAL_USER` / `ETHEREAL_PASS` from `server/.env` |
+| `yarn dev` (Strapi with `NODE_ENV=development`) | not set | Sent to Ethereal, no outbox | **Yes**, see below |
+| Production | not set | Sent through the real SMTP server (`SMTP_*`) | No |
+
+- **The outbox** (`server/src/lib/email/outbox.ts`) holds every mail sent through
+  `sendMailWithRetry` (contact request) and every Strapi system mail (e-mail confirmation,
+  password reset - the email plugin wrapper in `server/src/index.ts`). The tests read it with
+  `waitForMail()` (`e2e/support/outbox.ts`). Mails sent with a plain `transporter.sendMail`
+  (event signup, newsletter) are not saved there yet, but are not sent either.
+- **Why not Ethereal by default:** the tests would need the network and an open outgoing SMTP
+  port (587). Some networks block it, and Strapi sends the e-mail confirmation inside the
+  register request, so a mail that cannot be sent fails the registration itself.
+- **The Ethereal account only matters in `yarn dev`** (and in the opt-in e2e mode above).
+  With `ETHEREAL_USER` / `ETHEREAL_PASS` set in `server/.env`, every dev e-mail goes to that
+  account. Without them our own e-mails go to a throwaway account created on each start (its
+  login is printed to the Strapi log), **but the Strapi system e-mails (confirmation, password
+  reset) fall back to the real `SMTP_*` settings** (`server/config/plugins.ts`) - keep the
+  account set if `server/.env` holds live SMTP credentials.
+- **CI has no Ethereal account** (`.github/workflows/docs.yml` sets none). Setting
+  `E2E_EMAIL_DELIVERY=ethereal` there would create a throwaway account for our own e-mails,
+  and the Strapi system e-mails would fail on the closed `SMTP_HOST` port.
 
 ### The database copy
 
@@ -268,8 +296,9 @@ VS Code (**Run and Debug**):
 Triggers: push to `main`, every pull request, and manual runs.
 
 1. Installs the server, client, e2e and docs-site dependencies.
-2. Writes a throwaway `server/.env` with random secrets and the Ethereal account from the
-   `ETHEREAL_USER` / `ETHEREAL_PASS` repo secrets, so the run's e-mails land in that inbox.
+2. Writes a throwaway `server/.env` with random secrets. There is no Ethereal account and the
+   SMTP host is a closed port: the run's e-mails only go to the outbox (see
+   [E-mails and the Ethereal account](#e-mails-and-the-ethereal-account)).
 3. Builds Strapi. There is no seeding: the run starts from the committed `e2e/fixtures/data.db`.
 4. Typechecks `e2e/`, installs Chromium and runs `yarn test`. Playwright starts Strapi on a
    copy of the fixture, then builds and starts the client.
@@ -348,6 +377,7 @@ Conventions:
 | Guide says "Képernyőkép hiányzik" / "Nincs teszt" | No test run on this machine yet, or `docs:dev` was started before it. Run `yarn e2e`, then `yarn docs:dev`. |
 | Flaky first run after editing client code | The e2e client (`next dev` on `:3001`) is still compiling. Run the tests again. |
 | `http://localhost:1338 is already used` / `:3001 …` | An e2e server from an aborted run is still alive. Stop that node process. |
+| Registration fails with `Error sending confirmation email` | The run sends e-mails to Ethereal (`E2E_EMAIL_DELIVERY=ethereal`) and the network blocks outgoing SMTP. Run without it - the default keeps e-mails in the outbox. |
 | `server/.tmp/e2e/` left on disk | The run was started without `run.mjs` (see above), or the process was killed. The next run replaces it, or delete it by hand. |
 
 For the Next.js server-side error behind a failing page, check

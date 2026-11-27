@@ -1,12 +1,16 @@
 import nodemailer from "nodemailer";
 import { ETHEREAL_HOST, ETHEREAL_PORT, getEtherealAccount, isDevelopment } from "./ethereal";
+import { isOutboxOnlyDelivery } from "./outbox";
 
 let transporter: nodemailer.Transporter;
 
 export const getTransporter = async (): Promise<nodemailer.Transporter> => {
   if (transporter) return transporter;
 
-  if (isDevelopment()) {
+  if (isOutboxOnlyDelivery()) {
+    transporter = nodemailer.createTransport({ jsonTransport: true });
+    console.log("E-mails are only saved to the outbox (EMAIL_DELIVERY=outbox), none is sent");
+  } else if (isDevelopment()) {
     // A fixed account from the env, or a throwaway one created now (see ethereal.ts)
     const account = getEtherealAccount() ?? (await nodemailer.createTestAccount());
     transporter = nodemailer.createTransport({
