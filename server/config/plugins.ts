@@ -20,6 +20,14 @@ export default () => {
   const outboxOnly = isOutboxOnlyDelivery();
 
   const config = {
+    "users-permissions": {
+      config: {
+        // The plugin's own limiter (5 requests / 5 min) keys /auth/local and /auth/reset-password
+        // on the IP alone. Only the e2e Strapi turns it off, like our limits in
+        // lib/auth/auth-overrides.ts: every request of the suite comes from the one Next.js server.
+        ratelimit: { enabled: process.env.AUTH_RATE_LIMIT_DISABLED !== "true" },
+      },
+    },
     email: {
       config: {
         provider: "nodemailer",

@@ -84,7 +84,8 @@ export default defineConfig({
         // to Ethereal as well (as described above), which adds its preview link to the report.
         EMAIL_DELIVERY: process.env.E2E_EMAIL_DELIVERY === "ethereal" ? "" : "outbox",
         // Every auth request of the suite comes from the one Next.js server, i.e. one IP:
-        // the per-IP limits on register / login (lib/auth/auth-overrides.ts) would trip
+        // the per-IP limits on register / login (lib/auth/auth-overrides.ts, and the
+        // users-permissions plugin's own in config/plugins.ts) would trip
         AUTH_RATE_LIMIT_DISABLED: "true",
       },
     },
